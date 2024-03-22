@@ -8,7 +8,7 @@
 
 using log4net;
 
-namespace AsesAutoTypeALib
+namespace AsesAutoTypeLib
 {
     /// <summary>
     ///  This class shall implement all functionality 
@@ -37,26 +37,24 @@ namespace AsesAutoTypeALib
         {
             get
             {
-                if (m_WorkerConfig == null)
-                    m_WorkerConfig = new WorkerConfig();
-                return m_WorkerConfig;
+                if (this.m_WorkerConfig == null)
+                    this.m_WorkerConfig = new WorkerConfig();
+                return this.m_WorkerConfig;
             }
             set 
             {
-                m_WorkerConfig = value;
+                this.m_WorkerConfig = value;
             }
         }
-
+        public WorkerConfig GetWorkerConfig()
+        {
+            return this.WorkerConfig;
+        }
         public WorkerConfig SetWorkerConfig(WorkerConfig workerConfig)
         {
             WorkerConfig prev = this.GetWorkerConfig();
             this.WorkerConfig = workerConfig;
             return prev;
-        }
-
-        public WorkerConfig GetWorkerConfig()
-        {
-            return this.WorkerConfig;
         }
 
         /// <summary>
@@ -66,8 +64,8 @@ namespace AsesAutoTypeALib
         {
             try
             {
-                Log.Debug(LogConst.START);
-                this.Initialze(new WorkerConfig());
+                Log.Debug(LogConst.Start);
+                Initialze(new WorkerConfig());
             }
             catch (Exception ex)
             {
@@ -75,7 +73,7 @@ namespace AsesAutoTypeALib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -86,8 +84,8 @@ namespace AsesAutoTypeALib
         {
             try
             {
-                Log.Debug(LogConst.START);
-                this.Initialze(workerConfig);
+                Log.Debug(LogConst.Start);
+                Initialze(workerConfig);
             }
             catch (Exception ex)
             {
@@ -95,7 +93,7 @@ namespace AsesAutoTypeALib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -103,7 +101,7 @@ namespace AsesAutoTypeALib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 this.SetWorkerConfig(workerConfig);
                 return true;
             }
@@ -114,7 +112,7 @@ namespace AsesAutoTypeALib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
     }

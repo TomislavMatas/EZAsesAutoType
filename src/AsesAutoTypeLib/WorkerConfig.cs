@@ -37,9 +37,9 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 if (!Initialze())
-                    throw new Exception("Initialze failed");
+                    throw new Exception(nameof(Initialze) + LogConst.Fail);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -55,7 +55,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 return true;
             }
             catch (Exception ex)
@@ -65,8 +65,10 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
-    }
-}
+
+    } // class
+
+} // namespace

@@ -42,7 +42,7 @@ namespace AsesAutoTypeApp
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 ApplicationConfiguration.Initialize();
                 Application.Run(new FormMain());
             }
@@ -52,7 +52,7 @@ namespace AsesAutoTypeApp
             }
             finally
             { 
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
     }

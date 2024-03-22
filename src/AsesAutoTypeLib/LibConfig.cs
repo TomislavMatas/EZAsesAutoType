@@ -9,8 +9,7 @@
 // * Initial version.
 //
 
-using System.Diagnostics;
-using System.Reflection;
+using ConfigApi = AsesAutoTypeLib.ConfigApi;
 
 namespace AsesAutoTypeLib
 {
@@ -51,17 +50,17 @@ namespace AsesAutoTypeLib
         #endregion 
 
         #region "Browser.InitMode"
-        public const string BROWSERINITMODESIMPLE = "simple";
-        public const string BROWSERINITMODEEXTENDED = "extended";
-        private const string BROWSERINITMODENAME = "Browser.InitMode";
-        private const string BROWSERINITMODEDEFAULT = BROWSERINITMODEEXTENDED;
+        public const string BrowserInitModeSimple = "simple";
+        public const string BrowserInitModeExtended = "extended";
+        private const string BrowserInitModeKeyName = "Browser.InitMode";
+        private const string BrowserInitModeDefault = BrowserInitModeExtended;
         private static string? m_BrowserInitMode = null;
         private static string BrowserInitMode
         {
             get
             {
                 if (m_BrowserInitMode == null)
-                    m_BrowserInitMode = ConfigApi.GetAppSettingString(BROWSERINITMODENAME, BROWSERINITMODEDEFAULT);
+                    m_BrowserInitMode = ConfigApi.GetAppSettingString(BrowserInitModeKeyName, BrowserInitModeDefault);
                 return m_BrowserInitMode;
             }
             set
@@ -77,6 +76,35 @@ namespace AsesAutoTypeLib
         {
             string prev = BrowserInitMode;
             BrowserInitMode = value;
+            return prev;
+        }
+        #endregion 
+
+        #region "Browser.Interaction.Delay"
+        private const string BrowserInteractionDelayKeyName = "Browser.Interaction.Delay";
+        private const int BrowserInteractionDelayDefault = 500;
+        private static int? m_BrowserInteractionDelay = null;
+        private static int BrowserInteractionDelay
+        {
+            get
+            {
+                if (m_BrowserInteractionDelay == null)
+                    m_BrowserInteractionDelay = ConfigApi.GetAppSettingInt(BrowserInteractionDelayKeyName, BrowserInteractionDelayDefault);
+                return (int)m_BrowserInteractionDelay;
+            }
+            set
+            {
+                m_BrowserInteractionDelay = value;
+            }
+        }
+        public static int GetBrowserInteractionDelay()
+        {
+            return BrowserInteractionDelay;
+        }
+        public static int SetBrowserInteractionDelay(int value)
+        {
+            int prev = BrowserInteractionDelay;
+            BrowserInteractionDelay = value;
             return prev;
         }
         #endregion 

@@ -10,7 +10,11 @@ namespace AsesAutoTypeLib
 {
     public static class LogConst
     {
-        public const string START = "start";
-        public const string DONE = "done";   
+        public const string Start = " START";
+        public const string Done = " DONE";
+        public const string Fail = " FAIL";
+        public const string Invalid = " INVALID";
+        public const string NotImpl = " not implemented";
+        public const string IsNull = " IS NULL";
     }
 }
