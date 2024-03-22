@@ -29,13 +29,13 @@ namespace AsesAutoTypeApp
         }
         #endregion
 
-        private InteractionHandler? m_InteractionHandler = null;
-        private InteractionHandler InteractionHandler
+        private AppHandler? m_InteractionHandler = null;
+        private AppHandler InteractionHandler
         {
             get
             {
                 if (m_InteractionHandler == null)
-                    m_InteractionHandler = new InteractionHandler(this);
+                    m_InteractionHandler = new AppHandler(this);
                 return m_InteractionHandler;
             }
             set
@@ -44,14 +44,14 @@ namespace AsesAutoTypeApp
             }
         }
 
-        internal InteractionHandler SetInteractionHandler(InteractionHandler interactionHandler)
+        internal AppHandler SetInteractionHandler(AppHandler interactionHandler)
         {
-            InteractionHandler prev = this.GetInteractionHandler();
+            AppHandler prev = this.GetInteractionHandler();
             this.InteractionHandler = interactionHandler;
             return prev;
         }
 
-        internal InteractionHandler GetInteractionHandler()
+        internal AppHandler GetInteractionHandler()
         {
             return this.InteractionHandler;
         }
@@ -83,7 +83,7 @@ namespace AsesAutoTypeApp
             try
             {
                 Log.Debug(LogConst.START);
-                this.InteractionHandler = new InteractionHandler(this);
+                this.InteractionHandler = new AppHandler(this);
                 return true;
             }
             catch (Exception ex)
