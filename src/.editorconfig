@@ -1,0 +1,4 @@
+﻿[*.{cs,vb}]
+
+# IDE0074: Verbundzuweisung verwenden
+dotnet_diagnostic.IDE0074.severity = silent

@@ -1,0 +1,7 @@
+﻿# exclude Visual Studio sepcific folders by name 
+.vs
+bin
+obj
+
+# exclude Visual Studio sepcific files by pattern
+*.csproj.user
