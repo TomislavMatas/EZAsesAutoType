@@ -29,7 +29,7 @@ if "%WEBDRIVER_VERSION%" == "" (
 set "PROJEKT_ROOT=%~dp0.."
 set "WEBDRIVER_HOMEPAGE=https://msedgedriver.azureedge.net"
 set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%/%WEBDRIVER_VERSION%"
-set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\src\common\Selenium\WebDriver\Edge"
+set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\Edge"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
 @rem die Liste der Dateien, die heruntergeladen werden sollen.
 ::set "FILELIST=edgedriver_win64.zip edgedriver_win32.zip edgedriver_linux64.zip edgedriver_arm64.zip"
@@ -106,7 +106,7 @@ for %%f in (%FILELIST%) do (
 	)		
 	@rem "Verteile" den win64 in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
 	if not "x!fn:win64=!" == "x!fn!" ( 
-		set "prjlist=SeleniumLib"
+		set "prjlist=AsesAutoTypeLib"
 		for %%p in (!prjlist!) do (
 			set "prj=%%p" 
 			set "prjpath=%PROJEKT_ROOT%\src\!prj!"
