@@ -8,7 +8,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>AsesAutoTypeApp.Program</StartupObject>
     <Title>ASES-AutoType</Title>
+    <Version>24.123.0.0</Version>
+    <Authors>Tomislav Matas</Authors>
+    <Company>matas consulting</Company>
+    <Description>The Microsoft Windows Forms Application "AsesAutoTypeApp.exe" is supposed
+to automate the daily chore of utilizing the virtual punch card system
+"ATOSS Staff Efficiency Suite" also known as "ASES".</Description>
+    <Copyright>(c) 2024 $(Company)</Copyright>
+    <PackageIcon>ases-icon-60x60.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TomislavMatas/AsesAutoType.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ATOSS;ASES;Selenium;WebDriver;Chrome;Edge</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\res\img\ases-icon-60x60.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.16" />
@@ -16,6 +35,41 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AsesAutoTypeLib\AsesAutoTypeLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
