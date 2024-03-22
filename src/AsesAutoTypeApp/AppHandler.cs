@@ -62,7 +62,7 @@ namespace AsesAutoTypeApp
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 this.Initialze(null);
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace AsesAutoTypeApp
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -82,7 +82,7 @@ namespace AsesAutoTypeApp
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 this.Initialze(requestor);
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace AsesAutoTypeApp
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -99,7 +99,7 @@ namespace AsesAutoTypeApp
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 this.SetRequestor(requestor);
                 return true;
             }
@@ -110,8 +110,10 @@ namespace AsesAutoTypeApp
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
-    }
-}
+
+    } // class
+
+} // namespace

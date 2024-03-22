@@ -103,19 +103,19 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
  
                 string initMode = this.InitMode;
                 if (String.IsNullOrEmpty(initMode))
-                    throw new Exception("InitMode invalid");
+                    throw new Exception(nameof(initMode) + LogConst.Invalid);
 
-                if (LibConfig.BROWSERINITMODESIMPLE.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                if (LibConfig.BrowserInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
                     return this.InitializeSimple();
 
-                if (LibConfig.BROWSERINITMODEEXTENDED.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                if (LibConfig.BrowserInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
                     return InitializeExtended();
 
-                throw new Exception("InitMode unsupported");
+                throw new Exception(nameof(initMode) + LogConst.NotImpl);
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -140,10 +140,10 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (!GetDriverOptions(out EdgeOptions? options))
-                    throw new Exception("GetDriverOptions failed");
+                    throw new Exception(nameof(GetDriverOptions) + LogConst.Fail);
 
                 this.m_Driver = new EdgeDriver(options);
                 return true;
@@ -155,7 +155,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -171,7 +171,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 Log.Info("EdgeDriverService init ...");
                 EdgeDriverService service = EdgeDriverService.CreateDefaultService();
@@ -190,7 +190,7 @@ namespace AsesAutoTypeLib
 
                 Log.Info("GetDriverOptions ...");
                 if (!GetDriverOptions(out EdgeOptions? options))
-                    throw new Exception("GetDriverOptions failed");
+                    throw new Exception(nameof(GetDriverOptions) + LogConst.Fail);
 
                 Log.Info("GetDriverOptions OK");
 
@@ -214,7 +214,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -289,7 +289,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -330,7 +330,7 @@ namespace AsesAutoTypeLib
 //            }
 //            finally
 //            {
-//                Log.Debug(LogConst.DONE);
+//                Log.Debug(LogConst.Done);
 //            }
 //        }
 

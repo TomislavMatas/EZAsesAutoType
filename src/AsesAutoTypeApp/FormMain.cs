@@ -63,10 +63,10 @@ namespace AsesAutoTypeApp
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 InitializeComponent();
                 if (!Initialze())
-                    throw new Exception("Initialze failed");
+                    throw new Exception(nameof(Initialze) + LogConst.Fail);
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace AsesAutoTypeApp
             }
             finally
             { 
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -82,7 +82,7 @@ namespace AsesAutoTypeApp
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 this.InteractionHandler = new AppHandler(this);
                 return true;
             }
@@ -93,7 +93,7 @@ namespace AsesAutoTypeApp
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
     }

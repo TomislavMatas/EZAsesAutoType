@@ -30,6 +30,8 @@ using log4net;
 using OpenQA.Selenium.Interactions;
 using System.Threading;
 
+using LibConfig = AsesAutoTypeLib.LibConfig;
+
 namespace AsesAutoTypeLib
 {
     /// <summary>
@@ -54,6 +56,33 @@ namespace AsesAutoTypeLib
         }
         #endregion
 
+        #region configuration valuez
+        private int? m_BrowserInteractionDelay = null;
+        private int BrowserInteractionDelay
+        {
+            get
+            {
+                if (this.m_BrowserInteractionDelay == null)
+                    this.m_BrowserInteractionDelay = LibConfig.GetBrowserInteractionDelay();
+                return (int)this.m_BrowserInteractionDelay;
+            }
+            set
+            {
+                this.m_BrowserInteractionDelay = value;
+            }
+        }
+        public int GetBrowserInteractionDelay()
+        {
+            return this.BrowserInteractionDelay;
+        }
+        public int SetBrowserInteractionDelay(int value)
+        {
+            int prev = this.GetBrowserInteractionDelay();
+            this.BrowserInteractionDelay = value;
+            return prev;
+        }
+        #endregion 
+
         #region protected memberz
 
         protected RemoteWebDriver? m_Driver = null;
@@ -71,11 +100,11 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 m_EnablePopups = false;
                 m_EnableNotifications = false;
-                if (!this.Initialize())
-                    throw new Exception("Initialize failed");
+                if (!Initialize())
+                    throw new Exception(nameof(Initialize) + LogConst.Fail);
             }
             catch (Exception ex)
             {
@@ -83,7 +112,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -94,11 +123,11 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 m_EnablePopups = enablePopups;
                 m_EnableNotifications = enableNotifications;
-                if (!this.Initialize())
-                    throw new Exception("Initialize failed");
+                if (!Initialize())
+                    throw new Exception(nameof(Initialize) + LogConst.Fail);
             }
             catch (Exception ex)
             {
@@ -106,7 +135,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
 
         }
@@ -118,9 +147,9 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
-                if(!this.Cleanup())
-                    throw new Exception("Cleanup failed");
+                Log.Debug(LogConst.Start);
+                if(!Cleanup())
+                    throw new Exception(nameof(Cleanup) + LogConst.Fail);
             }
             catch (Exception ex)
             {
@@ -128,7 +157,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -147,7 +176,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 if (m_Driver != null)
                 {
                     m_Driver.Close();
@@ -170,7 +199,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -183,16 +212,16 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException(nameof(url));
 
                 if (!IsValidURI(url))
-                    throw new ArgumentException("url is not a valid URI");
+                    throw new ArgumentException(nameof(url) + LogConst.Invalid);
 
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 m_Driver.Url = url;
 
@@ -205,7 +234,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -217,10 +246,10 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 return m_Driver.Url;
             }
@@ -231,7 +260,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -244,7 +273,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult))
                     return false;
@@ -261,7 +290,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -274,16 +303,16 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException(nameof(url));
 
                 if (!IsValidURI(url))
-                    throw new ArgumentException("url is not a valid URL");
+                    throw new ArgumentException(nameof(url) + LogConst.Invalid);
 
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 Log.Debug(String.Format("url={0}",url));
                 m_Driver.Navigate().GoToUrl(url);
@@ -297,7 +326,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -320,7 +349,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds: 0);
             }
@@ -341,7 +370,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -357,7 +386,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds);
             }
@@ -378,7 +407,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -394,9 +423,9 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 if (timeoutInSeconds > 0)
                 {
@@ -425,7 +454,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -451,9 +480,9 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 if (timeoutInSeconds > 0)
                 {
@@ -482,7 +511,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -495,10 +524,11 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 Actions actions = new Actions(m_Driver);
                 actions.MoveToElement(element).Perform();
-                Thread.Sleep(500);
+                int delay = this.GetBrowserInteractionDelay();
+                Thread.Sleep(delay);
                 return true;
             }
             catch (Exception ex)
@@ -508,7 +538,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -521,7 +551,7 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
                 Actions actions = new Actions(m_Driver);
                 actions.MoveToElement(element).Click().Perform();
                 return true;
@@ -533,7 +563,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -546,15 +576,15 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 WebDriverWait wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(timeoutInSeconds));
                 IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
                 if (alert == null)
-                    throw new Exception("alert is null");
+                    throw new Exception(nameof(alert) + LogConst.IsNull);
 
                 alert = m_Driver.SwitchTo().Alert();
 
@@ -568,7 +598,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -576,17 +606,17 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 // first chance fallback
                 if (alert == null)
                     alert = m_Driver.SwitchTo().Alert();
 
                 if (alert == null)
-                    throw new Exception("alert is null");
+                    throw new Exception(nameof(alert) + LogConst.IsNull);
 
                 alert.Accept();
 
@@ -599,7 +629,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
@@ -607,17 +637,17 @@ namespace AsesAutoTypeLib
         {
             try
             {
-                Log.Debug(LogConst.START);
+                Log.Debug(LogConst.Start);
 
                 if (m_Driver == null)
-                    throw new Exception("m_Driver is null");
+                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
 
                 // first chance fallback
                 if (alert == null)
                     alert = m_Driver.SwitchTo().Alert();
 
                 if (alert == null)
-                    throw new Exception("alert is null");
+                    throw new Exception(nameof(alert) + LogConst.IsNull);
 
                 alert.Dismiss();
 
@@ -630,7 +660,7 @@ namespace AsesAutoTypeLib
             }
             finally
             {
-                Log.Debug(LogConst.DONE);
+                Log.Debug(LogConst.Done);
             }
         }
 
