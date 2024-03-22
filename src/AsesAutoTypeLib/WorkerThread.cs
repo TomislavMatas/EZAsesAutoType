@@ -6,10 +6,9 @@
 // * Initial version.
 //
 
-using AsesAutoTypeLib;
 using log4net;
 
-namespace AsesAutoTypeApp
+namespace AsesAutoTypeALib
 {
     /// <summary>
     ///  This class shall implement all functionality 
