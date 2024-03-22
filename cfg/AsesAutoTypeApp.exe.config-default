@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+//
+// File: "AsesAutoTypeApp.exe.config-default"
+//
+// Note: Should be kept in sync with "..\src\AsesAutoTypeApp\App.config".
+//
+// Revision History:
+// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// * Initial version.
+//
+-->
+<configuration>
+	<configSections>
+		<section name="log4net" type="System.Configuration.IgnoreSectionHandler,log4net"/>
+	</configSections>
+
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/>
+	</startup>
+
+	<System.Windows.Forms.ApplicationConfigurationSection>
+		<add key="DpiAwareness" value="PerMonitorV2"/>
+		<add key="EnableWindowsFormsHighDpiAutoResizing" value="true"/>
+	</System.Windows.Forms.ApplicationConfigurationSection>
+
+	<appSettings>
+
+		<add key="log4net.Config" value="log4net.config"/>
+		<add key="log4net.Config.Watch" value="True"/>
+
+		<add key="ClientSettingsProvider.ServiceUri" value=""/>
+
+    <!-- 
+		- Currently supported values for "Browser.Implementation":
+		- "Edge"   : Requires "MicrosoftWebDriver.exe"
+		- "Chrome" : Requires "chromedriver.exe".
+		-->
+    <add key="Browser.Implementation" value="Chrome"/>
+
+    <!-- 
+    - InitMode: "extended" or "simple"
+    -->
+		<add key="Browser.InitMode" value="extended"/>
+
+    <!-- 
+    - Valid values for parameter "ClientNo":
+		- 01 : Zentrale Cargo
+		- 02 : Erfurt Test
+		- 03 : DB Konzernleitung
+		- 04 : P-Zentrale
+		- 05 : Ffm/Fernverk.
+		- 06 : DB-Systel
+		- 07 : Agv MoVe
+		- 08 : DB InfraGO BZ S-B. Berlin
+		- 09 : Ffm/Karlstr.
+		- 10 : DB Sicherheit
+		- 11 : Frankfurt Stephenson
+		- 12 : TARIS-SST-Test
+		- 13 : Hannover
+		- 14 : Hamburg
+		- 15 : DB Systemtechnik
+		- 16 : Muenchen
+		- 17 : Berlin sonstige
+		- 18 : DB Regio
+		- 19 : Nürnberg
+		- 20 : Wuppertal
+		- 21 : DBS KT
+		- 22 : JobService
+		- 23 : München Richelstr.
+		- 24 : Cargo Zentrale
+		- 25 : FTZ
+		- 26 : Stuttgart
+		- 27 : Saarbrücken
+		- 28 : DB RegioNetz SOB
+		- 29 : Witten Werk
+		- 30 : DB Regio BWB
+		- 31 : Nürnberg Hbf
+		- 32 : DB Immobilien
+		- 33 : DB T/B
+		- 34 : SSC Buchhaltung
+		- 35 : Bildung
+		- 36 : KS Duisburg
+		- 37 : Cargo NL Ffm
+		- 38 : Netz  Ffm
+		- 39 : DB Cargo-Werke
+		- 40 : ICE-BW München
+		- 41 : R&amp;T Region
+		- 42 : Gastronomie (DBG)
+		- 43 : DB Energie
+		- 44 : DBS Süd
+		- 45 : DB Regio Nord
+		- 46 : DB Fernverkehr ICE
+		- 47 : DB Service
+		- 48 : DB Sicherheit
+		- 49 : DB Stiftung
+		- 50 : DB Vertrieb
+		- 51 : DB Connect
+		- 52 : DB Fahrzeuginstandhaltung
+		- 53 : DB Regio Mitte
+		- 54 : DB InfraGO AG (S&amp;S)
+		- 55 : DB Regio NO
+		- 56 : DB E&amp;C
+		- 57 : DB Regio Bayern
+		- 58 : DB Regio SO
+		- 59 : DB Regio NRW
+		- 60 : DB Fern TL
+		- 61 : DB Cargo
+		- 90 : DB Personalservice
+		- DB : Schulung
+    -->
+		<add key="ASES.BaseUrl" value="https://ases.noncd.rz.db.de/SES/html?ClientNo=06"/>
+
+		<!-- 
+    - Wait for specified amount of seconds for "Login Page" to be loaded.
+    -->
+		<add key="ASES.Timeout.Navigation.LoginPage" value="60"/>
+
+    <!-- 
+    - Wait for specified amount of seconds for any 
+    - "findItem" operation to complete.
+    -->
+    <add key="ASES.Timeout.Navigation.Wait" value="60" />
+
+    <!-- 
+    - Wait for specified amount of milliseconds 
+    - to "Sleep" after each interaction like "enter some text", 
+    - "click a element" or just moving around between elements. 
+    -->
+    <add key="ASES.Delay.Interaction.Wait" value="500" />
+
+    <!--
+    - Wait for specified amount of seconds for any "popup dialog" to apear.
+    -->
+		<add key="ASES.Timeout.Popup.Wait" value="5" />
+
+    <!--
+    - xPath specifications for elements uses with "findItem".
+    -->
+    <add key="ASES.Element.NavMenu.xPath" 
+       value="//a[@id='nav_menu' and contains(@class,'z-atossmenuitem')]"/>
+
+		<add key="ASES.Element.NavMenu.Button.ErfassenZeitbuchung.xPath"
+       value="//div[contains(@class,'z-atossbutton')]/*/span[@class='btn-label' and contains(.,'Erfassen Zeitbuchung')]"/>
+
+    <add key="ASES.Element.TimeGrid.Canvas.xPath"
+       value="//div[contains(@class,'grid-canvas')]"/>
+
+    <add key="ASES.Element.TimeGrid.Canvas.LastRow.xPath"
+       value="//div[contains(@class,'grid-canvas')]/div[contains(@class,'slick-row')][last()]"/>
+
+    <add key="ASES.Element.TimeGrid.Canvas.LastRow.Cell.DateFrom.xPath"
+       value="//div[contains(@class,'grid-canvas')]/div[contains(@class,'slick-row')][last()]/div[contains(@class,'slick-cell') and contains(@class,'l4') and contains(@class,'r4') and contains(@class,'editable')]/span/input"/>
+
+    <add key="ASES.Element.TimeGrid.Canvas.LastRow.Cell.DateFrom.xPath"
+       value="//div[contains(@class,'grid-canvas')]/div[contains(@class,'slick-row')][last()]/div[contains(@class,'slick-cell') and contains(@class,'l4') and contains(@class,'r4') and contains(@class,'editable')]/span/input"/>
+
+  </appSettings>
+
+	<log4net>
+
+		<appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
+			<threshold value="INFO"/>
+			<file value="AsesAutoTypeApp.log"/>
+			<appendToFile value="true"/>
+			<rollingStyle value="Size"/>
+			<maxSizeRollBackups value="9"/>
+			<maximumFileSize value="10MB"/>
+			<staticLogFileName value="true"/>
+			<layout type="log4net.Layout.PatternLayout">
+				<conversionPattern value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+			</layout>
+		</appender>
+
+		<appender name="EventLogAppender" type="log4net.Appender.EventLogAppender">
+			<!-- Log "WARN" (and above) to Windows' EventLog, ignore "INFO" and "DEBUG", those shall go to a log file.-->
+			<threshold value="WARN"/>
+			<param name="LogName" value="AsesAutoTypeApp"/>
+			<param name="ApplicationName" value="AsesAutoTypeApp"/>
+			<layout type="log4net.Layout.PatternLayout">
+				<conversionPattern value="%message"/>
+			</layout>
+		</appender>
+
+<!--
+		<appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender">
+		  <threshold value="DEBUG"/>
+		  <layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+		  </layout>
+		</appender>
+		<appender name="DebugAppender" type="log4net.Appender.DebugAppender">
+		  <threshold value="DEBUG"/>
+		  <layout type="log4net.Layout.PatternLayout">
+			<param name="ConversionPattern" value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+		  </layout>
+		</appender>
+		<appender name="SystemDebugAppender" type="log4net.Appender.OutputDebugStringAppender">
+		  <threshold value="DEBUG"/>
+		  <layout type="log4net.Layout.PatternLayout">
+			<param name="ConversionPattern" value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+		  </layout>
+		</appender>
+-->
+
+		<root>
+			<appender-ref ref="RollingFileAppender"/>
+			<appender-ref ref="EventLogAppender"/>
+<!--
+			<appender-ref ref="ConsoleAppender"/>
+			<appender-ref ref="DebugAppender"/>
+			<appender-ref ref="SystemDebugAppender"/> 
+-->
+		</root>
+
+	</log4net>
+
+</configuration>
