@@ -6,10 +6,9 @@
 // * Initial version.
 //
 
-using AsesAutoTypeLib;
 using log4net;
 
-namespace AsesAutoTypeApp
+namespace AsesAutoTypeLib
 {
     /// <summary>
     ///  Custom entity to store configuration settings that
