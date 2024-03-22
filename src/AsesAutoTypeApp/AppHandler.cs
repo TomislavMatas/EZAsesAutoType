@@ -1,5 +1,5 @@
 ﻿//
-// File: "InteractionHandler.cs"
+// File: "AppHandler.cs"
 //
 // Revision History: 
 // 2024/03/22:TomislavMatas: Version "24.123.0.0"
@@ -15,7 +15,7 @@ namespace AsesAutoTypeApp
     ///  This class shall handle all user interactions which
     ///  originate from any dialog or form.
     /// </summary>
-    internal class InteractionHandler
+    internal class AppHandler
     {
         #region log4net
         private static ILog? m_Log = null;
@@ -24,7 +24,7 @@ namespace AsesAutoTypeApp
             get
             {
                 if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(InteractionHandler));
+                    m_Log = LogManager.GetLogger(typeof(AppHandler));
                 return m_Log;
             }
         }
@@ -58,7 +58,7 @@ namespace AsesAutoTypeApp
         /// <summary>
         ///  Default constructor.
         /// </summary>
-        public InteractionHandler()
+        public AppHandler()
         {
             try
             {
@@ -78,7 +78,7 @@ namespace AsesAutoTypeApp
         /// <summary>
         ///  Custom constructor.
         /// </summary>
-        public InteractionHandler(object requestor)
+        public AppHandler(object requestor)
         {
             try
             {
