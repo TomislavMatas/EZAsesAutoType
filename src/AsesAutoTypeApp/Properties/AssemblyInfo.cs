@@ -9,8 +9,6 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("ASES-AutoType App")]
-[assembly: AssemblyCopyright("(c) 2024 matas consulting")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: Guid("A53BBEC1-946E-4491-98F7-6D17B316C393")]
