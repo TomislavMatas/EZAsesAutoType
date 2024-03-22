@@ -22,17 +22,11 @@ setlocal EnableExtensions EnableDelayedExpansion
 set "WEBDRIVER_VERSION_DEFAULT=123.0.6312.58"
  
 echo see current versions of webdriver at:
-@rem 2023/08/24:TomislavMatas: next line disabled - legacy driver download hompage for version 114.x and lower.
-@rem echo https://chromedriver.chromium.org/downloads/
-@rem 2023/08/24:TomislavMatas: next line added - legacy driver download hompage for version 115.x (ff).
 echo https://googlechromelabs.github.io/chrome-for-testing/
 
 pause
 
-@rem 2023/08/24:TomislavMatas: next line disabled - legacy driver download URLs for version 114.x and lower.
-@rem set "WEBDRIVER_HOMEPAGE=https://chromedriver.storage.googleapis.com"
-@rem 2023/08/24:TomislavMatas: next line added - new driver download URLs for Version 115.x (ff):
-set "WEBDRIVER_HOMEPAGE=https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing"
+set "WEBDRIVER_HOMEPAGE=https://storage.googleapis.com/chrome-for-testing-public"
 
 set "WEBDRIVER_VERSION=%1"
 if "%WEBDRIVER_VERSION%" == "" (
@@ -45,7 +39,7 @@ if "%WEBDRIVER_VERSION%" == "" (
 set "PROJEKT_ROOT=%~dp0.."
 
 set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%/%WEBDRIVER_VERSION%"
-set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\src\common\Selenium\WebDriver\Chrome"
+set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\Chrome"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
 @rem die Liste der Platformen, fuer die jeweils ein WebDriver ZIP Archiv heruntergeladen werden sollen.
 @rem set "PLATFORMLIST=win32"
@@ -118,7 +112,7 @@ for %%f in (%PLATFORMLIST%) do (
 		)
 	)		
 	@rem "Verteile" den treiber in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
-	set "prjlist=SeleniumLib"
+	set "prjlist=AsesAutoTypeLib"
 	for %%p in (!prjlist!) do (
 		set "prj=%%p" 
 		set "prjpath=%PROJEKT_ROOT%\src\!prj!"
