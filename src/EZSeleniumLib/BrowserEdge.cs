@@ -72,7 +72,7 @@ namespace EZSeleniumLib
             get 
             {
                 if (m_InitMode == null)
-                    m_InitMode = LibConfig.GetBrowserInitMode();  
+                    m_InitMode = ConfigSettings.GetBrowserInitMode();  
                 return m_InitMode;
             }
         }
@@ -103,19 +103,19 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
  
                 string initMode = this.InitMode;
                 if (String.IsNullOrEmpty(initMode))
-                    throw new Exception(nameof(initMode) + LogConst.Invalid);
+                    throw new Exception(nameof(initMode) + Const.LogInvalid);
 
-                if (LibConfig.BrowserInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                if (ConfigSettings.BrowserInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
                     return this.InitializeSimple();
 
-                if (LibConfig.BrowserInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                if (ConfigSettings.BrowserInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
                     return InitializeExtended();
 
-                throw new Exception(nameof(initMode) + LogConst.NotImpl);
+                throw new Exception(nameof(initMode) + Const.LogNotImpl);
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -140,10 +140,10 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (!GetDriverOptions(out EdgeOptions? options))
-                    throw new Exception(nameof(GetDriverOptions) + LogConst.Fail);
+                    throw new Exception(nameof(GetDriverOptions) + Const.LogFail);
 
                 this.m_Driver = new EdgeDriver(options);
                 return true;
@@ -155,7 +155,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -171,7 +171,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 Log.Info("EdgeDriverService init ...");
                 EdgeDriverService service = EdgeDriverService.CreateDefaultService();
@@ -190,7 +190,7 @@ namespace EZSeleniumLib
 
                 Log.Info("GetDriverOptions ...");
                 if (!GetDriverOptions(out EdgeOptions? options))
-                    throw new Exception(nameof(GetDriverOptions) + LogConst.Fail);
+                    throw new Exception(nameof(GetDriverOptions) + Const.LogFail);
 
                 Log.Info("GetDriverOptions OK");
 
@@ -214,7 +214,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -289,7 +289,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -330,7 +330,7 @@ namespace EZSeleniumLib
 //            }
 //            finally
 //            {
-//                Log.Debug(LogConst.Done);
+//                Log.Debug(Const.LogDone);
 //            }
 //        }
 

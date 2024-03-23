@@ -16,7 +16,7 @@ namespace EZSeleniumLib
     /// <summary>
     /// Project specific constants.
     /// </summary>
-    public static class LibConfig
+    public static class ConfigSettings
     {
         #region "ÊZSeleniumLib.Browser.WebDriver"
         public const string BROWSERIMPLEMENTATIONCHROME = "Chrome";
