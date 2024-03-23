@@ -11,6 +11,15 @@
 :: -- CMD> doChromeWebdriverUpdate 123.0.6312.58
 :: -- ```
 :: --
+:: -- Notes:
+:: -- * Google offers a bunch of API endpoints to enable automated build 
+:: --   scripts based on Chrome for Testing release data, see:
+:: --   -->< https://github.com/GoogleChromeLabs/chrome-for-testing#json-api-endpoints >
+:: --   For example, to answer the question
+:: --   "What's the latest available Stable channel version?"
+:: --   you can use curl with API-URL
+:: --   -->< https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE > 
+:: --
 :: -- Revision History
 :: -- 2024/03/22:TomislavMatas: Version "24.123.0.0"
 :: -- * Inital version with default "123.0.6312.58"
