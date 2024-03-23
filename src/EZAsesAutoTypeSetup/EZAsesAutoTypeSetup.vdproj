@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:AsesAutoTypeSetup"
+"ProjectName" = "8:EZAsesAutoTypeSetup"
 "LanguageId" = "3:1031"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1031"
@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_37847595323844FF99F529BA40316550"
+        "MsmKey" = "8:_50068045F57848C69B79060B6279E07C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+        "MsmKey" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,7 +39,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:bin\\Debug\\AsesAutoTypeSetup.msi"
+        "OutputFilename" = "8:bin\\Debug\\EZAsesAutoTypeSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -71,7 +71,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:bin\\Release\\AsesAutoTypeSetup.msi"
+        "OutputFilename" = "8:bin\\Release\\EZAsesAutoTypeSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -128,10 +128,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_37847595323844FF99F529BA40316550"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_50068045F57848C69B79060B6279E07C"
             {
-            "SourcePath" = "8:..\\AsesAutoTypeApp\\Resources\\ases.ico"
-            "TargetName" = "8:ases.ico"
+            "SourcePath" = "8:Resources\\EZAsesAutoTypeSetup.ico"
+            "TargetName" = "8:EZAsesAutoTypeSetup.ico"
             "Tag" = "8:"
             "Folder" = "8:_1104C379D14F46E8977131739157E861"
             "Condition" = "8:"
@@ -148,10 +148,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6C73A641DCF7459F9B612604D7BE1906"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D23ED5F6B9A643829B45D42EFCE23C4C"
             {
-            "SourcePath" = "8:..\\AsesAutoTypeApp\\Resources\\ases-setup-banner-500x70.jpg"
-            "TargetName" = "8:ases-setup-banner-500x70.jpg"
+            "SourcePath" = "8:Resources\\EZAsesAutoTypeSetup-Banner.jpg"
+            "TargetName" = "8:EZAsesAutoTypeSetup-Banner.jpg"
             "Tag" = "8:"
             "Folder" = "8:_1104C379D14F46E8977131739157E861"
             "Condition" = "8:"
@@ -164,7 +164,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
@@ -223,7 +223,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:ASES-AutoType"
+        "ProductName" = "8:EZAsesAutoType"
         "ProductCode" = "8:{762B6D47-2C25-4875-BD84-F24EA0751967}"
         "PackageCode" = "8:{C33E1FBD-18C3-4B0A-9DEB-74B378404284}"
         "UpgradeCode" = "8:{8A6849D5-37DA-4A40-A26E-88046820FAA1}"
@@ -234,15 +234,15 @@
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:24.123.0"
         "Manufacturer" = "8:matas consulting"
-        "ARPHELPTELEPHONE" = "8:"
+        "ARPHELPTELEPHONE" = "8:+49 151 50989124"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Setup ASES-AutoType"
+        "Title" = "8:EZAsesAutoType - Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:matas consulting"
-        "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
+        "Keywords" = "8:ATOSS;ASES"
+        "ARPCOMMENTS" = "8:The Microsoft Windows Forms application \"EZAsesAutoType.exe\" is supposed to automate the daily chore of utilizing the virtual punch card system \"ATOSS Staff Efficiency Suite\" also known as \"ASES\"."
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_37847595323844FF99F529BA40316550"
+        "ARPPRODUCTICON" = "8:_50068045F57848C69B79060B6279E07C"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -379,7 +379,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -428,7 +428,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -451,7 +451,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -483,7 +483,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -528,7 +528,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -573,7 +573,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -609,7 +609,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -658,7 +658,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -690,7 +690,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -722,7 +722,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_6C73A641DCF7459F9B612604D7BE1906"
+                            "Value" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -756,7 +756,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D71885C7E7C84103A3AA0DC700FF3BBB"
             {
-            "SourcePath" = "8:..\\AsesAutoTypeApp\\obj\\Debug\\net8.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\EZAsesAutoType\\obj\\Debug\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1104C379D14F46E8977131739157E861"
