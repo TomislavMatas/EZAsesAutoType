@@ -62,7 +62,8 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                this.Initialze(null);
+                if (!Initialze(null))
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -82,11 +83,56 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                this.Initialze(requestor);
+                if (!Initialze(null))
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        public bool LoadUserSettings(out UserSettings? userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                userSettings = new UserSettings();
+                if(!userSettings.Load())
+                    throw new Exception(nameof(userSettings.Load) + Const.LogFail);
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                userSettings = null ;
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        public bool SaveUserSettings(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if(!userSettings.Save())
+                    throw new Exception(nameof(userSettings.Save) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
             }
             finally
             {
