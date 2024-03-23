@@ -26,8 +26,12 @@ echo https://googlechromelabs.github.io/chrome-for-testing/
 
 pause
 
-set "WEBDRIVER_HOMEPAGE=https://storage.googleapis.com/chrome-for-testing-public"
+set "PROJEKT_ROOT=%~dp0.."
+@rem List of project directories under "%PROJEKT_ROOT%\src\", 
+@rem where the downloaded binaries shall be copied to.
+set "PROJEKT_LIST=EZSeleniumLib"
 
+set "WEBDRIVER_HOMEPAGE=https://storage.googleapis.com/chrome-for-testing-public"
 set "WEBDRIVER_VERSION=%1"
 if "%WEBDRIVER_VERSION%" == "" (
 	set /P "WEBDRIVER_VERSION=Version eingeben oder [Enter] fuer Default '%WEBDRIVER_VERSION_DEFAULT%' : "
@@ -35,8 +39,6 @@ if "%WEBDRIVER_VERSION%" == "" (
 if "%WEBDRIVER_VERSION%" == "" (
 	set "WEBDRIVER_VERSION=%WEBDRIVER_VERSION_DEFAULT%"
 )
-
-set "PROJEKT_ROOT=%~dp0.."
 
 set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%/%WEBDRIVER_VERSION%"
 set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\Chrome"
@@ -111,9 +113,7 @@ for %%f in (%PLATFORMLIST%) do (
 			echo rename "%FILENAME_ORIGINAL%" to "%FILENAME_CUSTOM%" OK
 		)
 	)		
-	@rem "Verteile" den treiber in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
-	set "prjlist=AsesAutoTypeLib"
-	for %%p in (!prjlist!) do (
+	for %%p in (!PROJEKT_LIST!) do (
 		set "prj=%%p" 
 		set "prjpath=%PROJEKT_ROOT%\src\!prj!"
 		echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
