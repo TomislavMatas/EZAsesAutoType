@@ -23,10 +23,7 @@ to automate the daily chore of utilizing the virtual punch card system
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\res\img\ases-icon-60x60.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Remove="Resources\ases.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +32,12 @@ to automate the daily chore of utilizing the virtual punch card system
 
   <ItemGroup>
     <ProjectReference Include="..\AsesAutoTypeLib\AsesAutoTypeLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\ases.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -66,10 +69,6 @@ to automate the daily chore of utilizing the virtual punch card system
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
