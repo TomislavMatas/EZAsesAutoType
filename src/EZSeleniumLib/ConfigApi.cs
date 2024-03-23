@@ -20,7 +20,7 @@ namespace EZSeleniumLib
     /// Diese Klasse stellt Methoden fuer den Zugriff
     /// auf die Werte in der "App.config" zuer Verfuegung.
     /// </summary>
-    public static class ConfigApi
+    internal static class ConfigApi
     {
         #region log4net
 

@@ -37,9 +37,9 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 if (!Initialze())
-                    throw new Exception(nameof(Initialze) + LogConst.Fail);
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -55,7 +55,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 return true;
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
