@@ -23,10 +23,6 @@ to automate the daily chore of utilizing the virtual punch card system
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\ases.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.16" />
   </ItemGroup>
 
@@ -35,7 +31,7 @@ to automate the daily chore of utilizing the virtual punch card system
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\ases.ico">
+    <Content Include="Resources\EZAsesAutoType.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
