@@ -7,9 +7,9 @@
 //
 
 using log4net;
-using LogConst = AsesAutoTypeLib.LogConst;
+using LogConst = EZSeleniumLib.LogConst;
 
-namespace AsesAutoTypeApp
+namespace EZAsesAutoType
 {
     /// <summary>
     ///  The main program class of the application.

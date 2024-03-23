@@ -6,12 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StartupObject>AsesAutoTypeApp.Program</StartupObject>
+    <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>ASES-AutoType</Title>
     <Version>24.123.0.0</Version>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
-    <Description>The Microsoft Windows Forms Application "AsesAutoTypeApp.exe" is supposed
+    <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
 to automate the daily chore of utilizing the virtual punch card system
 "ATOSS Staff Efficiency Suite" also known as "ASES".</Description>
     <Copyright>(c) 2024 $(Company)</Copyright>
@@ -31,7 +31,7 @@ to automate the daily chore of utilizing the virtual punch card system
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AsesAutoTypeLib\AsesAutoTypeLib.csproj" />
+    <ProjectReference Include="..\EZSeleniumLib\EZSeleniumLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
