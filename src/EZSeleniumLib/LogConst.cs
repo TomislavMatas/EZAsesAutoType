@@ -6,7 +6,7 @@
 // * Initial version.
 //
 
-namespace AsesAutoTypeLib
+namespace EZSeleniumLib
 {
     public static class LogConst
     {

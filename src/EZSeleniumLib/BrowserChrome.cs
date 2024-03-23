@@ -1,13 +1,13 @@
 //
-// File: BrowserEdge.cs
+// File: BrowserChrome.cs
 //
 // Summary:
 // Specific browser implementation using 
-// Selenium's WebDriver Class "OpenQA.Selenium.Edge".
+// Selenium's WebDriver Class "OpenQA.Selenium.Chrome".
 // 
 // Notes:
 // Requires a Selenium driver binary named 
-// "MicrosoftWebDriver.exe" 
+// "chromedriver.exe" 
 // within system's search path.
 // See "README.md" for details.
 //
@@ -20,22 +20,22 @@ using System;
 using System.Collections.Generic;
 
 using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
 using log4net;
 
-namespace AsesAutoTypeLib
+namespace EZSeleniumLib
 {
     /// <summary>
     /// Specific browser implementation using 
-    /// Selenium's WebDriver Class "OpenQA.Selenium.Edge".
+    /// Selenium's WebDriver Class "OpenQA.Selenium.Chrome".
     /// Requires a Selenium driver binary named 
-    /// "MicrosoftWebDriver.exe" 
+    /// "chromedriver.exe" 
     /// within system's search path.
     /// See "README.md" for details.
     /// </summary>
-    public class BrowserEdge : BrowserBase
+    public class BrowserChrome : BrowserBase
     {
         #region log4net
 
@@ -45,7 +45,7 @@ namespace AsesAutoTypeLib
             get
             {
                 if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(BrowserEdge));
+                    m_Log = LogManager.GetLogger(typeof(BrowserChrome));
                 return m_Log;
             }
         }
@@ -58,7 +58,7 @@ namespace AsesAutoTypeLib
         /// Startup Argument decoration prefix.
         /// Either "--", "-", "/" or "" depending on browser implementation. 
         /// </summary>
-        private const string m_ArgPfx = ""; 
+        private const string m_ArgPfx = "--";
 
         /// <summary>
         /// Singleton helper variabe.
@@ -72,7 +72,7 @@ namespace AsesAutoTypeLib
             get 
             {
                 if (m_InitMode == null)
-                    m_InitMode = LibConfig.GetBrowserInitMode();  
+                    m_InitMode = LibConfig.GetBrowserInitMode();
                 return m_InitMode;
             }
         }
@@ -81,13 +81,13 @@ namespace AsesAutoTypeLib
 
         #region constructorz
 
-        public BrowserEdge()
+        public BrowserChrome()
              : base()
         {
             // nothing special in here
         }
 
-        public BrowserEdge(bool enablePopups, bool enableNotifications) 
+        public BrowserChrome(bool enablePopups, bool enableNotifications) 
              : base(enablePopups, enableNotifications)
         { 
             // nothing special in here
@@ -96,7 +96,7 @@ namespace AsesAutoTypeLib
         #endregion 
 
         /// <summary>
-        /// Instantiate an instance of Edge WebDriver.
+        /// Instantiate an instance of Chrome WebDriver.
         /// </summary>
         /// <returns></returns>
         public override bool Initialize()
@@ -106,7 +106,7 @@ namespace AsesAutoTypeLib
                 Log.Debug(LogConst.Start);
  
                 string initMode = this.InitMode;
-                if (String.IsNullOrEmpty(initMode))
+                if(String.IsNullOrEmpty(initMode))
                     throw new Exception(nameof(initMode) + LogConst.Invalid);
 
                 if (LibConfig.BrowserInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
@@ -129,7 +129,7 @@ namespace AsesAutoTypeLib
         }
 
         /// <summary>
-        /// Instantiate an instance of Edge WebDriver.
+        /// Instantiate an instance of Chrome WebDriver.
         /// The instatiation method uses a minimalistic approach,
         /// applying only thare bare defaults.
         /// This mehtod will be called by "Initialize", 
@@ -142,10 +142,10 @@ namespace AsesAutoTypeLib
             {
                 Log.Debug(LogConst.Start);
 
-                if (!GetDriverOptions(out EdgeOptions? options))
+                if (!GetDriverOptions(out ChromeOptions? options))
                     throw new Exception(nameof(GetDriverOptions) + LogConst.Fail);
 
-                this.m_Driver = new EdgeDriver(options);
+                this.m_Driver = new ChromeDriver(options);
                 return true;
             }
             catch (Exception ex)
@@ -160,7 +160,7 @@ namespace AsesAutoTypeLib
         }
 
         /// <summary>
-        /// Instantiate an instance of Edge WebDriver.
+        /// Instantiate an instance of Chrome WebDriver.
         /// The instatiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
         /// This mehtod will be called by "Initialize", 
@@ -173,35 +173,46 @@ namespace AsesAutoTypeLib
             {
                 Log.Debug(LogConst.Start);
 
-                Log.Info("EdgeDriverService init ...");
-                EdgeDriverService service = EdgeDriverService.CreateDefaultService();
+                Log.Info("ChromeDriverService init ...");
+                ChromeDriverService service = ChromeDriverService.CreateDefaultService();
 #if DEBUG
-                service.UseVerboseLogging = true;
-                service.UseSpecCompliantProtocol = true;
+                service.EnableVerboseLogging = true;
                 service.HideCommandPromptWindow = false;
                 service.SuppressInitialDiagnosticInformation = false;
+                //string logPath = @"ChromeDriverService.log";
+                //try
+                //{
+                //    if (System.IO.File.Exists(logPath))
+                //        System.IO.File.Delete(logPath);
+                //}
+                //catch
+                //{
+                //    // fail silently
+                //}
+                //service.LogPath = logPath;
+                service.LogPath = "ChromeDriverService.log";
 #else
-                service.UseVerboseLogging = false;
-                service.UseSpecCompliantProtocol = true;
+                service.EnableVerboseLogging = false;
                 service.HideCommandPromptWindow = true;
                 service.SuppressInitialDiagnosticInformation = true;
+                service.LogPath = null;
 #endif
-                Log.Info("EdgeDriverService init OK");
+                Log.Info("ChromeDriverService init OK");
 
                 Log.Info("GetDriverOptions ...");
-                if (!GetDriverOptions(out EdgeOptions? options))
+                if (!GetDriverOptions(out ChromeOptions? options))
                     throw new Exception(nameof(GetDriverOptions) + LogConst.Fail);
 
                 Log.Info("GetDriverOptions OK");
 
-                Log.Info("EdgeDriverService start ...");
+                Log.Info("ChromeDriverService start ...");
                 service.Start();
                 m_Service = service;
-                Log.Info(String.Format("EdgeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
-                Log.Info("EdgeDriverService start OK");
+                Log.Info(String.Format("ChromeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
+                Log.Info("ChromeDriverService start OK");
 
                 Log.Info("RemoteWebDriver init ...");
-                this.m_Driver = new RemoteWebDriver(m_Service.ServiceUrl, options);
+                this.m_Driver = new RemoteWebDriver(remoteAddress: m_Service.ServiceUrl, options: options);
                 Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this.m_Driver.SessionId));
                 Log.Info("RemoteWebDriver init OK");
 
@@ -218,64 +229,58 @@ namespace AsesAutoTypeLib
             }
         }
 
-        private bool GetDriverOptions(out EdgeOptions? edgeOptions)
+        private bool GetDriverOptions(out ChromeOptions? chromeOptions)
         {
-            try {
-                edgeOptions = new EdgeOptions();
-                
+            try
+            {
+                chromeOptions = new ChromeOptions();
+
                 #region Basic Options
-                
-                edgeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
-                edgeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
+                chromeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
+                chromeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
+                chromeOptions.UseSpecCompliantProtocol = true;
 #if DEBUG
-                edgeOptions.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Client, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Driver, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Server, LogLevel.Debug);
+                chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
+                chromeOptions.SetLoggingPreference(LogType.Client, LogLevel.Debug);
+                chromeOptions.SetLoggingPreference(LogType.Driver, LogLevel.Debug);
+                chromeOptions.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
+                chromeOptions.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
-
                 #endregion Basic Options
-               
+
                 #region Startup Arguments
+                chromeOptions.AddArguments(String.Format("{0}disable-infobars", m_ArgPfx));
+                chromeOptions.AddArguments(String.Format("{0}disable-automation", m_ArgPfx));
+                chromeOptions.AddExcludedArguments(String.Format("{0}enable-automation", m_ArgPfx));
+                if (!m_EnableNotifications)
+                    chromeOptions.AddArguments(String.Format("{0}disable-notifications",m_ArgPfx));
 
-                List<string> argList = [
-                      String.Format("{0}disable-infobars", m_ArgPfx)
-                    , String.Format("{0}disable-automation", m_ArgPfx)
-                ];
-
-                List<string> excludeSwitchesList = [
-                    String.Format("{0}enable-automation", m_ArgPfx)
-                ];
+                if (m_EnablePopups)
+                    chromeOptions.AddArguments(String.Format("{0}disable-popup-blocking", m_ArgPfx));
 
                 #endregion Startup Arguments
 
-                #region Capabilities
+                # region Capabilities
+                int popups = m_EnablePopups ? 1 : 0; // 1: enable popups, 0: supress popups.
+                chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.popups", popups);
 
-                edgeOptions.AddAdditionalCapability("useAutomationExtension", false);
+                int notifications = m_EnableNotifications ? 1 : 2; // 0: Default, 1: Allow, 2: Block.
+                chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.notifications", notifications);
 
-                Dictionary<string, object> profileDict = [];
-                // supress popups with "0", enable popups with "1"
-                int popups = m_EnablePopups ? 1 : 0;
-                profileDict.Add("profile.default_content_settings.popups", popups);
+                List<string> tabDiscardExceptionsList = [];
+//              tabDiscardExceptionsList.Add("web.whatsapp.com");
 
-                // Values for "notifications": 0 - Default, 1 - Allow, 2 - Block
-                int notifications = m_EnableNotifications ? 1 : 2;
-                profileDict.Add("profile.default_content_setting_values.notifications", notifications);
+                Dictionary<string, object> tabDiscardDict = new Dictionary<string, object>
+                {
+                    { "exceptions", tabDiscardExceptionsList }
+                };
 
-                Dictionary<string, object> optionDict = [];
-                if (argList.Count > 0)
-                    optionDict.Add("args", argList);
+                Dictionary<string, object> performanceTuningDict = new Dictionary<string, object>
+                {
+                    { "tab_discarding", tabDiscardDict }
+                };
 
-                if (excludeSwitchesList.Count > 0)
-                    optionDict.Add("excludeSwitches", excludeSwitchesList);
-
-                if (profileDict.Count > 0)
-                    optionDict.Add("prefs", profileDict);
-
-                //edgeOptions.AddAdditionalCapability("ms:edgeChrominum", true);
-                if (optionDict.Count > 0)
-                    edgeOptions.AddAdditionalCapability("ms:edgeOptions", optionDict);
+                chromeOptions.AddUserProfilePreference("performance_tuning", performanceTuningDict);
 
                 #endregion Capabilities
 
@@ -284,7 +289,7 @@ namespace AsesAutoTypeLib
             catch (Exception ex)
             {
                 Log.Error(ex);
-                edgeOptions = null;
+                chromeOptions = null;
                 return false;
             }
             finally
@@ -294,10 +299,10 @@ namespace AsesAutoTypeLib
         }
 
 //        /// <summary>
-//        /// #TODO: this does not work using even when using Selenium 4.x and latest Edge WebDriver : - (
+//        /// #TODO: this does not work using even when using Selenium 4.x and latest Chrome WebDriver : - (
 //        /// anather approach modifying user prefs could be:
-//        /// a) https://stackoverflow.com/questions/60739613/change-default-download-location-on-edge-chromium
-//        /// b) using selenium to navigate to "edge://settings/system" and toggle the according switch
+//        /// a) https://stackoverflow.com/questions/60739613/change-default-download-location-on-Chrome-chromium
+//        /// b) using selenium to navigate to "Chrome://settings/system" and toggle the according switch
 //        /// </summary>
 //        /// <returns></returns>
 //        private bool GetUserPreferenceSleepingTabs(out string prefName, out Dictionary<string, object> prefValue)
