@@ -1,12 +1,12 @@
-# "AsesAutoTypeApp.csproj"
-This project is used to build the "AsesAutoTypeApp.exe".
+# "EZAsesAutoType.csproj"
+This project is used to build the "EZAsesAutoType.exe".
 
 ## Using Selenium Edge / EdgeChromium WebDriver
 WebDriver Download URL:
 -->< https://developer.microsoft.com/microsoft-edge/tools/webdriver >
 
-The Selenium WebDriver is wrapped within assembly "AsesAutoTypeLib.dll",
-see "AsesAutoTypeLib.csproj".
+The Selenium WebDriver is wrapped within assembly "EZSeleniumLib.dll",
+see "EZSeleniumLib.csproj".
 
 For details please visit
 -->< https://docs.microsoft.com/en-us/microsoft-edge/webdriver-chromium/?tabs=c-sharp >
@@ -14,7 +14,7 @@ For details please visit
 The driver version must match the actual verion of Microsoft Edge Browser used.
 For release schedule refer to
 -->< https://docs.microsoft.com/de-de/deployedge/microsoft-edge-release-schedule >
-Saying that, a new version of the "AsesAutoTypeApp.exe" potentially has to 
+Saying that, a new version of the "EZAsesAutoType.exe" potentially has to 
 be deployed with everey major update "123.x", "124.x", "97.x" and so on.
 Resulting in a patch need apx every month on "Stable release" channel by default.
 Starting with Microsoft Edge version 94, Customers can opt into the 
@@ -29,11 +29,11 @@ the specific Microsoft Edge Driver Version can be used "for ever", in theory...
 As with version "24.123.0.0" of this app, an update apx every eight (8) weeks is targeted,
 resulting in planned major versions 123, 125, 127 and so on.
 
-# "AsesAutoTypeLib.csproj"
-This project is used to build the "AsesAutoTypeLib.dll".
+# "EZSeleniumLib.csproj"
+This project is used to build the "EZSeleniumLib.dll".
 
-# "AsesAutoTypeAppSetup.vdproj"
-The project is used to build the Setup MSI "AsesAutoTypeAppSetup.msi"
+# "EZAsesAutoTypeSetup.vdproj"
+The project is used to build the Setup MSI "EZAsesAutoTypeSetup.msi"
 Requires Extension "Microsoft Visual Studio Installer Projects".
 Always use platform "Any CPU" when building the setup project. 
 For some reason, the generated Setup MSI can NOT be executed
