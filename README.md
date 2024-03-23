@@ -14,6 +14,7 @@ Containes all source code to build "EZAsesAutoType.exe".
 
 # Revision History
 ## 2024/03/23:TomislavMatas: Version "24.123.0.0"
+* Rename: "AsesAutoTypeSetup" to "EZAsesAutoTypeSetup".
 * Rename: "AsesAutoTypeApp" to "EZAsesAutoType".
 * Rename: "AsesAutoTypeLib" to "EZSeleniumLib".
 
