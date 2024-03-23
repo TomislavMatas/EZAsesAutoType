@@ -64,7 +64,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 Initialze(new WorkerConfig());
             }
             catch (Exception ex)
@@ -73,7 +73,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -84,7 +84,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 Initialze(workerConfig);
             }
             catch (Exception ex)
@@ -93,7 +93,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -101,7 +101,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 this.SetWorkerConfig(workerConfig);
                 return true;
             }
@@ -112,7 +112,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
     }

@@ -17,8 +17,12 @@ namespace EZSeleniumLib
     /// <summary>
     /// Project specific constants.
     /// </summary>
-    public static class LibConst
+    internal static class Const
     {
+        #region assembly constantz
+        /// <summary>
+        /// Customized assembly's display name
+        /// </summary>
         public const string DisplayName = "EZSeleniumLib.dll";
 
         /// <summary>
@@ -62,11 +66,11 @@ namespace EZSeleniumLib
                 if (m_AssemblyVersionString == null)
                 {
                     m_AssemblyVersionString = string.Format("{0}.{1}.{2}.{3}{4}"
-                        , LibConst.AssemblyVersionInfo.FileMajorPart
-                        , LibConst.AssemblyVersionInfo.FileMinorPart
-                        , LibConst.AssemblyVersionInfo.FileBuildPart
-                        , LibConst.AssemblyVersionInfo.FilePrivatePart
-                        , LibConst.DEBUGSUFFIX);
+                        , Const.AssemblyVersionInfo.FileMajorPart
+                        , Const.AssemblyVersionInfo.FileMinorPart
+                        , Const.AssemblyVersionInfo.FileBuildPart
+                        , Const.AssemblyVersionInfo.FilePrivatePart
+                        , Const.DEBUGSUFFIX);
                 }
                 return m_AssemblyVersionString;
             }
@@ -87,12 +91,22 @@ namespace EZSeleniumLib
                 if (m_Description == null)
                 {
                     m_Description = string.Format("{0} {1}"
-                        , LibConst.DisplayName
-                        , LibConst.AssemblyVersionString);
+                        , Const.DisplayName
+                        , Const.AssemblyVersionString);
                 }
                 return m_Description;
             }
         }
+        #endregion
+
+        #region logging constantz
+        public const string LogStart = " START";
+        public const string LogDone = " DONE";
+        public const string LogFail = " FAIL";
+        public const string LogInvalid = " INVALID";
+        public const string LogNotImpl = " NOT IMPLEMENTED";
+        public const string LogIsNull = " IS NULL";
+        #endregion
 
     } // class
 
