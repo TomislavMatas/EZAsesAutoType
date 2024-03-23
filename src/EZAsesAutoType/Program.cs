@@ -7,7 +7,6 @@
 //
 
 using log4net;
-using LogConst = EZSeleniumLib.LogConst;
 
 namespace EZAsesAutoType
 {
@@ -42,7 +41,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 ApplicationConfiguration.Initialize();
                 Application.Run(new FormMain());
             }
@@ -52,8 +51,10 @@ namespace EZAsesAutoType
             }
             finally
             { 
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
-    }
-}
+
+    } // class
+
+} // namespace

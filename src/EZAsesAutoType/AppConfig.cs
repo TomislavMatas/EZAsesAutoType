@@ -9,12 +9,12 @@
 // * Initial version.
 //
 
-using ConfigApi = EZSeleniumLib.ConfigApi;
+using ConfigApi = EZAsesAutoType.ConfigApi;
 
 namespace EZAsesAutoType
 {
     /// <summary>
-    /// Project specific constants.
+    /// Access app specific configuration settings from "App.config" file.
     /// </summary>
     public static class AppConfig
     {

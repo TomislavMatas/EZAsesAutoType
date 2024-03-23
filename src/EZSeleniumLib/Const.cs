@@ -20,8 +20,9 @@ namespace EZSeleniumLib
     internal static class Const
     {
         #region assembly constantz
+
         /// <summary>
-        /// Customized assembly's display name
+        /// Customized assembly's display name.
         /// </summary>
         public const string DisplayName = "EZSeleniumLib.dll";
 
