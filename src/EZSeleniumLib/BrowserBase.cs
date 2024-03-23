@@ -30,7 +30,7 @@ using log4net;
 using OpenQA.Selenium.Interactions;
 using System.Threading;
 
-using LibConfig = EZSeleniumLib.LibConfig;
+using LibConfig = EZSeleniumLib.ConfigSettings;
 
 namespace EZSeleniumLib
 {
@@ -63,7 +63,7 @@ namespace EZSeleniumLib
             get
             {
                 if (this.m_BrowserInteractionDelay == null)
-                    this.m_BrowserInteractionDelay = LibConfig.GetBrowserInteractionDelay();
+                    this.m_BrowserInteractionDelay = ConfigSettings.GetBrowserInteractionDelay();
                 return (int)this.m_BrowserInteractionDelay;
             }
             set
@@ -100,11 +100,11 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 m_EnablePopups = false;
                 m_EnableNotifications = false;
                 if (!Initialize())
-                    throw new Exception(nameof(Initialize) + LogConst.Fail);
+                    throw new Exception(nameof(Initialize) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -112,7 +112,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -123,11 +123,11 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 m_EnablePopups = enablePopups;
                 m_EnableNotifications = enableNotifications;
                 if (!Initialize())
-                    throw new Exception(nameof(Initialize) + LogConst.Fail);
+                    throw new Exception(nameof(Initialize) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -135,7 +135,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
 
         }
@@ -147,9 +147,9 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 if(!Cleanup())
-                    throw new Exception(nameof(Cleanup) + LogConst.Fail);
+                    throw new Exception(nameof(Cleanup) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -157,7 +157,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -176,7 +176,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 if (m_Driver != null)
                 {
                     m_Driver.Close();
@@ -199,7 +199,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -212,16 +212,16 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException(nameof(url));
 
                 if (!IsValidURI(url))
-                    throw new ArgumentException(nameof(url) + LogConst.Invalid);
+                    throw new ArgumentException(nameof(url) + Const.LogInvalid);
 
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 m_Driver.Url = url;
 
@@ -234,7 +234,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -246,10 +246,10 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 return m_Driver.Url;
             }
@@ -260,7 +260,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -273,7 +273,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult))
                     return false;
@@ -290,7 +290,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -303,16 +303,16 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException(nameof(url));
 
                 if (!IsValidURI(url))
-                    throw new ArgumentException(nameof(url) + LogConst.Invalid);
+                    throw new ArgumentException(nameof(url) + Const.LogInvalid);
 
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 Log.Debug(String.Format("url={0}",url));
                 m_Driver.Navigate().GoToUrl(url);
@@ -326,7 +326,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -349,7 +349,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds: 0);
             }
@@ -370,7 +370,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -386,7 +386,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds);
             }
@@ -407,7 +407,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -423,9 +423,9 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 if (timeoutInSeconds > 0)
                 {
@@ -454,7 +454,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -480,9 +480,9 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 if (timeoutInSeconds > 0)
                 {
@@ -511,7 +511,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -524,7 +524,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 Actions actions = new Actions(m_Driver);
                 actions.MoveToElement(element).Perform();
                 int delay = this.GetBrowserInteractionDelay();
@@ -538,7 +538,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -551,7 +551,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 Actions actions = new Actions(m_Driver);
                 actions.MoveToElement(element).Click().Perform();
                 return true;
@@ -563,7 +563,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -576,15 +576,15 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 WebDriverWait wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(timeoutInSeconds));
                 IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
                 if (alert == null)
-                    throw new Exception(nameof(alert) + LogConst.IsNull);
+                    throw new Exception(nameof(alert) + Const.LogIsNull);
 
                 alert = m_Driver.SwitchTo().Alert();
 
@@ -598,7 +598,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -606,17 +606,17 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 // first chance fallback
                 if (alert == null)
                     alert = m_Driver.SwitchTo().Alert();
 
                 if (alert == null)
-                    throw new Exception(nameof(alert) + LogConst.IsNull);
+                    throw new Exception(nameof(alert) + Const.LogIsNull);
 
                 alert.Accept();
 
@@ -629,7 +629,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -637,17 +637,17 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
 
                 if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + LogConst.IsNull);
+                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
                 // first chance fallback
                 if (alert == null)
                     alert = m_Driver.SwitchTo().Alert();
 
                 if (alert == null)
-                    throw new Exception(nameof(alert) + LogConst.IsNull);
+                    throw new Exception(nameof(alert) + Const.LogIsNull);
 
                 alert.Dismiss();
 
@@ -660,7 +660,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
