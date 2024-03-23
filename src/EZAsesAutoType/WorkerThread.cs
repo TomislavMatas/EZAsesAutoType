@@ -65,7 +65,8 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                Initialze(new WorkerConfig());
+                if(!Initialze(new WorkerConfig()))
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -85,7 +86,8 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                Initialze(workerConfig);
+                if(!Initialze(workerConfig))
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
             {
@@ -115,5 +117,7 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
-    }
-}
+
+    } // class
+
+} // namespace

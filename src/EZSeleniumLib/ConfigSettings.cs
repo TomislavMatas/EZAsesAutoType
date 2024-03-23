@@ -19,17 +19,17 @@ namespace EZSeleniumLib
     public static class ConfigSettings
     {
         #region "ÊZSeleniumLib.Browser.WebDriver"
-        public const string BROWSERIMPLEMENTATIONCHROME = "Chrome";
-        public const string BROWSERIMPLEMENTATIONEDGE = "Edge";
-        private const string BROWSERIMPLEMENTATIONNAME = "ÊZSeleniumLib.Browser.WebDriver";
-        private const string BROWSERIMPLEMENTATIONDEFAULT = BROWSERIMPLEMENTATIONCHROME;
+        public const string BrowserImplementationChrome = "Chrome";
+        public const string BrowserImplementationEdge = "Edge";
+        private const string BrowserImplementationName = "ÊZSeleniumLib.Browser.WebDriver";
+        private const string BrowserImplementationDefault = BrowserImplementationChrome;
         private static string? m_BrowserImplementation = null;
         private static string BrowserImplementation
         {
             get
             {
                 if (m_BrowserImplementation == null)
-                    m_BrowserImplementation = ConfigApi.GetAppSettingString(BROWSERIMPLEMENTATIONNAME, BROWSERIMPLEMENTATIONDEFAULT);
+                    m_BrowserImplementation = ConfigApi.GetAppSettingString(BrowserImplementationName, BrowserImplementationDefault);
                 return m_BrowserImplementation;
             }
             set
