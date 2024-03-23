@@ -1,23 +1,37 @@
 :: -- 
-:: -- Usage : doEdgeWebdriverUpdate[.bat] [ version ]
+:: -- File: "doEdgeWebdriverUpdate.bat"
 :: -- 
-:: -- Example : doEdgeWebdriverUpdate 109.0.1518.52
+:: -- Usage: 
+:: -- ```
+:: -- doEdgeWebdriverUpdate[.bat] [version]
+:: -- ```
 :: -- 
+:: -- Example:
+:: -- ```
+:: -- CMD> doEdgeWebdriverUpdate 123.0.6312.58
+:: -- ```
+:: --
 :: -- Revision History
 :: -- 2024/03/22:TomislavMatas: Version "24.123.0.0"
-:: -- * Inital version with default "122.0.2365.106".
+:: -- * Inital version with default "123.0.2420.53".
 :: --
 
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=122.0.2365.106"
+set "WEBDRIVER_VERSION_DEFAULT=123.0.2420.53"
  
 echo see current versions of webdriver at:
 echo https://developer.microsoft.com/de-de/microsoft-edge/tools/webdriver/
 
 pause
 
+set "PROJECT_ROOT=%~dp0.."
+@rem List of project directories under "%PROJECT_ROOT%\src\", 
+@rem where the downloaded binaries shall be copied to.
+set "PROJECT_LIST=EZSeleniumLib"
+
+set "WEBDRIVER_HOMEPAGE=https://msedgedriver.azureedge.net"
 set "WEBDRIVER_VERSION=%1"
 if "%WEBDRIVER_VERSION%" == "" (
 	set /P "WEBDRIVER_VERSION=Version eingeben oder [Enter] fuer Default '%WEBDRIVER_VERSION_DEFAULT%' : "
@@ -26,10 +40,8 @@ if "%WEBDRIVER_VERSION%" == "" (
 	set "WEBDRIVER_VERSION=%WEBDRIVER_VERSION_DEFAULT%"
 )
 
-set "PROJEKT_ROOT=%~dp0.."
-set "WEBDRIVER_HOMEPAGE=https://msedgedriver.azureedge.net"
 set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%/%WEBDRIVER_VERSION%"
-set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\Edge"
+set "DOWNLOAD_ROOT=%PROJECT_ROOT%\bin\WebDriver\Edge"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
 @rem die Liste der Dateien, die heruntergeladen werden sollen.
 ::set "FILELIST=edgedriver_win64.zip edgedriver_win32.zip edgedriver_linux64.zip edgedriver_arm64.zip"
@@ -106,10 +118,9 @@ for %%f in (%FILELIST%) do (
 	)		
 	@rem "Verteile" den win64 in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
 	if not "x!fn:win64=!" == "x!fn!" ( 
-		set "prjlist=AsesAutoTypeLib"
-		for %%p in (!prjlist!) do (
+		for %%p in (!PROJECT_LIST!) do (
 			set "prj=%%p" 
-			set "prjpath=%PROJEKT_ROOT%\src\!prj!"
+			set "prjpath=%PROJECT_ROOT%\src\!prj!"
 			echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
 			del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
 			copy "!unzipedpath!\%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
