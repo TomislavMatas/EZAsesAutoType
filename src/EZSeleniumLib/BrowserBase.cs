@@ -30,9 +30,9 @@ using log4net;
 using OpenQA.Selenium.Interactions;
 using System.Threading;
 
-using LibConfig = AsesAutoTypeLib.LibConfig;
+using LibConfig = EZSeleniumLib.LibConfig;
 
-namespace AsesAutoTypeLib
+namespace EZSeleniumLib
 {
     /// <summary>
     /// Base class used for specific browser implementations 

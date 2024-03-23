@@ -12,14 +12,14 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace AsesAutoTypeLib
+namespace EZSeleniumLib
 {
     /// <summary>
     /// Project specific constants.
     /// </summary>
     public static class LibConst
     {
-        public const string DisplayName = "AsesAutoTypeLib.dll";
+        public const string DisplayName = "EZSeleniumLib.dll";
 
         /// <summary>
         /// Singleton helper variable.
