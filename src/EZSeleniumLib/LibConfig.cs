@@ -18,10 +18,10 @@ namespace EZSeleniumLib
     /// </summary>
     public static class LibConfig
     {
-        #region "Browser.Implementation"
+        #region "ÊZSeleniumLib.Browser.WebDriver"
         public const string BROWSERIMPLEMENTATIONCHROME = "Chrome";
         public const string BROWSERIMPLEMENTATIONEDGE = "Edge";
-        private const string BROWSERIMPLEMENTATIONNAME = "Browser.Implementation";
+        private const string BROWSERIMPLEMENTATIONNAME = "ÊZSeleniumLib.Browser.WebDriver";
         private const string BROWSERIMPLEMENTATIONDEFAULT = BROWSERIMPLEMENTATIONCHROME;
         private static string? m_BrowserImplementation = null;
         private static string BrowserImplementation
@@ -49,10 +49,10 @@ namespace EZSeleniumLib
         }
         #endregion 
 
-        #region "Browser.InitMode"
+        #region "ÊZSeleniumLib.Browser.InitMode"
         public const string BrowserInitModeSimple = "simple";
         public const string BrowserInitModeExtended = "extended";
-        private const string BrowserInitModeKeyName = "Browser.InitMode";
+        private const string BrowserInitModeKeyName = "ÊZSeleniumLib.Browser.InitMode";
         private const string BrowserInitModeDefault = BrowserInitModeExtended;
         private static string? m_BrowserInitMode = null;
         private static string BrowserInitMode
@@ -80,8 +80,8 @@ namespace EZSeleniumLib
         }
         #endregion 
 
-        #region "Browser.Interaction.Delay"
-        private const string BrowserInteractionDelayKeyName = "Browser.Interaction.Delay";
+        #region "ÊZSeleniumLib.Browser.Interaction.Delay"
+        private const string BrowserInteractionDelayKeyName = "ÊZSeleniumLib.Browser.Interaction.Delay";
         private const int BrowserInteractionDelayDefault = 500;
         private static int? m_BrowserInteractionDelay = null;
         private static int BrowserInteractionDelay

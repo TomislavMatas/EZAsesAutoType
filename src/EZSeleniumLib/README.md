@@ -1,7 +1,7 @@
 # "EZSeleniumLib.csproj"
 This project is used to build the library "EZSeleniumLib.dll".
 
-## Using Selenium Edge / EdgeChromium WebDriver
+## Using Selenium Edge WebDriver
 WebDriver Download URL:
 -->< https://developer.microsoft.com/microsoft-edge/tools/webdriver >
 
@@ -33,5 +33,5 @@ resulting in planned major versions 123, 125, 127 and so on.
 ## 2024/03/22:TomislavMatas: Version "24.123.0.0"
 * Added initial prototyping to -->< "https://github.com/TomislavMatas/AsesAutoType" >.
 * Use "chromedriver.exe" version "123.0.6312.58".
-* Use "MicrosoftWebDriver.exe" version "122.0.2365.106".
+* Use "MicrosoftWebDriver.exe" version "123.0.2420.53".
 * Initial Version.
