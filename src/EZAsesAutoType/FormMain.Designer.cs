@@ -37,9 +37,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 562);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "FormMain";
-            Text = "ASES-AutoType";
+            Text = "EZAsesAutoType";
             ResumeLayout(false);
         }
 

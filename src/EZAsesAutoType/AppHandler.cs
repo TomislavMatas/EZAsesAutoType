@@ -7,7 +7,6 @@
 //
 
 using log4net;
-using LogConst = EZSeleniumLib.LogConst;
 
 namespace EZAsesAutoType
 {
@@ -62,7 +61,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 this.Initialze(null);
             }
             catch (Exception ex)
@@ -71,7 +70,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -82,7 +81,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 this.Initialze(requestor);
             }
             catch (Exception ex)
@@ -91,7 +90,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 
@@ -99,7 +98,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(LogConst.Start);
+                Log.Debug(Const.LogStart);
                 this.SetRequestor(requestor);
                 return true;
             }
@@ -110,7 +109,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(LogConst.Done);
+                Log.Debug(Const.LogDone);
             }
         }
 

@@ -63,30 +63,10 @@ namespace EZAsesAutoType.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
-        internal static System.Drawing.Icon ases {
+        internal static System.Drawing.Icon EZAsesAutoType {
             get {
-                object obj = ResourceManager.GetObject("ases", resourceCulture);
+                object obj = ResourceManager.GetObject("EZAsesAutoType", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ases_60x60 {
-            get {
-                object obj = ResourceManager.GetObject("ases_60x60", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ases_setup_banner_500x70 {
-            get {
-                object obj = ResourceManager.GetObject("ases_setup_banner_500x70", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

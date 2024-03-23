@@ -8,7 +8,7 @@
 
 using log4net;
 
-namespace EZSeleniumLib
+namespace EZAsesAutoType
 {
     /// <summary>
     ///  Custom entity to store configuration settings that
