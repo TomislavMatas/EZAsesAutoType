@@ -14,7 +14,7 @@ using System.Configuration;
 
 using log4net;
 
-namespace AsesAutoTypeLib
+namespace EZSeleniumLib
 {
     /// <summary>
     /// Diese Klasse stellt Methoden fuer den Zugriff

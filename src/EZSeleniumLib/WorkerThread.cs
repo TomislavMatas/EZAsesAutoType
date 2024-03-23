@@ -8,7 +8,7 @@
 
 using log4net;
 
-namespace AsesAutoTypeLib
+namespace EZSeleniumLib
 {
     /// <summary>
     ///  This class shall implement all functionality 

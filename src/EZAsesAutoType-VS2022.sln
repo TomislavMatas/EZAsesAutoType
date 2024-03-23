@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsesAutoTypeLib", "AsesAutoTypeLib\AsesAutoTypeLib.csproj", "{44EEA069-7635-4A38-97D9-BE04A0F2DAAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EZSeleniumLib", "EZSeleniumLib\EZSeleniumLib.csproj", "{44EEA069-7635-4A38-97D9-BE04A0F2DAAB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsesAutoTypeApp", "AsesAutoTypeApp\AsesAutoTypeApp.csproj", "{555FB130-6454-4EB6-A0A2-14386A5FABD8}"
 EndProject
