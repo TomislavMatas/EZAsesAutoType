@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AsesAutoTypeApp.Properties {
+namespace EZAsesAutoType.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

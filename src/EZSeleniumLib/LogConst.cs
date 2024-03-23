@@ -1,5 +1,5 @@
 ﻿//
-// File: "InteractionHandler.cs"
+// File: "LogConst.cs"
 //
 // Revision History: 
 // 2024/03/22:TomislavMatas: Version "24.123.0.0"
@@ -8,13 +8,13 @@
 
 namespace EZSeleniumLib
 {
-    public static class LogConst
+    internal static class LogConst
     {
         public const string Start = " START";
         public const string Done = " DONE";
         public const string Fail = " FAIL";
         public const string Invalid = " INVALID";
-        public const string NotImpl = " not implemented";
+        public const string NotImpl = " NOT IMPLEMENTED";
         public const string IsNull = " IS NULL";
     }
 }

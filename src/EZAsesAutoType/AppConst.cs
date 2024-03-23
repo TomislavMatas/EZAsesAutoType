@@ -12,14 +12,14 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace AsesAutoTypeApp
+namespace EZAsesAutoType
 {
     /// <summary>
     /// Project specific constants.
     /// </summary>
     public static class AppConst
     {
-        public const string DisplayName = "AsesAutoTypeApp.exe";
+        public const string DisplayName = "EZAsesAutoType.exe";
 
         /// <summary>
         /// Singleton helper variable.

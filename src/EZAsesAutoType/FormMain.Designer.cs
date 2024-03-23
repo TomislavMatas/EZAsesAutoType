@@ -1,4 +1,4 @@
-﻿namespace AsesAutoTypeApp
+﻿namespace EZAsesAutoType
 {
     partial class FormMain
     {

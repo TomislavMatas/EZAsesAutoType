@@ -9,9 +9,9 @@
 // * Initial version.
 //
 
-using ConfigApi = AsesAutoTypeLib.ConfigApi;
+using ConfigApi = EZSeleniumLib.ConfigApi;
 
-namespace AsesAutoTypeApp
+namespace EZAsesAutoType
 {
     /// <summary>
     /// Project specific constants.
