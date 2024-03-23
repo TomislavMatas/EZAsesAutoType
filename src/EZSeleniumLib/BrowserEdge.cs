@@ -66,7 +66,7 @@ namespace EZSeleniumLib
         private string? m_InitMode = null ;
 
         /// <summary>
-        /// Return value for "Browser.InitMode" from "App.config".
+        /// Return value for "ÊZSeleniumLib.Browser.InitMode" from "App.config".
         /// </summary>
         public string InitMode { 
             get 
@@ -133,7 +133,7 @@ namespace EZSeleniumLib
         /// The instatiation method uses a minimalistic approach,
         /// applying only thare bare defaults.
         /// This mehtod will be called by "Initialize", 
-        /// when "App.config" value for "Browser.InitMode" is set to "simple".
+        /// when "App.config" value for "ÊZSeleniumLib.Browser.InitMode" is set to "simple".
         /// </summary>
         /// <returns></returns>
         private bool InitializeSimple()
@@ -164,7 +164,7 @@ namespace EZSeleniumLib
         /// The instatiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
         /// This mehtod will be called by "Initialize", 
-        /// when "App.config" value for "Browser.InitMode" is set to "extended".
+        /// when "App.config" value for "ÊZSeleniumLib.Browser.InitMode" is set to "extended".
         /// </summary>
         /// <returns></returns>
         private bool InitializeExtended()
