@@ -62,12 +62,12 @@ namespace EZAsesAutoType.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("06-DB-Systel")]
-        public string ASESClientDefault {
+        public string ASESClient {
             get {
-                return ((string)(this["ASESClientDefault"]));
+                return ((string)(this["ASESClient"]));
             }
             set {
-                this["ASESClientDefault"] = value;
+                this["ASESClient"] = value;
             }
         }
         
@@ -88,12 +88,12 @@ namespace EZAsesAutoType.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Chrome")]
-        public string WebDriverDefault {
+        public string WebDriver {
             get {
-                return ((string)(this["WebDriverDefault"]));
+                return ((string)(this["WebDriver"]));
             }
             set {
-                this["WebDriverDefault"] = value;
+                this["WebDriver"] = value;
             }
         }
         
