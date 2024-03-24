@@ -5,7 +5,7 @@
 // Project specific constants. 
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// 2024/03/22:TomislavMatas: Version "1.0.0.0"
 // * Initial version.
 //
 
@@ -49,7 +49,7 @@ namespace EZAsesAutoType
 #if DEBUG
         private const string DEBUGSUFFIX = " (dbg)";
 #else
-        private const string DEBUGSUFFIX = string.Empty;
+        private const string DEBUGSUFFIX = "";
 #endif
 
         /// <summary>

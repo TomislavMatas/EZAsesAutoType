@@ -5,7 +5,7 @@
 // Assembly specific configuration settings.
 //
 // Revision History: 
-// 2024/03/24:TomislavMatas: Version "24.123.0.0"
+// 2024/03/24:TomislavMatas: Version "1.0.0.0"
 // * Initial version.
 //
 
