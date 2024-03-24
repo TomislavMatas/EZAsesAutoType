@@ -8,7 +8,7 @@
 :: -- 
 :: -- Example:
 :: -- ```
-:: -- CMD> doEdgeWebdriverUpdate 123.0.6312.58
+:: -- CMD> doEdgeWebdriverUpdate 124.0.2464.2
 :: -- ```
 :: --
 :: -- Revision History
@@ -19,7 +19,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=123.0.2420.53"
+set "WEBDRIVER_VERSION_DEFAULT=124.0.2464.2"
  
 echo see current versions of webdriver at:
 echo https://developer.microsoft.com/de-de/microsoft-edge/tools/webdriver/
