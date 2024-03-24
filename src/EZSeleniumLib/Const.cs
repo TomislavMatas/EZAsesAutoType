@@ -1,11 +1,11 @@
 ﻿//
-// File: LibConst.cs
+// File: "Const.cs"
 //
 // Summary:
-// Project specific constants. 
+// Assembly specific "internal" constants. 
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// 2024/03/24:TomislavMatas: Version "24.123.0.0"
 // * Initial version.
 //
 
@@ -15,7 +15,7 @@ using System.Reflection;
 namespace EZSeleniumLib
 {
     /// <summary>
-    /// Project specific constants.
+    /// Assembly specific "internal" constants.
     /// </summary>
     internal static class Const
     {
@@ -49,7 +49,7 @@ namespace EZSeleniumLib
 #if DEBUG
         private const string DEBUGSUFFIX = " (dbg)";
 #else
-        private const string DEBUGSUFFIX = string.Empty;
+        private const string DEBUGSUFFIX = "";
 #endif
 
         /// <summary>
@@ -107,6 +107,18 @@ namespace EZSeleniumLib
         public const string LogInvalid = " INVALID";
         public const string LogNotImpl = " NOT IMPLEMENTED";
         public const string LogIsNull = " IS NULL";
+        #endregion
+
+        #region "App.config" key namez
+        public const string WebDriverKeyName         = "EZSeleniumLib.WebDriver";
+        public const string WebDriverInitModeKeyName = "EZSeleniumLib.WebDriver.InitMode";
+        public const string WebDriverDelayKeyName    = "EZSeleniumLib.WebDriver.Delay";
+        #endregion
+
+        #region "App.config" default valuez
+        public const string WebDriverDefault         = Constant.WebDriverChrome;
+        public const string WebDriverInitModeDefault = Constant.WebDriverInitModeExtended;
+        public const int    WebDriverDelayDefault    = 500;
         #endregion
 
     } // class
