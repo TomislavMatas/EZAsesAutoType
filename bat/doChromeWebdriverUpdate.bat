@@ -21,8 +21,8 @@
 :: --   -->< https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE > 
 :: --
 :: -- Revision History
-:: -- 2024/03/22:TomislavMatas: Version "24.123.0.0"
-:: -- * Inital version with default "123.0.6312.58"
+:: -- 2024/03/25:TomislavMatas: Version "1.0.0.0"
+:: -- * Inital version with default webdriver version "123.0.6312.58"
 :: --
 
 @echo off

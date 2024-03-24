@@ -14,7 +14,7 @@
 :: -- IMPORTANT: Run as administrator.
 :: -- 
 :: -- Revision History
-:: -- 2024/03/22:TomislavMatas: Version "24.123.0.0"
+:: -- 2024/03/25:TomislavMatas: Version "1.0.0.0"
 :: -- * Inital version.
 :: --
 
@@ -27,9 +27,9 @@ set "FilterNameCmd=%SystemRoot%\System32\find.exe /I "%TaskPartialName%""
 set "ServiceNames=gupdate gupdatem"
 
 echo Kill WhatsAppWeb Proxy Processes ...
-taskkill /F /IM AsesAutoTypeApp.exe /T 1>nul 2>nul
-taskkill /F /IM chromedriver.exe    /T 1>nul 2>nul
-taskkill /F /IM chrome.exe          /T 1>nul 2>nul
+taskkill /F /IM EZAsesAutoType.exe /T 1>nul 2>nul
+taskkill /F /IM chromedriver.exe   /T 1>nul 2>nul
+taskkill /F /IM chrome.exe         /T 1>nul 2>nul
 echo Kill WhatsAppWeb Proxy Processes OK
 
 echo Enable Chrome Update Scheduled Tasks ...
