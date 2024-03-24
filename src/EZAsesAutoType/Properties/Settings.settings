@@ -25,15 +25,77 @@
       <Value Profile="(Default)">Chrome</Value>
     </Setting>
     <Setting Name="ASESUserId" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ChangeIt</Value>
+      <Value Profile="(Default)">ChangeIt!</Value>
     </Setting>
     <Setting Name="ASESPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ChangeIt</Value>
+      <Value Profile="(Default)">ChangeIt!</Value>
     </Setting>
     <Setting Name="ASESClientList" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;01-Zentrale Cargo&lt;/string&gt;
+  &lt;string&gt;02-Erfurt Test&lt;/string&gt;
+  &lt;string&gt;03-DB Konzernleitung&lt;/string&gt;
+  &lt;string&gt;04-P-Zentrale&lt;/string&gt;
+  &lt;string&gt;05-Ffm/Fernverk.&lt;/string&gt;
   &lt;string&gt;06-DB-Systel&lt;/string&gt;
+  &lt;string&gt;07-Agv MoVe&lt;/string&gt;
+  &lt;string&gt;08-DB InfraGO BZ S-B. Berlin&lt;/string&gt;
+  &lt;string&gt;09-Ffm/Karlstr.&lt;/string&gt;
+  &lt;string&gt;10-DB Sicherheit&lt;/string&gt;
+  &lt;string&gt;11-Frankfurt Stephenson&lt;/string&gt;
+  &lt;string&gt;12-TARIS-SST-Test&lt;/string&gt;
+  &lt;string&gt;13-Hannover&lt;/string&gt;
+  &lt;string&gt;14-Hamburg&lt;/string&gt;
+  &lt;string&gt;15-DB Systemtechnik&lt;/string&gt;
+  &lt;string&gt;16-München&lt;/string&gt;
+  &lt;string&gt;17-Berlin sonstige&lt;/string&gt;
+  &lt;string&gt;18-DB Regio&lt;/string&gt;
+  &lt;string&gt;19-Nürnberg&lt;/string&gt;
+  &lt;string&gt;20-Wuppertal&lt;/string&gt;
+  &lt;string&gt;21-DBS KT&lt;/string&gt;
+  &lt;string&gt;22-JobService&lt;/string&gt;
+  &lt;string&gt;23-München Richelstr.&lt;/string&gt;
+  &lt;string&gt;24-Cargo Zentrale&lt;/string&gt;
+  &lt;string&gt;25-FTZ&lt;/string&gt;
+  &lt;string&gt;26-Stuttgart&lt;/string&gt;
+  &lt;string&gt;27-Saarbrücken&lt;/string&gt;
+  &lt;string&gt;28-DB RegioNetz SOB&lt;/string&gt;
+  &lt;string&gt;29-Witten Werk&lt;/string&gt;
+  &lt;string&gt;30-DB Regio BWB&lt;/string&gt;
+  &lt;string&gt;31-Nürnberg Hbf&lt;/string&gt;
+  &lt;string&gt;32-DB Immobilien&lt;/string&gt;
+  &lt;string&gt;33-DB T/B&lt;/string&gt;
+  &lt;string&gt;34-SSC Buchhaltung&lt;/string&gt;
+  &lt;string&gt;35-Bildung&lt;/string&gt;
+  &lt;string&gt;36-KS Duisburg&lt;/string&gt;
+  &lt;string&gt;37-Cargo NL Ffm&lt;/string&gt;
+  &lt;string&gt;38-Netz Ffm&lt;/string&gt;
+  &lt;string&gt;39-DB Cargo-Werke&lt;/string&gt;
+  &lt;string&gt;40-ICE-BW München&lt;/string&gt;
+  &lt;string&gt;41-R&amp;amp;T Region&lt;/string&gt;
+  &lt;string&gt;42-Gastronomie (DBG)&lt;/string&gt;
+  &lt;string&gt;43-DB Energie&lt;/string&gt;
+  &lt;string&gt;44-DBS Süd&lt;/string&gt;
+  &lt;string&gt;45-DB Regio Nord&lt;/string&gt;
+  &lt;string&gt;46-DB Fernverkehr ICE&lt;/string&gt;
+  &lt;string&gt;47-DB Service&lt;/string&gt;
+  &lt;string&gt;48-DB Sicherheit&lt;/string&gt;
+  &lt;string&gt;49-DB Stiftung&lt;/string&gt;
+  &lt;string&gt;50-DB Vertrieb&lt;/string&gt;
+  &lt;string&gt;51-DB Connect&lt;/string&gt;
+  &lt;string&gt;52-DB Fahrzeuginstandhaltung&lt;/string&gt;
+  &lt;string&gt;53-DB Regio Mitte&lt;/string&gt;
+  &lt;string&gt;54-DB InfraGO AG (S&amp;amp;S)&lt;/string&gt;
+  &lt;string&gt;55-DB Regio NO&lt;/string&gt;
+  &lt;string&gt;56-DB E&amp;amp;C&lt;/string&gt;
+  &lt;string&gt;57-DB Regio Bayern&lt;/string&gt;
+  &lt;string&gt;58-DB Regio SO&lt;/string&gt;
+  &lt;string&gt;59-DB Regio NRW&lt;/string&gt;
+  &lt;string&gt;60-DB Fern TL&lt;/string&gt;
+  &lt;string&gt;61-DB Cargo&lt;/string&gt;
+  &lt;string&gt;90-DB Personalservice&lt;/string&gt;
+  &lt;string&gt;DB-Schulung&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
