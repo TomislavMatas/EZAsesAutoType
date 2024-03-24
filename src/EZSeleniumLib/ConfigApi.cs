@@ -1,12 +1,12 @@
 ﻿//
-// File: ConfigApi.cs
+// File: "ConfigApi.cs"
 //
 // Summary:
 // This class provides the interface for access to 
 // the "App.config" file using specific wrapper methods.
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// 2024/03/24:TomislavMatas: Version "24.123.0.0"
 // * Initial version.
 //
 
@@ -17,8 +17,8 @@ using log4net;
 namespace EZSeleniumLib
 {
     /// <summary>
-    /// Diese Klasse stellt Methoden fuer den Zugriff
-    /// auf die Werte in der "App.config" zuer Verfuegung.
+    /// This class provides the interface for access to 
+    /// the "App.config" file using specific wrapper methods.
     /// </summary>
     internal static class ConfigApi
     {
@@ -101,7 +101,7 @@ namespace EZSeleniumLib
                     return defaultValue;
 
                 bool value = ToBool(valueString, defaultValue);
-                Log.Debug(String.Format("name='{0}' appSetting={1}", name, value));
+                Log.Debug(string.Format("name='{0}' appSetting={1}", name, value));
                 return value;
             }
             catch (Exception ex)
@@ -120,7 +120,7 @@ namespace EZSeleniumLib
                     return defaultValue;
 
                 int value = ToInt(valueString, defaultValue);
-                Log.Debug(String.Format("name='{0}' appSetting={1}", name, value));
+                Log.Debug(string.Format("name='{0}' appSetting={1}", name, value));
                 return value;
             }
             catch (Exception ex)
@@ -144,9 +144,9 @@ namespace EZSeleniumLib
                 if (name.Contains("password", StringComparison.OrdinalIgnoreCase)
                 || name.Contains("password", StringComparison.OrdinalIgnoreCase)
                 || name.Contains("pwd", StringComparison.OrdinalIgnoreCase))
-                    Log.Debug(String.Format("name='{0}' appSetting='{1}'", name, "***"));
+                    Log.Debug(string.Format("name='{0}' appSetting='{1}'", name, "***"));
                 else
-                    Log.Debug(String.Format("name='{0}' appSetting='{1}'", name, value));
+                    Log.Debug(string.Format("name='{0}' appSetting='{1}'", name, value));
 
                 return value;
             }

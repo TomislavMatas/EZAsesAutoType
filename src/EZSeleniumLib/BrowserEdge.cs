@@ -1,5 +1,5 @@
 //
-// File: BrowserEdge.cs
+// File: "BrowserEdge.cs"
 //
 // Summary:
 // Specific browser implementation using 
@@ -12,12 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// 2024/03/24:TomislavMatas: Version "24.123.0.0"
 // * Initial version.
 //
-
-using System;
-using System.Collections.Generic;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
@@ -34,11 +31,14 @@ namespace EZSeleniumLib
     /// "MicrosoftWebDriver.exe" 
     /// within system's search path.
     /// See "README.md" for details.
+    /// Using "internal" modifier because this class shall
+    /// not be referenced from outside of the assembly.
+    /// Instead, access shall be done sololy through 
+    /// abstract class "BrowserBase".
     /// </summary>
-    public class BrowserEdge : BrowserBase
+    internal class BrowserEdge : BrowserBase
     {
         #region log4net
-
         private static ILog? m_Log = null;
         private static ILog Log
         {
@@ -49,7 +49,6 @@ namespace EZSeleniumLib
                 return m_Log;
             }
         }
-
         #endregion
 
         #region private memberz
@@ -59,23 +58,6 @@ namespace EZSeleniumLib
         /// Either "--", "-", "/" or "" depending on browser implementation. 
         /// </summary>
         private const string m_ArgPfx = ""; 
-
-        /// <summary>
-        /// Singleton helper variabe.
-        /// </summary>
-        private string? m_InitMode = null ;
-
-        /// <summary>
-        /// Return value for "ÊZSeleniumLib.Browser.InitMode" from "App.config".
-        /// </summary>
-        public string InitMode { 
-            get 
-            {
-                if (m_InitMode == null)
-                    m_InitMode = ConfigSettings.GetBrowserInitMode();  
-                return m_InitMode;
-            }
-        }
 
         #endregion
 
@@ -96,47 +78,14 @@ namespace EZSeleniumLib
         #endregion 
 
         /// <summary>
-        /// Instantiate an instance of Edge WebDriver.
-        /// </summary>
-        /// <returns></returns>
-        public override bool Initialize()
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
- 
-                string initMode = this.InitMode;
-                if (String.IsNullOrEmpty(initMode))
-                    throw new Exception(nameof(initMode) + Const.LogInvalid);
-
-                if (ConfigSettings.BrowserInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return this.InitializeSimple();
-
-                if (ConfigSettings.BrowserInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return InitializeExtended();
-
-                throw new Exception(nameof(initMode) + Const.LogNotImpl);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Instantiate an instance of Edge WebDriver.
+        /// Instantiate and initiialze instance of Edge WebDriver.
         /// The instatiation method uses a minimalistic approach,
         /// applying only thare bare defaults.
         /// This mehtod will be called by "Initialize", 
-        /// when "App.config" value for "ÊZSeleniumLib.Browser.InitMode" is set to "simple".
+        /// when "App.config" value for "ÊZSeleniumLib.Browser.WebDriverInitMode" is set to "simple".
         /// </summary>
         /// <returns></returns>
-        private bool InitializeSimple()
+        public override bool InitializeSimple()
         {
             try
             {
@@ -160,14 +109,14 @@ namespace EZSeleniumLib
         }
 
         /// <summary>
-        /// Instantiate an instance of Edge WebDriver.
+        /// Instantiate and initiialze an instance of Edge WebDriver.
         /// The instatiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
         /// This mehtod will be called by "Initialize", 
-        /// when "App.config" value for "ÊZSeleniumLib.Browser.InitMode" is set to "extended".
+        /// when "App.config" value for "ÊZSeleniumLib.Browser.WebDriverInitMode" is set to "extended".
         /// </summary>
         /// <returns></returns>
-        private bool InitializeExtended()
+        public override bool InitializeExtended()
         {
             try
             {
@@ -197,12 +146,12 @@ namespace EZSeleniumLib
                 Log.Info("EdgeDriverService start ...");
                 service.Start();
                 m_Service = service;
-                Log.Info(String.Format("EdgeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
+                Log.Info(string.Format("EdgeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
                 Log.Info("EdgeDriverService start OK");
 
                 Log.Info("RemoteWebDriver init ...");
                 this.m_Driver = new RemoteWebDriver(m_Service.ServiceUrl, options);
-                Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this.m_Driver.SessionId));
+                Log.Info(string.Format("RemoteWebDriver SessionId: {0}", this.m_Driver.SessionId));
                 Log.Info("RemoteWebDriver init OK");
 
                 return true;
@@ -240,12 +189,12 @@ namespace EZSeleniumLib
                 #region Startup Arguments
 
                 List<string> argList = [
-                      String.Format("{0}disable-infobars", m_ArgPfx)
-                    , String.Format("{0}disable-automation", m_ArgPfx)
+                      string.Format("{0}disable-infobars", m_ArgPfx)
+                    , string.Format("{0}disable-automation", m_ArgPfx)
                 ];
 
                 List<string> excludeSwitchesList = [
-                    String.Format("{0}enable-automation", m_ArgPfx)
+                    string.Format("{0}enable-automation", m_ArgPfx)
                 ];
 
                 #endregion Startup Arguments
