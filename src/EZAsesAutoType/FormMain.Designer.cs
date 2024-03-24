@@ -65,7 +65,6 @@
             textBoxUrl.Size = new Size(465, 31);
             textBoxUrl.TabIndex = 4;
             textBoxUrl.Text = "https://ases.noncd.rz.db.de/SES/html?ClientNo=06";
-            textBoxUrl.TextChanged += textBox1_BaseUrl_TextChanged;
             // 
             // textBoxUid
             // 
@@ -74,7 +73,6 @@
             textBoxUid.Size = new Size(174, 31);
             textBoxUid.TabIndex = 6;
             textBoxUid.Text = "ChangeIt!";
-            textBoxUid.TextChanged += textBox1_Uid_TextChanged;
             // 
             // textBoxPwd
             // 
@@ -228,7 +226,9 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             MaximizeBox = false;
+            MaximumSize = new Size(855, 231);
             MinimizeBox = false;
+            MinimumSize = new Size(855, 231);
             Name = "FormMain";
             Text = "EZAsesAutoType";
             FormClosing += onClosing;

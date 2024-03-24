@@ -99,7 +99,7 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ChangeIt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ChangeIt!")]
         public string ASESUserId {
             get {
                 return ((string)(this["ASESUserId"]));
@@ -111,7 +111,7 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ChangeIt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ChangeIt!")]
         public string ASESPassword {
             get {
                 return ((string)(this["ASESPassword"]));
@@ -125,7 +125,35 @@ namespace EZAsesAutoType.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
             "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
-            "tring>06-DB-Systel</string>\r\n</ArrayOfString>")]
+            "tring>01-Zentrale Cargo</string>\r\n  <string>02-Erfurt Test</string>\r\n  <string>0" +
+            "3-DB Konzernleitung</string>\r\n  <string>04-P-Zentrale</string>\r\n  <string>05-Ffm" +
+            "/Fernverk.</string>\r\n  <string>06-DB-Systel</string>\r\n  <string>07-Agv MoVe</str" +
+            "ing>\r\n  <string>08-DB InfraGO BZ S-B. Berlin</string>\r\n  <string>09-Ffm/Karlstr." +
+            "</string>\r\n  <string>10-DB Sicherheit</string>\r\n  <string>11-Frankfurt Stephenso" +
+            "n</string>\r\n  <string>12-TARIS-SST-Test</string>\r\n  <string>13-Hannover</string>" +
+            "\r\n  <string>14-Hamburg</string>\r\n  <string>15-DB Systemtechnik</string>\r\n  <stri" +
+            "ng>16-München</string>\r\n  <string>17-Berlin sonstige</string>\r\n  <string>18-DB R" +
+            "egio</string>\r\n  <string>19-Nürnberg</string>\r\n  <string>20-Wuppertal</string>\r\n" +
+            "  <string>21-DBS KT</string>\r\n  <string>22-JobService</string>\r\n  <string>23-Mün" +
+            "chen Richelstr.</string>\r\n  <string>24-Cargo Zentrale</string>\r\n  <string>25-FTZ" +
+            "</string>\r\n  <string>26-Stuttgart</string>\r\n  <string>27-Saarbrücken</string>\r\n " +
+            " <string>28-DB RegioNetz SOB</string>\r\n  <string>29-Witten Werk</string>\r\n  <str" +
+            "ing>30-DB Regio BWB</string>\r\n  <string>31-Nürnberg Hbf</string>\r\n  <string>32-D" +
+            "B Immobilien</string>\r\n  <string>33-DB T/B</string>\r\n  <string>34-SSC Buchhaltun" +
+            "g</string>\r\n  <string>35-Bildung</string>\r\n  <string>36-KS Duisburg</string>\r\n  " +
+            "<string>37-Cargo NL Ffm</string>\r\n  <string>38-Netz Ffm</string>\r\n  <string>39-D" +
+            "B Cargo-Werke</string>\r\n  <string>40-ICE-BW München</string>\r\n  <string>41-R&amp" +
+            ";T Region</string>\r\n  <string>42-Gastronomie (DBG)</string>\r\n  <string>43-DB Ene" +
+            "rgie</string>\r\n  <string>44-DBS Süd</string>\r\n  <string>45-DB Regio Nord</string" +
+            ">\r\n  <string>46-DB Fernverkehr ICE</string>\r\n  <string>47-DB Service</string>\r\n " +
+            " <string>48-DB Sicherheit</string>\r\n  <string>49-DB Stiftung</string>\r\n  <string" +
+            ">50-DB Vertrieb</string>\r\n  <string>51-DB Connect</string>\r\n  <string>52-DB Fahr" +
+            "zeuginstandhaltung</string>\r\n  <string>53-DB Regio Mitte</string>\r\n  <string>54-" +
+            "DB InfraGO AG (S&amp;S)</string>\r\n  <string>55-DB Regio NO</string>\r\n  <string>5" +
+            "6-DB E&amp;C</string>\r\n  <string>57-DB Regio Bayern</string>\r\n  <string>58-DB Re" +
+            "gio SO</string>\r\n  <string>59-DB Regio NRW</string>\r\n  <string>60-DB Fern TL</st" +
+            "ring>\r\n  <string>61-DB Cargo</string>\r\n  <string>90-DB Personalservice</string>\r" +
+            "\n  <string>DB-Schulung</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ASESClientList {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ASESClientList"]));
