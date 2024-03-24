@@ -13,12 +13,12 @@ Templates for config files, which can be used with  "EZAsesAutoType.exe".
 Containes all source code to build "EZAsesAutoType.exe".
 
 # Revision History
-## 2024/03/23:TomislavMatas: Version "24.123.0.0"
+## 2024/03/23:TomislavMatas: Version "1.0.0.0"
 * Use WebDriver for Chrome version "123.0.6312.58".
 * Use WebDriver for Edge version "123.0.2420.53".
 * Rename: "AsesAutoTypeSetup" to "EZAsesAutoTypeSetup".
 * Rename: "AsesAutoTypeApp" to "EZAsesAutoType".
 * Rename: "AsesAutoTypeLib" to "EZSeleniumLib".
 
-## 2024/03/22:TomislavMatas: Version "24.123.0.0"
+## 2024/03/22:TomislavMatas: Version "1.0.0.0"
 * Added initial prototyping into branch "main".
