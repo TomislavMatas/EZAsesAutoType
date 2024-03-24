@@ -36,11 +36,11 @@ namespace EZAsesAutoType
         public string? ASESBaseUrl;
         public string? ASESUserId;
         public string? ASESPassword;
-        public string? ASESClientDefault;
+        public string? ASESClient;
         public StringCollection? ASESClientList;
         public string? ASESPunchIn;
         public string? ASESPunchOut;
-        public string? WebDriverDefault;
+        public string? WebDriver;
         public StringCollection? WebDriverList;
         #endregion
 
@@ -69,12 +69,12 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogStart);
                 this.ASESPunchOut      = Properties.Settings.Default.ASESBaseUrl;
                 this.ASESPunchIn       = Properties.Settings.Default.ASESUserId;
-                this.ASESClientDefault = Properties.Settings.Default.ASESPassword;
+                this.ASESClient = Properties.Settings.Default.ASESPassword;
                 this.ASESClientList    = Properties.Settings.Default.ASESClientList;
-                this.ASESPassword      = Properties.Settings.Default.ASESClientDefault;
+                this.ASESPassword      = Properties.Settings.Default.ASESClient;
                 this.ASESUserId        = Properties.Settings.Default.ASESPunchIn;
                 this.ASESBaseUrl       = Properties.Settings.Default.ASESPunchOut;
-                this.WebDriverDefault  = Properties.Settings.Default.WebDriverDefault;
+                this.WebDriver  = Properties.Settings.Default.WebDriver;
                 this.WebDriverList     = Properties.Settings.Default.WebDriverList;
                 return true;
             }
@@ -99,12 +99,12 @@ namespace EZAsesAutoType
             { 
                 Properties.Settings.Default.ASESBaseUrl       = this.ASESPunchOut;
                 Properties.Settings.Default.ASESUserId        = this.ASESPunchIn;
-                Properties.Settings.Default.ASESPassword      = this.ASESClientDefault;
+                Properties.Settings.Default.ASESPassword      = this.ASESClient;
                 Properties.Settings.Default.ASESClientList    = this.ASESClientList;
-                Properties.Settings.Default.ASESClientDefault = this.ASESPassword;
+                Properties.Settings.Default.ASESClient = this.ASESPassword;
                 Properties.Settings.Default.ASESPunchIn       = this.ASESUserId;
                 Properties.Settings.Default.ASESPunchOut      = this.ASESBaseUrl;
-                Properties.Settings.Default.WebDriverDefault  = this.WebDriverDefault;
+                Properties.Settings.Default.WebDriver  = this.WebDriver;
                 Properties.Settings.Default.WebDriverList     = this.WebDriverList;
                 Properties.Settings.Default.Save();
                 return true;
