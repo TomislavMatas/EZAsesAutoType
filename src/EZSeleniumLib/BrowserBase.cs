@@ -1,10 +1,10 @@
 ﻿//
-// File: BrowserBase.cs
+// File: "BrowserBase.cs"
 //
 // Summary:
 // Base class used for abstract browser implementations 
 // using Selenium's WebDriver Classes.
-// Place wrapper for the abastract Selenium WebDriver 
+// Place wrapper for the abstract Selenium WebDriver 
 // helper methods here and implmenent in respective descendents.
 //
 // Notes:
@@ -13,24 +13,20 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// 2024/03/24:TomislavMatas: Version "24.123.0.0"
 // * Initial version.
 //
 
-using System;
 using System.Collections.ObjectModel;
 
+using log4net;
+
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 
 using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
-
-using log4net;
-using OpenQA.Selenium.Interactions;
-using System.Threading;
-
-using LibConfig = EZSeleniumLib.ConfigSettings;
 
 namespace EZSeleniumLib
 {
@@ -38,7 +34,7 @@ namespace EZSeleniumLib
     /// Base class used for specific browser implementations 
     /// using Selenium's WebDriver Classes.
     /// Provides wrapper methods for the most relevant 
-    /// relevant Selenium WebDriver methods, which in turn can
+    /// Selenium WebDriver methods, which in turn can
     /// be extended within specifc descendants - if needed.
     /// </summary>
     public abstract class BrowserBase
@@ -57,30 +53,84 @@ namespace EZSeleniumLib
         #endregion
 
         #region configuration valuez
-        private int? m_BrowserInteractionDelay = null;
-        private int BrowserInteractionDelay
+        private string? m_WebDriver = null;
+        private string WebDriver
         {
             get
             {
-                if (this.m_BrowserInteractionDelay == null)
-                    this.m_BrowserInteractionDelay = ConfigSettings.GetBrowserInteractionDelay();
-                return (int)this.m_BrowserInteractionDelay;
+                if (this.m_WebDriver == null)
+                    this.m_WebDriver = ConfigSettings.GetWebDriver();
+                return this.m_WebDriver;
             }
             set
             {
-                this.m_BrowserInteractionDelay = value;
+                this.m_WebDriver = value;
             }
         }
-        public int GetBrowserInteractionDelay()
+        public string GetWebDriver()
         {
-            return this.BrowserInteractionDelay;
+            return this.WebDriver;
         }
-        public int SetBrowserInteractionDelay(int value)
+        public string SetWebDriver(string value)
         {
-            int prev = this.GetBrowserInteractionDelay();
-            this.BrowserInteractionDelay = value;
+            string prev = this.GetWebDriver();
+            this.WebDriver = value;
             return prev;
         }
+
+        private string? m_WebDriverInitMode = null;
+        private string WebDriverInitMode
+        {
+            get
+            {
+                if (m_WebDriverInitMode == null)
+                    m_WebDriverInitMode = ConfigSettings.GetWebDriverInitMode();
+                return m_WebDriverInitMode;
+            }
+            set
+            {
+                m_WebDriverInitMode = value;
+            }
+        }
+        public string GetWebDriverInitMode()
+        {
+            return this.WebDriverInitMode;
+        }
+        public string SetWebDriverInitMode(string value)
+        {
+            string prev = this.GetWebDriverInitMode();
+            this.WebDriverInitMode = value;
+            return prev;
+        }
+
+        private int? m_WebDriverDelay = null;
+        private int WebDriverDelay
+        {
+            get
+            {
+                if (this.m_WebDriverDelay == null)
+                    this.m_WebDriverDelay = ConfigSettings.GetWebDriverDelay();
+                return (int)this.m_WebDriverDelay;
+            }
+            set
+            {
+                this.m_WebDriverDelay = value;
+            }
+        }
+        public int GetWebDriverDelay()
+        {
+            return this.WebDriverDelay;
+        }
+        public int SetWebDriverDelay(int value)
+        {
+            int prev = this.GetWebDriverDelay();
+            this.WebDriverDelay = value;
+            return prev;
+        }
+
+        protected bool m_EnablePopups = false; // #TODO: implement config get/set
+        protected bool m_EnableNotifications = false; // #TODO: implement config get/set 
+
         #endregion 
 
         #region protected memberz
@@ -88,8 +138,6 @@ namespace EZSeleniumLib
         protected RemoteWebDriver? m_Driver = null;
         protected DriverService? m_Service = null;
 
-        protected bool m_EnablePopups = false;
-        protected bool m_EnableNotifications = false;
 
         #endregion 
 
@@ -162,11 +210,42 @@ namespace EZSeleniumLib
         }
 
         /// <summary>
-        /// Initialize specific browser instance.
-        /// Must be implement in descandants.
+        /// Initialize specific WebDriver instance.
         /// </summary>
         /// <returns></returns>
-        public abstract bool Initialize();
+        public bool Initialize()
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+
+                string initMode = this.GetWebDriverInitMode();
+                if (string.IsNullOrEmpty(initMode))
+                    throw new Exception(nameof(initMode) + Const.LogInvalid);
+
+                if (Constant.WebDriverInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                    return this.InitializeSimple();
+
+                if (Constant.WebDriverInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                    return InitializeExtended();
+
+                throw new Exception(nameof(initMode) + Const.LogNotImpl);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        #region abstrct methodz
+        public abstract bool InitializeExtended();
+        public abstract bool InitializeSimple();
+        #endregion
 
         /// <summary>
         /// Graceful teardown of browser instance.
@@ -314,7 +393,7 @@ namespace EZSeleniumLib
                 if (m_Driver == null)
                     throw new Exception(nameof(m_Driver) + Const.LogIsNull);
 
-                Log.Debug(String.Format("url={0}",url));
+                Log.Debug(string.Format("url={0}",url));
                 m_Driver.Navigate().GoToUrl(url);
 
                 return true;
@@ -350,7 +429,7 @@ namespace EZSeleniumLib
             try
             {
                 Log.Debug(Const.LogStart);
-                Log.Debug(String.Format("xPath={0}", xPath));
+                Log.Debug(string.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds: 0);
             }
             catch( OpenQA.Selenium.WebDriverTimeoutException)
@@ -387,7 +466,7 @@ namespace EZSeleniumLib
             try
             {
                 Log.Debug(Const.LogStart);
-                Log.Debug(String.Format("xPath={0}", xPath));
+                Log.Debug(string.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds);
             }
             catch(OpenQA.Selenium.WebDriverTimeoutException)
@@ -527,7 +606,7 @@ namespace EZSeleniumLib
                 Log.Debug(Const.LogStart);
                 Actions actions = new Actions(m_Driver);
                 actions.MoveToElement(element).Perform();
-                int delay = this.GetBrowserInteractionDelay();
+                int delay = this.GetWebDriverDelay();
                 Thread.Sleep(delay);
                 return true;
             }

@@ -1,5 +1,5 @@
 //
-// File: BrowserChrome.cs
+// File: "BrowserChrome.cs"
 //
 // Summary:
 // Specific browser implementation using 
@@ -12,12 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "24.123.0.0"
+// 2024/03/24:TomislavMatas: Version "24.123.0.0"
 // * Initial version.
 //
-
-using System;
-using System.Collections.Generic;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -34,8 +31,12 @@ namespace EZSeleniumLib
     /// "chromedriver.exe" 
     /// within system's search path.
     /// See "README.md" for details.
+    /// Using "internal" modifier because this class shall
+    /// not be referenced from outside of the assembly.
+    /// Instead, access shall be done sololy through 
+    /// abstract class "BrowserBase".
     /// </summary>
-    public class BrowserChrome : BrowserBase
+    internal class BrowserChrome : BrowserBase
     {
         #region log4net
 
@@ -60,23 +61,6 @@ namespace EZSeleniumLib
         /// </summary>
         private const string m_ArgPfx = "--";
 
-        /// <summary>
-        /// Singleton helper variabe.
-        /// </summary>
-        private string? m_InitMode = null ;
-
-        /// <summary>
-        /// Return value for "ÊZSeleniumLib.Browser.InitMode" from "App.config".
-        /// </summary>
-        public string InitMode { 
-            get 
-            {
-                if (m_InitMode == null)
-                    m_InitMode = ConfigSettings.GetBrowserInitMode();
-                return m_InitMode;
-            }
-        }
-
         #endregion
 
         #region constructorz
@@ -96,26 +80,19 @@ namespace EZSeleniumLib
         #endregion 
 
         /// <summary>
-        /// Instantiate an instance of Chrome WebDriver.
+        /// Specific initialization of Chrome WebDriver.
         /// </summary>
         /// <returns></returns>
-        public override bool Initialize()
+        public new bool Initialize()
         {
             try
             {
                 Log.Debug(Const.LogStart);
- 
-                string initMode = this.InitMode;
-                if(String.IsNullOrEmpty(initMode))
-                    throw new Exception(nameof(initMode) + Const.LogInvalid);
+                if(base.Initialize())
+                   throw new Exception(nameof(base.Initialize) + Const.LogFail);
 
-                if (ConfigSettings.BrowserInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return this.InitializeSimple();
-
-                if (ConfigSettings.BrowserInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return InitializeExtended();
-
-                throw new Exception(nameof(initMode) + Const.LogNotImpl);
+                // no more specific initialization so far.
+                return true;
             }
             catch (Exception ex)
             {
@@ -129,14 +106,12 @@ namespace EZSeleniumLib
         }
 
         /// <summary>
-        /// Instantiate an instance of Chrome WebDriver.
+        /// Instantiate and initiialze an instance of Chrome WebDriver.
         /// The instatiation method uses a minimalistic approach,
         /// applying only thare bare defaults.
-        /// This mehtod will be called by "Initialize", 
-        /// when "App.config" value for "ÊZSeleniumLib.Browser.InitMode" is set to "simple".
         /// </summary>
         /// <returns></returns>
-        private bool InitializeSimple()
+        public override bool InitializeSimple()
         {
             try
             {
@@ -160,14 +135,12 @@ namespace EZSeleniumLib
         }
 
         /// <summary>
-        /// Instantiate an instance of Chrome WebDriver.
+        /// Instantiate and initiialze an instance of Chrome WebDriver.
         /// The instatiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
-        /// This mehtod will be called by "Initialize", 
-        /// when "App.config" value for "ÊZSeleniumLib.Browser.InitMode" is set to "extended".
         /// </summary>
         /// <returns></returns>
-        private bool InitializeExtended()
+        public override bool InitializeExtended()
         {
             try
             {
@@ -208,12 +181,12 @@ namespace EZSeleniumLib
                 Log.Info("ChromeDriverService start ...");
                 service.Start();
                 m_Service = service;
-                Log.Info(String.Format("ChromeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
+                Log.Info(string.Format("ChromeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
                 Log.Info("ChromeDriverService start OK");
 
                 Log.Info("RemoteWebDriver init ...");
                 this.m_Driver = new RemoteWebDriver(remoteAddress: m_Service.ServiceUrl, options: options);
-                Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this.m_Driver.SessionId));
+                Log.Info(string.Format("RemoteWebDriver SessionId: {0}", this.m_Driver.SessionId));
                 Log.Info("RemoteWebDriver init OK");
 
                 return true;
@@ -249,14 +222,14 @@ namespace EZSeleniumLib
                 #endregion Basic Options
 
                 #region Startup Arguments
-                chromeOptions.AddArguments(String.Format("{0}disable-infobars", m_ArgPfx));
-                chromeOptions.AddArguments(String.Format("{0}disable-automation", m_ArgPfx));
-                chromeOptions.AddExcludedArguments(String.Format("{0}enable-automation", m_ArgPfx));
+                chromeOptions.AddArguments(string.Format("{0}disable-infobars", m_ArgPfx));
+                chromeOptions.AddArguments(string.Format("{0}disable-automation", m_ArgPfx));
+                chromeOptions.AddExcludedArguments(string.Format("{0}enable-automation", m_ArgPfx));
                 if (!m_EnableNotifications)
-                    chromeOptions.AddArguments(String.Format("{0}disable-notifications",m_ArgPfx));
+                    chromeOptions.AddArguments(string.Format("{0}disable-notifications",m_ArgPfx));
 
                 if (m_EnablePopups)
-                    chromeOptions.AddArguments(String.Format("{0}disable-popup-blocking", m_ArgPfx));
+                    chromeOptions.AddArguments(string.Format("{0}disable-popup-blocking", m_ArgPfx));
 
                 #endregion Startup Arguments
 
