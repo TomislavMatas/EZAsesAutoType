@@ -105,12 +105,16 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// Initialize instance.
+        /// </summary>
+        /// <returns></returns>
         private bool Initialze()
         {
             try
             {
                 Log.Debug(Const.LogStart);
-                this.AppHandler = new AppHandler(this);
+                this.SetAppHandler(new AppHandler(this));
                 return true;
             }
             catch (Exception ex)
@@ -129,9 +133,12 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                UserSettings? userSettings;
-                if (!AppHandler.LoadUserSettings(out userSettings))
-                    throw new Exception(nameof(AppHandler.LoadUserSettings) + Const.LogFail);
+                AppHandler? appHandler = this.GetAppHandler();
+                if (appHandler == null)
+                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
+
+                if (!appHandler.LoadUserSettings(out UserSettings? userSettings))
+                    throw new Exception(nameof(appHandler.LoadUserSettings) + Const.LogFail);
 
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
@@ -150,18 +157,31 @@ namespace EZAsesAutoType
             }
         }
 
-        private UserSettings? GetUserSettingsFromGui()
+        private StringCollection GetComboBoxItemsAsStringCollection(ComboBox comboBox)
+        {
+            Log.Debug(Const.LogStart);
+            StringCollection stringCollection = new StringCollection();
+            foreach (object item in comboBox.Items)
+                if (item != null)
+                    stringCollection.Add(item.ToString());
+
+            return stringCollection;
+        }
+
+        private UserSettings? GetUserSettingsValuesFromControls()
         {
             try
             { 
                 UserSettings userSettings      = new UserSettings();
                 userSettings.ASESBaseUrl       = this.textBoxUrl.Text;
-                userSettings.ASESUserId        = this.textBoxUid.Text;
+                userSettings.ASESClient = this.comboBoxClientNo.Text;
+                userSettings.ASESClientList    = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
                 userSettings.ASESPassword      = this.textBoxPwd.Text;
-                userSettings.ASESClientDefault = this.comboBoxClientNo.Text;
                 userSettings.ASESPunchIn       = this.textBoxPunchIn.Text; 
                 userSettings.ASESPunchOut      = this.textBoxPunchOut.Text;
-                userSettings.WebDriverDefault  = this.comboBoxWebDriver.Text;
+                userSettings.ASESUserId        = this.textBoxUid.Text;
+                userSettings.WebDriver  = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList     = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 return userSettings;
             }
             catch (Exception ex)
@@ -180,18 +200,16 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                UserSettings? userSettings = this.GetUserSettings();
+                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                // map only a subset of the usersettings
-                UserSettings? userSettingsGui = this.GetUserSettingsFromGui();
-                if (userSettingsGui == null)
-                    throw new Exception(nameof(userSettingsGui) + Const.LogIsNull);
+                AppHandler? appHandler = this.GetAppHandler();
+                if (appHandler == null)
+                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
 
-
-                if (!AppHandler.SaveUserSettings(userSettings))
-                    throw new Exception(nameof(AppHandler.SaveUserSettings) + Const.LogFail);
+                if (appHandler.SaveUserSettings(userSettings))
+                    throw new Exception(nameof(appHandler.SaveUserSettings) + Const.LogFail);
 
                 return true;
             }
@@ -227,8 +245,8 @@ namespace EZAsesAutoType
                     if (!string.IsNullOrEmpty(item))
                         this.comboBoxClientNo.Items.Add(item);
     
-                string? defautValue = userSettings.ASESClientDefault;
-                if (string.IsNullOrEmpty(defautValue))
+                string? defautValue = userSettings.ASESClient;
+                if (!comboBox.Items.Contains(defautValue))
                 {
                     if (comboBox.Items.Count > 0)
                     {
@@ -273,8 +291,8 @@ namespace EZAsesAutoType
                     if (!string.IsNullOrEmpty(item))
                         comboBox.Items.Add(item);
 
-                string? defautValue = userSettings.WebDriverDefault;
-                if (string.IsNullOrEmpty(defautValue))
+                string? defautValue = userSettings.WebDriver;
+                if (!comboBox.Items.Contains(defautValue))
                 {
                     if (comboBox.Items.Count > 0)
                     {
@@ -325,16 +343,23 @@ namespace EZAsesAutoType
             }
         }
 
-        private bool RenderControls()
+        private bool RenderWebDriverVersion(UserSettings userSettings)
         {
             try
             {
                 Log.Debug(Const.LogStart);
-                UserSettings? userSettings = this.GetUserSettings();
                 if (userSettings == null)
-                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+                    throw new ArgumentNullException(nameof(userSettings));
 
-                
+                string? webDriver = userSettings.WebDriver;
+                if (webDriver == null)
+                    throw new Exception(nameof(webDriver) + Const.LogIsNull);
+
+                string? webDriverVersion = EZSeleniumLib.WebDriverVersion.GetWebDriverVersionString(webDriver);
+                if (webDriverVersion == null)
+                    throw new Exception(nameof(webDriverVersion) + Const.LogIsNull);
+
+                this.textBoxWebDriverVersion.Text = webDriverVersion;
                 return true;
             }
             catch (Exception ex)
@@ -348,6 +373,35 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// Render controls depending on their actual values.
+        /// Individual controls layout and content might
+        /// depend on others.
+        /// </summary>
+        /// <returns></returns>
+        private bool RenderControls(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                if(!RenderWebDriverVersion(userSettings))
+                    throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
 
         #region form handler
 
@@ -359,12 +413,15 @@ namespace EZAsesAutoType
                 if (!LoadUserSettings())
                     throw new Exception(nameof(LoadUserSettings) + Const.LogFail);
 
-                UserSettings userSettings = this.GetUserSettings();
+                UserSettings? userSettings = this.GetUserSettings();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
                 if (!InitializeComboBoxes(userSettings))
                     throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
+
+                if(!RenderControls(userSettings))
+                    throw new Exception(nameof(RenderControls) + Const.LogFail);
 
             }
             catch (Exception ex)
