@@ -11,7 +11,7 @@
     <Setting Name="ASESBaseUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://ases.noncd.rz.db.de/SES/html?ClientNo=06</Value>
     </Setting>
-    <Setting Name="ASESClientDefault" Type="System.String" Scope="User">
+    <Setting Name="ASESClient" Type="System.String" Scope="User">
       <Value Profile="(Default)">06-DB-Systel</Value>
     </Setting>
     <Setting Name="WebDriverList" Type="System.Collections.Specialized.StringCollection" Scope="User">
@@ -21,7 +21,7 @@
   &lt;string&gt;Edge&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="WebDriverDefault" Type="System.String" Scope="User">
+    <Setting Name="WebDriver" Type="System.String" Scope="User">
       <Value Profile="(Default)">Chrome</Value>
     </Setting>
     <Setting Name="ASESUserId" Type="System.String" Scope="User">
