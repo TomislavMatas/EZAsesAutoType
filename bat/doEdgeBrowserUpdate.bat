@@ -26,9 +26,9 @@ set "SCHEDTASKS=MicrosoftEdgeUpdateTaskMachineCore MicrosoftEdgeUpdateTaskMachin
 set "SERVICELIST=edgeupdate edgeupdatem"
 
 echo kill WhatsAppWeb Proxy Tasks ...
-taskkill /F /IM AsesAutoTypeApp.exe        /T 1>nul 2>nul
-taskkill /F /IM MicrosoftWebDriver.exe     /T 1>nul 2>nul
-taskkill /F /IM msedge.exe                 /T 1>nul 2>nul
+taskkill /F /IM EZAsesAutoType.exe     /T 1>nul 2>nul
+taskkill /F /IM MicrosoftWebDriver.exe /T 1>nul 2>nul
+taskkill /F /IM msedge.exe             /T 1>nul 2>nul
 echo kill WhatsAppWeb Proxy Tasks OK
 
 echo enable scheduled tasks ...
