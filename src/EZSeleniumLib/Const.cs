@@ -29,6 +29,24 @@ namespace EZSeleniumLib
         /// <summary>
         /// Singleton helper variable.
         /// </summary>
+        public static Assembly? m_ExecutingAssembly = null;
+
+        /// <summary>
+        /// Return instance of class FileVersionInfo reflecting AssemblyFileVersion from AssemblyInfo.cs.
+        /// </summary>
+        public static Assembly ExecutingAssembly
+        {
+            get
+            {
+                if (m_ExecutingAssembly == null)
+                    m_ExecutingAssembly = Assembly.GetExecutingAssembly();
+                return m_ExecutingAssembly;
+            }
+        }
+
+        /// <summary>
+        /// Singleton helper variable.
+        /// </summary>
         private static FileVersionInfo? m_AssemblyVersionInfo = null;
 
         /// <summary>
@@ -39,10 +57,29 @@ namespace EZSeleniumLib
             get
             {
                 if (m_AssemblyVersionInfo == null)
-                {
-                    m_AssemblyVersionInfo = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
-                }
+                    m_AssemblyVersionInfo = FileVersionInfo.GetVersionInfo(ExecutingAssembly.Location);
                 return m_AssemblyVersionInfo;
+            }
+        }
+
+        /// <summary>
+        /// Singleton helper variable.
+        /// </summary>
+        public static string? m_AssemblyPath = null;
+
+        /// <summary>
+        /// Return the executing assembly's path - aka "installation folder path".
+        /// </summary>
+        public static string ExecutingAssemblyPath
+        {
+            get
+            {
+                if (m_AssemblyPath == null)
+                {
+                    FileInfo file = new FileInfo(ExecutingAssembly.Location);
+                    m_AssemblyPath = file.DirectoryName;
+                }
+                return m_AssemblyPath;
             }
         }
 
