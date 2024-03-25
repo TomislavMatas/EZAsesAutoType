@@ -10,9 +10,8 @@
 // * Initial version.
 //
 
-using System.Configuration;
 using System.Diagnostics;
-using System.Reflection;
+
 using log4net;
 
 namespace EZSeleniumLib
@@ -37,8 +36,8 @@ namespace EZSeleniumLib
         #endregion
 
         /// <summary>
-        /// For unknown reason, Google decided not to add a version info 
-        /// ressource to Chrome WebDriver "chromedriver.exe". 
+        /// For unknown reason, Google and Mozilla decided not to add a version info 
+        /// ressource to their WebDriver executables. 
         /// So this implementation will work for the Edge WebDriver 
         /// "MicrosoftWebDriver.exe" only.
         /// </summary>
@@ -58,7 +57,7 @@ namespace EZSeleniumLib
                 
                 FileVersionInfo? webDriverVersionInfo = FileVersionInfo.GetVersionInfo(webDriverFullPath);
                 if (webDriverVersionInfo == null)
-                    throw new Exception(nameof(webDriverVersionInfo) + Const.LogIsNull);
+                    throw new Exception(nameof(webDriverVersionInfo) + Consts.LogIsNull);
 
                 string versionString = string.Format("{0}.{1}.{2}.{3}"
                     , webDriverVersionInfo.FileMajorPart
@@ -75,7 +74,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(Consts.LogDone);
             }
         }
 
@@ -96,20 +95,25 @@ namespace EZSeleniumLib
                 }
                 else if (Constant.WebDriverEdge.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
                     webDriverExe = Constant.WebDriverEdgeExe;
+                else if (Constant.WebDriverFirefox.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
+                    // For unknown reason, Mozilla decided not to add a version
+                    // info ressource to Chrome WebDriver "geckodriver.exe". 
+                    // so simply return the version used on build.
+                    return Constant.WebDriverFirefoxVersion;
                 else
-                    throw new Exception(nameof(webDriver) + Const.LogNotImpl);
+                    throw new Exception(nameof(webDriver) + Consts.LogNotImpl);
 
-                string executingAssemblyPath = Const.ExecutingAssemblyPath;
+                string executingAssemblyPath = Consts.ExecutingAssemblyPath;
                 if (string.IsNullOrEmpty(executingAssemblyPath))
-                    throw new Exception(nameof(executingAssemblyPath) + Const.LogIsNull);
+                    throw new Exception(nameof(executingAssemblyPath) + Consts.LogIsNull);
 
                 string webDriverFullPath = Path.Combine(executingAssemblyPath, webDriverExe);
                 if (string.IsNullOrEmpty(webDriverFullPath))
-                    throw new Exception(nameof(webDriverFullPath) + Const.LogIsNull);
+                    throw new Exception(nameof(webDriverFullPath) + Consts.LogIsNull);
 
                 string? webDriverVersionString = GetVersionStringFromBinary(webDriverFullPath);
                 if (string.IsNullOrEmpty(webDriverVersionString))
-                    throw new Exception(nameof(webDriverVersionString) + Const.LogIsNull);
+                    throw new Exception(nameof(webDriverVersionString) + Consts.LogIsNull);
 
                 return webDriverVersionString;
             }
@@ -120,7 +124,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(Consts.LogDone);
             }
         }
 
