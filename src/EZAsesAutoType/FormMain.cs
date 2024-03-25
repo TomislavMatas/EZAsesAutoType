@@ -10,6 +10,7 @@ using EZAsesAutoType;
 using log4net;
 using Microsoft.VisualBasic.Logging;
 using System.Collections.Specialized;
+using System.Text.RegularExpressions;
 
 namespace EZAsesAutoType
 {
@@ -171,17 +172,17 @@ namespace EZAsesAutoType
         private UserSettings? GetUserSettingsValuesFromControls()
         {
             try
-            { 
-                UserSettings userSettings      = new UserSettings();
-                userSettings.ASESBaseUrl       = this.textBoxUrl.Text;
+            {
+                UserSettings userSettings = new UserSettings();
+                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
                 userSettings.ASESClient = this.comboBoxClientNo.Text;
-                userSettings.ASESClientList    = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
-                userSettings.ASESPassword      = this.textBoxPwd.Text;
-                userSettings.ASESPunchIn       = this.textBoxPunchIn.Text; 
-                userSettings.ASESPunchOut      = this.textBoxPunchOut.Text;
-                userSettings.ASESUserId        = this.textBoxUid.Text;
-                userSettings.WebDriver  = this.comboBoxWebDriver.Text;
-                userSettings.WebDriverList     = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
+                userSettings.ASESPassword = this.textBoxPwd.Text;
+                userSettings.ASESPunchIn = this.textBoxPunchIn.Text;
+                userSettings.ASESPunchOut = this.textBoxPunchOut.Text;
+                userSettings.ASESUserId = this.textBoxUid.Text;
+                userSettings.WebDriver = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 return userSettings;
             }
             catch (Exception ex)
@@ -192,7 +193,7 @@ namespace EZAsesAutoType
             finally
             {
                 Log.Debug(Const.LogDone);
-            }        
+            }
         }
 
         private bool SaveUserSettings()
@@ -244,7 +245,7 @@ namespace EZAsesAutoType
                 foreach (string? item in itemList)
                     if (!string.IsNullOrEmpty(item))
                         this.comboBoxClientNo.Items.Add(item);
-    
+
                 string? defautValue = userSettings.ASESClient;
                 if (!comboBox.Items.Contains(defautValue))
                 {
@@ -321,15 +322,15 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if(userSettings == null)
+                if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
                 if (!InitializeComboBoxClientNo(userSettings))
                     throw new Exception(nameof(InitializeComboBoxClientNo) + Const.LogFail);
 
-                if(!InitializeComboBoxWebDriver(userSettings))
+                if (!InitializeComboBoxWebDriver(userSettings))
                     throw new Exception(nameof(InitializeComboBoxWebDriver) + Const.LogFail);
-                
+
                 return true;
             }
             catch (Exception ex)
@@ -341,6 +342,71 @@ namespace EZAsesAutoType
             {
                 Log.Debug(Const.LogDone);
             }
+        }
+
+        private bool RenderUrl(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                string? asesBaseUrl = userSettings.ASESBaseUrl;
+                if (asesBaseUrl == null)
+                    throw new Exception(nameof(asesBaseUrl) + Const.LogIsNull);
+
+                asesBaseUrl = asesBaseUrl.Trim();
+                if (asesBaseUrl.Length <= 0)
+                    return true; // nothing to do
+
+                string? asesClient = userSettings.ASESClient;
+                if (asesClient == null)
+                    throw new Exception(nameof(asesClient) + Const.LogIsNull);
+
+                asesClient = asesClient.Trim();
+                if (asesClient.Length < 2)
+                    return true; // nothing to do
+
+                string asesClientNo = asesClient.Substring(0, 2);
+                string matchPattern = "ClientNo=..";
+                asesBaseUrl = Regex.Replace(asesBaseUrl, matchPattern, "ClientNo=" + asesClientNo, RegexOptions.IgnoreCase);
+                this.textBoxUrl.Text = asesBaseUrl;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private void ComboBoxClientNoChanged()
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (!RenderUrl(userSettings))
+                    throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+
         }
 
         private bool RenderWebDriverVersion(UserSettings userSettings)
@@ -387,7 +453,7 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
-                if(!RenderWebDriverVersion(userSettings))
+                if (!RenderWebDriverVersion(userSettings))
                     throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
 
                 return true;
@@ -403,7 +469,7 @@ namespace EZAsesAutoType
             }
         }
 
-        #region form handler
+        #region form handlerz
 
         private void onLoad(object sender, EventArgs e)
         {
@@ -420,7 +486,7 @@ namespace EZAsesAutoType
                 if (!InitializeComboBoxes(userSettings))
                     throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
 
-                if(!RenderControls(userSettings))
+                if (!RenderControls(userSettings))
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
 
             }
@@ -455,7 +521,7 @@ namespace EZAsesAutoType
 
         #endregion
 
-        #region button handler
+        #region button handlerz
 
         private void btnRun_Click(object sender, EventArgs e)
         {
@@ -469,13 +535,47 @@ namespace EZAsesAutoType
 
         #endregion
 
-        #region textbox handler 
-        private void textBox1_BaseUrl_TextChanged(object sender, EventArgs e)
-        {
+        #region textbox handlerz
 
+        #endregion
+
+        #region combobox handlerz
+
+        private void comboBoxClientNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBoxClientNoChanged();
+        }
+
+        private void comboBoxClientNo_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBoxClientNoChanged();
+        }
+
+        private void comboBoxWebDriver_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (!RenderWebDriverVersion(userSettings))
+                    throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
         }
 
         #endregion
+
 
     } // class
 
