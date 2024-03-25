@@ -96,7 +96,7 @@
       <Value Profile="(Default)">09:00</Value>
     </Setting>
     <Setting Name="ASESPunchOut" Type="System.String" Scope="User">
-      <Value Profile="(Default)">17:00</Value>
+      <Value Profile="(Default)">17:18</Value>
     </Setting>
     <Setting Name="WebDriver" Type="System.String" Scope="User">
       <Value Profile="(Default)">Chrome</Value>
