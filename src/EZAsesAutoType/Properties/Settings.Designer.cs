@@ -153,7 +153,7 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("17:00")]
+        [global::System.Configuration.DefaultSettingValueAttribute("17:18")]
         public string ASESPunchOut {
             get {
                 return ((string)(this["ASESPunchOut"]));
