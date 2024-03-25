@@ -1,14 +1,14 @@
 :: -- 
-:: -- File: "doEdgeWebdriverUpdate.bat"
+:: -- File: "updateWebdriverEdge.bat"
 :: -- 
 :: -- Usage: 
 :: -- ```
-:: -- doEdgeWebdriverUpdate[.bat] [version]
+:: -- updateWebdriverEdge[.bat] [version]
 :: -- ```
 :: -- 
 :: -- Example:
 :: -- ```
-:: -- CMD> doEdgeWebdriverUpdate 124.0.2464.2
+:: -- CMD> updateWebdriverEdge 124.0.2464.2
 :: -- ```
 :: --
 :: -- Revision History
