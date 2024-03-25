@@ -209,6 +209,7 @@
             // textBoxWebDriverVersion
             // 
             textBoxWebDriverVersion.BorderStyle = BorderStyle.FixedSingle;
+            textBoxWebDriverVersion.Enabled = false;
             textBoxWebDriverVersion.Location = new Point(330, 105);
             textBoxWebDriverVersion.Margin = new Padding(2);
             textBoxWebDriverVersion.Name = "textBoxWebDriverVersion";
@@ -219,6 +220,7 @@
             // 
             // comboBoxLanguage
             // 
+            comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxLanguage.FormattingEnabled = true;
             comboBoxLanguage.Location = new Point(330, 73);
             comboBoxLanguage.Name = "comboBoxLanguage";
