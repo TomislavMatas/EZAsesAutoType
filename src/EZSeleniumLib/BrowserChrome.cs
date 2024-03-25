@@ -16,11 +16,16 @@
 // * Initial version.
 //
 
+using System;
+using System.Collections.Generic;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
 using log4net;
+using System.Threading;
+using System.ComponentModel;
 
 namespace EZSeleniumLib
 {
@@ -31,23 +36,19 @@ namespace EZSeleniumLib
     /// "chromedriver.exe" 
     /// within system's search path.
     /// See "README.md" for details.
-    /// Using "internal" modifier because this class shall
-    /// not be referenced from outside of the assembly.
-    /// Instead, access shall be done sololy through 
-    /// abstract class "BrowserBase".
     /// </summary>
-    internal class BrowserChrome : BrowserBase
+    public class BrowserChrome : BrowserBase
     {
         #region log4net
 
-        private static ILog? m_Log = null;
+        private static ILog _log = null;
         private static ILog Log
         {
             get
             {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(BrowserChrome));
-                return m_Log;
+                if (_log == null)
+                    _log = LogManager.GetLogger(typeof(BrowserChrome));
+                return _log;
             }
         }
 
@@ -55,11 +56,17 @@ namespace EZSeleniumLib
 
         #region private memberz
 
-        /// <summary>
-        /// Startup Argument decoration prefix.
-        /// Either "--", "-", "/" or "" depending on browser implementation. 
-        /// </summary>
-        private const string m_ArgPfx = "--";
+        private ChromeDriver _driver = null;
+        protected override RemoteWebDriver GetDriver()
+        {
+            return _driver;
+        }
+
+        private ChromeDriverService _service = null;
+        protected override DriverService GetService()
+        {
+            return _service;
+        }
 
         #endregion
 
@@ -71,28 +78,45 @@ namespace EZSeleniumLib
             // nothing special in here
         }
 
-        public BrowserChrome(bool enablePopups, bool enableNotifications) 
-             : base(enablePopups, enableNotifications)
-        { 
+        public BrowserChrome(BrowserOptions browserOptions)
+             : base(browserOptions)
+        {
             // nothing special in here
         }
 
         #endregion 
 
+        protected override void SetArgPrefix()
+        {
+            _argPfx = Consts.ARG_PREFIX_CHROME;
+        }
+
+        protected override void SetProcessName()
+        {
+            _processName = Consts.BROWSER_PROCESSNAME_CHROME;
+        }
+
         /// <summary>
-        /// Specific initialization of Chrome WebDriver.
+        /// Instantiate an instance of Chrome WebDriver.
         /// </summary>
         /// <returns></returns>
-        public new bool Initialize()
+        public override bool Initialize()
         {
             try
             {
-                Log.Debug(Const.LogStart);
-                if(base.Initialize())
-                   throw new Exception(nameof(base.Initialize) + Const.LogFail);
+                Log.Debug(DEBUG_START);
+ 
+                string initMode = this.BrowserOptions.InitMode;
+                if(String.IsNullOrEmpty(initMode))
+                    throw new Exception("InitMode invalid");
 
-                // no more specific initialization so far.
-                return true;
+                if (Consts.INITMODE_SIMPLE.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                    return this.InitializeSimple();
+
+                if (Consts.INITMODE_EXTENDED.Equals(initMode, StringComparison.OrdinalIgnoreCase))
+                    return InitializeExtended();
+
+                throw new Exception("InitMode unsupported");
             }
             catch (Exception ex)
             {
@@ -101,26 +125,28 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
         /// <summary>
-        /// Instantiate and initiialze an instance of Chrome WebDriver.
+        /// Instantiate an instance of Chrome WebDriver.
         /// The instatiation method uses a minimalistic approach,
         /// applying only thare bare defaults.
+        /// This mehtod will be called by "Initialize", 
+        /// when "App.config" value for "EZSeleniumLib.Browser.InitMode" is set to "simple".
         /// </summary>
         /// <returns></returns>
-        public override bool InitializeSimple()
+        private bool InitializeSimple()
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                Log.Debug(DEBUG_START);
 
-                if (!GetDriverOptions(out ChromeOptions? options))
-                    throw new Exception(nameof(GetDriverOptions) + Const.LogFail);
+                if (!GetDriverOptions(out ChromeOptions options))
+                    throw new Exception("GetDriverOptions failed");
 
-                this.m_Driver = new ChromeDriver(options);
+                this._driver = new ChromeDriver(options);
                 return true;
             }
             catch (Exception ex)
@@ -130,21 +156,23 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
         /// <summary>
-        /// Instantiate and initiialze an instance of Chrome WebDriver.
+        /// Instantiate an instance of Chrome WebDriver.
         /// The instatiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
+        /// This mehtod will be called by "Initialize", 
+        /// when "App.config" value for "EZSeleniumLib.Browser.InitMode" is set to "extended".
         /// </summary>
         /// <returns></returns>
-        public override bool InitializeExtended()
+        private bool InitializeExtended()
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                Log.Debug(DEBUG_START);
 
                 Log.Info("ChromeDriverService init ...");
                 ChromeDriverService service = ChromeDriverService.CreateDefaultService();
@@ -173,20 +201,21 @@ namespace EZSeleniumLib
                 Log.Info("ChromeDriverService init OK");
 
                 Log.Info("GetDriverOptions ...");
-                if (!GetDriverOptions(out ChromeOptions? options))
-                    throw new Exception(nameof(GetDriverOptions) + Const.LogFail);
+                if (!GetDriverOptions(out ChromeOptions options))
+                    throw new Exception("GetDriverOptions failed");
 
                 Log.Info("GetDriverOptions OK");
 
                 Log.Info("ChromeDriverService start ...");
                 service.Start();
-                m_Service = service;
-                Log.Info(string.Format("ChromeDriverService ServiceUrl: {0}", m_Service.ServiceUrl));
+                _service = service;
+                Log.Info(String.Format("ChromeDriverService ServiceUrl: {0}", _service.ServiceUrl));
                 Log.Info("ChromeDriverService start OK");
 
                 Log.Info("RemoteWebDriver init ...");
-                this.m_Driver = new RemoteWebDriver(remoteAddress: m_Service.ServiceUrl, options: options);
-                Log.Info(string.Format("RemoteWebDriver SessionId: {0}", this.m_Driver.SessionId));
+//                this._driver = new RemoteWebDriver(remoteAddress: _service.ServiceUrl, options: options);
+                this._driver = new ChromeDriver(_service, options: options);
+                Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this._driver.SessionId));
                 Log.Info("RemoteWebDriver init OK");
 
                 return true;
@@ -198,62 +227,87 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
-        private bool GetDriverOptions(out ChromeOptions? chromeOptions)
+        private bool GetDriverOptions(out ChromeOptions options)
         {
             try
             {
-                chromeOptions = new ChromeOptions();
+                options = new ChromeOptions();
 
                 #region Basic Options
-                chromeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
-                chromeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-                chromeOptions.UseSpecCompliantProtocol = true;
+                options.PageLoadStrategy = PageLoadStrategy.Normal;
+                options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
+                options.UseSpecCompliantProtocol = true;
 #if DEBUG
-                chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
-                chromeOptions.SetLoggingPreference(LogType.Client, LogLevel.Debug);
-                chromeOptions.SetLoggingPreference(LogType.Driver, LogLevel.Debug);
-                chromeOptions.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
-                chromeOptions.SetLoggingPreference(LogType.Server, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Client, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Driver, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
                 #endregion Basic Options
 
                 #region Startup Arguments
-                chromeOptions.AddArguments(string.Format("{0}disable-infobars", m_ArgPfx));
-                chromeOptions.AddArguments(string.Format("{0}disable-automation", m_ArgPfx));
-                chromeOptions.AddExcludedArguments(string.Format("{0}enable-automation", m_ArgPfx));
-                if (!m_EnableNotifications)
-                    chromeOptions.AddArguments(string.Format("{0}disable-notifications",m_ArgPfx));
 
-                if (m_EnablePopups)
-                    chromeOptions.AddArguments(string.Format("{0}disable-popup-blocking", m_ArgPfx));
+                string argPfx = this.GetArgPrefix();
+                options.AddArguments(String.Format("{0}disable-infobars", argPfx));
+                options.AddArguments(String.Format("{0}disable-automation", argPfx));
+// Use "--no-sandbox" with caution - exposes unsecure exploits!
+//              options.AddArguments(String.Format("{0}no-sandbox", argPfx));
+// "--disable-dev-shm-usage" is only on linux / docker helpfull
+//              options.AddArguments(String.Format("{0}disable-dev-shm-usage", argPfx));
+
+                bool disableGPU = this.BrowserOptions.DisableGPU;
+                if(disableGPU)
+                    options.AddArguments(String.Format("{0}disable-gpu", argPfx));
+                
+                bool exposeGC = this.BrowserOptions.ExposeGC;
+                if (exposeGC)
+                    options.AddArguments(String.Format("{0}js-flags=--expose-gc", argPfx));
+
+                bool preciseMemoryInfo = this.BrowserOptions.PreciseMemoryInfo;
+                if (preciseMemoryInfo)
+                    options.AddArguments(String.Format("{0}enable-precise-memory-info", argPfx));
+
+                int scriptPID = this.BrowserOptions.ScriptPID;
+                if (scriptPID > 0)
+                {
+                    SetScriptPID(scriptPID);
+                    options.AddArguments(GetArgScriptPID());
+                }
+
+                options.AddExcludedArguments(String.Format("{0}enable-automation", argPfx));
+
+                bool notificationsEnabled = this.BrowserOptions.NotificationsEnabled;
+                if (!notificationsEnabled)
+                    options.AddArguments(String.Format("{0}disable-notifications",argPfx));
+
+                bool popupsEnabled = this.BrowserOptions.PopupsEnabled;
+                if (popupsEnabled)
+                    options.AddArguments(String.Format("{0}disable-popup-blocking", argPfx));
 
                 #endregion Startup Arguments
 
                 # region Capabilities
-                int popups = m_EnablePopups ? 1 : 0; // 1: enable popups, 0: supress popups.
-                chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.popups", popups);
+                int popups = popupsEnabled ? 1 : 0; // 1: enable popups, 0: supress popups.
+                options.AddUserProfilePreference("profile.default_content_setting_values.popups", popups);
 
-                int notifications = m_EnableNotifications ? 1 : 2; // 0: Default, 1: Allow, 2: Block.
-                chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.notifications", notifications);
+                int notifications = notificationsEnabled ? 1 : 2; // 0: Default, 1: Allow, 2: Block.
+                options.AddUserProfilePreference("profile.default_content_setting_values.notifications", notifications);
 
-                List<string> tabDiscardExceptionsList = [];
-//              tabDiscardExceptionsList.Add("web.whatsapp.com");
+                List<string> tabDiscardExceptionsList = new List<string>();
+                tabDiscardExceptionsList.Add("web.whatsapp.com");
 
-                Dictionary<string, object> tabDiscardDict = new Dictionary<string, object>
-                {
-                    { "exceptions", tabDiscardExceptionsList }
-                };
+                Dictionary<string, object> tabDiscardDict = new Dictionary<string, object>();
+                tabDiscardDict.Add("exceptions", tabDiscardExceptionsList);
 
-                Dictionary<string, object> performanceTuningDict = new Dictionary<string, object>
-                {
-                    { "tab_discarding", tabDiscardDict }
-                };
+                Dictionary<string, object> performanceTuningDict = new Dictionary<string, object>();
+                performanceTuningDict.Add("tab_discarding", tabDiscardDict);
 
-                chromeOptions.AddUserProfilePreference("performance_tuning", performanceTuningDict);
+                options.AddUserProfilePreference("performance_tuning", performanceTuningDict);
 
                 #endregion Capabilities
 
@@ -262,55 +316,292 @@ namespace EZSeleniumLib
             catch (Exception ex)
             {
                 Log.Error(ex);
-                chromeOptions = null;
+                options = null;
                 return false;
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
-//        /// <summary>
-//        /// #TODO: this does not work using even when using Selenium 4.x and latest Chrome WebDriver : - (
-//        /// anather approach modifying user prefs could be:
-//        /// a) https://stackoverflow.com/questions/60739613/change-default-download-location-on-Chrome-chromium
-//        /// b) using selenium to navigate to "Chrome://settings/system" and toggle the according switch
-//        /// </summary>
-//        /// <returns></returns>
-//        private bool GetUserPreferenceSleepingTabs(out string prefName, out Dictionary<string, object> prefValue)
-//        {
-//            try
-//            {
-////                Dictionary<string, object> awarenessBubbleSetting = new Dictionary<string, object>
-////                {
-////                    { "shown_times", 1 }
-////                };
-//
-//                Dictionary<string, object> sleepingTabsSetting = new Dictionary<string, object>
-//                {   
-//                    //{"awareness_bubble", awarenessBubbleSetting },
-//                    { "enabled", false }
-//                    //{ "threshold", 43200 }
-//                };
-//
-//                prefName = "sleeping_tabs";
-//                prefValue = sleepingTabsSetting;
-//
-//                return true;
-//            }
-//            catch (Exception ex)
-//            {
-//                Log.Error(ex);
-//                prefName = null;
-//                prefValue = null;
-//                return false;
-//            }
-//            finally
-//            {
-//                Log.Debug(Const.LogDone);
-//            }
-//        }
+        //        /// <summary>
+        //        /// #TODO: this does not work using even when using Selenium 4.x and latest Chrome WebDriver : - (
+        //        /// anather approach modifying user prefs could be:
+        //        /// a) https://stackoverflow.com/questions/60739613/change-default-download-location-on-Chrome-chromium
+        //        /// b) using selenium to navigate to "Chrome://settings/system" and toggle the according switch
+        //        /// </summary>
+        //        /// <returns></returns>
+        //        private bool GetUserPreferenceSleepingTabs(out string prefName, out Dictionary<string, object> prefValue)
+        //        {
+        //            try
+        //            {
+        ////                Dictionary<string, object> awarenessBubbleSetting = new Dictionary<string, object>
+        ////                {
+        ////                    { "shown_times", 1 }
+        ////                };
+        //
+        //                Dictionary<string, object> sleepingTabsSetting = new Dictionary<string, object>
+        //                {   
+        //                    //{"awareness_bubble", awarenessBubbleSetting },
+        //                    { "enabled", false }
+        //                    //{ "threshold", 43200 }
+        //                };
+        //
+        //                prefName = "sleeping_tabs";
+        //                prefValue = sleepingTabsSetting;
+        //
+        //                return true;
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Log.Error(ex);
+        //                prefName = null;
+        //                prefValue = null;
+        //                return false;
+        //            }
+        //            finally
+        //            {
+        //                Log.Debug(DEBUG_DONE);
+        //            }
+        //        }
+
+        /// <summary>
+        /// Execute driver command "Page.reload".
+        /// With "ignoreCache = true" set, shall mimic "Control + F5".
+        /// see -->< https://bugs.chromium.org/p/chromedriver/issues/detail?id=3249 >
+        /// </summary>
+        /// <param name="ignoreCache"></param>
+        /// <returns></returns>
+        public override bool PageReload(bool ignoreCache = true)
+        {
+            try
+            {
+                Log.Debug(DEBUG_START);
+                if (_driver == null)
+                    throw new Exception("_driver is null");
+
+                Dictionary<string, object> details = new Dictionary<string, object>();
+                details["ignoreCache"] = ignoreCache;
+                _driver.ExecuteChromeCommand("Page.reload", details);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Initiate JavaScript VM Garbage Collection.
+        /// </summary>
+        /// <returns></returns>
+        public override void GarbageCollect()
+        {
+            try
+            {
+                bool exposeGC = this.BrowserOptions.ExposeGC;
+                if (!exposeGC)
+                    return;
+
+                this.ExecuteScript("window.gc()");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Wrapper for "IJavaScriptExecutor.ExecuteScript()".
+        /// </summary>
+        /// <param name="script"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public override object ExecuteScript(string script, params object[] args)
+        {
+            try
+            { 
+                if (_driver == null)
+                    throw new Exception("_driver is null");
+
+                IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+                return js.ExecuteScript(script, args);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return null;
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Return a new instance of class MemoryInfo. 
+        /// MemoryInfo is the representation of the json object 
+        /// returned by the JavaScript call "window.performance.memory".
+        /// </summary>
+        /// <returns></returns>
+        public override MemoryInfo GetMemoryInfo()
+        {
+            try
+            { 
+                object obj = this.ExecuteScript("return window.performance.memory");
+                MemoryInfo memoryInfo = new MemoryInfo(obj);
+                return memoryInfo;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return null;
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Write values of MemoryInfo's properties to Log. 
+        /// </summary>
+        /// <returns></returns>
+        public override void DumpMemoryInfo(MemoryInfo memoryInfo)
+        {
+            try
+            {
+                if (memoryInfo == null)
+                    return;
+
+                Log.Info(memoryInfo.ToJsonString());
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Transfer control to a specific TAB identified 
+        /// by it's window handle.
+        /// </summary>
+        /// <returns></returns>
+        public override bool SwitchTo(string handle)
+        {
+            try
+            {
+                Log.Debug(DEBUG_START);
+
+                if (_driver == null)
+                    throw new Exception("_driver is null");
+
+                if (handle == null)
+                    throw new Exception("handle is null");
+
+                Log.Info(string.Format("Switch to TAB '{0}' ...", handle));
+                IWebDriver _newDriver = _driver.SwitchTo().Window(handle);
+                if(_newDriver == null )
+                    throw new Exception("_newDriver is null");
+
+                Log.Info(string.Format("Switch to TAB '{0}' OK", handle));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Open a new TAB and transfer control to the newly opened TAB.
+        /// </summary>
+        /// <param name="closeOldTab">if set to true, closes the old TAB
+        /// after the control has been successfully transfered to the newly opened TAB</param>
+        /// <returns></returns>
+        public override bool SwitchToNewTab(bool closeOldTab = true)
+        {
+            try
+            {
+                Log.Debug(DEBUG_START);
+
+                if (_driver == null)
+                    throw new Exception("_driver is null");
+
+                // Store the old TAB list.
+                List<string> oldTabList = new List<string>(_driver.WindowHandles);
+                if (oldTabList == null)
+                    throw new Exception("oldTabList is null");
+
+                // store handle to current / old TAB, just fyi.
+                string oldTabHandle = _driver.CurrentWindowHandle;
+                if (oldTabHandle == null)
+                    throw new Exception("oldTabHandle is null");
+
+                // JavaScript "window.open()" opens a new TAB,
+                // but Selenium Driver does not transfer control
+                // to the newly opened TAB implizitly.
+                Log.Info("Open new TAB ...");
+                object objOpenResult = this.ExecuteScript("window.open()");
+
+                // although the scipt should execute "synchronously",
+                // give browser some time to render the newly opened TAB.
+                // Depending on browser implementation, there might be some 
+                // initial loading going on which might require some time to finish.
+                Thread.Sleep(1000);
+
+                // obtain "new" TAB list
+                List<string> newTabList = new List<string>(_driver.WindowHandles);
+                // the last element within newTabList contains the handle to the newly opend TAB
+                int newTabIndex = newTabList.Count - 1;
+                string newTabHandle = newTabList[newTabIndex];
+
+                if (closeOldTab)
+                {
+                    // before switching to new TAB close "current" TAB _NOW_.
+                    // It is still under Selenium Driver's control, as long
+                    // as the driver.SwitchTo() command as not been issued.
+                    Log.Info("Close old TAB ...");
+                    object objCloseResult = this.ExecuteScript("window.close()");
+                    Thread.Sleep(1000);
+                }
+
+                Log.Info("Switch to new TAB ...");
+                if (!SwitchTo(newTabHandle))
+                    throw new Exception("Switch to new TAB failed");
+
+                Log.Info("Switch to new TAB OK");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
 
     } // class
 
