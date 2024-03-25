@@ -149,12 +149,16 @@
             // 
             // comboBoxClientNo
             // 
+            comboBoxClientNo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBoxClientNo.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBoxClientNo.FormattingEnabled = true;
             comboBoxClientNo.Location = new Point(121, 49);
             comboBoxClientNo.Name = "comboBoxClientNo";
             comboBoxClientNo.Size = new Size(465, 33);
             comboBoxClientNo.TabIndex = 5;
             comboBoxClientNo.Text = "06-DB-Systel";
+            comboBoxClientNo.SelectedIndexChanged += comboBoxClientNo_SelectedIndexChanged;
+            comboBoxClientNo.SelectedValueChanged += comboBoxClientNo_SelectedValueChanged;
             // 
             // labelClientNo
             // 
@@ -167,12 +171,13 @@
             // 
             // comboBoxWebDriver
             // 
+            comboBoxWebDriver.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxWebDriver.FormattingEnabled = true;
             comboBoxWebDriver.Location = new Point(121, 125);
             comboBoxWebDriver.Name = "comboBoxWebDriver";
             comboBoxWebDriver.Size = new Size(174, 33);
             comboBoxWebDriver.TabIndex = 8;
-            comboBoxWebDriver.Text = "Chrome";
+            comboBoxWebDriver.SelectedIndexChanged += comboBoxWebDriver_SelectedIndexChanged;
             // 
             // labelWebDriver
             // 
