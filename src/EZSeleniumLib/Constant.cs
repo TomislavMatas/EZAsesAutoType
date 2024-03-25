@@ -2,7 +2,7 @@
 // File: "Constant.cs"
 //
 // Summary:
-// Cononstants with "public" relevance.
+// Constants with "public" relevance.
 //
 // Revision History: 
 // 2024/03/24:TomislavMatas: Version "1.0.0.0"
@@ -12,25 +12,69 @@
 namespace EZSeleniumLib
 {
     /// <summary>
-    /// Assembly specific constants.
+    /// Constants with "public" relevance.
     /// </summary>
     public static class Constant
     {
         #region WebDriver
-        public const string WebDriverChrome = "Chrome";
-        public const string WebDriverChromeExe = "chromedriver.exe";
+
+        #region "Chrome"
+
         /// <summary>
-        /// WebDriver version used on Build.
+        /// WebDriver name.
+        /// </summary>
+        public const string WebDriverChrome = "Chrome";
+        
+        /// <summary>
+        /// WebDriver executable.
+        /// </summary>
+        public const string WebDriverChromeExe = "chromedriver.exe";
+        
+        /// <summary>
+        /// WebDriver executable version used during build.
         /// </summary>
         public const string WebDriverChromeVersion = "125.0.6368.2";
-        public const string WebDriverEdge = "Edge";
-        public const string WebDriverEdgeExe = "MicrosoftWebDriver.exe";
+
+        #endregion
+
+        #region "Edge"
+
         /// <summary>
-        /// WebDriver version used on Build.
+        /// "Logical" WebDriver name.
+        /// </summary>
+        public const string WebDriverEdge = "Edge";
+
+        /// <summary>
+        /// WebDriver executable.
+        /// </summary>
+        public const string WebDriverEdgeExe = "MicrosoftWebDriver.exe";
+
+        /// <summary>
+        /// WebDriver executable version used during build.
         /// </summary>
         public const string WebDriverEdgeVersion = "124.0.2464.2";
-        public const string WebDriverInitModeSimple = "simple";
-        public const string WebDriverInitModeExtended = "extended";
+
+        #endregion
+
+        #region "Firefox"
+
+        /// <summary>
+        /// "Logical" WebDriver name.
+        /// </summary>
+        public const string WebDriverFirefox = "Chrome";
+
+        /// <summary>
+        /// WebDriver executable.
+        /// </summary>
+        public const string WebDriverFirefoxExe = "geckodriver.exe";
+
+        /// <summary>
+        /// WebDriver executable version used during build.
+        /// </summary>
+        public const string WebDriverFirefoxVersion = "0.34.0";
+
+        #endregion
+
         #endregion
 
     } // class
