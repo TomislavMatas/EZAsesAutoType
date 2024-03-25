@@ -2,10 +2,10 @@
 // File: "BrowserBase.cs"
 //
 // Summary:
-// Base class used for abstract browser implementations 
+// Base class used for browser specific implementations 
 // using Selenium's WebDriver Classes.
-// Place wrapper for the abstract Selenium WebDriver 
-// helper methods here and implmenent in respective descendents.
+// Place wrapper for the relevant Selenium WebDriver 
+// methods here or in respective descendents.
 //
 // Notes:
 // "OpenQA.Selenium.Support.UI.ExpectedConditions" has been deprecated, see details on
@@ -17,16 +17,15 @@
 // * Initial version.
 //
 
-using System.Collections.ObjectModel;
-
+using System;
+using System.Diagnostics;
+using System.Management;
+using System.Runtime.InteropServices;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 using log4net;
-
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Support.UI;
-
-using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace EZSeleniumLib
 {
@@ -37,107 +36,236 @@ namespace EZSeleniumLib
     /// Selenium WebDriver methods, which in turn can
     /// be extended within specifc descendants - if needed.
     /// </summary>
-    public abstract class BrowserBase
+    public abstract partial class BrowserBase
     {
         #region log4net
-        private static ILog? m_Log = null;
+        private static ILog _log = null;
         private static ILog Log
         {
             get
             {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(BrowserBase));
-                return m_Log;
+                if (_log == null)
+                    _log = LogManager.GetLogger(typeof(BrowserBase));
+                return _log;
             }
         }
         #endregion
 
-        #region configuration valuez
-        private string? m_WebDriver = null;
-        private string WebDriver
-        {
-            get
-            {
-                if (this.m_WebDriver == null)
-                    this.m_WebDriver = ConfigSettings.GetWebDriver();
-                return this.m_WebDriver;
-            }
-            set
-            {
-                this.m_WebDriver = value;
-            }
-        }
-        public string GetWebDriver()
-        {
-            return this.WebDriver;
-        }
-        public string SetWebDriver(string value)
-        {
-            string prev = this.GetWebDriver();
-            this.WebDriver = value;
-            return prev;
-        }
-
-        private string? m_WebDriverInitMode = null;
-        private string WebDriverInitMode
-        {
-            get
-            {
-                if (m_WebDriverInitMode == null)
-                    m_WebDriverInitMode = ConfigSettings.GetWebDriverInitMode();
-                return m_WebDriverInitMode;
-            }
-            set
-            {
-                m_WebDriverInitMode = value;
-            }
-        }
-        public string GetWebDriverInitMode()
-        {
-            return this.WebDriverInitMode;
-        }
-        public string SetWebDriverInitMode(string value)
-        {
-            string prev = this.GetWebDriverInitMode();
-            this.WebDriverInitMode = value;
-            return prev;
-        }
-
-        private int? m_WebDriverDelay = null;
-        private int WebDriverDelay
-        {
-            get
-            {
-                if (this.m_WebDriverDelay == null)
-                    this.m_WebDriverDelay = ConfigSettings.GetWebDriverDelay();
-                return (int)this.m_WebDriverDelay;
-            }
-            set
-            {
-                this.m_WebDriverDelay = value;
-            }
-        }
-        public int GetWebDriverDelay()
-        {
-            return this.WebDriverDelay;
-        }
-        public int SetWebDriverDelay(int value)
-        {
-            int prev = this.GetWebDriverDelay();
-            this.WebDriverDelay = value;
-            return prev;
-        }
-
-        protected bool m_EnablePopups = false; // #TODO: implement config get/set
-        protected bool m_EnableNotifications = false; // #TODO: implement config get/set 
-
-        #endregion 
-
         #region protected memberz
 
-        protected RemoteWebDriver? m_Driver = null;
-        protected DriverService? m_Service = null;
+        protected const string DEBUG_START = Consts.DEBUG_START;
+        protected const string DEBUG_DONE = Consts.DEBUG_DONE;
 
+        private RemoteWebDriver m_Driver = null;
+        protected RemoteWebDriver Driver
+        {
+            get
+            {
+                if (m_Driver == null)
+                    m_Driver = this.GetDriver();
+
+                return m_Driver;
+            }
+            set 
+            { 
+                m_Driver = value; 
+            }
+        }
+        protected abstract RemoteWebDriver GetDriver();
+
+        /// <summary>
+        /// Return reference on current instance of IWebDriver.
+        /// </summary>
+        /// <returns></returns>
+        public IWebDriver GetWebDriver()
+        {
+            return GetDriver();
+        }
+
+        private DriverService m_Service = null;
+        protected DriverService Service
+        {
+            get
+            {
+                if (m_Service == null)
+                    m_Service = this.GetService();
+
+                return m_Service;
+            }
+            set 
+            { 
+                m_Service = value; 
+            }
+        }
+        protected abstract DriverService GetService();
+
+        /// <summary>
+        /// Singleton helper variable.
+        /// </summary>
+        private BrowserOptions _browserOptions = null;
+
+        /// <summary>
+        /// Browser Options.
+        /// </summary>
+        protected BrowserOptions BrowserOptions
+        {
+            get
+            {
+                if(_browserOptions == null)
+                    _browserOptions = new BrowserOptions();
+
+                return _browserOptions;
+            }
+            set
+            {
+                _browserOptions= value;
+            }
+        }
+
+        /// <summary>
+        /// The browser specific startup argument decoration prefix.
+        /// Either "--", "-", "/" or "" depending on browser implementation. 
+        /// </summary>
+        protected string _argPfx = null;
+
+        /// <summary>
+        /// Set startup argument decoration prefix.
+        /// Either "--", "-", "/" or "" depending on browser implementation. 
+        /// Requires implementation in descendants.
+        /// </summary>
+        protected abstract void SetArgPrefix();
+
+        /// <summary>
+        /// Return startup argument decoration prefix.
+        /// Either "--", "-", "/" or "" depending on browser implementation. 
+        /// </summary>
+        protected string GetArgPrefix()
+        {
+            if (_argPfx == null)
+                SetArgPrefix();
+
+            return _argPfx;
+        }
+
+        /// <summary>
+        /// The requestor script's process id.
+        /// see: ->< https://stackoverflow.com/questions/47789640/get-handle-to-opened-chrome-window-in-selenium > 
+        /// </summary>
+        private int _scriptPID;
+
+        /// <summary>
+        /// Set requestor script's process id.
+        /// </summary>
+        protected void SetScriptPID(int scriptPID)
+        {
+            _scriptPID = scriptPID; 
+        }
+
+        /// <summary>
+        /// Get requestor script's process id.
+        /// </summary>
+        protected int GetScriptPID()
+        {
+            return _scriptPID;
+        }
+
+        /// <summary>
+        /// Get requestor script's process id as formated command line argument.
+        /// </summary>
+        protected string GetArgScriptPID()
+        {
+            string argScriptPID = String.Format("{0}{1}{2}", GetArgPrefix(), Consts.ARG_SCRIPTPID, GetScriptPID());
+            return argScriptPID;
+        }
+
+        /// <summary>
+        /// The browser specific executable process name.
+        /// </summary>
+        protected string _processName = null;
+
+        /// <summary>
+        /// Set the browser specific executable process name.
+        /// </summary>
+        protected abstract void SetProcessName();
+
+        /// <summary>
+        /// Get the browser specific executable process name.
+        /// </summary>
+        protected string GetProcessName()
+        {
+            if (_processName == null)
+                SetProcessName();
+
+            return _processName;
+        }
+
+        #endregion
+
+        #region private memberz
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+
+        private enum GetWindowCmd : uint
+        {
+            GW_HWNDFIRST = 0,
+            GW_HWNDLAST = 1,
+            GW_HWNDNEXT = 2,
+            GW_HWNDPREV = 3,
+            GW_OWNER = 4,
+            GW_CHILD = 5,
+            GW_ENABLEDPOPUP = 6
+        }
+
+        private void EvalProcessByScriptPID()
+        {
+            int scriptPID = this.BrowserOptions.ScriptPID;
+            if (scriptPID <= 0)
+                return;
+
+            string processName = this.GetProcessName();
+            System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName(processName);
+            for (int p = 0; p < processes.Length; p++)
+            {
+                ManagementObjectSearcher commandLineSearcher = new ManagementObjectSearcher("SELECT CommandLine FROM Win32_Process WHERE ProcessId = " + processes[p].Id);
+                String commandLine = "";
+                foreach (ManagementObject commandLineObject in commandLineSearcher.Get())
+                    commandLine += (String)commandLineObject["CommandLine"];
+
+                string argPart = String.Format("{0}{1}", this.GetArgPrefix(), Consts.ARG_SCRIPTPID);
+                string regExp = String.Format("{0}(.+?) ", argPart);
+                String pidStr = (new Regex(regExp)).Match(commandLine).Groups[1].Value;
+                if (!pidStr.Equals(String.Empty) && Convert.ToInt32(pidStr).Equals(scriptPID))
+                {
+                    _process = processes[p];
+                    return;
+                }
+            }
+        }
+
+        private Process _process = null;
+        private Process Process
+        {
+            get
+            {
+                if (_process == null)
+                    EvalProcessByScriptPID();
+
+                return _process;
+            }
+            set
+            {
+                _process = value;
+            }
+        }
+
+        private IntPtr GetChildWindow(IntPtr hwnd)
+        {
+            return GetWindow(hwnd, (uint)GetWindowCmd.GW_CHILD);
+        }
 
         #endregion 
 
@@ -148,11 +276,9 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(Const.LogStart);
-                m_EnablePopups = false;
-                m_EnableNotifications = false;
-                if (!Initialize())
-                    throw new Exception(nameof(Initialize) + Const.LogFail);
+                Log.Debug(DEBUG_START);
+                if (!this.Initialize())
+                    throw new Exception("Initialize failed");
             }
             catch (Exception ex)
             {
@@ -160,22 +286,21 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
         /// <summary>
         /// Custom constructor.
         /// </summary>
-        public BrowserBase(bool enablePopups, bool enableNotifications)
+        public BrowserBase(BrowserOptions browserOptions)
         {
             try
             {
-                Log.Debug(Const.LogStart);
-                m_EnablePopups = enablePopups;
-                m_EnableNotifications = enableNotifications;
-                if (!Initialize())
-                    throw new Exception(nameof(Initialize) + Const.LogFail);
+                Log.Debug(DEBUG_START);
+                this._browserOptions = browserOptions;
+                if (!this.Initialize())
+                    throw new Exception("Initialize failed");
             }
             catch (Exception ex)
             {
@@ -183,9 +308,8 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
-
         }
 
         /// <summary>
@@ -195,9 +319,9 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(Const.LogStart);
-                if(!Cleanup())
-                    throw new Exception(nameof(Cleanup) + Const.LogFail);
+                Log.Debug(DEBUG_START);
+                if(!this.Cleanup())
+                    throw new Exception("Cleanup failed");
             }
             catch (Exception ex)
             {
@@ -205,47 +329,9 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
-
-        /// <summary>
-        /// Initialize specific WebDriver instance.
-        /// </summary>
-        /// <returns></returns>
-        public bool Initialize()
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-
-                string initMode = this.GetWebDriverInitMode();
-                if (string.IsNullOrEmpty(initMode))
-                    throw new Exception(nameof(initMode) + Const.LogInvalid);
-
-                if (Constant.WebDriverInitModeSimple.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return this.InitializeSimple();
-
-                if (Constant.WebDriverInitModeExtended.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return InitializeExtended();
-
-                throw new Exception(nameof(initMode) + Const.LogNotImpl);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        #region abstrct methodz
-        public abstract bool InitializeExtended();
-        public abstract bool InitializeSimple();
-        #endregion
 
         /// <summary>
         /// Graceful teardown of browser instance.
@@ -255,18 +341,18 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(Const.LogStart);
-                if (m_Driver != null)
+                Log.Debug(DEBUG_START);
+                if (Driver != null)
                 {
-                    m_Driver.Close();
-                    m_Driver.Quit();
-                    m_Driver.Dispose();
-                    m_Driver = null;
+                    Driver.Close();
+                    Driver.Quit();
+                    Driver.Dispose();
+                    Driver = null;
                 }
-                if (m_Service != null)
+                if (Service != null)
                 {
-                    m_Service.Dispose();
-                    m_Service = null;
+                    Service.Dispose();
+                    Service = null;
                 }
 
                 return true;
@@ -278,337 +364,101 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
         /// <summary>
-        /// Wrapper for "m_Driver.Url = url;".
+        /// Write current Browser's MemoryInfo's properties to Log.
+        /// Failrues when calling this function should be swallowed silently. 
         /// </summary>
-        /// <param name="url"></param>
         /// <returns></returns>
-        public bool SetUrl(string url)
+        public void DumpMemoryInfo()
         {
             try
             {
-                Log.Debug(Const.LogStart);
-
-                if (String.IsNullOrEmpty(url))
-                    throw new ArgumentNullException(nameof(url));
-
-                if (!IsValidURI(url))
-                    throw new ArgumentException(nameof(url) + Const.LogInvalid);
-
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
-
-                m_Driver.Url = url;
-
-                return true;
+                MemoryInfo memoryInfo = this.GetMemoryInfo();
+                this.DumpMemoryInfo(memoryInfo);
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                return false;
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
 
         /// <summary>
-        /// Wrapper for "return m_Driver.Url;".
+        /// Enumartion of some special key chords.
         /// </summary>
+        public enum KeyChord
+        {
+            /// <summary>
+            /// CTRL + T = New Tab
+            /// </summary>
+            CTRL_T,
+            /// <summary>
+            /// CTRL + W = Close (current) Tab
+            /// </summary>
+            CTRL_W
+        }
+
+        /// <summary>
+        /// ->< https://stackoverflow.com/questions/2664804/is-it-possible-to-sendkeys-post-message-directly-to-a-htmlelement-rather-than >
+        /// "<...>
+        /// Use p/invoke GetWindow with the child command to repeatedly get 
+        /// child window handles until you get down to one that responds 
+        /// to GetClassName with "Internet Explorer_Server" or something like that.
+        /// Then PostMessage on that hWnd and the activeElement of the WebBrowser 
+        /// will recieve them.Make sure you have the WM_KEYUP in there as that 
+        /// seems to be the important one.
+        /// <...>"
+        /// </summary>
+        /// <param name="process"></param>
         /// <returns></returns>
-        public string? GetUrl()
+        private Process GetServerProcess(Process process)
+        {
+            return process;
+        }
+
+        public bool SendKeyChord(KeyChord keyChord)
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                Process p = this.Process;
+                if (p == null)
+                    throw new Exception("process is null");
 
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
+                int browserPID = p.Id;
+                IntPtr hwnd = p.MainWindowHandle;
+//hwnd = GetChildWindow(hwnd);
 
-                return m_Driver.Url;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
+                uint MSG_KEY_DOWN = 0x0100;
+                uint MSG_KEY_UP = 0x0101;
+                IntPtr KEY_CTRL = new IntPtr(0x11);
 
-        /// <summary>
-        /// Basic validation of given url.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static bool IsValidURI(string url)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-
-                if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult))
-                    return false;
-
-//                if (uriResult.Scheme != Uri.UriSchemeHttps)
-//                    return false;
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.Navigate().GoToUrl(url);".
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public bool GoToUrl(string url)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-
-                if (String.IsNullOrEmpty(url))
-                    throw new ArgumentNullException(nameof(url));
-
-                if (!IsValidURI(url))
-                    throw new ArgumentException(nameof(url) + Const.LogInvalid);
-
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
-
-                Log.Debug(string.Format("url={0}",url));
-                m_Driver.Navigate().GoToUrl(url);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.FindElement(by);".
-        /// </summary>
-        /// <param name="by"></param>
-        /// <returns></returns>
-        public IWebElement? FindElement(By by)
-        {
-            return this.FindElement(by, timeoutInSeconds: 0);
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.FindElement(By.XPath(xPath));".
-        /// </summary>
-        /// <param name="xPath"></param>
-        /// <returns></returns>
-        public IWebElement? FindElement(string xPath)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                Log.Debug(string.Format("xPath={0}", xPath));
-                return this.FindElement(By.XPath(xPath), timeoutInSeconds: 0);
-            }
-            catch( OpenQA.Selenium.WebDriverTimeoutException)
-            {
-                Log.Debug("WebDriverTimeout");
-                return null;
-            }
-            catch ( OpenQA.Selenium.NoSuchElementException)
-            {
-                Log.Debug("NoSuchElement");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.FindElement(By.XPath(xPath));".
-        /// If "timeoutInSeconds" has a value > 0, 
-        /// a sepcific "WebDriverWait.Until()" call will be added.
-        /// </summary>
-        /// <param name="xPath"></param>
-        /// <param name="timeoutInSeconds"></param>
-        /// <returns></returns>
-        public IWebElement? FindElement(string xPath, int timeoutInSeconds)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                Log.Debug(string.Format("xPath={0}", xPath));
-                return this.FindElement(By.XPath(xPath), timeoutInSeconds);
-            }
-            catch(OpenQA.Selenium.WebDriverTimeoutException)
-            {
-                Log.Debug("WebDriverTimeout");
-                return null;
-            }
-            catch(OpenQA.Selenium.NoSuchElementException)
-            {
-                Log.Debug("NoSuchElement");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.FindElement(by);".
-        /// If "timeoutInSeconds" has a value > 0, 
-        /// a sepcific "WebDriverWait.Until()" call will be added.
-        /// </summary>
-        /// <param name="by"></param>
-        /// <param name="timeoutInSeconds"></param>
-        /// <returns></returns>
-        public IWebElement? FindElement( By by, int timeoutInSeconds )
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
-
-                if (timeoutInSeconds > 0)
+                switch (keyChord)
                 {
-                    WebDriverWait wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                    wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-                    wait.IgnoreExceptionTypes(typeof(UnhandledAlertException));
-                    wait.IgnoreExceptionTypes(typeof(WebDriverException));
-                    return wait.Until(drv => drv.FindElement(by));
+                    case KeyChord.CTRL_T:
+//                        IntPtr key = new IntPtr(0x54); // "T" (Uppercase)
+                        IntPtr key = new IntPtr(0x74); // "t" (lowercase)
+                        PostMessage(hwnd, MSG_KEY_DOWN, KEY_CTRL, IntPtr.Zero);
+                        PostMessage(hwnd, MSG_KEY_DOWN, key, IntPtr.Zero);
+                        PostMessage(hwnd, MSG_KEY_UP, key, IntPtr.Zero);
+                        PostMessage(hwnd, MSG_KEY_UP, KEY_CTRL, IntPtr.Zero);
+                        return true;
+                    case KeyChord.CTRL_W:
+//                      IntPtr KEY_W = new IntPtr(0x57); // "W" (Uppercase)
+                        IntPtr KEY_w = new IntPtr(0x77); // "w" (lppercase)
+                        PostMessage(hwnd, MSG_KEY_DOWN, KEY_CTRL, IntPtr.Zero);
+                        PostMessage(hwnd, MSG_KEY_DOWN, KEY_w, IntPtr.Zero);
+                        PostMessage(hwnd, MSG_KEY_UP, KEY_w, IntPtr.Zero);
+                        PostMessage(hwnd, MSG_KEY_UP, KEY_CTRL, IntPtr.Zero);
+                        return true;
                 }
-                return m_Driver.FindElement(by);
-            }
-            catch (OpenQA.Selenium.WebDriverTimeoutException)
-            {
-                Log.Debug("WebDriverTimeout");
-                return null;
-            }
-            catch (OpenQA.Selenium.NoSuchElementException)
-            {
-                Log.Debug("NoSuchElement");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.FindElements(by);".
-        /// </summary>
-        /// <param name="by"></param>
-        /// <returns></returns>
-        public ReadOnlyCollection<IWebElement>? FindElements(By by)
-        {
-            return this.FindElements(by, timeoutInSeconds: 0);
-        }
-
-        /// <summary>
-        /// Wrapper for "m_Driver.FindElements(by);".
-        /// If "timeoutInSeconds" has a value > 0, 
-        /// a sepcific "WebDriverWait.Until()" call will be added.
-        /// </summary>
-        /// <param name="by"></param>
-        /// <param name="timeoutInSeconds"></param>
-        /// <returns></returns>
-        public ReadOnlyCollection<IWebElement>? FindElements(By by, int timeoutInSeconds)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
-
-                if (timeoutInSeconds > 0)
-                {
-                    WebDriverWait wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                    wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-                    wait.IgnoreExceptionTypes(typeof(UnhandledAlertException));
-                    wait.IgnoreExceptionTypes(typeof(WebDriverException));
-                    return wait.Until(drv => drv.FindElements(by));
-                }
-                return m_Driver.FindElements(by);
-            }
-            catch (OpenQA.Selenium.WebDriverTimeoutException)
-            {
-                Log.Debug("WebDriverTimeout");
-                return null;
-            }
-            catch (OpenQA.Selenium.NoSuchElementException)
-            {
-                Log.Debug("NoSuchElement");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        /// Moves the mouse to the specified element. 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns></returns>
-        public bool MoveToElement(IWebElement element)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                Actions actions = new Actions(m_Driver);
-                actions.MoveToElement(element).Perform();
-                int delay = this.GetWebDriverDelay();
-                Thread.Sleep(delay);
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
@@ -617,131 +467,73 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                Log.Debug(DEBUG_DONE);
             }
         }
+
+        #region abstract memberz
 
         /// <summary>
-        /// Click the specified element. 
+        /// Initialize specific browser instance.
+        /// Must be implement in descandants.
         /// </summary>
-        /// <param name="element"></param>
         /// <returns></returns>
-        public bool ClickElement(IWebElement element)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                Actions actions = new Actions(m_Driver);
-                actions.MoveToElement(element).Click().Perform();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
+        public abstract bool Initialize();
 
         /// <summary>
-        /// Wrapper for "wait.Until(ExpectedConditions.AlertIsPresent())".
+        /// Execute driver command "Page.reload".
+        /// Shall mimic Control + F5.
+        /// see ->< https://bugs.chromium.org/p/chromedriver/issues/detail?id=3249 >
         /// </summary>
-        /// <param name="timeoutInSeconds"></param>
+        /// <param name="ignoreCache"></param>
         /// <returns></returns>
-        public IAlert? WaitUntilAlertIsPresent(int timeoutInSeconds)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
+        public abstract bool PageReload(bool ignoreCache);
 
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
+        /// <summary>
+        /// Initiate JavaScript VM Garbage Collection.
+        /// </summary>
+        /// <returns></returns>
+        public abstract void GarbageCollect();
 
-                WebDriverWait wait = new WebDriverWait(m_Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
-                if (alert == null)
-                    throw new Exception(nameof(alert) + Const.LogIsNull);
+        /// <summary>
+        /// Wrapper for "IJavaScriptExecutor.ExecuteScript()".
+        /// </summary>
+        /// <param name="script"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public abstract object ExecuteScript(string script, params object[] args);
 
-                alert = m_Driver.SwitchTo().Alert();
+        /// <summary>
+        /// Return a new instance of class MemoryInfo. 
+        /// MemoryInfo is the representation of the json object 
+        /// returned by the JavaScript call "window.performance.memory".
+        /// </summary>
+        /// <returns></returns>
+        public abstract MemoryInfo GetMemoryInfo();
 
-                return alert;
+        /// <summary>
+        /// Write values of MemoryInfo's properties to Log. 
+        /// </summary>
+        /// <returns></returns>
+        public abstract void DumpMemoryInfo(MemoryInfo memoryInfo);
 
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
+        /// <summary>
+        /// Transfer control to a specific TAB identified 
+        /// by it's window hwnd.
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool SwitchTo(string handle);
 
-        public bool AlertAccept(IAlert alert)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
+        /// <summary>
+        /// Open a new TAB and immdiatly transfer control 
+        /// to the newly opened TAB.
+        /// </summary>
+        /// <param name="closeOldTab">if set to true, closes the old TAB also
+        /// after the control has been successfully transfered to the newly opened TAB</param>
+        /// <returns></returns>
+        public abstract bool SwitchToNewTab(bool closeOldTab = true);
 
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
-
-                // first chance fallback
-                if (alert == null)
-                    alert = m_Driver.SwitchTo().Alert();
-
-                if (alert == null)
-                    throw new Exception(nameof(alert) + Const.LogIsNull);
-
-                alert.Accept();
-
-                return true; 
-            }
-            catch (Exception e)
-            {
-                Log.Error(e);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        public bool AlertDismiss(IAlert alert)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-
-                if (m_Driver == null)
-                    throw new Exception(nameof(m_Driver) + Const.LogIsNull);
-
-                // first chance fallback
-                if (alert == null)
-                    alert = m_Driver.SwitchTo().Alert();
-
-                if (alert == null)
-                    throw new Exception(nameof(alert) + Const.LogIsNull);
-
-                alert.Dismiss();
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                Log.Error(e);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
+        #endregion abstract memberz
 
     } // class
 
