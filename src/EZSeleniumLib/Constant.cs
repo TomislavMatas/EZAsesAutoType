@@ -61,7 +61,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// "Logical" WebDriver name.
         /// </summary>
-        public const string WebDriverFirefox = "Chrome";
+        public const string WebDriverFirefox = "Firefox";
 
         /// <summary>
         /// WebDriver executable.

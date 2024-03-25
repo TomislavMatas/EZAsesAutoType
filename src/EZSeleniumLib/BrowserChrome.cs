@@ -37,7 +37,7 @@ namespace EZSeleniumLib
     /// within system's search path.
     /// See "README.md" for details.
     /// </summary>
-    public class BrowserChrome : BrowserBase
+    internal class BrowserChrome : BrowserBase
     {
         #region log4net
 

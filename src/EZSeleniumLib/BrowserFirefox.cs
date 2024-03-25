@@ -37,7 +37,7 @@ namespace EZSeleniumLib
     /// within system's search path.
     /// See "README.md" for details.
     /// </summary>
-    public class BrowserFirefox : BrowserBase
+    internal class BrowserFirefox : BrowserBase
     {
         #region log4net
 
