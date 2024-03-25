@@ -77,7 +77,10 @@ namespace EZSeleniumLib
                 if (m_AssemblyPath == null)
                 {
                     FileInfo file = new FileInfo(ExecutingAssembly.Location);
-                    m_AssemblyPath = file.DirectoryName;
+                    if (file.DirectoryName != null)
+                        m_AssemblyPath = file.DirectoryName;
+                    else
+                        m_AssemblyPath = ".";
                 }
                 return m_AssemblyPath;
             }
