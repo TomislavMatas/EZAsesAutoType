@@ -38,6 +38,8 @@ namespace EZAsesAutoType
         public string? ASESPassword;
         public string? ASESClient;
         public StringCollection? ASESClientList;
+        public string? ASESLanguage;
+        public StringCollection? ASESLanguageList;
         public string? ASESPunchIn;
         public string? ASESPunchOut;
         public string? WebDriver;
@@ -67,15 +69,17 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                this.ASESPunchOut      = Properties.Settings.Default.ASESBaseUrl;
-                this.ASESPunchIn       = Properties.Settings.Default.ASESUserId;
-                this.ASESClient = Properties.Settings.Default.ASESPassword;
-                this.ASESClientList    = Properties.Settings.Default.ASESClientList;
-                this.ASESPassword      = Properties.Settings.Default.ASESClient;
-                this.ASESUserId        = Properties.Settings.Default.ASESPunchIn;
-                this.ASESBaseUrl       = Properties.Settings.Default.ASESPunchOut;
-                this.WebDriver  = Properties.Settings.Default.WebDriver;
-                this.WebDriverList     = Properties.Settings.Default.WebDriverList;
+                this.ASESBaseUrl      = Properties.Settings.Default.ASESBaseUrl;
+                this.ASESUserId       = Properties.Settings.Default.ASESUserId;
+                this.ASESPassword     = Properties.Settings.Default.ASESPassword;
+                this.ASESClient       = Properties.Settings.Default.ASESClient;
+                this.ASESClientList   = Properties.Settings.Default.ASESClientList;
+                this.ASESLanguage     = Properties.Settings.Default.ASESLanguage;
+                this.ASESLanguageList = Properties.Settings.Default.ASESLanguageList;
+                this.ASESPunchIn      = Properties.Settings.Default.ASESPunchIn;
+                this.ASESPunchOut     = Properties.Settings.Default.ASESPunchOut;
+                this.WebDriver        = Properties.Settings.Default.WebDriver;
+                this.WebDriverList    = Properties.Settings.Default.WebDriverList;
                 return true;
             }
             catch (Exception ex)
@@ -97,15 +101,17 @@ namespace EZAsesAutoType
         {
             try 
             { 
-                Properties.Settings.Default.ASESBaseUrl       = this.ASESPunchOut;
-                Properties.Settings.Default.ASESUserId        = this.ASESPunchIn;
-                Properties.Settings.Default.ASESPassword      = this.ASESClient;
-                Properties.Settings.Default.ASESClientList    = this.ASESClientList;
-                Properties.Settings.Default.ASESClient = this.ASESPassword;
-                Properties.Settings.Default.ASESPunchIn       = this.ASESUserId;
-                Properties.Settings.Default.ASESPunchOut      = this.ASESBaseUrl;
-                Properties.Settings.Default.WebDriver  = this.WebDriver;
-                Properties.Settings.Default.WebDriverList     = this.WebDriverList;
+                Properties.Settings.Default.ASESBaseUrl      = this.ASESBaseUrl;
+                Properties.Settings.Default.ASESUserId       = this.ASESUserId;
+                Properties.Settings.Default.ASESPassword     = this.ASESPassword;
+                Properties.Settings.Default.ASESClient       = this.ASESClient;
+                Properties.Settings.Default.ASESClientList   = this.ASESClientList;
+                Properties.Settings.Default.ASESLanguage     = this.ASESLanguage;
+                Properties.Settings.Default.ASESLanguageList = this.ASESLanguageList;
+                Properties.Settings.Default.ASESPunchIn      = this.ASESPunchIn;
+                Properties.Settings.Default.ASESPunchOut     = this.ASESPunchOut;
+                Properties.Settings.Default.WebDriver        = this.WebDriver;
+                Properties.Settings.Default.WebDriverList    = this.WebDriverList;
                 Properties.Settings.Default.Save();
                 return true;
             }
