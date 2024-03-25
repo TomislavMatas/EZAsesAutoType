@@ -174,15 +174,17 @@ namespace EZAsesAutoType
             try
             {
                 UserSettings userSettings = new UserSettings();
-                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
-                userSettings.ASESClient = this.comboBoxClientNo.Text;
-                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
-                userSettings.ASESPassword = this.textBoxPwd.Text;
-                userSettings.ASESPunchIn = this.textBoxPunchIn.Text;
-                userSettings.ASESPunchOut = this.textBoxPunchOut.Text;
-                userSettings.ASESUserId = this.textBoxUid.Text;
-                userSettings.WebDriver = this.comboBoxWebDriver.Text;
-                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                userSettings.ASESBaseUrl      = this.textBoxUrl.Text;
+                userSettings.ASESUserId       = this.textBoxUid.Text;
+                userSettings.ASESPassword     = this.textBoxPwd.Text;
+                userSettings.ASESClient       = this.comboBoxClientNo.Text;
+                userSettings.ASESClientList   = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
+                userSettings.ASESLanguage     = this.comboBoxLanguage.Text;
+                userSettings.ASESLanguageList = this.GetComboBoxItemsAsStringCollection(this.comboBoxLanguage);
+                userSettings.ASESPunchIn      = this.textBoxPunchIn.Text;
+                userSettings.ASESPunchOut     = this.textBoxPunchOut.Text;
+                userSettings.WebDriver        = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList    = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 return userSettings;
             }
             catch (Exception ex)
@@ -225,6 +227,48 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool InitializeComboBox(ComboBox comboBox, StringCollection itemList, string defaultValue)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (comboBox == null)
+                    throw new ArgumentNullException(nameof(comboBox));
+
+                if (itemList == null)
+                    throw new ArgumentNullException(nameof(itemList));
+
+                if (defaultValue == null)
+                    throw new ArgumentNullException(nameof(defaultValue));
+
+                comboBox.Items.Clear();
+                foreach (string? item in itemList)
+                    if (!string.IsNullOrEmpty(item))
+                        comboBox.Items.Add(item);
+
+                if (!comboBox.Items.Contains(defaultValue))
+                {
+                    if (comboBox.Items.Count > 0)
+                    {
+                        object? firstItem = comboBox.Items[0];
+                        if (firstItem != null)
+                            defaultValue = (string)firstItem;
+                    }
+                }
+                comboBox.Text = defaultValue;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
         private bool InitializeComboBoxClientNo(UserSettings userSettings)
         {
             try
@@ -233,30 +277,56 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
-                StringCollection? itemList = userSettings.ASESClientList;
-                if (itemList == null)
-                    throw new Exception(nameof(itemList) + Const.LogIsNull);
+                if (this.comboBoxClientNo == null)
+                    throw new Exception(nameof(this.comboBoxClientNo) + Const.LogIsNull);
+
+                if (userSettings.ASESClientList == null)
+                    throw new Exception(nameof(userSettings.ASESClientList) + Const.LogIsNull);
+
+                if (userSettings.ASESClient == null)
+                    throw new Exception(nameof(userSettings.ASESClient) + Const.LogIsNull);
 
                 ComboBox comboBox = this.comboBoxClientNo;
-                if (comboBox == null)
-                    throw new Exception(nameof(comboBox) + Const.LogIsNull);
+                StringCollection? itemList = userSettings.ASESClientList;
+                string? defaultValue = userSettings.ASESClient;
+                if (!InitializeComboBox(comboBox,itemList,defaultValue))
+                    throw new Exception(nameof(InitializeComboBox) + Const.LogFail);
 
-                comboBox.Items.Clear();
-                foreach (string? item in itemList)
-                    if (!string.IsNullOrEmpty(item))
-                        this.comboBoxClientNo.Items.Add(item);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
 
-                string? defautValue = userSettings.ASESClient;
-                if (!comboBox.Items.Contains(defautValue))
-                {
-                    if (comboBox.Items.Count > 0)
-                    {
-                        object? firstItem = comboBox.Items[0];
-                        if (firstItem != null)
-                            defautValue = (string)firstItem;
-                    }
-                }
-                comboBox.Text = defautValue;
+        private bool InitializeComboBoxLanguage(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                if (this.comboBoxLanguage == null)
+                    throw new Exception(nameof(this.comboBoxLanguage) + Const.LogIsNull);
+
+                if (userSettings.ASESLanguageList == null)
+                    throw new Exception(nameof(userSettings.ASESLanguageList) + Const.LogIsNull);
+
+                if (userSettings.ASESLanguage == null)
+                    throw new Exception(nameof(userSettings.ASESLanguage) + Const.LogIsNull);
+
+                ComboBox comboBox = this.comboBoxLanguage;
+                StringCollection? itemList = userSettings.ASESLanguageList;
+                string? defaultValue = userSettings.ASESLanguage;
+                if (!InitializeComboBox(comboBox, itemList, defaultValue))
+                    throw new Exception(nameof(InitializeComboBox) + Const.LogFail);
 
                 return true;
             }
@@ -279,30 +349,20 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
-                StringCollection? itemList = userSettings.WebDriverList;
-                if (itemList == null)
-                    throw new Exception(nameof(itemList) + Const.LogIsNull);
+                if (this.comboBoxWebDriver == null)
+                    throw new Exception(nameof(this.comboBoxWebDriver) + Const.LogIsNull);
+
+                if (userSettings.WebDriverList == null)
+                    throw new Exception(nameof(userSettings.WebDriverList) + Const.LogIsNull);
+
+                if (userSettings.WebDriver == null)
+                    throw new Exception(nameof(userSettings.WebDriver) + Const.LogIsNull);
 
                 ComboBox comboBox = this.comboBoxWebDriver;
-                if (comboBox == null)
-                    throw new Exception(nameof(comboBox) + Const.LogIsNull);
-
-                comboBox.Items.Clear();
-                foreach (string? item in itemList)
-                    if (!string.IsNullOrEmpty(item))
-                        comboBox.Items.Add(item);
-
-                string? defautValue = userSettings.WebDriver;
-                if (!comboBox.Items.Contains(defautValue))
-                {
-                    if (comboBox.Items.Count > 0)
-                    {
-                        object? firstItem = comboBox.Items[0];
-                        if (firstItem != null)
-                            defautValue = (string)firstItem;
-                    }
-                }
-                comboBox.Text = defautValue;
+                StringCollection? itemList = userSettings.WebDriverList;
+                string? defaultValue = userSettings.WebDriver;
+                if (!InitializeComboBox(comboBox, itemList, defaultValue))
+                    throw new Exception(nameof(InitializeComboBox) + Const.LogFail);
 
                 return true;
             }
@@ -327,6 +387,9 @@ namespace EZAsesAutoType
 
                 if (!InitializeComboBoxClientNo(userSettings))
                     throw new Exception(nameof(InitializeComboBoxClientNo) + Const.LogFail);
+
+                if (!InitializeComboBoxLanguage(userSettings))
+                    throw new Exception(nameof(InitializeComboBoxLanguage) + Const.LogFail);
 
                 if (!InitializeComboBoxWebDriver(userSettings))
                     throw new Exception(nameof(InitializeComboBoxWebDriver) + Const.LogFail);
