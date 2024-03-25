@@ -1,47 +1,46 @@
+
 :: -- 
-:: -- File: "doChromeWebdriverUpdate.bat"
+:: -- Datei: "updateWebdriverFirefox.bat"
 :: -- 
-:: -- Usage: 
-:: -- ```
-:: -- doChromeWebdriverUpdate[.bat] [version]
-:: -- ```
+:: -- Verwendung: updateWebdriverFirefox[.bat] [ version ]
 :: -- 
-:: -- Example:
-:: -- ```
-:: -- CMD> doChromeWebdriverUpdate 125.0.6368.2
-:: -- ```
+:: -- Beispiel: updateWebdriverFirefox 0.33.0
 :: --
-:: -- Notes:
-:: -- * Google offers a bunch of API endpoints to enable automated build 
-:: --   scripts based on Chrome for Testing release data, see:
-:: --   -->< https://github.com/GoogleChromeLabs/chrome-for-testing#json-api-endpoints >
-:: --   For example, to answer the question
-:: --   "What's the latest available Stable channel version?"
-:: --   you can use curl with API-URL
-:: --   -->< https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE > 
-:: --
+:: -- Download-URL Deeplink Beispiel:
+:: -- https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-win64.zip
+:: -- 
+:: -- Mit der WebDriver Version "v0.33.0" koennen aktuell die
+:: -- FireFox Browser Versionen von 102.x bis 113.x unter Verwendung
+:: -- von Selenium Version >= 3.11 ferngesteuert werden
+:: -- Fuer eine vollstaendige Liste siehe 
+:: -- "GeckoDriver, Selenium and Firefox Browser compatibility chart":
+:: -- https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
+:: -- 
+:: -- Obacht: Bei "github.com" muss curl mit Parameter -L aufgerufen 
+:: -- werden, sonst klappt der Download nicht.
+:: -- 
 :: -- Revision History
-:: -- 2024/03/25:TomislavMatas: Version "1.0.0.0"
-:: -- * Inital version with default webdriver version "123.0.6312.58"
+:: -- 2024/03/22:TomislavMatas: Version 1.0.0.0
+:: -- * Initale Version mit Default "0.34.0".
 :: --
 
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=125.0.6368.2"
+set "WEBDRIVER_HOMEPAGE=https://github.com/mozilla/geckodriver/releases"
  
 echo see current versions of webdriver at:
-echo https://googlechromelabs.github.io/chrome-for-testing/
+echo %WEBDRIVER_HOMEPAGE%
 
-pause
+pause 
 
 set "PROJEKT_ROOT=%~dp0.."
 @rem List of project directories under "%PROJEKT_ROOT%\src\", 
 @rem where the downloaded binaries shall be copied to.
 set "PROJEKT_LIST=EZSeleniumLib"
 
-set "WEBDRIVER_HOMEPAGE=https://storage.googleapis.com/chrome-for-testing-public"
 set "WEBDRIVER_VERSION=%1"
+set "WEBDRIVER_VERSION_DEFAULT=0.34.0"
 if "%WEBDRIVER_VERSION%" == "" (
 	set /P "WEBDRIVER_VERSION=Version eingeben oder [Enter] fuer Default '%WEBDRIVER_VERSION_DEFAULT%' : "
 )
@@ -49,18 +48,20 @@ if "%WEBDRIVER_VERSION%" == "" (
 	set "WEBDRIVER_VERSION=%WEBDRIVER_VERSION_DEFAULT%"
 )
 
-set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%/%WEBDRIVER_VERSION%"
-set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\Chrome"
+
+set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%"
+set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\FireFox"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
-@rem die Liste der Platformen, fuer die jeweils ein WebDriver ZIP Archiv heruntergeladen werden sollen.
-@rem set "PLATFORMLIST=win32"
+@rem die Liste der Platformen, fuer die jeweils ein 
+@rem WebDriver ZIP Archiv heruntergeladen werden soll.
+@rem set "PLATFORMLIST=win64 win32"
 set "PLATFORMLIST=win64"
-@rem Beim ChromeDriver ist derzeit keine Umbenennung erforderlich, 
+@rem Beim geckodriver ist derzeit keine Umbenennung erforderlich, 
 @rem darum custom name = original name.
-set "FILENAME_ORIGINAL=chromedriver.exe"
+set "FILENAME_ORIGINAL=geckodriver.exe"
 set "FILENAME_CUSTOM=%FILENAME_ORIGINAL%"
 set "CURL_EXE=curl"
-set "CURL_OPT=-k -sS --fail"
+set "CURL_OPT=-k -L -sS --fail"
 
 mkdir "%DOWNLOAD_DIR%" 1>nul 2>nul
 if not exist "%DOWNLOAD_DIR%\" (
@@ -69,13 +70,13 @@ if not exist "%DOWNLOAD_DIR%\" (
 )
 
 for %%f in (%PLATFORMLIST%) do (
-	set "fn=chromedriver-%%f.zip"
-	set "url=%DOWNLOAD_URL%/%%f/!fn!"
+	set "fn=geckodriver-v%WEBDRIVER_VERSION%-%%f.zip"	
+	set "url=%DOWNLOAD_URL%/download/v%WEBDRIVER_VERSION%/!fn!"
 	set "loc=%DOWNLOAD_DIR%\!fn!"
-	echo download ...
+	echo downloading ...
 	echo from: "!url!"
 	echo to: "!loc!"
-	"%CURL_EXE%" %CURL_OPT% "!url!" --output "!loc!"
+    "%CURL_EXE%" %CURL_OPT% "!url!" --output "!loc!"
 	if ERRORLEVEL 1 (
 		echo ERROR download failed
 		exit /b 2
@@ -83,9 +84,14 @@ for %%f in (%PLATFORMLIST%) do (
 	echo download OK
 )
 
+@rem Mit der Sequenz "!sx=..." soll aus dem Dateinamen
+@rem des heruntergeladenen ZIP-Archivs die Version
+@rem und die Architektur extrahiert werden.
+@rem Dabei soll fuer die Architektur aus "win32" / "win64" die jeweilige
+@rem Kurzform "x32" bzw "x64" ersetzt werden. 
 for %%f in (%PLATFORMLIST%) do (
-	set "fn=chromedriver-%%f.zip"
-	set "sx=!fn:chromedriver-=!"
+	set "fn=geckodriver-v%WEBDRIVER_VERSION%-%%f.zip"	
+	set "sx=!fn:geckodriver-v%WEBDRIVER_VERSION%-=!"
 	set "sx=!sx:.zip=!"
 	set "sx=!sx:win=x!"
 	set "zipfile=!DOWNLOAD_DIR!\!fn!"
@@ -99,6 +105,7 @@ for %%f in (%PLATFORMLIST%) do (
 		exit /b 3
 	)	
 	echo unzip "!fn!" OK
+
 	@rem Zip-Datei verschieben, weil erfolgreich verarbeitet
 	echo move "!fn!" ... 
 	del "!unzipedpath!\!fn!" 1>nul 2>nul
@@ -108,7 +115,8 @@ for %%f in (%PLATFORMLIST%) do (
 		exit /b 4
 	)	
 	echo move "!fn!" OK
-	@rem Die Windows-Treiber umbenennen
+	
+	@rem Die Windows-Treiber umbenennen, falls erfoderlich
 	if not "x!fn:win=!" == "x!fn!" ( 
 		@rem ... aber nur falls ein abweichender "custom" name erforderlich sein sollte.
 		if not "%FILENAME_ORIGINAL%" == "%FILENAME_CUSTOM%" (
@@ -121,14 +129,15 @@ for %%f in (%PLATFORMLIST%) do (
 			)	
 			echo rename "%FILENAME_ORIGINAL%" to "%FILENAME_CUSTOM%" OK
 		)
-	)		
+	)
+
+	@rem "Verteile" den treiber in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
 	for %%p in (!PROJEKT_LIST!) do (
 		set "prj=%%p" 
-		set "prjpath=%PROJEKT_ROOT%\src\!prj!"
+		set "prjpath=%PROJEKT_ROOT%\src\  !"
 		echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
 		del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
-		set  "subdir=chromedriver-%%f\"
-		copy "!unzipedpath!\!subdir!%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
+		copy "!unzipedpath!\%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
 		if ERRORLEVEL 1 (
 			echo ERROR copy "%FILENAME_CUSTOM%" to "!prj!" failed
 			exit /b 7
