@@ -551,6 +551,11 @@ namespace EZAsesAutoType
             ComboBoxClientNoChanged();
         }
 
+        private void comboBoxClientNo_TextChanged(object sender, EventArgs e)
+        {
+            ComboBoxClientNoChanged();
+        }
+
         private void comboBoxWebDriver_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -575,7 +580,6 @@ namespace EZAsesAutoType
         }
 
         #endregion
-
 
     } // class
 

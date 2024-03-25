@@ -50,9 +50,10 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(613, 88);
+            btnRun.Location = new Point(490, 70);
+            btnRun.Margin = new Padding(2, 2, 2, 2);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(191, 70);
+            btnRun.Size = new Size(153, 56);
             btnRun.TabIndex = 3;
             btnRun.Text = "Run";
             btnRun.UseVisualStyleBackColor = true;
@@ -60,44 +61,49 @@
             // 
             // textBoxUrl
             // 
-            textBoxUrl.Location = new Point(121, 12);
+            textBoxUrl.Location = new Point(97, 10);
+            textBoxUrl.Margin = new Padding(2, 2, 2, 2);
             textBoxUrl.Name = "textBoxUrl";
-            textBoxUrl.Size = new Size(465, 31);
+            textBoxUrl.Size = new Size(373, 27);
             textBoxUrl.TabIndex = 4;
             textBoxUrl.Text = "https://ases.noncd.rz.db.de/SES/html?ClientNo=06";
             // 
             // textBoxUid
             // 
-            textBoxUid.Location = new Point(121, 88);
+            textBoxUid.Location = new Point(97, 70);
+            textBoxUid.Margin = new Padding(2, 2, 2, 2);
             textBoxUid.Name = "textBoxUid";
-            textBoxUid.Size = new Size(174, 31);
+            textBoxUid.Size = new Size(140, 27);
             textBoxUid.TabIndex = 6;
             textBoxUid.Text = "ChangeIt!";
             // 
             // textBoxPwd
             // 
-            textBoxPwd.Location = new Point(412, 88);
+            textBoxPwd.Location = new Point(330, 70);
+            textBoxPwd.Margin = new Padding(2, 2, 2, 2);
             textBoxPwd.Name = "textBoxPwd";
             textBoxPwd.PasswordChar = '*';
-            textBoxPwd.Size = new Size(174, 31);
+            textBoxPwd.Size = new Size(140, 27);
             textBoxPwd.TabIndex = 7;
             textBoxPwd.Text = "ChangeIt!";
             textBoxPwd.UseSystemPasswordChar = true;
             // 
             // textBoxPunchIn
             // 
-            textBoxPunchIn.Location = new Point(726, 12);
+            textBoxPunchIn.Location = new Point(581, 10);
+            textBoxPunchIn.Margin = new Padding(2, 2, 2, 2);
             textBoxPunchIn.Name = "textBoxPunchIn";
-            textBoxPunchIn.Size = new Size(78, 31);
+            textBoxPunchIn.Size = new Size(63, 27);
             textBoxPunchIn.TabIndex = 1;
             textBoxPunchIn.Text = "09:00";
             textBoxPunchIn.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxPunchOut
             // 
-            textBoxPunchOut.Location = new Point(726, 49);
+            textBoxPunchOut.Location = new Point(581, 39);
+            textBoxPunchOut.Margin = new Padding(2, 2, 2, 2);
             textBoxPunchOut.Name = "textBoxPunchOut";
-            textBoxPunchOut.Size = new Size(78, 31);
+            textBoxPunchOut.Size = new Size(63, 27);
             textBoxPunchOut.TabIndex = 2;
             textBoxPunchOut.Text = "17:00";
             textBoxPunchOut.TextAlign = HorizontalAlignment.Center;
@@ -105,45 +111,50 @@
             // labelUrl
             // 
             labelUrl.AutoSize = true;
-            labelUrl.Location = new Point(12, 15);
+            labelUrl.Location = new Point(10, 12);
+            labelUrl.Margin = new Padding(2, 0, 2, 0);
             labelUrl.Name = "labelUrl";
-            labelUrl.Size = new Size(47, 25);
+            labelUrl.Size = new Size(38, 20);
             labelUrl.TabIndex = 7;
             labelUrl.Text = "URL:";
             // 
             // labelUid
             // 
             labelUid.AutoSize = true;
-            labelUid.Location = new Point(12, 91);
+            labelUid.Location = new Point(10, 73);
+            labelUid.Margin = new Padding(2, 0, 2, 0);
             labelUid.Name = "labelUid";
-            labelUid.Size = new Size(69, 25);
+            labelUid.Size = new Size(56, 20);
             labelUid.TabIndex = 8;
             labelUid.Text = "UserID:";
             // 
             // labelPwd
             // 
             labelPwd.AutoSize = true;
-            labelPwd.Location = new Point(311, 91);
+            labelPwd.Location = new Point(249, 73);
+            labelPwd.Margin = new Padding(2, 0, 2, 0);
             labelPwd.Name = "labelPwd";
-            labelPwd.Size = new Size(91, 25);
+            labelPwd.Size = new Size(73, 20);
             labelPwd.TabIndex = 9;
             labelPwd.Text = "Password:";
             // 
             // labelPunchIn
             // 
             labelPunchIn.AutoSize = true;
-            labelPunchIn.Location = new Point(613, 15);
+            labelPunchIn.Location = new Point(490, 12);
+            labelPunchIn.Margin = new Padding(2, 0, 2, 0);
             labelPunchIn.Name = "labelPunchIn";
-            labelPunchIn.Size = new Size(86, 25);
+            labelPunchIn.Size = new Size(69, 20);
             labelPunchIn.TabIndex = 10;
             labelPunchIn.Text = "Punch-In:";
             // 
             // labelPunchOut
             // 
             labelPunchOut.AutoSize = true;
-            labelPunchOut.Location = new Point(613, 52);
+            labelPunchOut.Location = new Point(490, 42);
+            labelPunchOut.Margin = new Padding(2, 0, 2, 0);
             labelPunchOut.Name = "labelPunchOut";
-            labelPunchOut.Size = new Size(101, 25);
+            labelPunchOut.Size = new Size(81, 20);
             labelPunchOut.TabIndex = 11;
             labelPunchOut.Text = "Punch-Out:";
             // 
@@ -152,20 +163,23 @@
             comboBoxClientNo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxClientNo.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBoxClientNo.FormattingEnabled = true;
-            comboBoxClientNo.Location = new Point(121, 49);
+            comboBoxClientNo.Location = new Point(97, 39);
+            comboBoxClientNo.Margin = new Padding(2, 2, 2, 2);
             comboBoxClientNo.Name = "comboBoxClientNo";
-            comboBoxClientNo.Size = new Size(465, 33);
+            comboBoxClientNo.Size = new Size(373, 28);
             comboBoxClientNo.TabIndex = 5;
             comboBoxClientNo.Text = "06-DB-Systel";
             comboBoxClientNo.SelectedIndexChanged += comboBoxClientNo_SelectedIndexChanged;
             comboBoxClientNo.SelectedValueChanged += comboBoxClientNo_SelectedValueChanged;
+            comboBoxClientNo.TextChanged += comboBoxClientNo_TextChanged;
             // 
             // labelClientNo
             // 
             labelClientNo.AutoSize = true;
-            labelClientNo.Location = new Point(12, 52);
+            labelClientNo.Location = new Point(10, 42);
+            labelClientNo.Margin = new Padding(2, 0, 2, 0);
             labelClientNo.Name = "labelClientNo";
-            labelClientNo.Size = new Size(60, 25);
+            labelClientNo.Size = new Size(50, 20);
             labelClientNo.TabIndex = 13;
             labelClientNo.Text = "Client:";
             // 
@@ -173,44 +187,48 @@
             // 
             comboBoxWebDriver.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxWebDriver.FormattingEnabled = true;
-            comboBoxWebDriver.Location = new Point(121, 125);
+            comboBoxWebDriver.Location = new Point(97, 100);
+            comboBoxWebDriver.Margin = new Padding(2, 2, 2, 2);
             comboBoxWebDriver.Name = "comboBoxWebDriver";
-            comboBoxWebDriver.Size = new Size(174, 33);
+            comboBoxWebDriver.Size = new Size(140, 28);
             comboBoxWebDriver.TabIndex = 8;
             comboBoxWebDriver.SelectedIndexChanged += comboBoxWebDriver_SelectedIndexChanged;
             // 
             // labelWebDriver
             // 
             labelWebDriver.AutoSize = true;
-            labelWebDriver.Location = new Point(12, 128);
+            labelWebDriver.Location = new Point(10, 102);
+            labelWebDriver.Margin = new Padding(2, 0, 2, 0);
             labelWebDriver.Name = "labelWebDriver";
-            labelWebDriver.Size = new Size(99, 25);
+            labelWebDriver.Size = new Size(82, 20);
             labelWebDriver.TabIndex = 15;
             labelWebDriver.Text = "WebDriver:";
             // 
             // labelWebDriverVersion
             // 
             labelWebDriverVersion.AutoSize = true;
-            labelWebDriverVersion.Location = new Point(311, 128);
+            labelWebDriverVersion.Location = new Point(249, 102);
+            labelWebDriverVersion.Margin = new Padding(2, 0, 2, 0);
             labelWebDriverVersion.Name = "labelWebDriverVersion";
-            labelWebDriverVersion.Size = new Size(74, 25);
+            labelWebDriverVersion.Size = new Size(60, 20);
             labelWebDriverVersion.TabIndex = 16;
             labelWebDriverVersion.Text = "Version:";
             // 
             // textBoxWebDriverVersion
             // 
-            textBoxWebDriverVersion.Location = new Point(412, 125);
+            textBoxWebDriverVersion.Location = new Point(330, 100);
+            textBoxWebDriverVersion.Margin = new Padding(2, 2, 2, 2);
             textBoxWebDriverVersion.Name = "textBoxWebDriverVersion";
             textBoxWebDriverVersion.ReadOnly = true;
-            textBoxWebDriverVersion.Size = new Size(174, 31);
+            textBoxWebDriverVersion.Size = new Size(140, 27);
             textBoxWebDriverVersion.TabIndex = 9;
             textBoxWebDriverVersion.Text = "123.0.6312.58";
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(833, 175);
+            ClientSize = new Size(670, 147);
             Controls.Add(textBoxWebDriverVersion);
             Controls.Add(labelWebDriverVersion);
             Controls.Add(labelWebDriver);
@@ -229,11 +247,10 @@
             Controls.Add(textBoxUrl);
             Controls.Add(btnRun);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4);
             MaximizeBox = false;
-            MaximumSize = new Size(855, 231);
+            MaximumSize = new Size(688, 194);
             MinimizeBox = false;
-            MinimumSize = new Size(855, 231);
+            MinimumSize = new Size(688, 194);
             Name = "FormMain";
             Text = "EZAsesAutoType";
             FormClosing += onClosing;
