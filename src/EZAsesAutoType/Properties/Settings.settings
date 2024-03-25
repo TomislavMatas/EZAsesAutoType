@@ -2,33 +2,17 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EZAsesAutoType.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ASESPunchIn" Type="System.String" Scope="User">
-      <Value Profile="(Default)">09:00</Value>
-    </Setting>
-    <Setting Name="ASESPunchOut" Type="System.String" Scope="User">
-      <Value Profile="(Default)">17:00</Value>
-    </Setting>
     <Setting Name="ASESBaseUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://ases.noncd.rz.db.de/SES/html?ClientNo=06</Value>
-    </Setting>
-    <Setting Name="ASESClient" Type="System.String" Scope="User">
-      <Value Profile="(Default)">06-DB-Systel</Value>
-    </Setting>
-    <Setting Name="WebDriverList" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;string&gt;Chrome&lt;/string&gt;
-  &lt;string&gt;Edge&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="WebDriver" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Chrome</Value>
     </Setting>
     <Setting Name="ASESUserId" Type="System.String" Scope="User">
       <Value Profile="(Default)">ChangeIt!</Value>
     </Setting>
     <Setting Name="ASESPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">ChangeIt!</Value>
+    </Setting>
+    <Setting Name="ASESClient" Type="System.String" Scope="User">
+      <Value Profile="(Default)">06-DB-Systel</Value>
     </Setting>
     <Setting Name="ASESClientList" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -96,6 +80,31 @@
   &lt;string&gt;61-DB Cargo&lt;/string&gt;
   &lt;string&gt;90-DB Personalservice&lt;/string&gt;
   &lt;string&gt;DB-Schulung&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ASESLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Deutsch</Value>
+    </Setting>
+    <Setting Name="ASESLanguageList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;Deutsch&lt;/string&gt;
+  &lt;string&gt;English&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ASESPunchIn" Type="System.String" Scope="User">
+      <Value Profile="(Default)">09:00</Value>
+    </Setting>
+    <Setting Name="ASESPunchOut" Type="System.String" Scope="User">
+      <Value Profile="(Default)">17:00</Value>
+    </Setting>
+    <Setting Name="WebDriver" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Chrome</Value>
+    </Setting>    <Setting Name="WebDriverList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;Chrome&lt;/string&gt;
+  &lt;string&gt;Edge&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

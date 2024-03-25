@@ -22,31 +22,7 @@ namespace EZAsesAutoType.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("09:00")]
-        public string ASESPunchIn {
-            get {
-                return ((string)(this["ASESPunchIn"]));
-            }
-            set {
-                this["ASESPunchIn"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("17:00")]
-        public string ASESPunchOut {
-            get {
-                return ((string)(this["ASESPunchOut"]));
-            }
-            set {
-                this["ASESPunchOut"] = value;
-            }
-        }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://ases.noncd.rz.db.de/SES/html?ClientNo=06")]
@@ -58,45 +34,7 @@ namespace EZAsesAutoType.Properties {
                 this["ASESBaseUrl"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("06-DB-Systel")]
-        public string ASESClient {
-            get {
-                return ((string)(this["ASESClient"]));
-            }
-            set {
-                this["ASESClient"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
-            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
-            "tring>Chrome</string>\r\n  <string>Edge</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection WebDriverList {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["WebDriverList"]));
-            }
-            set {
-                this["WebDriverList"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Chrome")]
-        public string WebDriver {
-            get {
-                return ((string)(this["WebDriver"]));
-            }
-            set {
-                this["WebDriver"] = value;
-            }
-        }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("ChangeIt!")]
@@ -120,7 +58,19 @@ namespace EZAsesAutoType.Properties {
                 this["ASESPassword"] = value;
             }
         }
-        
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("06-DB-Systel")]
+        public string ASESClient {
+            get {
+                return ((string)(this["ASESClient"]));
+            }
+            set {
+                this["ASESClient"] = value;
+            }
+        }
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
@@ -162,5 +112,83 @@ namespace EZAsesAutoType.Properties {
                 this["ASESClientList"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Deutsch")]
+        public string ASESLanguage {
+            get {
+                return ((string)(this["ASESLanguage"]));
+            }
+            set {
+                this["ASESLanguage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
+            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
+            "tring>Deutsch</string>\r\n  <string>English</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ASESLanguageList {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["ASESLanguageList"]));
+            }
+            set {
+                this["ASESLanguageList"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("09:00")]
+        public string ASESPunchIn {
+            get {
+                return ((string)(this["ASESPunchIn"]));
+            }
+            set {
+                this["ASESPunchIn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("17:00")]
+        public string ASESPunchOut {
+            get {
+                return ((string)(this["ASESPunchOut"]));
+            }
+            set {
+                this["ASESPunchOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Chrome")]
+        public string WebDriver {
+            get {
+                return ((string)(this["WebDriver"]));
+            }
+            set {
+                this["WebDriver"] = value;
+            }
+        }
+        
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
+            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
+            "tring>Chrome</string>\r\n  <string>Edge</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection WebDriverList {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["WebDriverList"]));
+            }
+            set {
+                this["WebDriverList"] = value;
+            }
+        }
+        
     }
 }
