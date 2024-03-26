@@ -82,26 +82,6 @@ namespace EZAsesAutoType
             return prev;
         }
 
-        private object m_LockCancelRequested = new object();
-        private bool m_CancelRequested = false;
-        private bool CancelRequested
-        {
-            get
-            {
-                lock (m_LockCancelRequested)
-                {
-                    return this.m_CancelRequested;
-                }
-            }
-            set
-            {
-                lock (m_LockCancelRequested)
-                {
-                    this.m_CancelRequested = value;
-                }
-            }
-        }
-
         #endregion
 
         /// <summary>
@@ -154,12 +134,8 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                AppHandler? appHandler = this.GetAppHandler();
-                if (appHandler == null)
-                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
-
-                if (!appHandler.LoadUserSettings(out UserSettings? userSettings))
-                    throw new Exception(nameof(appHandler.LoadUserSettings) + Const.LogFail);
+                if (!this.AppHandler.LoadUserSettings(out UserSettings? userSettings))
+                    throw new Exception(nameof(this.AppHandler.LoadUserSettings) + Const.LogFail);
 
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
@@ -187,12 +163,8 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                AppHandler? appHandler = this.GetAppHandler();
-                if (appHandler == null)
-                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
-
-                if (appHandler.SaveUserSettings(userSettings))
-                    throw new Exception(nameof(appHandler.SaveUserSettings) + Const.LogFail);
+                if (this.AppHandler.SaveUserSettings(userSettings))
+                    throw new Exception(nameof(this.AppHandler.SaveUserSettings) + Const.LogFail);
 
                 return true;
             }
@@ -653,14 +625,14 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                this.CancelRequested = false;
+                this.AppHandler.SetCancelRequested(false);
                 this.RenderControlsBusy(true);
                 this.backgroundWorker1.RunWorkerAsync(userSettings);
                 bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 while (backroundWorkerIsBusy)
                 {
                     Application.DoEvents();
-                    if (this.CancelRequested)
+                    if ( this.AppHandler.GetCancelRequested() )
                         backgroundWorker1.CancelAsync();
 
                     backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
@@ -672,7 +644,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                this.CancelRequested = false;
+                this.AppHandler.SetCancelRequested(false);
                 this.RenderControlsBusy(false);
                 Log.Debug(Const.LogDone);
             }
@@ -680,7 +652,7 @@ namespace EZAsesAutoType
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.CancelRequested = true;
+            this.AppHandler.SetCancelRequested(true);
         }
 
         #endregion
@@ -748,12 +720,8 @@ namespace EZAsesAutoType
 
                 UserSettings userSettings = (UserSettings)obj;
 
-                AppHandler? appHandler = this.GetAppHandler();
-                if (appHandler == null)
-                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
-
-                if (!appHandler.DoDailyPunch(userSettings))
-                    throw new Exception(nameof(appHandler.DoDailyPunch) + Const.LogFail);
+                if (!this.AppHandler.DoDailyPunch(userSettings))
+                    throw new Exception(nameof(this.AppHandler.DoDailyPunch) + Const.LogFail);
             }
             catch (Exception ex)
             {

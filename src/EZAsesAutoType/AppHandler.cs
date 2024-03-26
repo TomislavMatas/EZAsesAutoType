@@ -41,17 +41,43 @@ namespace EZAsesAutoType
                 m_Requestor = value;
             }
         }
-
         public object? SetRequestor(object? requestor)
         {
             object? prev = this.GetRequestor();
             this.Requestor = requestor;
             return prev ;
         }
-
         public object? GetRequestor()
         {
             return this.Requestor;
+        }
+
+        private object m_LockCancelRequested = new object();
+        private bool m_CancelRequested = false;
+        private bool CancelRequested
+        {
+            get
+            {
+                lock (m_LockCancelRequested)
+                {
+                    return this.m_CancelRequested;
+                }
+            }
+            set
+            {
+                lock (m_LockCancelRequested)
+                {
+                    this.m_CancelRequested = value;
+                }
+            }
+        }
+        public bool GetCancelRequested()
+        {
+            return this.CancelRequested;
+        }
+        public void SetCancelRequested(bool flag)
+        {
+            this.CancelRequested = flag;
         }
 
         /// <summary>
