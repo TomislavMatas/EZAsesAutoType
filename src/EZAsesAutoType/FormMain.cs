@@ -174,17 +174,17 @@ namespace EZAsesAutoType
             try
             {
                 UserSettings userSettings = new UserSettings();
-                userSettings.ASESBaseUrl      = this.textBoxUrl.Text;
-                userSettings.ASESUserId       = this.textBoxUid.Text;
-                userSettings.ASESPassword     = this.textBoxPwd.Text;
-                userSettings.ASESClient       = this.comboBoxClientNo.Text;
-                userSettings.ASESClientList   = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
-                userSettings.ASESLanguage     = this.comboBoxLanguage.Text;
+                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
+                userSettings.ASESUserId = this.textBoxUid.Text;
+                userSettings.ASESPassword = this.textBoxPwd.Text;
+                userSettings.ASESClient = this.comboBoxClientNo.Text;
+                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
+                userSettings.ASESLanguage = this.comboBoxLanguage.Text;
                 userSettings.ASESLanguageList = this.GetComboBoxItemsAsStringCollection(this.comboBoxLanguage);
-                userSettings.ASESPunchIn      = this.textBoxPunchIn.Text;
-                userSettings.ASESPunchOut     = this.textBoxPunchOut.Text;
-                userSettings.WebDriver        = this.comboBoxWebDriver.Text;
-                userSettings.WebDriverList    = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                userSettings.ASESPunchIn = this.textBoxPunchIn.Text;
+                userSettings.ASESPunchOut = this.textBoxPunchOut.Text;
+                userSettings.WebDriver = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 return userSettings;
             }
             catch (Exception ex)
@@ -289,7 +289,7 @@ namespace EZAsesAutoType
                 ComboBox comboBox = this.comboBoxClientNo;
                 StringCollection? itemList = userSettings.ASESClientList;
                 string? defaultValue = userSettings.ASESClient;
-                if (!InitializeComboBox(comboBox,itemList,defaultValue))
+                if (!InitializeComboBox(comboBox, itemList, defaultValue))
                     throw new Exception(nameof(InitializeComboBox) + Const.LogFail);
 
                 return true;
@@ -588,12 +588,28 @@ namespace EZAsesAutoType
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            try 
+            { 
+                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-
+                this.backgroundWorker1.RunWorkerAsync(userSettings);
+                while(this.backgroundWorker1.IsBusy)
+                {
+                    this.btnRun.Enabled = false;
+                    Application.DoEvents();
+                }
+                this.btnRun.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
         }
 
         #endregion
@@ -643,6 +659,40 @@ namespace EZAsesAutoType
         }
 
         #endregion
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (e == null)
+                    throw new ArgumentNullException(nameof(e));
+
+                if (e.Argument == null)
+                    throw new Exception(nameof(e.Argument) + Const.LogIsNull);
+
+                object? obj = e.Argument;
+                if (obj.GetType() != typeof(UserSettings))
+                    throw new Exception(nameof(obj) + Const.LogNotImpl);
+
+                UserSettings userSettings = (UserSettings)obj;
+
+                AppHandler? appHandler = this.GetAppHandler();
+                if (appHandler == null)
+                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
+
+                if (!appHandler.DoDailyPunch(userSettings))
+                    throw new Exception(nameof(appHandler.DoDailyPunch) + Const.LogFail);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
 
     } // class
 
