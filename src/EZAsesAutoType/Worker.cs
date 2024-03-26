@@ -131,12 +131,14 @@ namespace EZAsesAutoType
 
         #endregion
 
-        #region WebDriver 
+        #region "userSettings" - wrapperz
 
         private string GetBaseUrl()
         {
             return this.WorkerConfig.GetUserSettings().ASESBaseUrl;
         }
+
+        #endregion "userSettings" - wrapperz
 
         /// <summary>
         /// Return a specific descendant of class "BrowserBase" using "BrowserFactory".
@@ -161,6 +163,8 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        #region Navigation 
 
         /// <summary>
         /// Use Browser-Interop Helper to navigate to "Login Page".
@@ -196,8 +200,6 @@ namespace EZAsesAutoType
             }
         }
 
-        #endregion
-
         public bool DoDailyPunch(UserSettings userSettings)
         {
             try
@@ -226,6 +228,9 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        #endregion Navigation 
+
 
     } // class
 

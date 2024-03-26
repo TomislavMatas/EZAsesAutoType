@@ -82,6 +82,27 @@ namespace EZAsesAutoType
             this.UserSettings = userSettings;
             return prev;
         }
+
+        private object m_LockCancelRequested = new object();
+        private bool m_CancelRequested = false;
+        private bool CancelRequested
+        {
+            get
+            {
+                lock (m_LockCancelRequested) 
+                { 
+                    return this.m_CancelRequested;   
+                }
+            }
+            set
+            {
+                lock (m_LockCancelRequested)
+                {
+                    this.m_CancelRequested = value;
+                }
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -158,6 +179,35 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool SaveUserSettings()
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                AppHandler? appHandler = this.GetAppHandler();
+                if (appHandler == null)
+                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
+
+                if (appHandler.SaveUserSettings(userSettings))
+                    throw new Exception(nameof(appHandler.SaveUserSettings) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
         private StringCollection GetComboBoxItemsAsStringCollection(ComboBox comboBox)
         {
             Log.Debug(Const.LogStart);
@@ -191,35 +241,6 @@ namespace EZAsesAutoType
             {
                 Log.Error(ex);
                 return null;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        private bool SaveUserSettings()
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
-                if (userSettings == null)
-                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
-
-                AppHandler? appHandler = this.GetAppHandler();
-                if (appHandler == null)
-                    throw new Exception(nameof(appHandler) + Const.LogIsNull);
-
-                if (appHandler.SaveUserSettings(userSettings))
-                    throw new Exception(nameof(appHandler.SaveUserSettings) + Const.LogFail);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
             }
             finally
             {
@@ -508,7 +529,7 @@ namespace EZAsesAutoType
         /// depend on others.
         /// </summary>
         /// <returns></returns>
-        private bool RenderControls(UserSettings userSettings)
+        private bool RenderControlsSettings(UserSettings userSettings)
         {
             try
             {
@@ -532,6 +553,24 @@ namespace EZAsesAutoType
             }
         }
 
+        private void RenderControlsBusy(bool busy)
+        {
+            if (busy)
+            {
+                this.btnRun.Enabled = false;
+                this.btnRun.Visible = false;
+                this.btnCancel.Enabled = true;
+                this.btnCancel.Visible = true;
+            }
+            else 
+            {
+                this.btnRun.Enabled = true;
+                this.btnRun.Visible = true;
+                this.btnCancel.Enabled = false;
+                this.btnCancel.Visible = false;
+            }
+        }
+
         #region form handlerz
 
         private void onLoad(object sender, EventArgs e)
@@ -549,8 +588,8 @@ namespace EZAsesAutoType
                 if (!InitializeComboBoxes(userSettings))
                     throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
 
-                if (!RenderControls(userSettings))
-                    throw new Exception(nameof(RenderControls) + Const.LogFail);
+                if (!RenderControlsSettings(userSettings))
+                    throw new Exception(nameof(RenderControlsSettings) + Const.LogFail);
 
             }
             catch (Exception ex)
@@ -588,19 +627,24 @@ namespace EZAsesAutoType
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            try 
-            { 
+            try
+            {
                 UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
+                this.CancelRequested = false;
+                this.RenderControlsBusy(true);
                 this.backgroundWorker1.RunWorkerAsync(userSettings);
-                while(this.backgroundWorker1.IsBusy)
+                bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
+                while (backroundWorkerIsBusy)
                 {
-                    this.btnRun.Enabled = false;
                     Application.DoEvents();
+                    if (this.CancelRequested)
+                        backgroundWorker1.CancelAsync();
+
+                    backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 }
-                this.btnRun.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -608,8 +652,15 @@ namespace EZAsesAutoType
             }
             finally
             {
+                this.CancelRequested = false;
+                this.RenderControlsBusy(false);
                 Log.Debug(Const.LogDone);
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.CancelRequested = true;
         }
 
         #endregion
@@ -693,6 +744,7 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
 
     } // class
 
