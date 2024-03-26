@@ -202,13 +202,14 @@ namespace EZAsesAutoType
 
         public bool DoDailyPunch(UserSettings userSettings)
         {
+            BrowserBase? browser = null;
             try
             {
                 Log.Debug(Const.LogStart);
                 int timeout = 60; // seconds
                 string webDriver = userSettings.WebDriver;
                 BrowserOptions browserOptions = new BrowserOptions();
-                BrowserBase browser = this.GetBrowserInstance(webDriver, browserOptions);
+                browser = this.GetBrowserInstance(webDriver, browserOptions);
                 if (browser == null)
                     throw new Exception(nameof(this.GetBrowserInstance) + Const.LogFail);
 
@@ -225,6 +226,11 @@ namespace EZAsesAutoType
             }
             finally
             {
+                if(browser != null)
+                {
+                    browser.Cleanup();
+                    browser = null;
+                }
                 Log.Debug(Const.LogDone);
             }
         }
