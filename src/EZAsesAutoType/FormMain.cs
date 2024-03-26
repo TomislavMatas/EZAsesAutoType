@@ -6,11 +6,10 @@
 // * Initial version.
 //
 
-using EZAsesAutoType;
-using log4net;
-using Microsoft.VisualBasic.Logging;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
+
+using log4net;
 
 namespace EZAsesAutoType
 {
@@ -89,9 +88,9 @@ namespace EZAsesAutoType
         {
             get
             {
-                lock (m_LockCancelRequested) 
-                { 
-                    return this.m_CancelRequested;   
+                lock (m_LockCancelRequested)
+                {
+                    return this.m_CancelRequested;
                 }
             }
             set
@@ -509,7 +508,7 @@ namespace EZAsesAutoType
                 if (webDriverVersion == null)
                     throw new Exception(nameof(webDriverVersion) + Const.LogIsNull);
 
-                this.textBoxWebDriverVersion.Text = webDriverVersion;
+                this.labelWebDriverVersion.Text = webDriverVersion;
                 return true;
             }
             catch (Exception ex)
@@ -557,18 +556,34 @@ namespace EZAsesAutoType
         {
             if (busy)
             {
+                this.textBoxUrl.Enabled = false;
+                this.textBoxUid.Enabled = false;
+                this.textBoxPwd.Enabled = false;
+                this.comboBoxClientNo.Enabled = false;
+                this.comboBoxLanguage.Enabled = false;
+                this.comboBoxWebDriver.Enabled = false;
+                this.textBoxPunchIn.Enabled = false;
+                this.textBoxPunchOut.Enabled = false;
                 this.btnRun.Enabled = false;
                 this.btnRun.Visible = false;
                 this.btnCancel.Enabled = true;
                 this.btnCancel.Visible = true;
+                this.btnCancel.Focus();
+                return;
             }
-            else 
-            {
-                this.btnRun.Enabled = true;
-                this.btnRun.Visible = true;
-                this.btnCancel.Enabled = false;
-                this.btnCancel.Visible = false;
-            }
+            this.textBoxUrl.Enabled = true;
+            this.textBoxUid.Enabled = true;
+            this.textBoxPwd.Enabled = true;
+            this.comboBoxClientNo.Enabled = true;
+            this.comboBoxLanguage.Enabled = true;
+            this.comboBoxWebDriver.Enabled = true;
+            this.textBoxPunchIn.Enabled = true;
+            this.textBoxPunchOut.Enabled = true;
+            this.btnRun.Enabled = true;
+            this.btnRun.Visible = true;
+            this.btnCancel.Enabled = false;
+            this.btnCancel.Visible = false;
+            this.btnRun.Focus();
         }
 
         #region form handlerz
@@ -619,6 +634,11 @@ namespace EZAsesAutoType
             {
                 Log.Debug(Const.LogDone);
             }
+        }
+
+        private void onShown(object sender, EventArgs e)
+        {
+            this.RenderControlsBusy(false);
         }
 
         #endregion
@@ -744,7 +764,6 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
-
 
     } // class
 
