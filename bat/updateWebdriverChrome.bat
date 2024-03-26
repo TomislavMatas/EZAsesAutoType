@@ -28,7 +28,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=125.0.6368.2"
+set "WEBDRIVER_VERSION_DEFAULT=123.0.6312.58"
  
 echo see current versions of webdriver at:
 echo https://googlechromelabs.github.io/chrome-for-testing/

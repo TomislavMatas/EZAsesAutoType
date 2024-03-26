@@ -33,17 +33,17 @@ namespace EZAsesAutoType
         #endregion
 
         #region "userSettings"
-        public string? ASESBaseUrl;
-        public string? ASESUserId;
-        public string? ASESPassword;
-        public string? ASESClient;
-        public StringCollection? ASESClientList;
-        public string? ASESLanguage;
-        public StringCollection? ASESLanguageList;
-        public string? ASESPunchIn;
-        public string? ASESPunchOut;
-        public string? WebDriver;
-        public StringCollection? WebDriverList;
+        public string ASESBaseUrl;
+        public string ASESUserId;
+        public string ASESPassword;
+        public string ASESClient;
+        public StringCollection ASESClientList;
+        public string ASESLanguage;
+        public StringCollection ASESLanguageList;
+        public string ASESPunchIn;
+        public string ASESPunchOut;
+        public string WebDriver;
+        public StringCollection WebDriverList;
         #endregion
 
         /// <summary>
@@ -51,6 +51,17 @@ namespace EZAsesAutoType
         /// </summary>
         public UserSettings() 
         {
+            this.ASESBaseUrl = string.Empty;
+            this.ASESUserId = string.Empty;
+            this.ASESPassword = string.Empty;
+            this.ASESClient = string.Empty;
+            this.ASESClientList = [];
+            this.ASESLanguage = string.Empty;
+            this.ASESLanguageList = [];
+            this.ASESPunchIn = string.Empty;
+            this.ASESPunchOut = string.Empty;
+            this.WebDriver = string.Empty;
+            this.WebDriverList = [];
         }
 
         /// <summary>
