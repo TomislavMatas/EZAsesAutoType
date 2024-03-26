@@ -85,6 +85,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -147,6 +148,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -173,6 +175,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -198,6 +201,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -246,7 +250,7 @@ namespace EZSeleniumLib
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
-                // fist chance fallback
+                // first chance fallback
                 if (alert == null)
                     alert = Driver.SwitchTo().Alert();
 
@@ -264,6 +268,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -277,7 +282,7 @@ namespace EZSeleniumLib
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
-                // fist chance fallback
+                // first chance fallback
                 if (alert == null)
                     alert = Driver.SwitchTo().Alert();
 
@@ -295,6 +300,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
