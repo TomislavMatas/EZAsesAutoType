@@ -122,6 +122,32 @@ namespace EZSeleniumLib
             }
         }
 
+        protected int m_Delay = -1;
+        protected int Delay
+        {
+            get
+            {
+                if (m_Delay == -1)
+                    m_Delay = this.BrowserOptions.Delay;
+
+                return m_Delay;
+            }
+            set
+            {
+                m_Delay = value;
+            }
+        }
+        public int GetDelay()
+        {
+            return this.Delay;
+        }
+        public int SetDelay(int delay)
+        {
+            int prev = this.GetDelay();
+            this.Delay = delay;
+            return prev;
+        }
+
         /// <summary>
         /// The browser specific startup argument decoration prefix.
         /// Either "--", "-", "/" or "" depending on browser implementation. 
@@ -467,6 +493,7 @@ namespace EZSeleniumLib
             }
             finally
             {
+                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
