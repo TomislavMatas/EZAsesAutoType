@@ -105,6 +105,11 @@ namespace EZSeleniumLib
         /// </summary>
         public const bool PRECISEMEMORYINFO_DEFAULT = false;
 
+        /// <summary>
+        /// Default value if "EZSeleniumLib.Browser.Delay" is missing in "App.config".
+        /// </summary>
+        public const int DELAY_DEFAULT = 500;
+
         public const string BROWSERIMPLEMENTATATION_CHROME = Constant.WebDriverChrome;
         public const string BROWSERIMPLEMENTATATION_EDGE = Constant.WebDriverEdge;
         public const string BROWSERIMPLEMENTATATION_FIREFOX = Constant.WebDriverFirefox;

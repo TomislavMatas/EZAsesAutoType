@@ -16,12 +16,23 @@ namespace EZSeleniumLib
     /// </summary>
     public class BrowserOptions
     {
+        /// <summary>
+		/// Currently supported values for "InitMode":
+		/// "extended" : More sophisticated initalization.
+		/// "simple"   : Limitied control during initalization.
+        /// </summary>
         public string InitMode;
         public bool PopupsEnabled;
         public bool NotificationsEnabled;
         public bool DisableGPU;
         public bool ExposeGC;
         public bool PreciseMemoryInfo;
+        /// <summary>
+		/// The value for "Delay" specifies the
+		/// delay in milliseconds after each browser interaction like 
+		/// "enter some text", "click an element" or "move to element". 
+        /// </summary>
+        public int Delay;
 
         /// <summary>
         /// The requestor script's process id.
@@ -35,12 +46,14 @@ namespace EZSeleniumLib
         /// </summary>
         public BrowserOptions()
         {
-            this.InitMode = Configs.GetAppSettingString(Consts.BrowserInitModeKeyName, Consts.INITMODE_DEFAULT);
-            this.PopupsEnabled = Configs.GetAppSettingBool(Consts.BrowserPopupsEnabledKeyName, Consts.POPUPSENABLED_DEFAULT);
+            this.InitMode             = Configs.GetAppSettingString(Consts.BrowserInitModeKeyName, Consts.INITMODE_DEFAULT);
+            this.PopupsEnabled        = Configs.GetAppSettingBool(Consts.BrowserPopupsEnabledKeyName, Consts.POPUPSENABLED_DEFAULT);
             this.NotificationsEnabled = Configs.GetAppSettingBool(Consts.BrowserNotificationsEnabledKeyName, Consts.NOTIFICATIONSENABLED_DEFAULT);
-            this.DisableGPU = Configs.GetAppSettingBool(Consts.BrowserDisableGPUKeyName, Consts.DISABLEGPU_DEFAULT);
-            this.ExposeGC = Configs.GetAppSettingBool(Consts.BrowserExposeGCKeyName, Consts.EXPOSEGC_DEFAULT);
-            this.PreciseMemoryInfo = Configs.GetAppSettingBool(Consts.BrowserPreciseMemoryInfoEnabledKeyName, Consts.PRECISEMEMORYINFO_DEFAULT);
+            this.DisableGPU           = Configs.GetAppSettingBool(Consts.BrowserDisableGPUKeyName, Consts.DISABLEGPU_DEFAULT);
+            this.ExposeGC             = Configs.GetAppSettingBool(Consts.BrowserExposeGCKeyName, Consts.EXPOSEGC_DEFAULT);
+            this.PreciseMemoryInfo    = Configs.GetAppSettingBool(Consts.BrowserPreciseMemoryInfoEnabledKeyName, Consts.PRECISEMEMORYINFO_DEFAULT);
+            this.Delay                = Configs.GetAppSettingInt(Consts.BrowserDelayKeyName, Consts.DELAY_DEFAULT);
+            
             this.ScriptPID = System.Diagnostics.Process.GetCurrentProcess().Id;
         }
 
