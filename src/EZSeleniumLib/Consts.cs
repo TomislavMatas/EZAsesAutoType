@@ -98,12 +98,12 @@ namespace EZSeleniumLib
         /// <summary>
         /// Default value if "EZSeleniumLib.Browser.ExposeGC" is missing in "App.config".
         /// </summary>
-        public const bool EXPOSEGC_DEFAULT = true;
+        public const bool EXPOSEGC_DEFAULT = false;
 
         /// <summary>
         /// Default value if "EZSeleniumLib.Browser.PreciseMemoryInfo.Enabled" is missing in "App.config".
         /// </summary>
-        public const bool PRECISEMEMORYINFO_DEFAULT = true;
+        public const bool PRECISEMEMORYINFO_DEFAULT = false;
 
         public const string BROWSERIMPLEMENTATATION_CHROME = Constant.WebDriverChrome;
         public const string BROWSERIMPLEMENTATATION_EDGE = Constant.WebDriverEdge;

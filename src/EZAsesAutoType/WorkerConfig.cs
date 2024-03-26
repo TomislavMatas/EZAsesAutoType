@@ -30,6 +30,56 @@ namespace EZAsesAutoType
         }
         #endregion
 
+        #region propertiez
+        private UserSettings? m_UserSettings = null;
+        private UserSettings UserSettings
+        {
+            get
+            {
+                if (m_UserSettings == null)
+                    m_UserSettings = new UserSettings();
+                return m_UserSettings;
+            }
+            set
+            {
+                m_UserSettings = value;
+            }
+        }
+        public UserSettings GetUserSettings()
+        {
+            return this.UserSettings;
+        }
+        public UserSettings SetUserSettings(UserSettings userSettings)
+        {
+            UserSettings prev = this.GetUserSettings();
+            this.UserSettings = userSettings;
+            return prev;
+        }
+        #endregion
+
+        /// <summary>
+        /// Init instance.
+        /// </summary>
+        /// <returns></returns>
+        private bool Initialze(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                this.SetUserSettings(userSettings);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
         /// <summary>
         ///  Default constructor.
         /// </summary>
@@ -38,7 +88,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (!Initialze())
+                if (!Initialze(new UserSettings()))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
@@ -51,17 +101,20 @@ namespace EZAsesAutoType
             }
         }
 
-        private bool Initialze()
+        /// <summary>
+        ///  Custom constructor.
+        /// </summary>
+        public WorkerConfig(UserSettings userSettings)
         {
             try
             {
                 Log.Debug(Const.LogStart);
-                return true;
+                if (!Initialze(userSettings))
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                return false;
             }
             finally
             {

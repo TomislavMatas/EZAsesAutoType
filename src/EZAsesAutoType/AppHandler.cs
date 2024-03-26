@@ -159,6 +159,29 @@ namespace EZAsesAutoType
             }
         }
 
+        public bool DoDailyPunch(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                WorkerConfig config = new WorkerConfig(userSettings);
+                Worker worker = new Worker(config);
+                if(!worker.DoDailyPunch(userSettings))
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
     } // class
 
 } // namespace

@@ -105,6 +105,7 @@
 &lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
   &lt;string&gt;Chrome&lt;/string&gt;
   &lt;string&gt;Edge&lt;/string&gt;
+  &lt;string&gt;Firefox&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

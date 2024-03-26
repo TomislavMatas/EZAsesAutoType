@@ -48,6 +48,7 @@
             comboBoxLanguage = new ComboBox();
             labelLanguage = new Label();
             labelDash1 = new Label();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             SuspendLayout();
             // 
             // btnRun
@@ -247,6 +248,10 @@
             labelDash1.TabIndex = 19;
             labelDash1.Text = " / ";
             // 
+            // backgroundWorker1
+            // 
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -305,5 +310,6 @@
         private ComboBox comboBoxLanguage;
         private Label labelLanguage;
         private Label labelDash1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
