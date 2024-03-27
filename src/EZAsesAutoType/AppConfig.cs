@@ -10,13 +10,14 @@
 //
 
 using log4net;
+using System.Threading;
 
 namespace EZAsesAutoType
 {
     /// <summary>
     /// Access app specific configuration settings from "App.config" file.
     /// </summary>
-    internal static class AppConfig
+    internal class AppConfig
     {
         #region log4net
         private static ILog? m_Log = null;
@@ -31,23 +32,137 @@ namespace EZAsesAutoType
         }
         #endregion
 
-        private static bool Initialze()
+        private const string TimeoutLoginPageKeyName = "ASES.Timeout.LoginPage";
+        private const int TimeoutLoginPageDefault = 60;
+        private int m_TimeoutLoginPage = -1;
+        private int TimeoutLoginPage
         {
-            try
+            get
             {
-                Log.Debug(Const.LogStart);
-                return true;
+                if (m_TimeoutLoginPage == -1)
+                    m_TimeoutLoginPage = ConfigApi.GetAppSettingInt(TimeoutLoginPageKeyName, TimeoutLoginPageDefault);
+                return m_TimeoutLoginPage;
             }
-            catch (Exception ex)
+            set
             {
-                Log.Error(ex);
-                return false;
+                m_TimeoutLoginPage = value;
             }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
+        }
+        public int GetTimeoutLoginPage()
+        {
+            return this.TimeoutLoginPage;
+        }
+        public int SetTimeoutLoginPage(int value)
+        {
+            int prev = this.GetTimeoutLoginPage();
+            this.TimeoutLoginPage = value;
+            return prev;
+        }
 
+        private const string TimeoutFindElementKeyName = "ASES.Timeout.FindElement";
+        private const int TimeoutFindElementDefault = 10;
+        private int m_TimeoutFindElement = -1;
+        private int TimeoutFindElement
+        {
+            get
+            {
+                if (m_TimeoutFindElement == -1)
+                    m_TimeoutFindElement = ConfigApi.GetAppSettingInt(TimeoutFindElementKeyName, TimeoutFindElementDefault);
+                return m_TimeoutFindElement;
+            }
+            set
+            {
+                m_TimeoutFindElement = value;
+            }
+        }
+        public int GetTimeoutFindElement()
+        {
+            return this.TimeoutFindElement;
+        }
+        public int SetTimeoutFindElement(int value)
+        {
+            int prev = this.GetTimeoutFindElement();
+            this.TimeoutFindElement = value;
+            return prev;
+        }
+
+        private const string TimeoutPopupKeyName = "ASES.Timeout.Popup";
+        private const int TimeoutPopupDefault = 10;
+        private int m_TimeoutPopup = -1;
+        private int TimeoutPopup
+        {
+            get
+            {
+                if (m_TimeoutPopup == -1)
+                    m_TimeoutPopup = ConfigApi.GetAppSettingInt(TimeoutPopupKeyName, TimeoutPopupDefault);
+                return m_TimeoutPopup;
+            }
+            set
+            {
+                m_TimeoutPopup = value;
+            }
+        }
+        public int GetTimeoutPopup()
+        {
+            return this.TimeoutPopup;
+        }
+        public int SetTimeoutPopup(int value)
+        {
+            int prev = this.GetTimeoutPopup();
+            this.TimeoutPopup = value;
+            return prev;
+        }
+
+        private const string LoginPageFooterXPathKeyName = "ASES.LoginPage.Footer.xPath";
+        private string m_LoginPageFooterXPath = null;
+        private string LoginPageFooterXPath
+        {
+            get
+            {
+                if (m_LoginPageFooterXPath == null)
+                    m_LoginPageFooterXPath = ConfigApi.GetAppSettingString(LoginPageFooterXPathKeyName, string.Empty);
+                return m_LoginPageFooterXPath;
+            }
+            set
+            {
+                m_LoginPageFooterXPath = value;
+            }
+        }
+        public string GetLoginPageFooterXPath()
+        {
+            return this.LoginPageFooterXPath;
+        }
+        public string SetLoginPageFooterXPath(string value)
+        {
+            string prev = this.GetLoginPageFooterXPath();
+            this.LoginPageFooterXPath = value;
+            return prev;
+        }
+
+        private const string LoginPageUsernameXPathKeyName = "ASES.LoginPage.Username.xPath";
+        private string m_LoginPageUsernameXPath = null;
+        private string LoginPageUsernameXPath
+        {
+            get
+            {
+                if (m_LoginPageUsernameXPath == null)
+                    m_LoginPageUsernameXPath = ConfigApi.GetAppSettingString(LoginPageUsernameXPathKeyName, string.Empty);
+                return m_LoginPageUsernameXPath;
+            }
+            set
+            {
+                m_LoginPageUsernameXPath = value;
+            }
+        }
+        public string GetLoginPageUsernameXPath()
+        {
+            return this.LoginPageUsernameXPath;
+        }
+        public string SetLoginPageUsernameXPath(string value)
+        {
+            string prev = this.GetLoginPageUsernameXPath();
+            this.LoginPageUsernameXPath = value;
+            return prev;
         }
 
     } // class

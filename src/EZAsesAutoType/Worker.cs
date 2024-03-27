@@ -59,6 +59,22 @@ namespace EZAsesAutoType
             this.WorkerConfig = workerConfig;
             return prev;
         }
+
+        private AppConfig? m_AppConfig = null;
+        private AppConfig AppConfig
+        {
+            get
+            {
+                if (m_AppConfig == null)
+                    m_AppConfig = new AppConfig();
+                return m_AppConfig;
+            }
+            set
+            {
+                m_AppConfig = value;
+            }
+        }
+
         #endregion
 
         #region Instantiation
@@ -140,6 +156,25 @@ namespace EZAsesAutoType
 
         #endregion "userSettings" - wrapperz
 
+        #region "AppConfig" - wrapperz
+
+        private int GetTimeoutNavigationLoginPage()
+        {
+            return this.AppConfig.GetTimeoutLoginPage();
+        }
+
+        private string GetLoginPageFooterXPath()
+        {
+            return this.AppConfig.GetLoginPageFooterXPath();
+        }
+
+        private string GetLoginPageUsernameXPath()
+        {
+            return this.AppConfig.GetLoginPageUsernameXPath();
+        }
+
+        #endregion "AppConfig" - wrapperz
+
         /// <summary>
         /// Return a specific descendant of class "BrowserBase" using "BrowserFactory".
         /// </summary>
@@ -172,7 +207,7 @@ namespace EZAsesAutoType
         /// <param name="browser"></param>
         /// <param name="timeout">Timeout in seconds.</param>
         /// <returns></returns>
-        private bool ASESNavigateToLoginPage(BrowserBase browser, string baseUrl, int timeout)
+        private bool ASESNavigateToLoginPage(BrowserBase browser, string baseUrl, int timeoutLoginPage)
         {
             try
             {
@@ -181,10 +216,21 @@ namespace EZAsesAutoType
                     throw new Exception(String.Format("GoToUrl '{0}' failed", baseUrl));
 
                 #region validate complete rendering 
-                //string xPath = this.GetWawXpathIntialChatPageH1();
-                //IWebElement element = browser.FindElement(By.XPath(xPath), timeout);
-                //if (element == null)
-                //    throw new Exception(String.Format("Element '{0}' not found", xPath));
+
+                // consider "loaded" when footer and all required input elements can be found.
+                // use a "long" timeout only for first element that should be found.
+                // although not reliable, use the buttom~most element as first element to look for.
+                string xPath = this.GetLoginPageUsernameXPath(); ;// this.GetLoginPageFooterXPath();
+                IWebElement element = browser.FindElement(By.XPath(xPath), timeoutLoginPage);
+                if (element == null)
+                    throw new Exception(String.Format("Element '{0}' not found", xPath));
+
+                // look for other rquired elements with an arbitary and shorter timeout
+                xPath = this.GetLoginPageUsernameXPath();
+                element = browser.FindElement(By.XPath(xPath), 1);
+                if (element == null)
+                    throw new Exception(String.Format("Element '{0}' not found", xPath));
+
                 #endregion
 
                 return true;
@@ -206,7 +252,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                int timeout = 60; // seconds
+                int timeoutLoginPage = this.GetTimeoutNavigationLoginPage();
                 string webDriver = userSettings.WebDriver;
                 BrowserOptions browserOptions = new BrowserOptions();
                 browser = this.GetBrowserInstance(webDriver, browserOptions);
@@ -214,7 +260,7 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(this.GetBrowserInstance) + Const.LogFail);
 
                 string baseUrl = userSettings.ASESBaseUrl;
-                if (!this.ASESNavigateToLoginPage(browser, baseUrl,timeout))
+                if (!this.ASESNavigateToLoginPage(browser, baseUrl,timeoutLoginPage))
                     throw new Exception(nameof(this.ASESNavigateToLoginPage) + Const.LogFail);
 
                 return true;
