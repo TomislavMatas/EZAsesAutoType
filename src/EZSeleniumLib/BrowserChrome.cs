@@ -16,16 +16,10 @@
 // * Initial version.
 //
 
-using System;
-using System.Collections.Generic;
-
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
 
 using log4net;
-using System.Threading;
-using System.ComponentModel;
 
 namespace EZSeleniumLib
 {
@@ -57,9 +51,10 @@ namespace EZSeleniumLib
         #region private memberz
 
         private ChromeDriver _driver = null;
-        protected override RemoteWebDriver GetDriver()
+        protected override WebDriver GetDriver()
         {
-            return _driver;
+        	// Explicit type cast below is optional, but kept for the sake of clarity.
+            return (ChromeDriver)_driver;
         }
 
         private ChromeDriverService _service = null;
@@ -212,11 +207,11 @@ namespace EZSeleniumLib
                 Log.Info(String.Format("ChromeDriverService ServiceUrl: {0}", _service.ServiceUrl));
                 Log.Info("ChromeDriverService start OK");
 
-                Log.Info("RemoteWebDriver init ...");
-//                this._driver = new RemoteWebDriver(remoteAddress: _service.ServiceUrl, options: options);
+                Log.Info("WebDriver init ...");
+//                this._driver = new WebDriver(remoteAddress: _service.ServiceUrl, options: options);
                 this._driver = new ChromeDriver(_service, options: options);
-                Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this._driver.SessionId));
-                Log.Info("RemoteWebDriver init OK");
+                Log.Info(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
+                Log.Info("WebDriver init OK");
 
                 return true;
             }
@@ -240,7 +235,8 @@ namespace EZSeleniumLib
                 #region Basic Options
                 options.PageLoadStrategy = PageLoadStrategy.Normal;
                 options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-                options.UseSpecCompliantProtocol = true;
+				// Selenium v3
+				// options.UseSpecCompliantProtocol = true;
 #if DEBUG
                 options.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Client, LogLevel.Debug);
@@ -383,7 +379,10 @@ namespace EZSeleniumLib
 
                 Dictionary<string, object> details = new Dictionary<string, object>();
                 details["ignoreCache"] = ignoreCache;
-                _driver.ExecuteChromeCommand("Page.reload", details);
+				// Selenium v3
+				// _driver.ExecuteChromeCommand("Page.reload", details);
+				// Selenium v4				
+                _driver.ExecuteCustomDriverCommand("Page.reload", details);
                 return true;
             }
             catch (Exception e)
