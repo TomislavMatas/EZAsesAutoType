@@ -163,6 +163,11 @@ namespace EZAsesAutoType
             return this.AppConfig.GetTimeoutLoginPage();
         }
 
+        private int GetTimeoutFindElement()
+        {
+            return this.AppConfig.GetTimeoutFindElement();
+        }
+
         private string GetLoginPageFooterXPath()
         {
             return this.AppConfig.GetLoginPageFooterXPath();
@@ -207,12 +212,13 @@ namespace EZAsesAutoType
         /// <param name="browser"></param>
         /// <param name="timeout">Timeout in seconds.</param>
         /// <returns></returns>
-        private bool ASESNavigateToLoginPage(BrowserBase browser, string baseUrl, int timeoutLoginPage)
+        private bool ASESNavigateToLoginPage(BrowserBase browser, string baseUrl, int timeoutInSeconds)
         {
+
             try
             {
                 Log.Debug(Const.LogStart);
-                if (!browser.GoToUrl(baseUrl))
+                if (!browser.GoToUrl(baseUrl, timeoutInSeconds))
                     throw new Exception(String.Format("GoToUrl '{0}' failed", baseUrl));
 
                 #region validate complete rendering 
@@ -220,14 +226,15 @@ namespace EZAsesAutoType
                 // consider "loaded" when footer and all required input elements can be found.
                 // use a "long" timeout only for first element that should be found.
                 // although not reliable, use the buttom~most element as first element to look for.
-                string xPath = this.GetLoginPageUsernameXPath(); ;// this.GetLoginPageFooterXPath();
-                IWebElement element = browser.FindElement(By.XPath(xPath), timeoutLoginPage);
+                string xPath = this.GetLoginPageUsernameXPath(); // this.GetLoginPageFooterXPath();
+                int timeoutFindElement = this.GetTimeoutFindElement();
+                IWebElement element = browser.FindElementByXpath(xPath, timeoutFindElement);
                 if (element == null)
                     throw new Exception(String.Format("Element '{0}' not found", xPath));
 
                 // look for other rquired elements with an arbitary and shorter timeout
                 xPath = this.GetLoginPageUsernameXPath();
-                element = browser.FindElement(By.XPath(xPath), 1);
+                element = browser.FindElementByXpath(xPath, timeoutFindElement);
                 if (element == null)
                     throw new Exception(String.Format("Element '{0}' not found", xPath));
 
@@ -260,7 +267,7 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(this.GetBrowserInstance) + Const.LogFail);
 
                 string baseUrl = userSettings.ASESBaseUrl;
-                if (!this.ASESNavigateToLoginPage(browser, baseUrl,timeoutLoginPage))
+                if (!this.ASESNavigateToLoginPage(browser, baseUrl, timeoutLoginPage))
                     throw new Exception(nameof(this.ASESNavigateToLoginPage) + Const.LogFail);
 
                 return true;
