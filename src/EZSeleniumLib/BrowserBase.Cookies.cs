@@ -3,7 +3,7 @@
 //
 // Summary:
 // Supplementary methods for "BrowserBase".
-// Wrapper for "RemoteWebDriver.Manage().Cookies.*" methods.
+// Wrapper for "WebDriver.Manage().Cookies.*" methods.
 //
 // Revision History: 
 // 2024/03/24:TomislavMatas: Version "1.0.0.0"

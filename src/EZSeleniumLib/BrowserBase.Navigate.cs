@@ -11,14 +11,9 @@
 // * Initial version.
 //
 
-using System;
-using System.Threading;
-
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
-
-using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace EZSeleniumLib
 {
@@ -211,7 +206,7 @@ namespace EZSeleniumLib
         /// </summary>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        public IAlert WaitUntilAlertIsPresent(int timeoutInSeconds)
+        public IAlert? WaitUntilAlertIsPresent(int timeoutInSeconds)
         {
             try
             {
@@ -220,15 +215,36 @@ namespace EZSeleniumLib
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
-                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
-                if (alert == null)
-                    throw new Exception("alert is null");
+                // Selenium v3 did provide "ExpectedConditions.AlertIsPresent()" implementation.
+                // WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
+                // IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+                // Selenium v4 does not even have the class "ExpectedConditions" any more, make custom culprit.
+                IAlert? alert = null; 
+                bool timeoutReached = false;
+                int secondsElapsed = 0;
+                while (!timeoutReached)
+                {
+                    if (secondsElapsed > timeoutInSeconds)
+                        throw new Exception("timeout");
 
-                alert = Driver.SwitchTo().Alert();
+                    try
+                    {
+                        alert = Driver.SwitchTo().Alert();
+                        if (alert == null)
+                            Log.Debug("Driver.SwitchTo().Alert()"+ Consts.LogFail);
 
+                        return alert; // SUCCESS!
+                    }
+                    catch (Exception ex) 
+                    {
+                        Log.Debug(ex);
+                    }
+                    Thread.Sleep(1000);
+                }
+                // "unreachable code".
+                // "alert" will be null at this point.
+                // kept for the sake of clarity.
                 return alert;
-
             }
             catch (Exception ex)
             {
