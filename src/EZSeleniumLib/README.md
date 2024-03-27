@@ -4,10 +4,9 @@ This project is used to build the library "EZSeleniumLib.dll".
 A new version of the "EZSeleniumLib.dll" potentially has to 
 be deployed with every major browser version update.
 Resulting in a patch needed apx. every month on "Stable release" 
-channels of Chrome and Edge.
+channels of Chrome, Edge and Firefox.
 
-The WebDriver version must be the same (or higher) 
-than the browser verion installed.
+The WebDriver main version must be the same as the browser verion.
 
 ## Using Selenium WebDriver for Chrome
 WebDriver download URL:
@@ -46,8 +45,17 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 
 # Revision History
 ## 2024/03/24:TomislavMatas: Version "1.0.0.0"
-* Added initial prototyping to -->< "https://github.com/TomislavMatas/AsesAutoType" >.
 * Use "chromedriver.exe" version "123.0.6312.58".
 * Use "MicrosoftWebDriver.exe" version "122.0.2365.106".
 * Use "geckodriver.exe" version "0.34.0".
+* Upgrade Selenium framework from "3.141.0" to "4.18.1".
+  - Refactor "WaitUntilAlertIsPresent" because Selenium v4 does not provide "ExpectedConditions" any more.
+  - Replace "RemoteWebDriver" with "WebDriver".
+  - Replace "AddAdditionalCapability" with "AddAdditionalEdgeOption".
+  - Replace "UseVerboseLogging" with "EnableVerboseLogging".
+  - Replace "ExecuteChromeCommand" with "ExecuteCustomDriverCommand".
+  - Remove references to "SeleniumExtras.WaitHelpers.*".
+  - Remove references to "UseSpecCompliantProtocol".
+  - Remove nuget PackageReference "DotNetSeleniumExtras.PageObjects".
+  - Remove nuget PackageReference "DotNetSeleniumExtras.WaitHelpers".
 * Initial Version.

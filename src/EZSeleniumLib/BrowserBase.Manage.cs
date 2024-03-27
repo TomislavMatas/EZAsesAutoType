@@ -4,7 +4,7 @@
 // Summary:
 // Supplementary methods for "BrowserBase".
 // Implementation for wrapper methods derived 
-// from "RemoteWebDriver.Manage()".
+// from "WebDriver.Manage()".
 //
 // Revision History: 
 // 2024/03/24:TomislavMatas: Version "1.0.0.0"
