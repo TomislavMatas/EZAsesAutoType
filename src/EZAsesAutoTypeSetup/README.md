@@ -7,5 +7,4 @@ when building with platform "x64".
 
 # Revision History
 ## 2024/03/22:TomislavMatas: Version "1.0.0.0"
-* Added initial prototyping to -->< "https://github.com/TomislavMatas/AsesAutoType" >.
 * Initial Version.
