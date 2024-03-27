@@ -10,11 +10,9 @@
 // * Initial version.
 //
 
-using System;
 using System.Collections.ObjectModel;
 
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 
 namespace EZSeleniumLib
 {
@@ -35,7 +33,7 @@ namespace EZSeleniumLib
         /// </summary>
         /// <param name="xPath"></param>
         /// <returns></returns>
-        public IWebElement FindElement(string xPath)
+        public IWebElement FindElementByXPath(string xPath)
         {
             try
             {
@@ -72,7 +70,7 @@ namespace EZSeleniumLib
         /// <param name="xPath"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        public IWebElement FindElement(string xPath, int timeoutInSeconds)
+        public IWebElement FindElementByXpath(string xPath, int timeoutInSeconds)
         {
             try
             {
@@ -102,15 +100,15 @@ namespace EZSeleniumLib
         }
 
         /// <summary>
-        /// Wrapper for "Driver.FindElement(by);".
-        /// If "timeoutInSeconds" has a value > 0, 
-        /// a sepcific "WebDriverWait.Until()" call will be added.
+        /// Wrapper for "Driver.FindElement(by);" with extension to 
+        /// obey a given and specific "timeout".
         /// </summary>
         /// <param name="by"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
         public IWebElement FindElement( By by, int timeoutInSeconds )
         {
+            TimeSpan revert = TimeSpan.Zero;
             try
             {
                 Log.Debug(DEBUG_START);
@@ -119,11 +117,8 @@ namespace EZSeleniumLib
 
                 if (timeoutInSeconds > 0)
                 {
-                    WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                    wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-                    wait.IgnoreExceptionTypes(typeof(UnhandledAlertException));
-                    wait.IgnoreExceptionTypes(typeof(WebDriverException));
-                    return wait.Until(drv => drv.FindElement(by));
+                    revert = Driver.Manage().Timeouts().ImplicitWait;
+                    Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(timeoutInSeconds);
                 }
                 return Driver.FindElement(by);
             }
@@ -144,6 +139,9 @@ namespace EZSeleniumLib
             }
             finally
             {
+                if(revert != TimeSpan.Zero)
+                    Driver.Manage().Timeouts().ImplicitWait = revert;
+
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -168,6 +166,7 @@ namespace EZSeleniumLib
         /// <returns></returns>
         public ReadOnlyCollection<IWebElement> FindElements(By by, int timeoutInSeconds)
         {
+            TimeSpan revert = TimeSpan.Zero;
             try
             {
                 Log.Debug(DEBUG_START);
@@ -176,13 +175,11 @@ namespace EZSeleniumLib
 
                 if (timeoutInSeconds > 0)
                 {
-                    WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                    wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-                    wait.IgnoreExceptionTypes(typeof(UnhandledAlertException));
-                    wait.IgnoreExceptionTypes(typeof(WebDriverException));
-                    return wait.Until(drv => drv.FindElements(by));
+                    revert = Driver.Manage().Timeouts().ImplicitWait;
+                    Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(timeoutInSeconds);
                 }
-                return Driver.FindElements(by);
+                ReadOnlyCollection<IWebElement> elements = Driver.FindElements(by);
+                return elements;
             }
             catch (OpenQA.Selenium.WebDriverTimeoutException)
             {
@@ -201,6 +198,9 @@ namespace EZSeleniumLib
             }
             finally
             {
+                if (revert != TimeSpan.Zero)
+                    Driver.Manage().Timeouts().ImplicitWait = revert;
+
                 Log.Debug(DEBUG_DONE);
             }
         }
