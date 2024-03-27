@@ -111,17 +111,24 @@ namespace EZSeleniumLib
             }
         }
 
+
+
+
         /// <summary>
         /// Wrapper for "Driver.Navigate().GoToUrl(url);".
+        /// If "timeoutInSeconds > 0", than change the 
+        /// current "PageLoad" timeout temporarialy and revert 
+        /// it back upun completion.
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public bool GoToUrl(string url)
+        public bool GoToUrl(string url, int timeoutInSeconds = 0)
         {
+            TimeSpan revert = TimeSpan.Zero;
             try
             {
                 Log.Debug(DEBUG_START);
-
+                Log.Debug(String.Format("url={0},timeout={1}",url, timeoutInSeconds));
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException("url");
 
@@ -131,7 +138,12 @@ namespace EZSeleniumLib
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
-                Log.Debug(String.Format("url={0}", url));
+                if (timeoutInSeconds > 0)
+                {
+                    revert = this.Driver.Manage().Timeouts().PageLoad;
+                    this.Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(timeoutInSeconds);
+                }
+
                 Driver.Navigate().GoToUrl(url);
 
                 return true;
@@ -144,6 +156,35 @@ namespace EZSeleniumLib
             finally
             {
                 Thread.Sleep(this.GetDelay());
+                if (revert != TimeSpan.Zero)
+                    this.Driver.Manage().Timeouts().PageLoad = revert;
+
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Wrapper for "Driver.Navigate().GoToUrl(url);".
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public bool GoToUrl(string url)
+        {
+            try
+            {
+                Log.Debug(DEBUG_START);
+                if (!this.GoToUrl(url,0))
+                    throw new Exception(nameof(this.GoToUrl) + Consts.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
                 Log.Debug(DEBUG_DONE);
             }
         }
