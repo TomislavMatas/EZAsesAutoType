@@ -17,13 +17,8 @@
 // * Initial version.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Remote;
 
 using log4net;
 
@@ -57,9 +52,10 @@ namespace EZSeleniumLib
         #region private memberz
 
         private FirefoxDriver _driver = null;
-        protected override RemoteWebDriver GetDriver()
+        protected override WebDriver GetDriver()
         {
-            return _driver;
+        	// Explicit type cast below is optional, but kept for the sake of clarity.
+            return (FirefoxDriver)_driver;
         }
 
         private FirefoxDriverService _service = null;
@@ -212,11 +208,10 @@ namespace EZSeleniumLib
                 Log.Info(String.Format("FirefoxDriverService ServiceUrl: {0}", _service.ServiceUrl));
                 Log.Info("FirefoxDriverService start OK");
 
-                Log.Info("RemoteWebDriver init ...");
-//                this._driver = new RemoteWebDriver(remoteAddress: _service.ServiceUrl, options: options);
+                Log.Info("WebDriver init ...");
                 this._driver = new FirefoxDriver(_service, options: options);
-                Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this._driver.SessionId));
-                Log.Info("RemoteWebDriver init OK");
+                Log.Info(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
+                Log.Info("WebDriver init OK");
 
                 return true;
             }
@@ -247,7 +242,8 @@ namespace EZSeleniumLib
 
                 options.PageLoadStrategy = PageLoadStrategy.Normal;
                 options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-                options.UseLegacyImplementation = false;
+                // Selenium v3 next line disabled
+                // options.UseLegacyImplementation = false;
 #if DEBUG
                 options.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Client, LogLevel.Debug);

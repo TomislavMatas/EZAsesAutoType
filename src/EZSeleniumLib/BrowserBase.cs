@@ -56,8 +56,8 @@ namespace EZSeleniumLib
         protected const string DEBUG_START = Consts.DEBUG_START;
         protected const string DEBUG_DONE = Consts.DEBUG_DONE;
 
-        private RemoteWebDriver m_Driver = null;
-        protected RemoteWebDriver Driver
+        private WebDriver m_Driver = null;
+        protected WebDriver Driver
         {
             get
             {
@@ -71,7 +71,7 @@ namespace EZSeleniumLib
                 m_Driver = value; 
             }
         }
-        protected abstract RemoteWebDriver GetDriver();
+        protected abstract WebDriver GetDriver();
 
         /// <summary>
         /// Return reference on current instance of IWebDriver.

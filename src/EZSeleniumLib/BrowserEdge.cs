@@ -56,9 +56,10 @@ namespace EZSeleniumLib
         #region private memberz
 
         private EdgeDriver _driver = null;
-        protected override RemoteWebDriver GetDriver()
+        protected override WebDriver GetDriver()
         {
-            return _driver;
+        	// Explicit type cast below is optional, but kept for the sake of clarity.
+            return (EdgeDriver)_driver;
         }
 
         private EdgeDriverService _service = null;
@@ -176,13 +177,16 @@ namespace EZSeleniumLib
                 Log.Info("EdgeDriverService init ...");
                 EdgeDriverService service = EdgeDriverService.CreateDefaultService();
 #if DEBUG
-                service.UseVerboseLogging = true;
-                service.UseSpecCompliantProtocol = true;
+				// Selenium v3
+				// service.UseVerboseLogging = true;
+				// service.UseSpecCompliantProtocol = true;
+                service.EnableVerboseLogging = true;
                 service.HideCommandPromptWindow = false;
                 service.SuppressInitialDiagnosticInformation = false;
 #else
-                service.UseVerboseLogging = false;
-                service.UseSpecCompliantProtocol = true;
+                // Selenium v3
+                // service.UseVerboseLogging = false;
+                // service.UseSpecCompliantProtocol = true;
                 service.HideCommandPromptWindow = true;
                 service.SuppressInitialDiagnosticInformation = true;
 #endif
@@ -200,11 +204,10 @@ namespace EZSeleniumLib
                 Log.Info(String.Format("EdgeDriverService ServiceUrl: {0}", _service.ServiceUrl));
                 Log.Info("EdgeDriverService start OK");
 
-                Log.Info("RemoteWebDriver init ...");
-//                this._driver = new RemoteWebDriver(_service.ServiceUrl, options);
+                Log.Info("WebDriver init ...");
                 this._driver = new EdgeDriver(_service, options);
-                Log.Info(String.Format("RemoteWebDriver SessionId: {0}", this._driver.SessionId));
-                Log.Info("RemoteWebDriver init OK");
+                Log.Info(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
+                Log.Info("WebDriver init OK");
 
                 return true;
             }
@@ -271,7 +274,10 @@ namespace EZSeleniumLib
 
                 #region Capabilities
 
-                edgeOptions.AddAdditionalCapability("useAutomationExtension", false);
+                // Selenium v3
+                // edgeOptions.AddAdditionalCapability("useAutomationExtension", false);
+                // Selenium v4
+                edgeOptions.AddAdditionalEdgeOption("useAutomationExtension", false);
 
                 Dictionary<string, object> profileDict = new Dictionary<string, object>();
                 bool popupsEnabled = this.BrowserOptions.PopupsEnabled;
@@ -294,9 +300,8 @@ namespace EZSeleniumLib
                 if (profileDict.Count > 0)
                     optionDict.Add("prefs", profileDict);
 
-                //edgeOptions.AddAdditionalCapability("ms:edgeChrominum", true);
                 if (optionDict.Count > 0)
-                    edgeOptions.AddAdditionalCapability("ms:edgeOptions", optionDict);
+                    edgeOptions.AddAdditionalEdgeOption("ms:edgeOptions", optionDict);
 
                 #endregion Capabilities
 

@@ -3,7 +3,7 @@
 //
 // Summary:
 // Supplementary methods for "BrowserBase".
-// Implementation of wrappers for "RemoteWebDriver.Find*" methods.
+// Implementation of wrappers for "WebDriver.Find*" methods.
 //
 // Revision History: 
 // 2024/03/24:TomislavMatas: Version "1.0.0.0"
