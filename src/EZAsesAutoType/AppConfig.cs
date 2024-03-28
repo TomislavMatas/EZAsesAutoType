@@ -113,29 +113,29 @@ namespace EZAsesAutoType
             return prev;
         }
 
-        private const string LoginPageFooterXPathKeyName = "ASES.LoginPage.Footer.xPath";
-        private string m_LoginPageFooterXPath = null;
-        private string LoginPageFooterXPath
+        private const string ApplicationIFrameXPathKeyName = "ASES.Application.iFrame.xPath";
+        private string m_ApplicationIFrameXPath = null;
+        private string ApplicationIFrameXPath
         {
             get
             {
-                if (m_LoginPageFooterXPath == null)
-                    m_LoginPageFooterXPath = ConfigApi.GetAppSettingString(LoginPageFooterXPathKeyName, string.Empty);
-                return m_LoginPageFooterXPath;
+                if (m_ApplicationIFrameXPath == null)
+                    m_ApplicationIFrameXPath = ConfigApi.GetAppSettingString(ApplicationIFrameXPathKeyName, string.Empty);
+                return m_ApplicationIFrameXPath;
             }
             set
             {
-                m_LoginPageFooterXPath = value;
+                m_ApplicationIFrameXPath = value;
             }
         }
-        public string GetLoginPageFooterXPath()
+        public string GetApplicationIFrameXPath()
         {
-            return this.LoginPageFooterXPath;
+            return this.ApplicationIFrameXPath;
         }
-        public string SetLoginPageFooterXPath(string value)
+        public string SetApplicationIFrameXPath(string value)
         {
-            string prev = this.GetLoginPageFooterXPath();
-            this.LoginPageFooterXPath = value;
+            string prev = this.GetApplicationIFrameXPath();
+            this.ApplicationIFrameXPath = value;
             return prev;
         }
 
@@ -164,6 +164,33 @@ namespace EZAsesAutoType
             this.LoginPageUsernameXPath = value;
             return prev;
         }
+
+        private const string LoginPagePasswordXPathKeyName = "ASES.LoginPage.Password.xPath";
+        private string m_LoginPagePasswordXPath = null;
+        private string LoginPagePasswordXPath
+        {
+            get
+            {
+                if (m_LoginPagePasswordXPath == null)
+                    m_LoginPagePasswordXPath = ConfigApi.GetAppSettingString(LoginPagePasswordXPathKeyName, string.Empty);
+                return m_LoginPagePasswordXPath;
+            }
+            set
+            {
+                m_LoginPagePasswordXPath = value;
+            }
+        }
+        public string GetLoginPagePasswordXPath()
+        {
+            return this.LoginPagePasswordXPath;
+        }
+        public string SetLoginPagePasswordXPath(string value)
+        {
+            string prev = this.GetLoginPagePasswordXPath();
+            this.LoginPagePasswordXPath = value;
+            return prev;
+        }
+
 
     } // class
 
