@@ -107,6 +107,7 @@ namespace EZAsesAutoType
         public const string LogInvalid = " INVALID";
         public const string LogNotImpl = " NOT IMPLEMENTED";
         public const string LogIsNull = " IS NULL";
+        public const string LogNotFound = " NOT FOUND";
         #endregion
 
     } // class
