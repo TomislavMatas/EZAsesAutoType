@@ -474,6 +474,7 @@ namespace EZSeleniumLib
                         PostMessage(hwnd, MSG_KEY_DOWN, key, IntPtr.Zero);
                         PostMessage(hwnd, MSG_KEY_UP, key, IntPtr.Zero);
                         PostMessage(hwnd, MSG_KEY_UP, KEY_CTRL, IntPtr.Zero);
+                        Thread.Sleep(this.GetDelay());
                         return true;
                     case KeyChord.CTRL_W:
 //                      IntPtr KEY_W = new IntPtr(0x57); // "W" (Uppercase)
@@ -482,6 +483,7 @@ namespace EZSeleniumLib
                         PostMessage(hwnd, MSG_KEY_DOWN, KEY_w, IntPtr.Zero);
                         PostMessage(hwnd, MSG_KEY_UP, KEY_w, IntPtr.Zero);
                         PostMessage(hwnd, MSG_KEY_UP, KEY_CTRL, IntPtr.Zero);
+                        Thread.Sleep(this.GetDelay());
                         return true;
                 }
                 return false;
@@ -493,7 +495,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
