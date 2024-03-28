@@ -71,6 +71,7 @@ namespace EZSeleniumLib
 
                 Driver.Url = url;
 
+                Thread.Sleep(this.GetDelay());
                 return true;
             }
             catch (Exception ex)
@@ -80,7 +81,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -146,6 +146,7 @@ namespace EZSeleniumLib
 
                 Driver.Navigate().GoToUrl(url);
 
+                Thread.Sleep(this.GetDelay());
                 return true;
             }
             catch (Exception ex)
@@ -155,7 +156,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 if (revert != TimeSpan.Zero)
                     this.Driver.Manage().Timeouts().PageLoad = revert;
 
@@ -201,7 +201,7 @@ namespace EZSeleniumLib
                 Log.Debug(DEBUG_START);
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(element).Perform();
-                Thread.Sleep(500);
+                Thread.Sleep(this.GetDelay());
                 return true;
             }
             catch (Exception ex)
@@ -211,7 +211,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -228,6 +227,7 @@ namespace EZSeleniumLib
                 Log.Debug(DEBUG_START);
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(element).Click().Build().Perform();
+                Thread.Sleep(this.GetDelay());
                 return true;
             }
             catch (Exception ex)
@@ -237,7 +237,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -280,7 +279,7 @@ namespace EZSeleniumLib
                     {
                         Log.Debug(ex);
                     }
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1000); // 1000 ms = one second
                 }
                 // "unreachable code".
                 // "alert" will be null at this point.
@@ -316,6 +315,7 @@ namespace EZSeleniumLib
 
                 alert.Accept();
 
+                Thread.Sleep(this.GetDelay());
                 return true;
             }
             catch (Exception e)
@@ -325,7 +325,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
@@ -348,6 +347,7 @@ namespace EZSeleniumLib
 
                 alert.Dismiss();
 
+                Thread.Sleep(this.GetDelay());
                 return true;
             }
             catch (Exception e)
@@ -357,7 +357,6 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Thread.Sleep(this.GetDelay());
                 Log.Debug(DEBUG_DONE);
             }
         }
