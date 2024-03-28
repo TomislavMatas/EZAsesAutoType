@@ -168,14 +168,19 @@ namespace EZAsesAutoType
             return this.AppConfig.GetTimeoutFindElement();
         }
 
-        private string GetLoginPageFooterXPath()
+        private string GetApplicationIFrameXPath()
         {
-            return this.AppConfig.GetLoginPageFooterXPath();
+            return this.AppConfig.GetApplicationIFrameXPath();
         }
 
         private string GetLoginPageUsernameXPath()
         {
             return this.AppConfig.GetLoginPageUsernameXPath();
+        }
+
+        private string GetLoginPagePasswordXPath()
+        {
+            return this.AppConfig.GetLoginPagePasswordXPath();
         }
 
         #endregion "AppConfig" - wrapperz
@@ -218,25 +223,42 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                if (baseUrl == null)
+                    throw new ArgumentNullException(nameof(baseUrl));
+
+                Log.Debug(String.Format("baseUrl={0}", baseUrl));
+
                 if (!browser.GoToUrl(baseUrl, timeoutInSeconds))
-                    throw new Exception(String.Format("GoToUrl '{0}' failed", baseUrl));
+                    throw new Exception(nameof(browser.SwitchToIFrame) + Const.LogFail);
 
-                #region validate complete rendering 
-
-                // consider "loaded" when footer and all required input elements can be found.
-                // use a "long" timeout only for first element that should be found.
-                // although not reliable, use the buttom~most element as first element to look for.
-                string xPath = this.GetLoginPageUsernameXPath(); // this.GetLoginPageFooterXPath();
+                #region validate succossfull "load" of LoginPage
+                // The entire ASES Application runs in an iFrame.
+                // In order to make this work with Selenium,
+                // need to switch to that specific iFrame first,
+                // before _any_ other FindElement will work as expected.
                 int timeoutFindElement = this.GetTimeoutFindElement();
+                string xPath = this.GetApplicationIFrameXPath();
                 IWebElement element = browser.FindElementByXpath(xPath, timeoutFindElement);
                 if (element == null)
-                    throw new Exception(String.Format("Element '{0}' not found", xPath));
+                    throw new Exception(String.Format("'{0}'{1}", xPath, Const.LogNotFound));
 
-                // look for other rquired elements with an arbitary and shorter timeout
-                xPath = this.GetLoginPageUsernameXPath();
+                IWebDriver iFrame = browser.SwitchToIFrame(element);
+                if (iFrame == null)
+                    throw new Exception(nameof(browser.SwitchToIFrame) + Const.LogFail);
+
+                // consider "loaded" when all required input elements can be found.
+                xPath = this.GetLoginPageUsernameXPath(); 
                 element = browser.FindElementByXpath(xPath, timeoutFindElement);
                 if (element == null)
-                    throw new Exception(String.Format("Element '{0}' not found", xPath));
+                    throw new Exception(String.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
+                xPath = this.GetLoginPagePasswordXPath();
+                element = browser.FindElementByXpath(xPath, timeoutFindElement);
+                if (element == null)
+                    throw new Exception(String.Format("'{0}'{1}", xPath, Const.LogNotFound));
 
                 #endregion
 
