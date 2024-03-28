@@ -541,7 +541,7 @@ namespace EZSeleniumLib
                 // give browser some time to render the newly opened TAB.
                 // Depending on browser implementation, there might be some 
                 // initial loading going on which might require some time to finish.
-                Thread.Sleep(1000);
+                Thread.Sleep(this.GetDelay());
 
                 // obtain "new" TAB list
                 List<string> newTabList = new List<string>(_driver.WindowHandles);
@@ -556,7 +556,7 @@ namespace EZSeleniumLib
                     // as the driver.SwitchTo() command as not been issued.
                     Log.Info("Close old TAB ...");
                     this.ExecuteScript("window.close()");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(this.GetDelay());
                 }
 
                 Log.Info("Switch to new TAB ...");
