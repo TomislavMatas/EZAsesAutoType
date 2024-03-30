@@ -56,7 +56,7 @@
             btnRun.BackColor = Color.Gray;
             btnRun.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRun.ForeColor = Color.White;
-            btnRun.Location = new Point(329, 178);
+            btnRun.Location = new Point(331, 205);
             btnRun.Margin = new Padding(2, 3, 2, 3);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(144, 42);
@@ -267,7 +267,7 @@
             btnCancel.Enabled = false;
             btnCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(329, 178);
+            btnCancel.Location = new Point(10, 205);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(144, 42);
             btnCancel.TabIndex = 30;
