@@ -52,7 +52,7 @@ namespace EZSeleniumLib
             this.DisableGPU           = Configs.GetAppSettingBool(Consts.BrowserDisableGPUKeyName, Consts.DISABLEGPU_DEFAULT);
             this.ExposeGC             = Configs.GetAppSettingBool(Consts.BrowserExposeGCKeyName, Consts.EXPOSEGC_DEFAULT);
             this.PreciseMemoryInfo    = Configs.GetAppSettingBool(Consts.BrowserPreciseMemoryInfoEnabledKeyName, Consts.PRECISEMEMORYINFO_DEFAULT);
-            this.Delay                = Configs.GetAppSettingInt(Consts.BrowserDelayKeyName, Consts.DELAY_DEFAULT);
+            this.Delay                = Configs.GetAppSettingInt(Consts.BrowserDelayKeyName, Consts.BROWSERDELAY_DEFAULT);
             
             this.ScriptPID = System.Diagnostics.Process.GetCurrentProcess().Id;
         }
