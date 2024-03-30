@@ -6,6 +6,7 @@
 // * Initial version.
 //
 
+using EZSeleniumLib;
 using log4net;
 
 namespace EZAsesAutoType
@@ -50,34 +51,6 @@ namespace EZAsesAutoType
         public object? GetRequestor()
         {
             return this.Requestor;
-        }
-
-        private object m_LockCancelRequested = new object();
-        private bool m_CancelRequested = false;
-        private bool CancelRequested
-        {
-            get
-            {
-                lock (m_LockCancelRequested)
-                {
-                    return this.m_CancelRequested;
-                }
-            }
-            set
-            {
-                lock (m_LockCancelRequested)
-                {
-                    this.m_CancelRequested = value;
-                }
-            }
-        }
-        public bool GetCancelRequested()
-        {
-            return this.CancelRequested;
-        }
-        public void SetCancelRequested(bool flag)
-        {
-            this.CancelRequested = flag;
         }
 
         /// <summary>
@@ -190,9 +163,10 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                WorkerConfig config = new WorkerConfig(userSettings);
-                Worker worker = new Worker(config);
-                if(!worker.DoDailyPunch(userSettings))
+                WorkerConfig workerConfig = new WorkerConfig(userSettings);
+                Worker worker = new Worker(workerConfig);
+                worker.SetAppHandler(this);
+                if(!worker.DoDailyPunch())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogFail);
 
                 return true;
