@@ -32,6 +32,7 @@ namespace EZAsesAutoType
         }
         #endregion
 
+        #region propertiez
         private const string TimeoutLoginPageKeyName = "ASES.Timeout.LoginPage";
         private const int TimeoutLoginPageDefault = 60;
         private int m_TimeoutLoginPage = -1;
@@ -114,7 +115,7 @@ namespace EZAsesAutoType
         }
 
         private const string ApplicationIFrameXPathKeyName = "ASES.Application.iFrame.xPath";
-        private string m_ApplicationIFrameXPath = null;
+        private string? m_ApplicationIFrameXPath = null;
         private string ApplicationIFrameXPath
         {
             get
@@ -140,7 +141,7 @@ namespace EZAsesAutoType
         }
 
         private const string LoginPageUsernameXPathKeyName = "ASES.LoginPage.Username.xPath";
-        private string m_LoginPageUsernameXPath = null;
+        private string? m_LoginPageUsernameXPath = null;
         private string LoginPageUsernameXPath
         {
             get
@@ -166,7 +167,7 @@ namespace EZAsesAutoType
         }
 
         private const string LoginPagePasswordXPathKeyName = "ASES.LoginPage.Password.xPath";
-        private string m_LoginPagePasswordXPath = null;
+        private string? m_LoginPagePasswordXPath = null;
         private string LoginPagePasswordXPath
         {
             get
@@ -191,6 +192,266 @@ namespace EZAsesAutoType
             return prev;
         }
 
+        private const string LoginPageClientXPathKeyName = "ASES.LoginPage.Client.xPath";
+        private string? m_LoginPageClientXPath = null;
+        private string LoginPageClientXPath
+        {
+            get
+            {
+                if (m_LoginPageClientXPath == null)
+                    m_LoginPageClientXPath = ConfigApi.GetAppSettingString(LoginPageClientXPathKeyName, string.Empty);
+                return m_LoginPageClientXPath;
+            }
+            set
+            {
+                m_LoginPageClientXPath = value;
+            }
+        }
+        public string GetLoginPageClientXPath()
+        {
+            return this.LoginPageClientXPath;
+        }
+        public string SetLoginPageClientXPath(string value)
+        {
+            string prev = this.GetLoginPageClientXPath();
+            this.LoginPageClientXPath = value;
+            return prev;
+        }
+
+        private const string LoginPageLanguageXPathKeyName = "ASES.LoginPage.Langauge.xPath";
+        private string? m_LoginPageLanguageXPath = null;
+        private string LoginPageLanguageXPath
+        {
+            get
+            {
+                if (m_LoginPageLanguageXPath == null)
+                    m_LoginPageLanguageXPath = ConfigApi.GetAppSettingString(LoginPageLanguageXPathKeyName, string.Empty);
+                return m_LoginPageLanguageXPath;
+            }
+            set
+            {
+                m_LoginPageLanguageXPath = value;
+            }
+        }
+        public string GetLoginPageLanguageXPath()
+        {
+            return this.LoginPageLanguageXPath;
+        }
+        public string SetLoginPageLanguageXPath(string value)
+        {
+            string prev = this.GetLoginPageLanguageXPath();
+            this.LoginPageLanguageXPath = value;
+            return prev;
+        }
+
+        private const string LoginPageLoginButtonXPathKeyName = "ASES.LoginPage.LoginButton.xPath";
+        private string? m_LoginPageLoginButtonXPath = null;
+        private string LoginPageLoginButtonXPath
+        {
+            get
+            {
+                if (m_LoginPageLoginButtonXPath == null)
+                    m_LoginPageLoginButtonXPath = ConfigApi.GetAppSettingString(LoginPageLoginButtonXPathKeyName, string.Empty);
+                return m_LoginPageLoginButtonXPath;
+            }
+            set
+            {
+                m_LoginPageLoginButtonXPath = value;
+            }
+        }
+        public string GetLoginPageLoginButtonXPath()
+        {
+            return this.LoginPageLoginButtonXPath;
+        }
+        public string SetLoginPageLoginButtonXPath(string value)
+        {
+            string prev = this.GetLoginPageLoginButtonXPath();
+            this.LoginPageLoginButtonXPath = value;
+            return prev;
+        }
+
+        private const string NavMenuXPathKeyName = "ASES.MainPage.NavMenu.xPath";
+        private string? m_NavMenuXPath = null;
+        private string NavMenuXPath
+        {
+            get
+            {
+                if (m_NavMenuXPath == null)
+                    m_NavMenuXPath = ConfigApi.GetAppSettingString(NavMenuXPathKeyName, string.Empty);
+                return m_NavMenuXPath;
+            }
+            set
+            {
+                m_NavMenuXPath = value;
+            }
+        }
+        public string GetNavMenuXPath()
+        {
+            return this.NavMenuXPath;
+        }
+        public string SetNavMenuXPath(string value)
+        {
+            string prev = this.GetNavMenuXPath();
+            this.NavMenuXPath = value;
+            return prev;
+        }
+
+        private const string NavMenuZeitbuchungXPathKeyName = "ASES.MainPage.NavMenu.Zeitbuchung.xPath";
+        private string? m_NavMenuZeitbuchungXPath = null;
+        private string NavMenuZeitbuchungXPath
+        {
+            get
+            {
+                if (m_NavMenuZeitbuchungXPath == null)
+                    m_NavMenuZeitbuchungXPath = ConfigApi.GetAppSettingString(NavMenuZeitbuchungXPathKeyName, string.Empty);
+                return m_NavMenuZeitbuchungXPath;
+            }
+            set
+            {
+                m_NavMenuZeitbuchungXPath = value;
+            }
+        }
+        public string GetNavMenuZeitbuchungXPath()
+        {
+            return this.NavMenuZeitbuchungXPath;
+        }
+        public string SetNavMenuZeitbuchungXPath(string value)
+        {
+            string prev = this.GetNavMenuZeitbuchungXPath();
+            this.NavMenuZeitbuchungXPath = value;
+            return prev;
+        }
+
+        private const string NavMenuUsernameXPathKeyName = "ASES.MainPage.NavMenu.UserName.xPath";
+        private string? m_NavMenuUsernameXPath = null;
+        private string NavMenuUsernameXPath
+        {
+            get
+            {
+                if (m_NavMenuUsernameXPath == null)
+                    m_NavMenuUsernameXPath = ConfigApi.GetAppSettingString(NavMenuUsernameXPathKeyName, string.Empty);
+                return m_NavMenuUsernameXPath;
+            }
+            set
+            {
+                m_NavMenuUsernameXPath = value;
+            }
+        }
+        public string GetNavMenuUsernameXPath()
+        {
+            return this.NavMenuUsernameXPath;
+        }
+        public string SetNavMenuUsernameXPath(string value)
+        {
+            string prev = this.GetNavMenuUsernameXPath();
+            this.NavMenuUsernameXPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasXPathKeyName = "ASES.TimeGrid.Canvas.xPath";
+        private string? m_TimeGridCanvasXPath = null;
+        private string TimeGridCanvasXPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasXPath == null)
+                    m_TimeGridCanvasXPath = ConfigApi.GetAppSettingString(TimeGridCanvasXPathKeyName, string.Empty);
+                return m_TimeGridCanvasXPath;
+            }
+            set
+            {
+                m_TimeGridCanvasXPath = value;
+            }
+        }
+        public string GetTimeGridCanvasXPath()
+        {
+            return this.TimeGridCanvasXPath;
+        }
+        public string SetTimeGridCanvasXPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasXPath();
+            this.TimeGridCanvasXPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasLastRowXPathKeyName = "ASES.TimeGrid.Canvas.LastRow.xPath";
+        private string? m_TimeGridCanvasLastRowXPath = null;
+        private string TimeGridCanvasLastRowXPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasLastRowXPath == null)
+                    m_TimeGridCanvasLastRowXPath = ConfigApi.GetAppSettingString(TimeGridCanvasLastRowXPathKeyName, string.Empty);
+                return m_TimeGridCanvasLastRowXPath;
+            }
+            set
+            {
+                m_TimeGridCanvasLastRowXPath = value;
+            }
+        }
+        public string GetTimeGridCanvasLastRowXPath()
+        {
+            return this.TimeGridCanvasLastRowXPath;
+        }
+        public string SetTimeGridCanvasLastRowXPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasLastRowXPath();
+            this.TimeGridCanvasLastRowXPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasLastRowDateFromXPathKeyName = "ASES.TimeGrid.Canvas.LastRow.DateFrom.xPath";
+        private string? m_TimeGridCanvasLastRowDateFromXPath = null;
+        private string TimeGridCanvasLastRowDateFromXPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasLastRowDateFromXPath == null)
+                    m_TimeGridCanvasLastRowDateFromXPath = ConfigApi.GetAppSettingString(TimeGridCanvasLastRowDateFromXPathKeyName, string.Empty);
+                return m_TimeGridCanvasLastRowDateFromXPath;
+            }
+            set
+            {
+                m_TimeGridCanvasLastRowDateFromXPath = value;
+            }
+        }
+        public string GetTimeGridCanvasLastRowDateFromXPath()
+        {
+            return this.TimeGridCanvasLastRowDateFromXPath;
+        }
+        public string SetTimeGridCanvasLastRowDateFromXPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasLastRowDateFromXPath();
+            this.TimeGridCanvasLastRowDateFromXPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasLastRowDateToXPathKeyName = "ASES.TimeGrid.Canvas.LastRow.DateTo.xPath";
+        private string? m_TimeGridCanvasLastRowDateToXPath = null;
+        private string TimeGridCanvasLastRowDateToXPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasLastRowDateToXPath == null)
+                    m_TimeGridCanvasLastRowDateToXPath = ConfigApi.GetAppSettingString(TimeGridCanvasLastRowDateToXPathKeyName, string.Empty);
+                return m_TimeGridCanvasLastRowDateToXPath;
+            }
+            set
+            {
+                m_TimeGridCanvasLastRowDateToXPath = value;
+            }
+        }
+        public string GetTimeGridCanvasLastRowDateToXPath()
+        {
+            return this.TimeGridCanvasLastRowDateToXPath;
+        }
+        public string SetTimeGridCanvasLastRowDateToXPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasLastRowDateToXPath();
+            this.TimeGridCanvasLastRowDateToXPath = value;
+            return prev;
+        }
+        #endregion
 
     } // class
 
