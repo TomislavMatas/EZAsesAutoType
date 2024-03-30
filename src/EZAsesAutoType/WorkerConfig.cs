@@ -6,6 +6,7 @@
 // * Initial version.
 //
 
+using EZSeleniumLib;
 using log4net;
 
 namespace EZAsesAutoType
@@ -31,6 +32,32 @@ namespace EZAsesAutoType
         #endregion
 
         #region propertiez
+
+        private AppConfig? m_AppConfig = null;
+        private AppConfig AppConfig
+        {
+            get
+            {
+                if (m_AppConfig == null)
+                    m_AppConfig = new AppConfig();
+                return m_AppConfig;
+            }
+            set
+            {
+                m_AppConfig = value;
+            }
+        }
+        public AppConfig GetAppConfig()
+        {
+            return this.AppConfig;
+        }
+        public AppConfig SetAppConfig(AppConfig appConfig)
+        {
+            AppConfig prev = this.GetAppConfig();
+            this.AppConfig = appConfig;
+            return prev;
+        }
+
         private UserSettings? m_UserSettings = null;
         private UserSettings UserSettings
         {
@@ -55,18 +82,46 @@ namespace EZAsesAutoType
             this.UserSettings = userSettings;
             return prev;
         }
+
+        private BrowserOptions? m_BrowserOptions = null;
+        private BrowserOptions BrowserOptions
+        {
+            get
+            {
+                if (m_BrowserOptions == null)
+                    m_BrowserOptions = new BrowserOptions();
+                return m_BrowserOptions;
+            }
+            set
+            {
+                m_BrowserOptions = value;
+            }
+        }
+        public BrowserOptions GetBrowserOptions()
+        {
+            return this.BrowserOptions;
+        }
+        public BrowserOptions SetBrowserOptions(BrowserOptions browserOptions)
+        {
+            BrowserOptions prev = this.GetBrowserOptions();
+            this.BrowserOptions = browserOptions;
+            return prev;
+        }
+
         #endregion
 
         /// <summary>
         /// Init instance.
         /// </summary>
         /// <returns></returns>
-        private bool Initialze(UserSettings userSettings)
+        private bool Initialze(UserSettings userSettings, AppConfig appConfig, BrowserOptions browserOptions)
         {
             try
             {
                 Log.Debug(Const.LogStart);
                 this.SetUserSettings(userSettings);
+                this.SetAppConfig(appConfig);
+                this.SetBrowserOptions(browserOptions);
                 return true;
             }
             catch (Exception ex)
@@ -88,7 +143,10 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (!Initialze(new UserSettings()))
+                UserSettings userSettings = new UserSettings();
+                AppConfig appConfig = new AppConfig();
+                BrowserOptions browserOptions = new BrowserOptions();
+                if (!Initialze(userSettings, appConfig, browserOptions))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
@@ -109,7 +167,9 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (!Initialze(userSettings))
+                AppConfig appConfig = new AppConfig();
+                BrowserOptions browserOptions = new BrowserOptions();
+                if (!Initialze(userSettings, appConfig, browserOptions))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)

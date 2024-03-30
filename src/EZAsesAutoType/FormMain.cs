@@ -399,6 +399,60 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool InitializeTextBoxes(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                this.textBoxUrl.Text = userSettings.ASESBaseUrl;
+                this.textBoxUid.Text = userSettings.ASESUserId;
+                this.textBoxPwd.Text = userSettings.ASESPassword;
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private bool InitializeControls(UserSettings userSettings)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                this.SuspendLayout();
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                if (!InitializeComboBoxes(userSettings))
+                    throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
+
+                if (!InitializeTextBoxes(userSettings))
+                    throw new Exception(nameof(InitializeTextBoxes) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                this.ResumeLayout();
+                Log.Debug(Const.LogDone);
+            }
+        }
+
         private bool RenderUrl(UserSettings userSettings)
         {
             try
@@ -424,8 +478,8 @@ namespace EZAsesAutoType
                     return true; // nothing to do
 
                 string asesClientNo = asesClient.Substring(0, 2);
-                string matchPattern = "ClientNo=..";
-                asesBaseUrl = Regex.Replace(asesBaseUrl, matchPattern, "ClientNo=" + asesClientNo, RegexOptions.IgnoreCase);
+                string matchPattern = Const.UrlParmClientNo + "..";
+                asesBaseUrl = Regex.Replace(asesBaseUrl, matchPattern, Const.UrlParmClientNo + asesClientNo, RegexOptions.IgnoreCase);
                 this.textBoxUrl.Text = asesBaseUrl;
                 return true;
             }
@@ -500,11 +554,12 @@ namespace EZAsesAutoType
         /// depend on others.
         /// </summary>
         /// <returns></returns>
-        private bool RenderControlsSettings(UserSettings userSettings)
+        private bool RenderControls(UserSettings userSettings)
         {
             try
             {
                 Log.Debug(Const.LogStart);
+                this.SuspendLayout();
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -520,42 +575,57 @@ namespace EZAsesAutoType
             }
             finally
             {
+                this.ResumeLayout();
                 Log.Debug(Const.LogDone);
             }
         }
 
-        private void RenderControlsBusy(bool busy)
+        private void RenderControlsWorkerStatus(bool busy)
         {
-            if (busy)
+            try
             {
-                this.textBoxUrl.Enabled = false;
-                this.textBoxUid.Enabled = false;
-                this.textBoxPwd.Enabled = false;
-                this.comboBoxClientNo.Enabled = false;
-                this.comboBoxLanguage.Enabled = false;
-                this.comboBoxWebDriver.Enabled = false;
-                this.textBoxPunchIn.Enabled = false;
-                this.textBoxPunchOut.Enabled = false;
-                this.btnRun.Enabled = false;
-                this.btnRun.Visible = false;
+                Log.Debug(Const.LogStart);
+                this.SuspendLayout();
+                if (busy)
+                {
+                    this.textBoxUrl.Enabled = false;
+                    this.textBoxUid.Enabled = false;
+                    this.textBoxPwd.Enabled = false;
+                    this.comboBoxClientNo.Enabled = false;
+                    this.comboBoxLanguage.Enabled = false;
+                    this.comboBoxWebDriver.Enabled = false;
+                    this.textBoxPunchIn.Enabled = false;
+                    this.textBoxPunchOut.Enabled = false;
+                    this.btnRun.Enabled = false;
+                    this.btnRun.Visible = true;
+                    this.btnCancel.Enabled = true;
+                    this.btnCancel.Visible = true;
+                    this.btnCancel.Focus();
+                    return;
+                }
+                this.textBoxUrl.Enabled = true;
+                this.textBoxUid.Enabled = true;
+                this.textBoxPwd.Enabled = true;
+                this.comboBoxClientNo.Enabled = true;
+                this.comboBoxLanguage.Enabled = true;
+                this.comboBoxWebDriver.Enabled = true;
+                this.textBoxPunchIn.Enabled = true;
+                this.textBoxPunchOut.Enabled = true;
+                this.btnRun.Enabled = true;
+                this.btnRun.Visible = true;
                 this.btnCancel.Enabled = true;
                 this.btnCancel.Visible = true;
-                this.btnCancel.Focus();
-                return;
+                this.btnRun.Focus();
             }
-            this.textBoxUrl.Enabled = true;
-            this.textBoxUid.Enabled = true;
-            this.textBoxPwd.Enabled = true;
-            this.comboBoxClientNo.Enabled = true;
-            this.comboBoxLanguage.Enabled = true;
-            this.comboBoxWebDriver.Enabled = true;
-            this.textBoxPunchIn.Enabled = true;
-            this.textBoxPunchOut.Enabled = true;
-            this.btnRun.Enabled = true;
-            this.btnRun.Visible = true;
-            this.btnCancel.Enabled = false;
-            this.btnCancel.Visible = false;
-            this.btnRun.Focus();
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                this.ResumeLayout();
+                Log.Debug(Const.LogDone);
+            }
         }
 
         #region form handlerz
@@ -572,11 +642,11 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                if (!InitializeComboBoxes(userSettings))
-                    throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
+                if(!InitializeControls(userSettings))
+                    throw new Exception(nameof(InitializeControls) + Const.LogFail);
 
-                if (!RenderControlsSettings(userSettings))
-                    throw new Exception(nameof(RenderControlsSettings) + Const.LogFail);
+                if (!RenderControls(userSettings))
+                    throw new Exception(nameof(RenderControls) + Const.LogFail);
 
             }
             catch (Exception ex)
@@ -610,7 +680,19 @@ namespace EZAsesAutoType
 
         private void onShown(object sender, EventArgs e)
         {
-            this.RenderControlsBusy(false);
+            try
+            {
+                Log.Debug(Const.LogStart);
+                RenderControlsWorkerStatus(false);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
         }
 
         #endregion
@@ -625,14 +707,14 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                this.AppHandler.SetCancelRequested(false);
-                this.RenderControlsBusy(true);
+                Global.SetCancelRequested(false);
+                this.RenderControlsWorkerStatus(true);
                 this.backgroundWorker1.RunWorkerAsync(userSettings);
                 bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 while (backroundWorkerIsBusy)
                 {
                     Application.DoEvents();
-                    if ( this.AppHandler.GetCancelRequested() )
+                    if (Global.GetCancelRequested())
                         backgroundWorker1.CancelAsync();
 
                     backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
@@ -644,15 +726,22 @@ namespace EZAsesAutoType
             }
             finally
             {
-                this.AppHandler.SetCancelRequested(false);
-                this.RenderControlsBusy(false);
+                this.RenderControlsWorkerStatus(false);
                 Log.Debug(Const.LogDone);
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.AppHandler.SetCancelRequested(true);
+            if (!this.backgroundWorker1.IsBusy)
+                this.Close();
+
+            while(this.backgroundWorker1.IsBusy) 
+            {
+                Global.SetCancelRequested(true);
+                backgroundWorker1.CancelAsync();
+                Application.DoEvents();
+            }
         }
 
         #endregion
