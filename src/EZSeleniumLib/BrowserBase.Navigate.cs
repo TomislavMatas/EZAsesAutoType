@@ -225,8 +225,14 @@ namespace EZSeleniumLib
             try
             {
                 Log.Debug(DEBUG_START);
+                if(element==null)
+                    throw new ArgumentNullException(nameof(element)); 
+
+                object result = this.ExecuteScript("arguments[0].scrollIntoView(true);", element);
                 Actions actions = new Actions(Driver);
-                actions.MoveToElement(element).Click().Build().Perform();
+                actions.MoveToElement(element).Perform();
+                Thread.Sleep(this.GetDelay());
+                element.Click();
                 Thread.Sleep(this.GetDelay());
                 return true;
             }

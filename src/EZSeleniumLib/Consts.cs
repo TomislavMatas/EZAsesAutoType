@@ -78,7 +78,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// Default value if value "EZSeleniumLib.Browser.Delay" is missing in "App.config".
         /// </summary>
-        public const int BROWSERDELAY_DEFAULT = 500;
+        public const int BROWSERDELAY_DEFAULT = 250;
 
         /// <summary>
         /// Default value if "EZSeleniumLib.Browser.PopupsEnabled" is missing in "App.config".
@@ -104,11 +104,6 @@ namespace EZSeleniumLib
         /// Default value if "EZSeleniumLib.Browser.PreciseMemoryInfo.Enabled" is missing in "App.config".
         /// </summary>
         public const bool PRECISEMEMORYINFO_DEFAULT = false;
-
-        /// <summary>
-        /// Default value if "EZSeleniumLib.Browser.Delay" is missing in "App.config".
-        /// </summary>
-        public const int DELAY_DEFAULT = 500;
 
         public const string BROWSERIMPLEMENTATATION_CHROME = Constant.WebDriverChrome;
         public const string BROWSERIMPLEMENTATATION_EDGE = Constant.WebDriverEdge;
