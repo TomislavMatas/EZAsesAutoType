@@ -110,6 +110,7 @@ namespace EZAsesAutoType
         public const string LogNotFound = " NOT FOUND";
         public const string LogCanceld = " CANCELD";
         public const string LogTimeout = " TIMEOUT";
+        public const string LogInProgress = " ...";
         #endregion
 
         public const string UrlParmClientNo = "ClientNo=";
