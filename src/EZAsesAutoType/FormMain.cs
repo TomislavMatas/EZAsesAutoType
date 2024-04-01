@@ -106,6 +106,8 @@ namespace EZAsesAutoType
             }
         }
 
+        #region Initializerz
+
         /// <summary>
         /// Initialize instance.
         /// </summary>
@@ -122,96 +124,6 @@ namespace EZAsesAutoType
             {
                 Log.Error(ex);
                 return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        private bool LoadUserSettings()
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                if (!this.AppHandler.LoadUserSettings(out UserSettings? userSettings))
-                    throw new Exception(nameof(this.AppHandler.LoadUserSettings) + Const.LogFail);
-
-                if (userSettings == null)
-                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
-
-                this.SetUserSettings(userSettings);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        private bool SaveUserSettings()
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
-                if (userSettings == null)
-                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
-
-                if (this.AppHandler.SaveUserSettings(userSettings))
-                    throw new Exception(nameof(this.AppHandler.SaveUserSettings) + Const.LogFail);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        private StringCollection GetComboBoxItemsAsStringCollection(ComboBox comboBox)
-        {
-            Log.Debug(Const.LogStart);
-            StringCollection stringCollection = new StringCollection();
-            foreach (object item in comboBox.Items)
-                if (item != null)
-                    stringCollection.Add(item.ToString());
-
-            return stringCollection;
-        }
-
-        private UserSettings? GetUserSettingsValuesFromControls()
-        {
-            try
-            {
-                UserSettings userSettings = new UserSettings();
-                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
-                userSettings.ASESUserId = this.textBoxUid.Text;
-                userSettings.ASESPassword = this.textBoxPwd.Text;
-                userSettings.ASESClient = this.comboBoxClientNo.Text;
-                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
-                userSettings.ASESLanguage = this.comboBoxLanguage.Text;
-                userSettings.ASESLanguageList = this.GetComboBoxItemsAsStringCollection(this.comboBoxLanguage);
-                userSettings.ASESPunchIn = this.textBoxPunchIn.Text;
-                userSettings.ASESPunchOut = this.textBoxPunchOut.Text;
-                userSettings.WebDriver = this.comboBoxWebDriver.Text;
-                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
-                return userSettings;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return null;
             }
             finally
             {
@@ -410,7 +322,7 @@ namespace EZAsesAutoType
                 this.textBoxUrl.Text = userSettings.ASESBaseUrl;
                 this.textBoxUid.Text = userSettings.ASESUserId;
                 this.textBoxPwd.Text = userSettings.ASESPassword;
-                
+
                 return true;
             }
             catch (Exception ex)
@@ -452,6 +364,104 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        #endregion
+
+        #region "UserSettings" - Handlerz
+
+        private bool LoadUserSettings()
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (!this.AppHandler.LoadUserSettings(out UserSettings? userSettings))
+                    throw new Exception(nameof(this.AppHandler.LoadUserSettings) + Const.LogFail);
+
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                this.SetUserSettings(userSettings);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private bool SaveUserSettings()
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (this.AppHandler.SaveUserSettings(userSettings))
+                    throw new Exception(nameof(this.AppHandler.SaveUserSettings) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private StringCollection GetComboBoxItemsAsStringCollection(ComboBox comboBox)
+        {
+            Log.Debug(Const.LogStart);
+            StringCollection stringCollection = new StringCollection();
+            foreach (object item in comboBox.Items)
+                if (item != null)
+                    stringCollection.Add(item.ToString());
+
+            return stringCollection;
+        }
+
+        private UserSettings? GetUserSettingsValuesFromControls()
+        {
+            try
+            {
+                UserSettings userSettings = new UserSettings();
+                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
+                userSettings.ASESUserId = this.textBoxUid.Text;
+                userSettings.ASESPassword = this.textBoxPwd.Text;
+                userSettings.ASESClient = this.comboBoxClientNo.Text;
+                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
+                userSettings.ASESLanguage = this.comboBoxLanguage.Text;
+                userSettings.ASESLanguageList = this.GetComboBoxItemsAsStringCollection(this.comboBoxLanguage);
+                userSettings.ASESPunchIn = this.textBoxPunchIn.Text;
+                userSettings.ASESPunchOut = this.textBoxPunchOut.Text;
+                userSettings.WebDriver = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                return userSettings;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return null;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        #endregion
+
+        #region rendererz
 
         private bool RenderUrl(UserSettings userSettings)
         {
@@ -627,6 +637,8 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        #endregion 
 
         #region form handlerz
 
