@@ -270,6 +270,58 @@ namespace EZAsesAutoType
             return prev;
         }
 
+        private const string MainPageIFrameXPathKeyName = "ASES.MainPage.iFrame.xPath";
+        private string? m_MainPageIFrameXPath = null;
+        private string MainPageIFrameXPath
+        {
+            get
+            {
+                if (m_MainPageIFrameXPath == null)
+                    m_MainPageIFrameXPath = ConfigApi.GetAppSettingString(MainPageIFrameXPathKeyName, string.Empty);
+                return m_MainPageIFrameXPath;
+            }
+            set
+            {
+                m_MainPageIFrameXPath = value;
+            }
+        }
+        public string GetMainPageIFrameXPath()
+        {
+            return this.MainPageIFrameXPath;
+        }
+        public string SetMainPageIFrameXPath(string value)
+        {
+            string prev = this.GetMainPageIFrameXPath();
+            this.MainPageIFrameXPath = value;
+            return prev;
+        }
+
+        private const string MainPageWelcomeImageXPathKeyName = "ASES.MainPage.iFrame.WelcomeImage.xPath";
+        private string? m_MainPageWelcomeImageXPath = null;
+        private string MainPageWelcomeImageXPath
+        {
+            get
+            {
+                if (m_MainPageWelcomeImageXPath == null)
+                    m_MainPageWelcomeImageXPath = ConfigApi.GetAppSettingString(MainPageWelcomeImageXPathKeyName, string.Empty);
+                return m_MainPageWelcomeImageXPath;
+            }
+            set
+            {
+                m_MainPageWelcomeImageXPath = value;
+            }
+        }
+        public string GetMainPageWelcomeImageXPath()
+        {
+            return this.MainPageWelcomeImageXPath;
+        }
+        public string SetMainPageWelcomeImageXPath(string value)
+        {
+            string prev = this.GetMainPageWelcomeImageXPath();
+            this.MainPageWelcomeImageXPath = value;
+            return prev;
+        }
+
         private const string NavMenuXPathKeyName = "ASES.MainPage.NavMenu.xPath";
         private string? m_NavMenuXPath = null;
         private string NavMenuXPath
@@ -347,6 +399,32 @@ namespace EZAsesAutoType
             this.NavMenuUsernameXPath = value;
             return prev;
         }
+        
+        private const string TimeGridFormXPathKeyName = "ASES.TimeGrid.Form.xPath";
+        private string? m_TimeGridFormXPath = null;
+        private string TimeGridFormXPath
+        {
+            get
+            {
+                if (m_TimeGridFormXPath == null)
+                    m_TimeGridFormXPath = ConfigApi.GetAppSettingString(TimeGridFormXPathKeyName, string.Empty);
+                return m_TimeGridFormXPath;
+            }
+            set
+            {
+                m_TimeGridFormXPath = value;
+            }
+        }
+        public string GetTimeGridFormXPath()
+        {
+            return this.TimeGridFormXPath;
+        }
+        public string SetTimeGridFormXPath(string value)
+        {
+            string prev = this.GetTimeGridFormXPath();
+            this.TimeGridFormXPath = value;
+            return prev;
+        }
 
         private const string TimeGridCanvasXPathKeyName = "ASES.TimeGrid.Canvas.xPath";
         private string? m_TimeGridCanvasXPath = null;
@@ -371,6 +449,58 @@ namespace EZAsesAutoType
         {
             string prev = this.GetTimeGridCanvasXPath();
             this.TimeGridCanvasXPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasSortingAscXPathKeyName = "ASES.TimeGrid.Canvas.Sortindicator.Ascending.xPath";
+        private string? m_TimeGridCanvasSortingAscXPath = null;
+        private string TimeGridCanvasSortingAscXPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasSortingAscXPath == null)
+                    m_TimeGridCanvasSortingAscXPath = ConfigApi.GetAppSettingString(TimeGridCanvasSortingAscXPathKeyName, string.Empty);
+                return m_TimeGridCanvasSortingAscXPath;
+            }
+            set
+            {
+                m_TimeGridCanvasSortingAscXPath = value;
+            }
+        }
+        public string GetTimeGridCanvasSortingAscXPath()
+        {
+            return this.TimeGridCanvasSortingAscXPath;
+        }
+        public string SetTimeGridCanvasSortingAscXPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasSortingAscXPath();
+            this.TimeGridCanvasSortingAscXPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasSortingDescXPathKeyName = "ASES.TimeGrid.Canvas.Sortindicator.Descending.xPath";
+        private string? m_TimeGridCanvasSortingDescXPath = null;
+        private string TimeGridCanvasSortingDescXPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasSortingDescXPath == null)
+                    m_TimeGridCanvasSortingDescXPath = ConfigApi.GetAppSettingString(TimeGridCanvasSortingDescXPathKeyName, string.Empty);
+                return m_TimeGridCanvasSortingDescXPath;
+            }
+            set
+            {
+                m_TimeGridCanvasSortingDescXPath = value;
+            }
+        }
+        public string GetTimeGridCanvasSortingDescXPath()
+        {
+            return this.TimeGridCanvasSortingDescXPath;
+        }
+        public string SetTimeGridCanvasSortingDescXPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasSortingDescXPath();
+            this.TimeGridCanvasSortingDescXPath = value;
             return prev;
         }
 
@@ -451,6 +581,59 @@ namespace EZAsesAutoType
             this.TimeGridCanvasLastRowDateToXPath = value;
             return prev;
         }
+
+        private const string TimePairFirstRowTimeFromXPathKeyName = "ASES.TimePair.FirstRow.TimeFrom.xPath";
+        private string? m_TimePairFirstRowTimeFromXPath = null;
+        private string TimePairFirstRowTimeFromXPath
+        {
+            get
+            {
+                if (m_TimePairFirstRowTimeFromXPath == null)
+                    m_TimePairFirstRowTimeFromXPath = ConfigApi.GetAppSettingString(TimePairFirstRowTimeFromXPathKeyName, string.Empty);
+                return m_TimePairFirstRowTimeFromXPath;
+            }
+            set
+            {
+                m_TimePairFirstRowTimeFromXPath = value;
+            }
+        }
+        public string GetTimePairFirstRowTimeFromXPath()
+        {
+            return this.TimePairFirstRowTimeFromXPath;
+        }
+        public string SetTimePairFirstRowTimeFromXPath(string value)
+        {
+            string prev = this.GetTimePairFirstRowTimeFromXPath();
+            this.TimePairFirstRowTimeFromXPath = value;
+            return prev;
+        }
+
+        private const string TimePairFirstRowTimeToXPathKeyName = "ASES.TimePair.FirstRow.TimeTo.xPath";
+        private string? m_TimePairFirstRowTimeToXPath = null;
+        private string TimePairFirstRowTimeToXPath
+        {
+            get
+            {
+                if (m_TimePairFirstRowTimeToXPath == null)
+                    m_TimePairFirstRowTimeToXPath = ConfigApi.GetAppSettingString(TimePairFirstRowTimeToXPathKeyName, string.Empty);
+                return m_TimePairFirstRowTimeToXPath;
+            }
+            set
+            {
+                m_TimePairFirstRowTimeToXPath = value;
+            }
+        }
+        public string GetTimePairFirstRowTimeToXPath()
+        {
+            return this.TimePairFirstRowTimeToXPath;
+        }
+        public string SetTimePairFirstRowTimeToXPath(string value)
+        {
+            string prev = this.GetTimePairFirstRowTimeToXPath();
+            this.TimePairFirstRowTimeToXPath = value;
+            return prev;
+        }
+
         #endregion
 
     } // class

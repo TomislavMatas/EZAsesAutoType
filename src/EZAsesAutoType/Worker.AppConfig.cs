@@ -57,6 +57,16 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetAppConfig().GetLoginPageLoginButtonXPath();
         }
 
+        private string GetMainPageIFrameXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetMainPageIFrameXPath();
+        }
+
+        private string GetMainPageWelcomeImageXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetMainPageWelcomeImageXPath();
+        }
+
         private string GetNavMenuXPath()
         {
             return this.WorkerConfig.GetAppConfig().GetNavMenuXPath();
@@ -71,7 +81,52 @@ namespace EZAsesAutoType
         {
             return this.WorkerConfig.GetAppConfig().GetNavMenuUsernameXPath();
         }
-        
+
+        private string GetTimeGridFormXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridFormXPath();
+        }
+
+        private string GetTimeGridCanvasXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasXPath();
+        }
+
+        private string GetTimeGridCanvasSortingAscXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSortingAscXPath();
+        }
+
+        private string GetTimeGridCanvasSortingDescXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSortingDescXPath();
+        }
+
+        private string GetTimeGridCanvasLastRowXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasLastRowXPath();
+        }
+
+        private string GetTimeGridCanvasLastRowDateFromXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasLastRowDateFromXPath();
+        }
+
+        private string GetTimeGridCanvasLastRowDateToXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasLastRowDateToXPath();
+        }
+
+        private string GetTimePairFirstRowTimeFromXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimePairFirstRowTimeFromXPath();
+        }
+
+        private string GetTimePairFirstRowTimeToXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimePairFirstRowTimeToXPath();
+        }
+
         #endregion "AppConfig" - wrapperz
 
     } // class
