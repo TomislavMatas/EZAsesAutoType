@@ -17,6 +17,11 @@ namespace EZAsesAutoType
     {
         #region Navigation 
 
+        private bool CancelRequested()
+        {
+            return Global.GetCancelRequested();
+        }
+
         /// <summary>
         /// Use Browser-Interop Helper to navigate to "Login Page".
         /// Uses a single "browser.GoToUrl()" call.
@@ -184,8 +189,8 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(this.ASESMainPageIsLoaded) + Const.LogFail);
 
                 // this extra sleep is required, because the splash
-                // image is moved by an "animation" effect - which
-                // invalidates the DOM for a a while : - (
+                // image is moved by an "animation effect" which
+                // invalidates the DOM for a while : - (
                 Thread.Sleep(1000);
 
                 string xPath = this.GetNavMenuXPath();
@@ -195,6 +200,8 @@ namespace EZAsesAutoType
                 if(!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
+                if(!this.WaitUntilNavMenuPopupHasLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.WaitUntilNavMenuPopupHasLoaded) + Const.LogFail);
 
                 xPath = this.GetNavMenuZeitbuchungXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
@@ -203,7 +210,6 @@ namespace EZAsesAutoType
                 if (!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
-                Thread.Sleep(5000);
                 return true;
             }
             catch (Exception ex)
@@ -217,9 +223,167 @@ namespace EZAsesAutoType
             }
         }
 
-        private bool CancelRequested()
+        private bool ASESSortTimeEntryCanvasAscending(BrowserBase browser, int timeoutInSeconds)
         {
-            return Global.GetCancelRequested();
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+
+                if (!this.ASESTimeEntryCanvasIsSortedAscending(browser, timeoutInSeconds))
+                {
+                    if (this.ASESTimeEntryCanvasIsSortedDescending(browser, timeoutInSeconds))
+                    {
+                        const string subProcess = "Set sorting state ascending";
+                        Log.Info(subProcess + Const.LogInProgress);
+                        string sortindicatorXPath = this.GetTimeGridCanvasSortingDescXPath();
+                        IWebElement sortindicatorElement = browser.FindElementByXpath(sortindicatorXPath, timeoutInSeconds);
+                        if (sortindicatorElement == null)
+                            throw new Exception(string.Format("'{0}'{1}", sortindicatorXPath, Const.LogNotFound));
+                        if (!browser.ClickElement(sortindicatorElement))
+                            throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                        // sleep a while before validating succes of "sort" operation
+                        Thread.Sleep(1000);
+
+                        if(!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
+                            throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+
+                        if (!this.ASESTimeEntryCanvasIsSortedAscending(browser, timeoutInSeconds))
+                            throw new Exception(subProcess + Const.LogFail);
+                        
+                        Log.Info(subProcess + Const.LogDone);
+                    }
+                    else
+                    {
+                        throw new Exception("SortingState"+Const.LogInvalid);
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private bool ASESOpenTimePairEntryPopup(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+
+
+                string xPath = this.GetTimeGridCanvasLastRowDateFromXPath();
+                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                // first click on "span" element activates "edit mode" by
+                // embedding a "input" control. Need to click a second time
+                // but only if that "input" control has appeared
+                Thread.Sleep(1000);
+                xPath = xPath + "/input";
+                IWebElement input = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (input == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
+                if (!browser.ClickElement(input))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                if (!this.WaitUntilTimePairEntryPopupHasLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.WaitUntilTimePairEntryPopupHasLoaded) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private bool ASESDoTimePairEntry(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                if (!this.ASESTimePairEntryPopupIsLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimePairEntryPopupIsLoaded) + Const.LogFail);
+
+                string xPath= this.GetTimePairFirstRowTimeFromXPath();
+                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                // first click on "span" element activates "edit mode" by
+                // embedding a "input" control. Need to click a second time
+                // but only if that "input" control has appeared
+                Thread.Sleep(1000);
+                xPath = xPath + "/input";
+                IWebElement input = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (input == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
+                string value = this.GetASESPunchIn();
+                input.SendKeys(value);
+
+                xPath = this.GetTimePairFirstRowTimeToXPath();
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                // first click on "span" element activates "edit mode" by
+                // embedding a "input" control. Need to click a second time
+                // but only if that "input" control has appeared
+                Thread.Sleep(1000);
+                xPath = xPath + "/input";
+                input = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (input == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
+                value = this.GetASESPunchOut();
+                input.SendKeys(value);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
         }
 
         /// <summary>
@@ -232,7 +396,10 @@ namespace EZAsesAutoType
             BrowserBase? browser = null;
             try
             {
-                Log.Debug(Const.LogStart);
+                Log.Info(Const.LogStart);
+
+                Log.Info("Init browser" + Const.LogInProgress);
+
                 string webDriver = this.GetWebDriver(); ;
                 BrowserOptions browserOptionsDefault = this.GetBrowserOptionsDefault();
                 browser = this.GetBrowserInstance(webDriver, browserOptionsDefault);
@@ -243,6 +410,7 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
 
                 string baseUrl = this.GetASESBaseUrl();
+                Log.Info(String.Format("Navigate to '{0}'{1}", baseUrl, Const.LogInProgress));
                 int timeoutLoginPage = this.GetTimeoutNavigationLoginPage();
                 if (!this.ASESNavigateToLoginPage(browser, baseUrl, timeoutLoginPage))
                     throw new Exception(nameof(this.ASESNavigateToLoginPage) + Const.LogFail);
@@ -264,12 +432,14 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
 
+                Log.Info("Login" + Const.LogInProgress);
                 if (!this.ASESDoLogin(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESDoLogin) + Const.LogFail);
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
 
+                Log.Info("Open time card" + Const.LogInProgress);
                 if (!this.ASESNavigateToTimeEntryCanvas(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESNavigateToTimeEntryCanvas) + Const.LogFail);
 
@@ -278,6 +448,27 @@ namespace EZAsesAutoType
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+
+                if (!this.ASESSortTimeEntryCanvasAscending(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESSortTimeEntryCanvasAscending) + Const.LogFail);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+
+                Log.Info("Open time pair" + Const.LogInProgress);
+                if (!this.ASESOpenTimePairEntryPopup(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESOpenTimePairEntryPopup) + Const.LogFail);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+
+                if (!this.ASESDoTimePairEntry(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESDoTimePairEntry) + Const.LogFail);
+
+                Thread.Sleep(5000);
 
                 return true;
             }
@@ -293,7 +484,7 @@ namespace EZAsesAutoType
                     browser.Cleanup();
                     browser = null;
                 }
-                Log.Debug(Const.LogDone);
+                Log.Info(Const.LogDone);
             }
         }
 
