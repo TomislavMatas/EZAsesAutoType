@@ -16,6 +16,59 @@ namespace EZAsesAutoType
 {
     internal partial class Worker
     {
+        #region cancelation handling
+
+        /// <summary>
+        /// Check a global semaphore if user has requested "cancelation".
+        /// </summary>
+        /// <returns></returns>
+        private bool CancelRequested()
+        {
+            return Global.GetCancelRequested();
+        }
+
+        /// <summary>
+        /// Wait for specified seconds with opportunity to react on "cacnel request".
+        /// Returns true, if the wait time has elapsed without cancelation request.
+        /// Otherwise, if user requested to cancel the pending opration, returns false.
+        /// </summary>
+        /// <param name="waitForSeconds"></param>
+        /// <returns></returns>
+        private bool CancelableWait(int waitForSeconds)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (waitForSeconds < 0)
+                    return true;
+
+                int sleepMilliseconds = waitForSeconds * 1000;
+                int secondsElapsed = 0;
+                while (secondsElapsed < waitForSeconds)
+                {
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(CancelableWait) + Const.LogCanceled);
+
+                    Thread.Sleep(sleepMilliseconds);
+                    secondsElapsed++;
+                    if (secondsElapsed >= waitForSeconds)
+                        throw new Exception(nameof(CancelableWait) + Const.LogTimeout);
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+        #endregion 
+
         #region page loaded validatorz
 
         /// <summary>
@@ -114,15 +167,11 @@ namespace EZAsesAutoType
                     throw new ArgumentNullException(nameof(browser));
 
                 int timeoutFindElement = this.GetTimeoutFindElement();
-                bool timeoutReached = false;
                 int secondsElapsed = 0;
-                while (!timeoutReached)
+                while (secondsElapsed < timeoutInSeconds)
                 {
                     if (this.CancelRequested())
                         throw new Exception(nameof(WaitUntilMainPageHasLoaded) + Const.LogCanceled);
-
-                    if (secondsElapsed > timeoutInSeconds)
-                        throw new Exception(Const.LogTimeout);
 
                     try
                     {
@@ -134,6 +183,10 @@ namespace EZAsesAutoType
                         Log.Debug(ex);
                     }
                     Thread.Sleep(1000); // 1000 ms = one second
+                    secondsElapsed++;
+                    if (secondsElapsed >= timeoutInSeconds)
+                        throw new Exception(nameof(WaitUntilMainPageHasLoaded) + Const.LogTimeout);
+
                 }
                 return false;
             }
@@ -201,15 +254,11 @@ namespace EZAsesAutoType
                     throw new ArgumentNullException(nameof(browser));
 
                 int timeoutFindElement = this.GetTimeoutFindElement();
-                bool timeoutReached = false;
                 int secondsElapsed = 0;
-                while (!timeoutReached)
+                while (secondsElapsed < timeoutInSeconds)
                 {
                     if (this.CancelRequested())
                         throw new Exception(nameof(WaitUntilNavMenuPopupHasLoaded) + Const.LogCanceled);
-
-                    if (secondsElapsed > timeoutInSeconds)
-                        throw new Exception(Const.LogTimeout);
 
                     try
                     {
@@ -221,6 +270,10 @@ namespace EZAsesAutoType
                         Log.Debug(ex);
                     }
                     Thread.Sleep(1000); // 1000 ms = one second
+                    secondsElapsed++;
+                    if (secondsElapsed >= timeoutInSeconds)
+                        throw new Exception(nameof(WaitUntilNavMenuPopupHasLoaded) + Const.LogTimeout);
+
                 }
                 return false;
             }
@@ -292,15 +345,11 @@ namespace EZAsesAutoType
                     throw new ArgumentNullException(nameof(browser));
 
                 int timeoutFindElement = this.GetTimeoutFindElement();
-                bool timeoutReached = false;
                 int secondsElapsed = 0;
-                while (!timeoutReached)
+                while (secondsElapsed < timeoutInSeconds)
                 {
                     if (this.CancelRequested())
                         throw new Exception(nameof(WaitUntilTimeEntryCanvasHasLoaded) + Const.LogCanceled);
-
-                    if (secondsElapsed > timeoutInSeconds)
-                        throw new Exception(Const.LogTimeout);
 
                     try
                     {
@@ -312,6 +361,10 @@ namespace EZAsesAutoType
                         Log.Debug(ex);
                     }
                     Thread.Sleep(1000); // 1000 ms = one second
+                    secondsElapsed++;
+                    if (secondsElapsed >= timeoutInSeconds)
+                        throw new Exception(nameof(WaitUntilTimeEntryCanvasHasLoaded) + Const.LogTimeout);
+
                 }
                 return false;
             }
