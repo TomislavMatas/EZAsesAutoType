@@ -623,6 +623,13 @@ namespace EZAsesAutoType
                 if (!this.ASESDoLogout(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESDoLogout) + Const.LogFail);
 
+                if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
+
+                Log.Info("Teardown browser" + Const.LogInProgress);
+                TeardownBrowserInstance(browser);
+                browser = null;
+
                 return true;
             }
             catch (Exception ex)
@@ -632,11 +639,9 @@ namespace EZAsesAutoType
             }
             finally
             {
-                if (browser != null)
-                {
-                    browser.Cleanup();
-                    browser = null;
-                }
+                if(browser != null)
+                    TeardownBrowserInstance(browser);
+
                 Log.Info(Const.LogDone);
             }
         }
