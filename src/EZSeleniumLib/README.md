@@ -44,18 +44,8 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
-## 2024/03/24:TomislavMatas: Version "1.0.0.0"
-* Use "chromedriver.exe" version "123.0.6312.58".
-* Use "MicrosoftWebDriver.exe" version "122.0.2365.106".
-* Use "geckodriver.exe" version "0.34.0".
-* Upgrade Selenium framework from "3.141.0" to "4.18.1".
-  - Refactor "WaitUntilAlertIsPresent" because Selenium v4 does not provide "ExpectedConditions" any more.
-  - Replace "RemoteWebDriver" with "WebDriver".
-  - Replace "AddAdditionalCapability" with "AddAdditionalEdgeOption".
-  - Replace "UseVerboseLogging" with "EnableVerboseLogging".
-  - Replace "ExecuteChromeCommand" with "ExecuteCustomDriverCommand".
-  - Remove references to "SeleniumExtras.WaitHelpers.*".
-  - Remove references to "UseSpecCompliantProtocol".
-  - Remove nuget PackageReference "DotNetSeleniumExtras.PageObjects".
-  - Remove nuget PackageReference "DotNetSeleniumExtras.WaitHelpers".
-* Initial Version.
+## 2024/04/04:TomislavMatas: Version "1.0.0"
+* Using "chromedriver.exe" version "123.0.6312.58".
+* Using "MicrosoftWebDriver.exe" version "122.0.2365.106".
+* Using "geckodriver.exe" version "0.34.0".
+* Initial version.

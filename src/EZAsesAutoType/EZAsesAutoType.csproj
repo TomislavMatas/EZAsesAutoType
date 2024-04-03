@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZAsesAutoType</Title>
-    <Version>1.0.0.0</Version>
+    <Version>1.0.0</Version>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -20,10 +20,13 @@ to automate the daily chore of utilizing the virtual punch card system
     <RepositoryUrl>https://github.com/TomislavMatas/AsesAutoType.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ATOSS;ASES;Selenium;WebDriver;Chrome;Edge</PackageTags>
+    <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.16" />
+    <PackageReference Include="log4net" Version="2.0.17" />
   </ItemGroup>
 
   <ItemGroup>
