@@ -17,48 +17,6 @@ namespace EZAsesAutoType
     {
         #region Navigation 
 
-        private bool CancelRequested()
-        {
-            return Global.GetCancelRequested();
-        }
-
-        /// <summary>
-        /// Wait for specified seconds with opportunity to react on "cacnel request".
-        /// Returns true, if the wait time has elapsed without cancelation request.
-        /// Otherwise, if user requested to cancel the pending opration, returns false.
-        /// </summary>
-        /// <param name="waitForSeconds"></param>
-        /// <returns></returns>
-        private bool CancelableWait(int waitForSeconds)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                if (waitForSeconds < 0)
-                    return true;
-
-                int sleepMilliseconds = waitForSeconds * 1000;
-                int secondsElapsed = 0;
-                while (secondsElapsed < waitForSeconds)
-                {
-                    if (this.CancelRequested())
-                        throw new Exception(nameof(CancelableWait) + Const.LogCanceled);
-
-                    Thread.Sleep(sleepMilliseconds);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
         /// <summary>
         /// Use Browser-Interop Helper to navigate to "Login Page".
         /// Uses a single "browser.GoToUrl()" call.
