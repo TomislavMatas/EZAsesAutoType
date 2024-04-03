@@ -35,6 +35,7 @@ namespace EZSeleniumLib
         public const string LogInvalid = " INVALID";
         public const string LogNotImpl = " NOT IMPLEMENTED";
         public const string LogIsNull = " IS NULL";
+        public const string LogTimeout = " TIMEOUT";
         #endregion
 
         #region "App.config" key namez 
