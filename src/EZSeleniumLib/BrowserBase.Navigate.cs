@@ -264,15 +264,16 @@ namespace EZSeleniumLib
                 // WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
                 // IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
                 // Selenium v4 does not even have the class "ExpectedConditions" any more, make custom culprit.
-                IAlert? alert = null; 
                 int secondsElapsed = 0;
                 while (secondsElapsed < timeoutInSeconds)
                 {
                     try
                     {
-                        alert = Driver.SwitchTo().Alert();
+                        IAlert? alert = Driver.SwitchTo().Alert();
                         if (alert != null)
                             return alert; // SUCCESS!
+
+                        Log.Debug("Driver.SwitchTo().Alert()" + Consts.LogIsNull);
                     }
                     catch (Exception ex) 
                     {
@@ -284,10 +285,7 @@ namespace EZSeleniumLib
                         throw new Exception(nameof(WaitUntilAlertIsPresent) + Consts.LogTimeout);
 
                 }
-                // "unreachable code".
-                // "alert" will be null at this point.
-                // kept for the sake of clarity.
-                return alert;
+                return null;
             }
             catch (Exception ex)
             {
