@@ -2,7 +2,7 @@
 // File: "Worker.AppConfig.cs"
 //
 // Revision History: 
-// 2024/03/22:TomislavMatas: Version "1.0.0.0"
+// 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 

@@ -8,6 +8,5 @@ Contains sources required to build the assembly "EZSeleniumLib.dll".
 Contains sources required to build the setup package "EZAsesAutoTypeSetup.msi".
 
 # Revision History
-## 2024/03/22:TomislavMatas: Version "1.0.0.0"
-* Added initial prototyping to -->< "https://github.com/TomislavMatas/AsesAutoType" >.
-* Initial Version.
+## 2024/04/04:TomislavMatas: Version "1.0.0"
+* Initial version.

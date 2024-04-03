@@ -6,7 +6,7 @@
 // Implementation of wrappers for "WebDriver.Find*" methods.
 //
 // Revision History: 
-// 2024/03/24:TomislavMatas: Version "1.0.0.0"
+// 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
