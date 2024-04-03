@@ -657,7 +657,7 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                if(!InitializeControls(userSettings))
+                if (!InitializeControls(userSettings))
                     throw new Exception(nameof(InitializeControls) + Const.LogFail);
 
                 if (!RenderControls(userSettings))
@@ -753,7 +753,7 @@ namespace EZAsesAutoType
             if (!this.backgroundWorker1.IsBusy)
                 this.Close();
 
-            while(this.backgroundWorker1.IsBusy) 
+            while (this.backgroundWorker1.IsBusy)
             {
                 Global.SetCancelRequested(true);
                 backgroundWorker1.CancelAsync();
@@ -764,6 +764,233 @@ namespace EZAsesAutoType
         #endregion
 
         #region textbox handlerz
+
+        private string EvalTimeByFragment(string value)
+        {
+            if (value == null)
+                return null;
+
+            value = value.Trim();
+            if ( string.Equals(value, "now", StringComparison.OrdinalIgnoreCase)
+              || string.Equals(value, ".")
+               )
+            {
+                return DateTime.Now.ToString("HH:mm");
+            }
+
+            if (string.Equals(value, "nine", StringComparison.OrdinalIgnoreCase))
+                return "09:00";
+
+            if (string.Equals(value, "five", StringComparison.OrdinalIgnoreCase))
+                return "17:00";
+
+            if (value.Length == 1)
+            {
+                if(int.TryParse(value, out int intValue))
+                {
+                    return intValue.ToString("00") + ":00";
+                }
+            }
+
+            if (value.Length == 2)
+            {
+                if (int.TryParse(value, out int intValue))
+                {
+                    if (intValue >= 10 && intValue <= 23)
+                    {
+                        return intValue.ToString("00") + ":00";
+                    }
+                    if (intValue > 23 & intValue <= 59)
+                    {
+                        return DateTime.Now.ToString("HH") + ":" + intValue.ToString("00");
+                    }
+                }
+            }
+
+            if (value.Length == 3)
+            {
+                if (string.Equals(value.Substring(1, 1), ":"))
+                {
+                    // "a:b"
+                    string hour = value.Substring(0, 1);
+                    string minute = value.Substring(2, 1);
+                    if ( int.TryParse(hour, out int intHour) 
+                      && int.TryParse(minute, out int intMinute)
+                       )
+                    {
+                        // "h:m" --> "HH:mm"
+                        return intHour.ToString("00") + ":" + intMinute.ToString("00");
+                    }
+                }
+                if (int.TryParse(value, out int intValue))
+                {
+                    // "nnn"
+                    if (intValue == 0 )
+                    {
+                        // "000" --> "00:00"
+                        return "00:00";
+                    }
+                    if (intValue <= 23)
+                    {
+                        // assume "hour" portion with either one or two leading zeroes.
+                        return intValue.ToString("00") + ":00";
+                    }
+                    if (intValue > 23 && intValue <= 59 )
+                    {
+                        // assume "minute" portion with either one or two leading zeroes.
+                        // prefix result with current hour portion.
+                        return DateTime.Now.ToString("HH") + ":" + intValue.ToString("00"); 
+                    }
+                    if (intValue >= 100 && intValue <= 959)
+                    {
+                        string hour = value.Substring(0, 1);
+                        string minute = value.Substring(1, 2);
+                        if (int.TryParse(hour, out int intHour)
+                          && int.TryParse(minute, out int intMinute)
+                           )
+                        {
+                            return intHour.ToString("00") + ":" + intMinute.ToString("00");
+                        }
+
+                    }
+                }
+            }
+            if (value.Length == 4)
+            {
+                if (string.Equals(value.Substring(1, 1), ":"))
+                {
+                    // "a:bc"
+                    string hour = value.Substring(0, 1);
+                    string minute = value.Substring(2, 2);
+                    if (int.TryParse(hour, out int intHour)
+                      && int.TryParse(minute, out int intMinute)
+                       )
+                    {
+                        if (intMinute >= 0 && intMinute <= 59)
+                        {
+                            // "h:mm" --> "HH:mm"
+                            return intHour.ToString("00") + ":" + intMinute.ToString("00");
+                        }
+                    }
+                }
+                if (string.Equals(value.Substring(2, 1), ":"))
+                {
+                    // "ab:c"
+                    string hour = value.Substring(0, 2);
+                    string minute = value.Substring(3, 1);
+                    if (int.TryParse(hour, out int intHour)
+                      && int.TryParse(minute, out int intMinute)
+                       )
+                    {
+                        if (intHour >= 0 && intHour <= 23)
+                        {
+                            // "hh:m" --> "HH:mm"
+                            return intHour.ToString("00") + ":" + intMinute.ToString("00");
+                        }
+                    }
+                }
+                if (int.TryParse(value, out int intValue))
+                {
+                    // "nnnn"
+                    if (intValue == 0)
+                    {
+                        // "0000" --> "00:00"
+                        return "00:00";
+                    }
+                    string hour = value.Substring(0, 2);
+                    string minute = value.Substring(2, 2);
+                    if (int.TryParse(hour, out int intHour)
+                      && int.TryParse(minute, out int intMinute)
+                       )
+                    {
+                        if (intHour >= 0 && intHour <= 23
+                         && intMinute >=0 && intMinute <=59 )
+                        {
+                            // "hhmm" --> "HH:mm"
+                            return intHour.ToString("00") + ":" + intMinute.ToString("00");
+                        }
+                    }
+                }
+            }
+            if (value.Length == 5)
+            {
+                if (string.Equals(value.Substring(2, 1), ":"))
+                {
+                    // "ab:cd"
+                    string hour = value.Substring(0, 2);
+                    string minute = value.Substring(3, 2);
+                    if (int.TryParse(hour, out int intHour)
+                      && int.TryParse(minute, out int intMinute)
+                       )
+                    {
+                        if (intHour >= 0 && intHour <= 23
+                         && intMinute >= 0 && intMinute <= 59)
+                        {
+                            // "hh:mm" --> "HH:mm"
+                            return intHour.ToString("00") + ":" + intMinute.ToString("00");
+                        }
+                    }
+                }
+                if (int.TryParse(value, out int intValue))
+                {
+                    // "nnnnn"
+                    if (intValue == 0)
+                    {
+                        // "00000" --> "00:00"
+                        return "00:00";
+                    }
+                }
+            }
+
+            // if none of the above "matched", return unmodified value.
+            return value;
+        }
+
+        private void textBoxPunchIn_TextChanged(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+        }
+
+        private void textBoxPunchIn_Validated(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            TextBox textBox = (TextBox)sender;
+            string fragment = textBox.Text;
+            string expanded = this.EvalTimeByFragment(fragment);
+            if (string.Equals(fragment, expanded))
+                return;
+
+            this.textBoxPunchIn.Text = expanded;
+        }
+
+        private void textBoxPunchOut_TextChanged(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+        }
+
+        private void textBoxPunchOut_Validated(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            TextBox textBox = (TextBox)sender;
+            string fragment = textBox.Text;
+            string expanded = this.EvalTimeByFragment(fragment);
+            if (string.Equals(fragment, expanded))
+                return;
+
+            this.textBoxPunchOut.Text = expanded;
+        }
 
         #endregion
 
@@ -842,6 +1069,8 @@ namespace EZAsesAutoType
         }
 
         #endregion
+
+
     } // class
 
 } // namespace
