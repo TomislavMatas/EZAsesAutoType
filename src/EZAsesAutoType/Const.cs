@@ -108,7 +108,7 @@ namespace EZAsesAutoType
         public const string LogNotImpl = " NOT IMPLEMENTED";
         public const string LogIsNull = " IS NULL";
         public const string LogNotFound = " NOT FOUND";
-        public const string LogCanceld = " CANCELD";
+        public const string LogCanceled = " CANCELD";
         public const string LogTimeout = " TIMEOUT";
         public const string LogInProgress = " ...";
         #endregion

@@ -34,7 +34,7 @@ namespace EZAsesAutoType
 
         #region propertiez
         private const string TimeoutLoginPageKeyName = "ASES.Timeout.LoginPage";
-        private const int TimeoutLoginPageDefault = 60;
+        private const int TimeoutLoginPageDefault = 15;
         private int m_TimeoutLoginPage = -1;
         private int TimeoutLoginPage
         {
@@ -61,7 +61,7 @@ namespace EZAsesAutoType
         }
 
         private const string TimeoutFindElementKeyName = "ASES.Timeout.FindElement";
-        private const int TimeoutFindElementDefault = 10;
+        private const int TimeoutFindElementDefault = 1;
         private int m_TimeoutFindElement = -1;
         private int TimeoutFindElement
         {
@@ -88,7 +88,7 @@ namespace EZAsesAutoType
         }
 
         private const string TimeoutPopupKeyName = "ASES.Timeout.Popup";
-        private const int TimeoutPopupDefault = 10;
+        private const int TimeoutPopupDefault = 1;
         private int m_TimeoutPopup = -1;
         private int TimeoutPopup
         {
@@ -111,6 +111,33 @@ namespace EZAsesAutoType
         {
             int prev = this.GetTimeoutPopup();
             this.TimeoutPopup = value;
+            return prev;
+        }
+        
+        private const string WaitBeforeLogoutKeyName = "ASES.WaitBefore.Logout";
+        private const int WaitBeforeLogoutDefault = 5;
+        private int m_WaitBeforeLogout = -1;
+        private int WaitBeforeLogout
+        {
+            get
+            {
+                if (m_WaitBeforeLogout == -1)
+                    m_WaitBeforeLogout = ConfigApi.GetAppSettingInt(WaitBeforeLogoutKeyName, WaitBeforeLogoutDefault);
+                return m_WaitBeforeLogout;
+            }
+            set
+            {
+                m_WaitBeforeLogout = value;
+            }
+        }
+        public int GetWaitBeforeLogout()
+        {
+            return this.WaitBeforeLogout;
+        }
+        public int SetWaitBeforeLogout(int value)
+        {
+            int prev = this.GetWaitBeforeLogout();
+            this.WaitBeforeLogout = value;
             return prev;
         }
 
@@ -399,7 +426,33 @@ namespace EZAsesAutoType
             this.NavMenuUsernameXPath = value;
             return prev;
         }
-        
+
+        private const string NavMenuUsernameLogoutButtonXPathKeyName = "ASES.MainPage.NavMenu.UserName.LogoutButton.xPath";
+        private string? m_NavMenuUsernameLogoutButtonXPath = null;
+        private string NavMenuUsernameLogoutButtonXPath
+        {
+            get
+            {
+                if (m_NavMenuUsernameLogoutButtonXPath == null)
+                    m_NavMenuUsernameLogoutButtonXPath = ConfigApi.GetAppSettingString(NavMenuUsernameLogoutButtonXPathKeyName, string.Empty);
+                return m_NavMenuUsernameLogoutButtonXPath;
+            }
+            set
+            {
+                m_NavMenuUsernameLogoutButtonXPath = value;
+            }
+        }
+        public string GetNavMenuUsernameLogoutButtonXPath()
+        {
+            return this.NavMenuUsernameLogoutButtonXPath;
+        }
+        public string SetNavMenuUsernameLogoutButtonXPath(string value)
+        {
+            string prev = this.GetNavMenuUsernameLogoutButtonXPath();
+            this.NavMenuUsernameLogoutButtonXPath = value;
+            return prev;
+        }
+
         private const string TimeGridFormXPathKeyName = "ASES.TimeGrid.Form.xPath";
         private string? m_TimeGridFormXPath = null;
         private string TimeGridFormXPath
@@ -631,6 +684,58 @@ namespace EZAsesAutoType
         {
             string prev = this.GetTimePairFirstRowTimeToXPath();
             this.TimePairFirstRowTimeToXPath = value;
+            return prev;
+        }
+
+        private const string TimePairFooterAcceptButtonPathKeyName = "ASES.TimePair.Footer.AccecptButton.xPath";
+        private string? m_TimePairFooterAcceptButtonPath = null;
+        private string TimePairFooterAcceptButtonPath
+        {
+            get
+            {
+                if (m_TimePairFooterAcceptButtonPath == null)
+                    m_TimePairFooterAcceptButtonPath = ConfigApi.GetAppSettingString(TimePairFooterAcceptButtonPathKeyName, string.Empty);
+                return m_TimePairFooterAcceptButtonPath;
+            }
+            set
+            {
+                m_TimePairFooterAcceptButtonPath = value;
+            }
+        }
+        public string GetTimePairFooterAcceptButtonPath()
+        {
+            return this.TimePairFooterAcceptButtonPath;
+        }
+        public string SetTimePairFooterAcceptButtonPath(string value)
+        {
+            string prev = this.GetTimePairFooterAcceptButtonPath();
+            this.TimePairFooterAcceptButtonPath = value;
+            return prev;
+        }
+
+        private const string TimeGridCanvasSaveButtonPathKeyName = "ASES.TimeGrid.Canvas.SaveButton.xPath";
+        private string? m_TimeGridCanvasSaveButtonPath = null;
+        private string TimeGridCanvasSaveButtonPath
+        {
+            get
+            {
+                if (m_TimeGridCanvasSaveButtonPath == null)
+                    m_TimeGridCanvasSaveButtonPath = ConfigApi.GetAppSettingString(TimeGridCanvasSaveButtonPathKeyName, string.Empty);
+                return m_TimeGridCanvasSaveButtonPath;
+            }
+            set
+            {
+                m_TimeGridCanvasSaveButtonPath = value;
+            }
+        }
+        public string GetTimeGridCanvasSaveButtonPath()
+        {
+            return this.TimeGridCanvasSaveButtonPath;
+        }
+        public string SetTimeGridCanvasSaveButtonPath(string value)
+        {
+            string prev = this.GetTimeGridCanvasSaveButtonPath();
+            this.TimeGridCanvasSaveButtonPath = value;
             return prev;
         }
 

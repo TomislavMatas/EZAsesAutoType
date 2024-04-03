@@ -23,6 +23,43 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
+        /// Wait for specified seconds with opportunity to react on "cacnel request".
+        /// Returns true, if the wait time has elapsed without cancelation request.
+        /// Otherwise, if user requested to cancel the pending opration, returns false.
+        /// </summary>
+        /// <param name="waitForSeconds"></param>
+        /// <returns></returns>
+        private bool CancelableWait(int waitForSeconds)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (waitForSeconds < 0)
+                    return true;
+
+                int sleepMilliseconds = waitForSeconds * 1000;
+                int secondsElapsed = 0;
+                while (secondsElapsed < waitForSeconds)
+                {
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(CancelableWait) + Const.LogCanceled);
+
+                    Thread.Sleep(sleepMilliseconds);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        /// <summary>
         /// Use Browser-Interop Helper to navigate to "Login Page".
         /// Uses a single "browser.GoToUrl()" call.
         /// </summary>
@@ -172,7 +209,7 @@ namespace EZAsesAutoType
 
         /// <summary>
         /// Use Browser-Interop Helper to navigate to "Time Entry Grid Canvas".
-        /// In Essence: Click the respective menu elements in coorect order.
+        /// In Essence: Click the respective menu elements in correct order.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
@@ -223,6 +260,13 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// Use Browser-Interop Helper to navigate to sort the "Time Entry Grid Canvas" ascending.
+        /// In Essence: Click the respective header item.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
         private bool ASESSortTimeEntryCanvasAscending(BrowserBase browser, int timeoutInSeconds)
         {
             try
@@ -277,6 +321,14 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// Use Browser-Interop Helper to open up "Time Pair Entry" popup dialog.
+        /// In Essence: Assuming, the grid is sorted ascending by date,
+        /// then an item in the grid's last row must be clicked.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
         private bool ASESOpenTimePairEntryPopup(BrowserBase browser, int timeoutInSeconds)
         {
             try
@@ -287,7 +339,6 @@ namespace EZAsesAutoType
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
-
 
                 string xPath = this.GetTimeGridCanvasLastRowDateFromXPath();
                 IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
@@ -324,7 +375,19 @@ namespace EZAsesAutoType
             }
         }
 
-        private bool ASESDoTimePairEntry(BrowserBase browser, int timeoutInSeconds)
+        /// <summary>
+        /// Use Browser-Interop Helper to "type" the "in/out Time Pair" 
+        /// within "Time Pair Entry" popup dialog. 
+        /// In Essence: When successfully clicked on the respective "span" 
+        /// element, it shall activate edit mode by embedding an "input" 
+        /// control. Use Thread.Sleep() to give browser some time 
+        /// to render that "input" control.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private bool ASESEnterInOutTimePair(BrowserBase browser, int timeoutInSeconds)
         {
             try
             {
@@ -339,39 +402,157 @@ namespace EZAsesAutoType
                 IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
-                if (!browser.ClickElement(element))
-                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
-                // first click on "span" element activates "edit mode" by
-                // embedding a "input" control. Need to click a second time
-                // but only if that "input" control has appeared
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
                 Thread.Sleep(1000);
                 xPath = xPath + "/input";
-                IWebElement input = browser.FindElementByXpath(xPath, timeoutInSeconds);
-                if (input == null)
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
 
                 string value = this.GetASESPunchIn();
-                input.SendKeys(value);
+                element.SendKeys(value);
 
                 xPath = this.GetTimePairFirstRowTimeToXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
-                if (!browser.ClickElement(element))
-                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
-                // first click on "span" element activates "edit mode" by
-                // embedding a "input" control. Need to click a second time
-                // but only if that "input" control has appeared
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
                 Thread.Sleep(1000);
                 xPath = xPath + "/input";
-                input = browser.FindElementByXpath(xPath, timeoutInSeconds);
-                if (input == null)
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
 
                 value = this.GetASESPunchOut();
-                input.SendKeys(value);
+                element.SendKeys(value);
+
+                xPath = this.GetTimePairFooterAcceptButtonPath();
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to save the current data.
+        /// In Essence: Click the "save button".
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        private bool ASESSaveTimeEntryCanvas(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+
+                string xPath = this.GetTimeGridCanvasSaveButtonPath();
+                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// After time pair entry, wait for the amount of seconds 
+        /// configured in "App.config" to give user the opportunity to review 
+        /// the actual data before proceeding with logoout.
+        /// Returns true, if the wait time has elapsed without cancelation request.
+        /// Otherwise, if user requested to cancel the pending opration, returns false.
+        /// </summary>
+        /// <returns></returns>
+        private bool ASESWaitBeforeLogout()
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                int waitTimeInSeconds = this.GetWaitBeforeLogout();
+                if (!this.CancelableWait(waitTimeInSeconds))
+                    throw new Exception(nameof(CancelableWait) + Const.LogCanceled);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to save the current data.
+        /// In Essence: Click the menu sequence for "log out current user".
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        private bool ASESDoLogout(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                if (!this.ASESMainPageIsLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESMainPageIsLoaded) + Const.LogFail);
+
+                string xPath = this.GetNavMenuUsernameXPath();
+                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                Thread.Sleep(1000);
+                xPath = this.GetNavMenuUsernameLogoutButtonXPath();
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
                 return true;
             }
@@ -407,7 +588,7 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(this.GetBrowserInstance) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 string baseUrl = this.GetASESBaseUrl();
                 Log.Info(String.Format("Navigate to '{0}'{1}", baseUrl, Const.LogInProgress));
@@ -416,7 +597,7 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(this.ASESNavigateToLoginPage) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 string iFrameXPath = this.GetApplicationIFrameXPath();
                 int timeoutFindElement = this.GetTimeoutFindElement();
@@ -424,51 +605,65 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 Log.Info("Login" + Const.LogInProgress);
                 if (!this.ASESDoLogin(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESDoLogin) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 Log.Info("Open time card" + Const.LogInProgress);
                 if (!this.ASESNavigateToTimeEntryCanvas(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESNavigateToTimeEntryCanvas) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 if (!this.ASESSortTimeEntryCanvasAscending(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESSortTimeEntryCanvasAscending) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 Log.Info("Open time pair" + Const.LogInProgress);
                 if (!this.ASESOpenTimePairEntryPopup(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESOpenTimePairEntryPopup) + Const.LogFail);
 
                 if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceld);
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                if (!this.ASESDoTimePairEntry(browser, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESDoTimePairEntry) + Const.LogFail);
+                Log.Info("Type time pair" + Const.LogInProgress);
+                if (!this.ASESEnterInOutTimePair(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESEnterInOutTimePair) + Const.LogFail);
 
-                Thread.Sleep(5000);
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                Log.Info("Save time card" + Const.LogInProgress);
+                if (!this.ASESSaveTimeEntryCanvas(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESSaveTimeEntryCanvas) + Const.LogFail);
+
+                Log.Info("Wait before logout" + Const.LogInProgress);
+                if(!this.ASESWaitBeforeLogout())
+                    throw new Exception(nameof(ASESWaitBeforeLogout) + Const.LogCanceled);
+
+                Log.Info("Logout" + Const.LogInProgress);
+                if (!this.ASESDoLogout(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESDoLogout) + Const.LogFail);
 
                 return true;
             }

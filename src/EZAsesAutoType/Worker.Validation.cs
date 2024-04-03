@@ -100,7 +100,7 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Wait until a specif content has been loaded.
+        /// Wait until a specific content has been loaded.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
@@ -118,6 +118,9 @@ namespace EZAsesAutoType
                 int secondsElapsed = 0;
                 while (!timeoutReached)
                 {
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(WaitUntilMainPageHasLoaded) + Const.LogCanceled);
+
                     if (secondsElapsed > timeoutInSeconds)
                         throw new Exception(Const.LogTimeout);
 
@@ -184,7 +187,7 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Wait until a specif content has been loaded.
+        /// Wait until a specific content has been loaded.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
@@ -202,6 +205,9 @@ namespace EZAsesAutoType
                 int secondsElapsed = 0;
                 while (!timeoutReached)
                 {
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(WaitUntilNavMenuPopupHasLoaded) + Const.LogCanceled);
+
                     if (secondsElapsed > timeoutInSeconds)
                         throw new Exception(Const.LogTimeout);
 
@@ -272,7 +278,7 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Wait until a specif content has been loaded.
+        /// Wait until a specific content has been loaded.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
@@ -290,6 +296,9 @@ namespace EZAsesAutoType
                 int secondsElapsed = 0;
                 while (!timeoutReached)
                 {
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(WaitUntilTimeEntryCanvasHasLoaded) + Const.LogCanceled);
+
                     if (secondsElapsed > timeoutInSeconds)
                         throw new Exception(Const.LogTimeout);
 
@@ -350,7 +359,7 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Wait until a specif content has been loaded.
+        /// Wait until a specific content has been loaded.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
@@ -368,6 +377,9 @@ namespace EZAsesAutoType
                 int secondsElapsed = 0;
                 while (!timeoutReached)
                 {
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(WaitUntilTimePairEntryPopupHasLoaded) + Const.LogCanceled);
+
                     if (secondsElapsed > timeoutInSeconds)
                         throw new Exception(Const.LogTimeout);
 
