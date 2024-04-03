@@ -84,6 +84,7 @@ namespace EZAsesAutoType
 
         #endregion
 
+        #region constructorz 
         /// <summary>
         ///  Default constructor.
         /// </summary>
@@ -105,6 +106,8 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        #endregion
 
         #region Initializerz
 
@@ -715,6 +718,8 @@ namespace EZAsesAutoType
         {
             try
             {
+                this.SaveUserSettings();
+
                 UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
@@ -804,6 +809,8 @@ namespace EZAsesAutoType
 
         #endregion
 
+        #region background worker taskz
+
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             try
@@ -834,6 +841,7 @@ namespace EZAsesAutoType
             }
         }
 
+        #endregion
     } // class
 
 } // namespace

@@ -27,6 +27,11 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetAppConfig().GetTimeoutPopup();
         }
 
+        private int GetWaitBeforeLogout()
+        {
+            return this.WorkerConfig.GetAppConfig().GetWaitBeforeLogout();
+        }
+
         private string GetApplicationIFrameXPath()
         {
             return this.WorkerConfig.GetAppConfig().GetApplicationIFrameXPath();
@@ -82,6 +87,11 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetAppConfig().GetNavMenuUsernameXPath();
         }
 
+        private string GetNavMenuUsernameLogoutButtonXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetNavMenuUsernameLogoutButtonXPath();
+        }
+
         private string GetTimeGridFormXPath()
         {
             return this.WorkerConfig.GetAppConfig().GetTimeGridFormXPath();
@@ -125,6 +135,16 @@ namespace EZAsesAutoType
         private string GetTimePairFirstRowTimeToXPath()
         {
             return this.WorkerConfig.GetAppConfig().GetTimePairFirstRowTimeToXPath();
+        }
+
+        private string GetTimePairFooterAcceptButtonPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimePairFooterAcceptButtonPath();
+        }
+        
+        private string GetTimeGridCanvasSaveButtonPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSaveButtonPath();
         }
 
         #endregion "AppConfig" - wrapperz
