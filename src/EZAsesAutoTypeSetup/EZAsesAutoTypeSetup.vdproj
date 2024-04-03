@@ -225,7 +225,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EZAsesAutoType"
         "ProductCode" = "8:{29C468BF-5FC9-4885-9A17-EE4AC554F2F2}"
-        "PackageCode" = "8:{AAEF9F66-02DB-40DC-BC21-C6006F4FE783}"
+        "PackageCode" = "8:{20AEC0E8-F571-459B-943F-5D3A7B69C297}"
         "UpgradeCode" = "8:{8A6849D5-37DA-4A40-A26E-88046820FAA1}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

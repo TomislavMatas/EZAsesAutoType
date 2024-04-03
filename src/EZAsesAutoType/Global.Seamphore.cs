@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//
+// File: "Global.Seamphore.cs"
+//
+// Summary:
+// Project specific semaphore implementations.
+//
+// Revision History: 
+// 2024/04/04:TomislavMatas: Version "1.0.0"
+// * Initial version.
+//
 
 namespace EZAsesAutoType
 {
     internal static partial class Global
     {
+
         private static object m_LockCancelRequested = new object();
         private static bool m_CancelRequested = false;
         private static bool CancelRequested
@@ -36,5 +42,6 @@ namespace EZAsesAutoType
             CancelRequested = flag;
         }
 
-    }
-}
+    } // class
+
+} // namespace
