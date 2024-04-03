@@ -325,6 +325,8 @@ namespace EZAsesAutoType
                 this.textBoxUrl.Text = userSettings.ASESBaseUrl;
                 this.textBoxUid.Text = userSettings.ASESUserId;
                 this.textBoxPwd.Text = userSettings.ASESPassword;
+                this.textBoxPunchIn.Text = userSettings.ASESPunchIn;
+                this.textBoxPunchOut.Text = userSettings.ASESPunchOut;
 
                 return true;
             }
