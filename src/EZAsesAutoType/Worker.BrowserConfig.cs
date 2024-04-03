@@ -27,6 +27,8 @@ namespace EZAsesAutoType
 
         #endregion "BrowserOptions" - wrapperz
 
+        #region Browser instantiation wrapperz
+
         /// <summary>
         /// Return a specific descendant of class "BrowserBase" 
         /// using "BrowserFactory".
@@ -51,6 +53,35 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        /// <summary>
+        /// Graceful TearDown of browser.
+        /// </summary>
+        /// <param name="webDriver"></param>
+        /// <param name="browserOptions"></param>
+        /// <returns></returns>
+        private void TeardownBrowserInstance(BrowserBase browser)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                if (browser != null)
+                {
+                    browser.Cleanup();
+                    browser = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        #endregion Browser instantiation wrapperz
 
     } // class
 

@@ -42,18 +42,16 @@ namespace EZAsesAutoType
                 if (waitForSeconds < 0)
                     return true;
 
-                int sleepMilliseconds = waitForSeconds * 1000;
                 int secondsElapsed = 0;
                 while (secondsElapsed < waitForSeconds)
                 {
                     if (this.CancelRequested())
                         throw new Exception(nameof(CancelableWait) + Const.LogCanceled);
 
-                    Thread.Sleep(sleepMilliseconds);
+                    Thread.Sleep(1000); // 1000 ms = one second
                     secondsElapsed++;
                     if (secondsElapsed >= waitForSeconds)
-                        throw new Exception(nameof(CancelableWait) + Const.LogTimeout);
-
+                        return true;
                 }
                 return true;
             }
