@@ -1,4 +1,14 @@
-﻿namespace EZAsesAutoType
+﻿//
+// File: "FormMain.Designer.cs"
+//
+// Revision History:
+// 2024/04/04:TomislavMatas: Version "1.123.1"
+// * Set WorkerSupportsCancellation=true.
+// 2024/04/04:TomislavMatas: Version "1.0.0"
+// * Initial version.
+//
+
+namespace EZAsesAutoType
 {
     partial class FormMain
     {
@@ -266,6 +276,7 @@
             // 
             // backgroundWorker1
             // 
+            backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             // 
             // btnCancel

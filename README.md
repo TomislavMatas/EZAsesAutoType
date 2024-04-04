@@ -3,17 +3,17 @@ The Microsoft Windows Forms application "EZAsesAutoType.exe" is supposed
 to automate the daily chore of utilizing the virtual punch card system 
 "ATOSS Staff Efficiency Suite" also known as "ASES".
 
-# "bat" subfolder
+## "bat" subfolder
 Containes some helpful windows batch files.
 
-# "bin" subfolder
+## "bin" subfolder
 Containes required third party binaries as well as the released 
 versions of "EZAsesAutoType".
 
-# "cfg" subfolder
+## "cfg" subfolder
 Templates for config files, which can be used with  "EZAsesAutoType.exe".
 
-# "src" subfolder
+## "src" subfolder
 Containes all source code to build "EZAsesAutoType.exe".
 
 # Revision History
