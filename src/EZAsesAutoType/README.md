@@ -6,6 +6,9 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/04/04:TomislavMatas: Version "1.123.1"
+* BugFix in "FormMain": Set WorkerSupportsCancellation = true.
+
 ## 2024/04/04:TomislavMatas: Version "1.0.123"
 * Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
 * Edit "App.config" defaults:
