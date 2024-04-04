@@ -18,6 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
 		EZAsesAutoTypeSetup\README.md = EZAsesAutoTypeSetup\README.md
+		..\bat\updateWebdriverChrome.bat = ..\bat\updateWebdriverChrome.bat
+		..\bat\updateWebdriverEdge.bat = ..\bat\updateWebdriverEdge.bat
+		..\bat\updateWebdriverFirefox.bat = ..\bat\updateWebdriverFirefox.bat
 	EndProjectSection
 EndProject
 Global
