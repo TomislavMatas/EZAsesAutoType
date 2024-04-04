@@ -12,6 +12,8 @@
 // See "README.md" for details.
 //
 // Revision History: 
+// 2024/04/04:TomislavMatas: Version "1.0.123"
+// * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -169,7 +171,7 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                Log.Info("ChromeDriverService init ...");
+                Log.Debug("ChromeDriverService init ...");
                 ChromeDriverService service = ChromeDriverService.CreateDefaultService();
 #if DEBUG
                 service.EnableVerboseLogging = true;
@@ -193,25 +195,22 @@ namespace EZSeleniumLib
                 service.SuppressInitialDiagnosticInformation = true;
                 service.LogPath = null;
 #endif
-                Log.Info("ChromeDriverService init OK");
+                Log.Debug("ChromeDriverService init OK");
 
-                Log.Info("GetDriverOptions ...");
                 if (!GetDriverOptions(out ChromeOptions options))
-                    throw new Exception("GetDriverOptions failed");
+                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
-                Log.Info("GetDriverOptions OK");
-
-                Log.Info("ChromeDriverService start ...");
+                Log.Debug("ChromeDriverService start ...");
                 service.Start();
                 _service = service;
-                Log.Info(String.Format("ChromeDriverService ServiceUrl: {0}", _service.ServiceUrl));
-                Log.Info("ChromeDriverService start OK");
+                Log.Debug(String.Format("ChromeDriverService ServiceUrl: {0}", _service.ServiceUrl));
+                Log.Debug("ChromeDriverService start OK");
 
-                Log.Info("WebDriver init ...");
+                Log.Debug("WebDriver init ...");
 //                this._driver = new WebDriver(remoteAddress: _service.ServiceUrl, options: options);
                 this._driver = new ChromeDriver(_service, options: options);
-                Log.Info(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
-                Log.Info("WebDriver init OK");
+                Log.Debug(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
+                Log.Debug("WebDriver init OK");
 
                 return true;
             }
@@ -230,6 +229,8 @@ namespace EZSeleniumLib
         {
             try
             {
+                Log.Debug(DEBUG_START);
+
                 options = new ChromeOptions();
 
                 #region Basic Options
