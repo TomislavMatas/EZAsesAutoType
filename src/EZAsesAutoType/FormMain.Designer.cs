@@ -257,7 +257,7 @@
             labelDash1.AutoSize = true;
             labelDash1.BackColor = Color.Transparent;
             labelDash1.ForeColor = Color.White;
-            labelDash1.Location = new Point(340, 105);
+            labelDash1.Location = new Point(342, 105);
             labelDash1.Margin = new Padding(2, 0, 2, 0);
             labelDash1.Name = "labelDash1";
             labelDash1.Size = new Size(18, 15);
