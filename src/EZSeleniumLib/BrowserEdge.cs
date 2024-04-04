@@ -224,11 +224,12 @@ namespace EZSeleniumLib
 
         private bool GetDriverOptions(out EdgeOptions edgeOptions)
         {
-            try {
+            try
+            {
                 edgeOptions = new EdgeOptions();
-                
+
                 #region Basic Options
-                
+
                 edgeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
                 edgeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
 #if DEBUG
@@ -244,31 +245,31 @@ namespace EZSeleniumLib
                 #region Startup Arguments
 
                 string argPfx = this.GetArgPrefix();
-                List<string> argList = new List<string>();
-                argList.Add(String.Format("{0}disable-infobars", argPfx));
-                argList.Add(String.Format("{0}disable-automation", argPfx));
+                List<string> argumentList = new List<string>();
+                argumentList.Add(String.Format("{0}disable-infobars", argPfx));
+                argumentList.Add(String.Format("{0}disable-automation", argPfx));
 
                 bool disableGPU = this.BrowserOptions.DisableGPU;
                 if (disableGPU)
-                    argList.Add(String.Format("{0}disable-gpu", argPfx));
+                    argumentList.Add(String.Format("{0}disable-gpu", argPfx));
 
                 bool exposeGC = this.BrowserOptions.ExposeGC;
                 if (exposeGC)
-                    argList.Add(String.Format("{0}js-flags=--expose-gc", argPfx));
+                    argumentList.Add(String.Format("{0}js-flags=--expose-gc", argPfx));
 
                 bool preciseMemoryInfo = this.BrowserOptions.PreciseMemoryInfo;
                 if (preciseMemoryInfo)
-                    argList.Add(String.Format("{0}enable-precise-memory-info", argPfx));
+                    argumentList.Add(String.Format("{0}enable-precise-memory-info", argPfx));
 
                 int scriptPID = this.BrowserOptions.ScriptPID;
                 if (scriptPID > 0)
                 {
                     SetScriptPID(scriptPID);
-                    argList.Add(GetArgScriptPID());
+                    argumentList.Add(GetArgScriptPID());
                 }
 
-                List<string> excludeSwitchesList = new List<string>();
-                excludeSwitchesList.Add(String.Format("{0}enable-automation", argPfx));
+                List<string> excludedArgumentList = new List<string>();
+                excludedArgumentList.Add(String.Format("{0}enable-automation", argPfx));
 
                 #endregion Startup Arguments
 
@@ -279,29 +280,73 @@ namespace EZSeleniumLib
                 // Selenium v4
                 edgeOptions.AddAdditionalEdgeOption("useAutomationExtension", false);
 
-                Dictionary<string, object> profileDict = new Dictionary<string, object>();
+                Dictionary<string, object> profilePreferenceDict = new Dictionary<string, object>();
                 bool popupsEnabled = this.BrowserOptions.PopupsEnabled;
                 // supress popups with "0", enable popups with "1"
                 int popups = popupsEnabled ? 1 : 0;
-                profileDict.Add("profile.default_content_settings.popups", popups);
+                profilePreferenceDict.Add("profile.default_content_settings.popups", popups);
 
                 bool notificationsEnabled = this.BrowserOptions.NotificationsEnabled;
                 // Values for "notifications": 0 - Default, 1 - Allow, 2 - Block
                 int notifications = notificationsEnabled ? 1 : 2;
-                profileDict.Add("profile.default_content_setting_values.notifications", notifications);
+                profilePreferenceDict.Add("profile.default_content_setting_values.notifications", notifications);
 
-                Dictionary<string, object> optionDict = new Dictionary<string, object>();
-                if (argList.Count > 0)
-                    optionDict.Add("args", argList);
+                #region Selenium v3 
+                // Dictionary<string, object> optionDict = new Dictionary<string, object>();
+                // if (argList.Count > 0)
+                //    optionDict.Add("args", argList);
+                //
+                // if (excludeSwitchesList.Count > 0)
+                //    optionDict.Add("excludeSwitches", excludeSwitchesList);
+                //
+                // if (profileDict.Count > 0)
+                //     optionDict.Add("prefs", profileDict);
+                //
+                // if (optionDict.Count > 0)
+                //    edgeOptions.AddAdditionalEdgeOption("ms:edgeOptions", optionDict);
+                #endregion Selenium v3 
 
-                if (excludeSwitchesList.Count > 0)
-                    optionDict.Add("excludeSwitches", excludeSwitchesList);
+                #region Selenium v4
+                foreach (string argument in argumentList)
+                {
+                    try
+                    {
+                        edgeOptions.AddArgument(argument);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                        Log.Info(string.Format("{0}('{1}'){2}", nameof(edgeOptions.AddArgument), argument, Consts.LogFail));
+                    }
+                }
 
-                if (profileDict.Count > 0)
-                    optionDict.Add("prefs", profileDict);
+                foreach (string excludedArgument in excludedArgumentList)
+                {
+                    try 
+                    { 
+                        edgeOptions.AddExcludedArgument(excludedArgument);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                        Log.Info(string.Format("{0}('{1}'){2}", nameof(edgeOptions.AddExcludedArgument), excludedArgument, Consts.LogFail));
+                    }
+                }
 
-                if (optionDict.Count > 0)
-                    edgeOptions.AddAdditionalEdgeOption("ms:edgeOptions", optionDict);
+                foreach (KeyValuePair<string, object> profilePrefence in profilePreferenceDict)
+                {
+                    try
+                    {
+                        edgeOptions.AddUserProfilePreference(profilePrefence.Key, profilePrefence.Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                        Log.Info(string.Format("{0}('{1}'){2}", nameof(edgeOptions.AddUserProfilePreference), profilePrefence.Key, Consts.LogFail));
+                    }
+                }
+
+                #endregion Selenium v4 
 
                 #endregion Capabilities
 
