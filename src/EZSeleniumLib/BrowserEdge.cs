@@ -12,17 +12,14 @@
 // See "README.md" for details.
 //
 // Revision History: 
+// 2024/04/04:TomislavMatas: Version "1.0.123"
+// * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Remote;
 
 using log4net;
 
@@ -174,7 +171,7 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                Log.Info("EdgeDriverService init ...");
+                Log.Debug("EdgeDriverService init ...");
                 EdgeDriverService service = EdgeDriverService.CreateDefaultService();
 #if DEBUG
 				// Selenium v3
@@ -190,24 +187,21 @@ namespace EZSeleniumLib
                 service.HideCommandPromptWindow = true;
                 service.SuppressInitialDiagnosticInformation = true;
 #endif
-                Log.Info("EdgeDriverService init OK");
+                Log.Debug("EdgeDriverService init OK");
 
-                Log.Info("GetDriverOptions ...");
                 if (!GetDriverOptions(out EdgeOptions options))
-                    throw new Exception("GetDriverOptions failed");
+                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
-                Log.Info("GetDriverOptions OK");
-
-                Log.Info("EdgeDriverService start ...");
+                Log.Debug("EdgeDriverService start ...");
                 service.Start();
                 _service = service;
-                Log.Info(String.Format("EdgeDriverService ServiceUrl: {0}", _service.ServiceUrl));
-                Log.Info("EdgeDriverService start OK");
+                Log.Debug(String.Format("EdgeDriverService ServiceUrl: {0}", _service.ServiceUrl));
+                Log.Debug("EdgeDriverService start OK");
 
-                Log.Info("WebDriver init ...");
+                Log.Debug("WebDriver init ...");
                 this._driver = new EdgeDriver(_service, options);
-                Log.Info(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
-                Log.Info("WebDriver init OK");
+                Log.Debug(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
+                Log.Debug("WebDriver init OK");
 
                 return true;
             }
@@ -226,6 +220,8 @@ namespace EZSeleniumLib
         {
             try
             {
+                Log.Debug(DEBUG_START);
+
                 edgeOptions = new EdgeOptions();
 
                 #region Basic Options
