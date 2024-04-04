@@ -2,7 +2,7 @@
 // File: "FormMain.cs"
 //
 // Revision History:
-// 2024/04/04:TomislavMatas: Version "1.0.124"
+// 2024/04/04:TomislavMatas: Version "1.0.123"
 // * BugFix in "SaveUserSettings".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.

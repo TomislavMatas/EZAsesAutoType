@@ -9,6 +9,9 @@ Please refer to "EZSeleniumLib" project for details.
 ## 2024/04/04:TomislavMatas: Version "1.0.124"
 * Update "chromedriver.exe"       to version "124.0.6367.29".
 * Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".
+
+## 2024/04/04:TomislavMatas: Version "1.0.123"
+* Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
 * Edit "App.config" defaults:
 * - Use "log4net.File=${UserProfile}\.EZAsesAutoType\EZAsesAutoType.log".
 * - Use "ASES.WaitBefore.Logout=2".
