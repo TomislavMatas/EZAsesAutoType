@@ -5,12 +5,13 @@
 // Project specific configuration settings. 
 //
 // Revision History: 
+// 2024/04/04:TomislavMatas: Version "1.0.124"
+// * Use "WaitBeforeLogoutDefault=2" instead of ""WaitBeforeLogoutDefault=5".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
 using log4net;
-using System.Threading;
 
 namespace EZAsesAutoType
 {
@@ -115,7 +116,7 @@ namespace EZAsesAutoType
         }
         
         private const string WaitBeforeLogoutKeyName = "ASES.WaitBefore.Logout";
-        private const int WaitBeforeLogoutDefault = 5;
+        private const int WaitBeforeLogoutDefault = 2;
         private int m_WaitBeforeLogout = -1;
         private int WaitBeforeLogout
         {
