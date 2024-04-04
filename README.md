@@ -6,6 +6,10 @@ to automate the daily chore of utilizing the virtual punch card system
 # "bat" subfolder
 Containes some helpful windows batch files.
 
+# "bin" subfolder
+Containes required third party binaries as well as the released 
+versions of "EZAsesAutoType".
+
 # "cfg" subfolder
 Templates for config files, which can be used with  "EZAsesAutoType.exe".
 
@@ -14,6 +18,4 @@ Containes all source code to build "EZAsesAutoType.exe".
 
 # Revision History
 ## 2024/04/04:TomislavMatas: Version "1.0.0"
-* Using WebDriver for Chrome version "123.0.6312.58".
-* Using WebDriver for Edge version "123.0.2420.53".
 * Initial version.
