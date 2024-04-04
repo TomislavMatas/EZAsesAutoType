@@ -23,6 +23,7 @@
 :: -- Revision History
 :: -- 2024/04/04:TomislavMatas: Version "1.0.124"
 :: -- * Set "WEBDRIVER_VERSION_DEFAULT=124.0.6367.29"
+:: -- 2024/04/04:TomislavMatas: Version "1.0.123"
 :: -- * Tidy~Up commentz.
 :: -- 2024/03/25:TomislavMatas: Version "1.0.0.0"
 :: -- * Inital version with default webdriver version "123.0.6312.58"

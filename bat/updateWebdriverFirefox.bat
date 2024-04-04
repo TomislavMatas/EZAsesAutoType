@@ -26,7 +26,7 @@
 :: -- https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
 :: -- 
 :: -- Revision History
-:: -- 2024/04/04:TomislavMatas: Version "1.0.124"
+:: -- 2024/04/04:TomislavMatas: Version "1.0.123"
 :: -- * Tidy~Up commentz.
 :: -- 2024/03/22:TomislavMatas: Version 1.0.0.0
 :: -- * Initale version with default "0.34.0".

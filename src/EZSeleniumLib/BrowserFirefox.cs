@@ -13,6 +13,8 @@
 //
 // History:
 // Revision History: 
+// 2024/04/04:TomislavMatas: Version "1.0.123"
+// * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -170,7 +172,7 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                Log.Info("FirefoxDriverService init ...");
+                Log.Debug("FirefoxDriverService init ...");
                 FirefoxDriverService service = FirefoxDriverService.CreateDefaultService();
 #if DEBUG
                 //service.EnableVerboseLogging = true;
@@ -194,24 +196,21 @@ namespace EZSeleniumLib
                 service.HideCommandPromptWindow = true;
                 service.SuppressInitialDiagnosticInformation = true;
 #endif
-                Log.Info("FirefoxDriverService init OK");
+                Log.Debug("FirefoxDriverService init OK");
 
-                Log.Info("GetDriverOptions ...");
                 if (!GetDriverOptions(out FirefoxOptions options))
-                    throw new Exception("GetDriverOptions failed");
+                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
-                Log.Info("GetDriverOptions OK");
-
-                Log.Info("FirefoxDriverService start ...");
+                Log.Debug("FirefoxDriverService start ...");
                 service.Start();
                 _service = service;
-                Log.Info(String.Format("FirefoxDriverService ServiceUrl: {0}", _service.ServiceUrl));
-                Log.Info("FirefoxDriverService start OK");
+                Log.Debug(String.Format("FirefoxDriverService ServiceUrl: {0}", _service.ServiceUrl));
+                Log.Debug("FirefoxDriverService start OK");
 
-                Log.Info("WebDriver init ...");
+                Log.Debug("WebDriver init ...");
                 this._driver = new FirefoxDriver(_service, options: options);
-                Log.Info(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
-                Log.Info("WebDriver init OK");
+                Log.Debug(String.Format("WebDriver SessionId: {0}", this._driver.SessionId));
+                Log.Debug("WebDriver init OK");
 
                 return true;
             }
@@ -236,6 +235,8 @@ namespace EZSeleniumLib
         {
             try
             {
+                Log.Debug(DEBUG_START);
+
                 options = new FirefoxOptions();
 
                 #region Basic Options
