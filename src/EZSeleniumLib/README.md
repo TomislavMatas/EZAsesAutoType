@@ -47,6 +47,7 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 ## 2024/04/04:TomislavMatas: Version "1.0.124"
 * Update "chromedriver.exe"       to version "124.0.6367.29".
 * Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".
+* BugFix: Refactor "ms:edgeOptions" to work with selenium v4.
 
 ## 2024/04/04:TomislavMatas: Version "1.0.0"
 * Using "chromedriver.exe" version "123.0.6312.58".
