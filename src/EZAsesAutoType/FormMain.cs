@@ -2,6 +2,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/04/04:TomislavMatas: Version "1.0.123"
+// * BugFix in "SaveUserSettings".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -408,7 +410,7 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                if (this.AppHandler.SaveUserSettings(userSettings))
+                if (!this.AppHandler.SaveUserSettings(userSettings))
                     throw new Exception(nameof(this.AppHandler.SaveUserSettings) + Const.LogFail);
 
                 return true;
