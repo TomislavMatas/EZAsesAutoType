@@ -6,5 +6,13 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/04/04:TomislavMatas: Version "1.0.123"
+* Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
+* Edit "App.config" defaults:
+* - Use "log4net.File=${UserProfile}\.EZAsesAutoType\EZAsesAutoType.log".
+* - Use "ASES.WaitBefore.Logout=2".
+* BugFix in "FormMain.SaveUserSettings".
+* Change product name from "EZAsesAutoType" to "EZ ASES AutoType".
+
 ## 2024/04/04:TomislavMatas: Version "1.0.0"
 * Initial Version.
