@@ -1,27 +1,35 @@
-
 :: -- 
-:: -- Datei: "updateWebdriverFirefox.bat"
+:: -- File: "updateWebdriverFirefox.bat"
 :: -- 
-:: -- Verwendung: updateWebdriverFirefox[.bat] [ version ]
-:: -- 
-:: -- Beispiel: updateWebdriverFirefox 0.33.0
+:: -- Usage: 
+:: -- ```
+:: -- updateWebdriverFirefox[.bat] [ version ]
+:: -- ```
 :: --
-:: -- Download-URL Deeplink Beispiel:
-:: -- https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-win64.zip
+:: -- Example: 
+:: -- ```
+:: -- CMD> updateWebdriverFirefox 0.34.0
+:: -- ```
+:: --
+:: -- Download-URL deeplink:
+:: -- https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-win64.zip
+:: -- Obacht: Bei "github.com" muss bei der Verwendung von curl der 
+:: -- Parameter -L verwendet werden, sonst klappt der Download nicht.
 :: -- 
-:: -- Mit der WebDriver Version "v0.33.0" koennen aktuell die
-:: -- FireFox Browser Versionen von 102.x bis 113.x unter Verwendung
-:: -- von Selenium Version >= 3.11 ferngesteuert werden
+:: -- Mit der WebDriver Version "v0.34.0" koennen aktuell die
+:: -- FireFox Versionen ab "115" ferngesteuert werden.
+:: -- Mit der WebDriver Version "v0.33.0" konnten zuletzt die
+:: -- FireFox Versionen von "102" bis "120" ferngesteuert werden.
+:: -- Voraussetzung ist jeweils die Verwendung von Selenium Version >= 3.11".
 :: -- Fuer eine vollstaendige Liste siehe 
 :: -- "GeckoDriver, Selenium and Firefox Browser compatibility chart":
 :: -- https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
 :: -- 
-:: -- Obacht: Bei "github.com" muss curl mit Parameter -L aufgerufen 
-:: -- werden, sonst klappt der Download nicht.
-:: -- 
 :: -- Revision History
+:: -- 2024/04/04:TomislavMatas: Version "1.0.123"
+:: -- * Tidy~Up commentz.
 :: -- 2024/03/22:TomislavMatas: Version 1.0.0.0
-:: -- * Initale Version mit Default "0.34.0".
+:: -- * Initale version with default "0.34.0".
 :: --
 
 @echo off
