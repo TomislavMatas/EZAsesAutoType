@@ -8,7 +8,7 @@
 :: -- 
 :: -- Example:
 :: -- ```
-:: -- CMD> updateWebdriverChrome 125.0.6368.2
+:: -- CMD> updateWebdriverChrome 123.0.6312.58
 :: -- ```
 :: --
 :: -- Notes:
@@ -21,6 +21,8 @@
 :: --   -->< https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE > 
 :: --
 :: -- Revision History
+:: -- 2024/04/04:TomislavMatas: Version "1.0.123"
+:: -- * Tidy~Up commentz.
 :: -- 2024/03/25:TomislavMatas: Version "1.0.0.0"
 :: -- * Inital version with default webdriver version "123.0.6312.58"
 :: --
