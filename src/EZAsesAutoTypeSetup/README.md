@@ -6,7 +6,7 @@ For some reason, the generated Setup MSI can NOT be executed
 when building with platform "x64". 
 
 # Revision History
-## 2024/04/04:TomislavMatas: Version "1.0.124"
+## 2024/04/04:TomislavMatas: Version "1.0.123"
 * Change product name from "EZAsesAutoType" to "EZ ASES AutoType".
 * Add version info suffix to "OutputFilename".
 
