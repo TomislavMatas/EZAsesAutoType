@@ -5,6 +5,8 @@
 // Constants with "public" relevance.
 //
 // Revision History: 
+// 2024/04/04:TomislavMatas: Version "1.0.123"
+// * Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -52,7 +54,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverEdgeVersion = "122.0.2365.106";
+        public const string WebDriverEdgeVersion = "123.0.2420.65";
 
         #endregion
 
