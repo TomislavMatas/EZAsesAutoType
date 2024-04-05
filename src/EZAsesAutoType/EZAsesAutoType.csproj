@@ -27,6 +27,7 @@ to automate the daily chore of utilizing the virtual punch card system
     <PackageReleaseNotes>Version "1.124.0":
 * Update "chromedriver.exe" to version "124.0.6367.29".
 * Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".</PackageReleaseNotes>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
