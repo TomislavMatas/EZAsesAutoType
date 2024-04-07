@@ -28,7 +28,8 @@ to automate the daily chore of utilizing the virtual punch card system
 * Update "chromedriver.exe" to version "124.0.6367.29".
 * Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".</PackageReleaseNotes>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-  </PropertyGroup>
+	<Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
+   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.17" />
