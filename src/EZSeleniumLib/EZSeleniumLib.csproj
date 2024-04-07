@@ -13,6 +13,7 @@
     <NeutralLanguage>de-DE</NeutralLanguage>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Title>EZSeleniumLib</Title>
+    <Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
