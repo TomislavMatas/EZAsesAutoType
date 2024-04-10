@@ -2,6 +2,11 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/04/10:TomislavMatas: Version "1.123.3"
+// * Add check to "DoDailyPunch": When user hitted the "Cancel" button,
+//   the already loaded browser instance shall stay "active". Otherwise,
+//   when processing has not been canceled by user, the browser instance
+//   will be closed immediatly after "logout".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -615,16 +620,28 @@ namespace EZAsesAutoType
                 if (!this.ASESSaveTimeEntryCanvas(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESSaveTimeEntryCanvas) + Const.LogFail);
 
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
                 Log.Info("Wait before logout" + Const.LogInProgress);
                 if(!this.ASESWaitBeforeLogout())
                     throw new Exception(nameof(ASESWaitBeforeLogout) + Const.LogCanceled);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 Log.Info("Logout" + Const.LogInProgress);
                 if (!this.ASESDoLogout(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESDoLogout) + Const.LogFail);
 
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
                 if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
                     throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                 Log.Info("Teardown browser" + Const.LogInProgress);
                 TeardownBrowserInstance(browser);
@@ -640,7 +657,8 @@ namespace EZAsesAutoType
             finally
             {
                 if(browser != null)
-                    TeardownBrowserInstance(browser);
+                    if (!this.CancelRequested())
+                        TeardownBrowserInstance(browser);
 
                 Log.Info(Const.LogDone);
             }
