@@ -24,9 +24,23 @@ to automate the daily chore of utilizing the virtual punch card system
     <AssemblyVersion>1.124.0</AssemblyVersion>
     <FileVersion>1.124.0</FileVersion>
     <Product>EZ ASES AutoType</Product>
-    <PackageReleaseNotes>Version "1.124.0":
+    <PackageReleaseNotes>
+Version "1.124.0":
 * Update "chromedriver.exe" to version "124.0.6367.29".
-* Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".</PackageReleaseNotes>
+* Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".
+
+Version "1.123.3":
+* Browser stays active when user hitted the "Cancel" button.
+
+Version "1.123.2":
+* Setup now adds shortcut "EZ ASES AutoType" to the "User's Programs Menu".
+
+Version "1.123.1":
+* BugFix in "FormMain": Set WorkerSupportsCancellation = true.
+
+Version "1.0.123":
+* Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
+    </PackageReleaseNotes>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 	<Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
    </PropertyGroup>
