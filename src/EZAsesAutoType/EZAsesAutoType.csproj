@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.123.4</Version>
+    <Version>1.123.4.0</Version>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -21,12 +21,13 @@ to automate the daily chore of utilizing the virtual punch card system
     <RepositoryType>git</RepositoryType>
     <PackageTags>ATOSS;ASES;Selenium;WebDriver;Chrome;Edge;FireFox;AutoType;RemoteControl</PackageTags>
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
-    <AssemblyVersion>1.123.4</AssemblyVersion>
-    <FileVersion>1.123.4</FileVersion>
+    <AssemblyVersion>1.123.4.0</AssemblyVersion>
+    <FileVersion>1.123.4.0</FileVersion>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 Version "1.123.4":
 * Add additional text boxes for second time pair to main dialog.
+* Add signage of release msi with self signed certificate.
 
 Version "1.123.3":
 * Browser stays active when user hitted the "Cancel" button.
@@ -41,6 +42,9 @@ Version "1.0.123":
 * Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
     </PackageReleaseNotes>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>D:\Projekte\github.com\EZAsesAutoType\cert\MatasConsultingSelfSigned.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>
