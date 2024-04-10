@@ -28,7 +28,7 @@ All aspects are controlled by settings within the application's configuration
 file "EZAsesAutoType.dll.config". Logging is configured with reasonable default 
 values and usually there's no need to modify any of the values manually.
 
-NOTE: The default location for the log file is "%UserProfile%\.EZAsesAutoType":
+NOTE: The default location for the log file is "%UserProfile%&#92;.EZAsesAutoType":
 
 ![LogFile](../res/img/Screenshot-WindowsExplorer-LogFile.png)
 
@@ -65,18 +65,18 @@ on subsequent starts of the application.
   
 * "five" will evaluate to 5pm ("17:00").
   
-* Digits between "0" and "23" will evaluate to respective "hour", e.g.:
-   "7" --> "07:00"
-  "18" --> "18:00"  
+* Digits between "0" and "23" will evaluate to respective "hour", e.g.:   
+   "7" --> "07:00"   
+  "18" --> "18:00"     
 
 * digits between "24" and "59" will evaluate to respective "minute" 
-  of current "hour". For example when entered at 9am:
-  "30" --> "09:30"
+  of current "hour". For example when entered at 9am:   
+  "30" --> "09:30"   
 
 * Any entry consisting of three or four digits without the separator ":" 
-  will be treated as a time entry in the form of "hhmm". For example:
-   "700" --> "07:00"
-  "1600" --> "16:00"
+  will be treated as a time entry in the form of "hhmm". For example:   
+   "700" --> "07:00"   
+  "1600" --> "16:00"   
 
 All shortcut replacements are implemented within the 
 function "FormMain.EvalTimeByFragment()".
