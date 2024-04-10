@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.123.2</Version>
+    <Version>1.123.3</Version>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -21,17 +21,22 @@ to automate the daily chore of utilizing the virtual punch card system
     <RepositoryType>git</RepositoryType>
     <PackageTags>ATOSS;ASES;Selenium;WebDriver;Chrome;Edge;FireFox;AutoType;RemoteControl</PackageTags>
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
-    <AssemblyVersion>1.123.2</AssemblyVersion>
-    <FileVersion>1.123.2</FileVersion>
+    <AssemblyVersion>1.123.3</AssemblyVersion>
+    <FileVersion>1.123.3</FileVersion>
     <Product>EZ ASES AutoType</Product>
-    <PackageReleaseNotes>Version "1.123.2":
+    <PackageReleaseNotes>
+Version "1.123.3":
+* Browser stays active when user hitted the "Cancel" button.
+
+Version "1.123.2":
 * Setup now adds shortcut "EZ ASES AutoType" to the "User's Programs Menu".
 
 Version "1.123.1":
 * BugFix in "FormMain": Set WorkerSupportsCancellation = true.
 
 Version "1.0.123":
-* Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".</PackageReleaseNotes>
+* Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
+    </PackageReleaseNotes>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
