@@ -2,11 +2,12 @@
 // File: "AppHandler.cs"
 //
 // Revision History: 
+// 2024/04/10:TomislavMatas: Version "1.123.3"
+// * Implement singleton pattern for "WorkerConfig" and "Worker".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
-using EZSeleniumLib;
 using log4net;
 
 namespace EZAsesAutoType
@@ -30,6 +31,7 @@ namespace EZAsesAutoType
         }
         #endregion
 
+        #region propertiez
         private object? m_Requestor = null;
         private object? Requestor
         {
@@ -42,16 +44,69 @@ namespace EZAsesAutoType
                 m_Requestor = value;
             }
         }
+        public object? GetRequestor()
+        {
+            return this.Requestor;
+        }
         public object? SetRequestor(object? requestor)
         {
             object? prev = this.GetRequestor();
             this.Requestor = requestor;
             return prev ;
         }
-        public object? GetRequestor()
+
+        private WorkerConfig? m_WorkerConfig = null;
+        private WorkerConfig? WorkerConfig
         {
-            return this.Requestor;
+            get
+            {
+                if (m_WorkerConfig == null)
+                    m_WorkerConfig = new WorkerConfig();
+
+                return m_WorkerConfig;
+            }
+            set
+            {
+            m_WorkerConfig = value;
+            }
         }
+        private WorkerConfig? GetWorkerConfig()
+        {
+            return this.WorkerConfig;
+        }
+        private WorkerConfig? SetWorkerConfig(WorkerConfig? workerConfig)
+        {
+            WorkerConfig? prev = this.GetWorkerConfig();
+            this.WorkerConfig = workerConfig;
+            return prev;
+        }
+
+        private Worker? m_Worker = null;
+        private Worker? Worker
+        {
+            get
+            {
+                if (m_Worker == null)
+                    m_Worker = new Worker();
+
+                return m_Worker;
+            }
+            set
+            {
+                m_Worker = value;
+            }
+        }
+        private Worker? GetWorker()
+        {
+            return this.Worker;
+        }
+        public Worker? SetWorker(Worker? worker)
+        {
+            Worker? prev = this.GetWorker();
+            this.Worker = worker;
+            return prev;
+        }
+        #endregion propertiez
 
         /// <summary>
         ///  Default constructor.
@@ -82,7 +137,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (!Initialze(null))
+                if (!Initialze(requestor))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
@@ -163,8 +218,16 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                WorkerConfig workerConfig = new WorkerConfig(userSettings);
-                Worker worker = new Worker(workerConfig);
+                WorkerConfig? workerConfig = this.GetWorkerConfig();
+                if (workerConfig == null)
+                    throw new Exception(nameof(workerConfig) + Const.LogIsNull);
+
+                Worker? worker = this.GetWorker();
+                if (worker == null)
+                    throw new Exception(nameof(worker) + Const.LogIsNull);
+
+                workerConfig.SetUserSettings(userSettings);
+                worker.SetWorkerConfig(workerConfig);
                 worker.SetAppHandler(this);
                 if(!worker.DoDailyPunch())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogFail);

@@ -1074,7 +1074,6 @@ namespace EZAsesAutoType
 
         #endregion
 
-
     } // class
 
 } // namespace
