@@ -12,7 +12,6 @@ the desired values in the main dialog:
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
 
-
 1) Open a new browser instance.
 2) Log in with provided credentials.
 3) Open the time entry grid.
