@@ -561,7 +561,7 @@ namespace EZSeleniumLib
         /// <returns></returns>
         public abstract bool SwitchToNewTab(bool closeOldTab = true);
 
-        #endregion abstract memberz
+        #endregion
 
     } // class
 

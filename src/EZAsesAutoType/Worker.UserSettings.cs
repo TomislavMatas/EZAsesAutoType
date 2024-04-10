@@ -52,7 +52,7 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetUserSettings().ASESPunchOut;
         }
 
-        #endregion "UserSetting" - wrapperz
+        #endregion
 
     } // class
 

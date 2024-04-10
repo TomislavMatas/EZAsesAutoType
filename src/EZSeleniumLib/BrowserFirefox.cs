@@ -252,7 +252,7 @@ namespace EZSeleniumLib
                 options.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
-                #endregion Basic Options
+                #endregion
 
                 #region configurable custom options
 
@@ -284,11 +284,11 @@ namespace EZSeleniumLib
                     options.AddArgument(GetArgScriptPID());
                 }
 
-                #endregion Startup Arguments
+                #endregion
 
                 #region Capabilities
 
-                #endregion Capabilities
+                #endregion
 
                 return true;
             }

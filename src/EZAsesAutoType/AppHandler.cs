@@ -100,14 +100,44 @@ namespace EZAsesAutoType
         {
             return this.Worker;
         }
-        public Worker? SetWorker(Worker? worker)
+        private Worker? SetWorker(Worker? worker)
         {
             Worker? prev = this.GetWorker();
             this.Worker = worker;
             return prev;
         }
-        #endregion propertiez
+        #endregion
 
+        #region initializerz
+
+        /// <summary>
+        /// Initialize instance
+        /// </summary>
+        /// <param name="requestor"></param>
+        /// <returns></returns>
+        private bool Initialze(object? requestor = null)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                this.SetRequestor(requestor);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        #endregion
+        
+        #region constructorz
+        
         /// <summary>
         ///  Default constructor.
         /// </summary>
@@ -149,7 +179,9 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
-
+        
+        #endregion
+        
         public bool LoadUserSettings(out UserSettings? userSettings)
         {
             try
@@ -181,25 +213,6 @@ namespace EZAsesAutoType
                 if(!userSettings.Save())
                     throw new Exception(nameof(userSettings.Save) + Const.LogFail);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(Const.LogDone);
-            }
-        }
-
-        private bool Initialze(object? requestor = null)
-        {
-            try
-            {
-                Log.Debug(Const.LogStart);
-                this.SetRequestor(requestor);
                 return true;
             }
             catch (Exception ex)

@@ -111,7 +111,7 @@ namespace EZAsesAutoType
 
         #endregion
 
-        #region Initializerz
+        #region initializerz
 
         /// <summary>
         /// Initialize instance.
