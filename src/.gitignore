@@ -5,3 +5,5 @@ obj
 
 # exclude Visual Studio sepcific files by pattern
 *.csproj.user
+*.assets.cache
+*.wapproj.user
