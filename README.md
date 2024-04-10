@@ -3,9 +3,8 @@ The Microsoft Windows Forms application "EZ ASES AutoType" is supposed
 to automate the daily chore of utilizing the virtual punch card system 
 "ATOSS Staff Efficiency Suite" also known as "ASES".
 
-## Usage
-Start the application ("EZAsesAutoType.exe") and set 
-the desired values in the main dialog: 
+## Overview
+Start the application and set the desired values in the main dialog: 
 
 ![MainDialog](res/img/Screenshot-MainDialog-v1.123.3.png)
 
@@ -19,15 +18,6 @@ following for you completely automatically:
 5) Bring up the time pair entry popup dialog and enter the time pair.
 6) Save the time entry grid.
 7) Log out and close browser instance.
-
-Be a bit patient after hitting the "Run" button. The browser instance 
-startup and initialization may take a few seconds.
-
-You can hit the "Cancel" button at any time. Control will be passed back to 
-the main dialog as soon as technical possible.
-
-The user settings will be stored within user's profile and reused 
-on subsequent starts of the application.
 
 For more details please refer to the user's manual:
 ->< [doc/EZAsesAutoType-UserManual.md](doc/EZAsesAutoType-UserManual.md) >
@@ -51,7 +41,7 @@ Contains all source code to build "EZAsesAutoType.exe".
 
 # Revision History
 ## 2024/04/10:TomislavMatas: Version "1.123.3"
-* Add "Usage" section to this "README.md" file.
+* Add "Overview" section to this "README.md" file.
 
 ## 2024/04/04:TomislavMatas: Version "1.0.0"
 * Initial version.
