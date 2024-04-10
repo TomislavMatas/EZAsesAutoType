@@ -80,9 +80,9 @@ namespace EZAsesAutoType
             this.WorkerConfig = workerConfig;
             return prev;
         }
-        #endregion propertiez
+        #endregion
 
-        #region Instantiation
+        #region initializerz
 
         /// <summary>
         /// Initialize instance.
@@ -107,6 +107,10 @@ namespace EZAsesAutoType
                 Log.Debug(Const.LogDone);
             }
         }
+
+        #endregion
+
+        #region constructorz
 
         /// <summary>
         ///  Default constructor.

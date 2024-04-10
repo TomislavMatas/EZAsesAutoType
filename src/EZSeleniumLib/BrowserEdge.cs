@@ -236,7 +236,7 @@ namespace EZSeleniumLib
                 edgeOptions.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
 
-                #endregion Basic Options
+                #endregion
 
                 #region Startup Arguments
 
@@ -267,7 +267,7 @@ namespace EZSeleniumLib
                 List<string> excludedArgumentList = new List<string>();
                 excludedArgumentList.Add(String.Format("{0}enable-automation", argPfx));
 
-                #endregion Startup Arguments
+                #endregion
 
                 #region Capabilities
 
@@ -300,7 +300,7 @@ namespace EZSeleniumLib
                 //
                 // if (optionDict.Count > 0)
                 //    edgeOptions.AddAdditionalEdgeOption("ms:edgeOptions", optionDict);
-                #endregion Selenium v3 
+                #endregion
 
                 #region Selenium v4
                 foreach (string argument in argumentList)
@@ -342,9 +342,9 @@ namespace EZSeleniumLib
                     }
                 }
 
-                #endregion Selenium v4 
+                #endregion
 
-                #endregion Capabilities
+                #endregion
 
                 return true;
             }
