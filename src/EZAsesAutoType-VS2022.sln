@@ -16,6 +16,7 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EZAsesAutoTypeSetup", "EZAs
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{B1A35B65-7B66-49EA-A910-8865B72C1B9C}"
 	ProjectSection(SolutionItems) = preProject
+		..\doc\EZAsesAutoType-UserManual.md = ..\doc\EZAsesAutoType-UserManual.md
 		..\README.md = ..\README.md
 		EZAsesAutoTypeSetup\README.md = EZAsesAutoTypeSetup\README.md
 		..\bat\updateWebdriverChrome.bat = ..\bat\updateWebdriverChrome.bat
