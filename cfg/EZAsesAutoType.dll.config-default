@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+///
+/// File: "EZAsesAutoType.dll.config-default"
+///
+/// Revision History:
+/// 2024/04/04:TomislavMatas: Version "1.0.123"
+/// * Use "log4net.File=${UserProfile}\.EZAsesAutoType\EZAsesAutoType.log" instead of "log4net.File=EZAsesAutoType.log".
+/// * Use "ASES.WaitBefore.Logout=2" instead of "ASES.WaitBefore.Logout=5".
+/// 2024/04/04:TomislavMatas: Version "1.0.0"
+/// * Need to explicitly declare section "System.Windows.Forms.ApplicationConfigurationSection"
+///   to be "ignored" by section handler when used together with "userSettings".
+/// * Initial version.
+///
+-->
+<configuration>
+	<configSections>
+		<section name="System.Windows.Forms.ApplicationConfigurationSection" type="System.Configuration.IgnoreSectionHandler,System.Windows.Forms.ApplicationConfigurationSection" />
+		<section name="log4net" type="System.Configuration.IgnoreSectionHandler,log4net"/>
+		<sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+			<section name="EZAsesAutoType.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+		</sectionGroup>
+	</configSections>
+
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/>
+	</startup>
+
+	<System.Windows.Forms.ApplicationConfigurationSection>
+		<add key="DpiAwareness" value="PerMonitorV2"/>
+		<add key="EnableWindowsFormsHighDpiAutoResizing" value="true"/>
+	</System.Windows.Forms.ApplicationConfigurationSection>
+
+	<appSettings>
+
+		<add key="log4net.Config" value="log4net.config"/>
+		<add key="log4net.Config.Watch" value="True"/>
+
+		<add key="ClientSettingsProvider.ServiceUri" value=""/>
+
+		<!--
+		/// Currently supported values for "EZSeleniumLib.WebDriver":
+		/// "Edge"    : Requires "MicrosoftWebDriver.exe"
+		/// "Chrome"  : Requires "chromedriver.exe".
+		/// "Firefox" : Requires "geckodriver.exe".
+		-->
+		<add key="EZSeleniumLib.WebDriver" value="Chrome"/>
+
+		<!--
+		/// Currently supported values for "EZSeleniumLib.Browser.InitMode":
+		/// "extended" : More sophisticated initalization.
+		/// "simple"   : Limitied control during initalization.
+		-->
+		<add key="EZSeleniumLib.Browser.InitMode" value="extended"/>
+
+		<!--
+		/// The value for "EZSeleniumLib.Browser.Delay" specifies the
+		/// delay in milliseconds after each browser interaction like
+		/// "enter some text", "click an element" or "move to element".
+		-->
+		<add key="EZSeleniumLib.Browser.Delay" value="250" />
+
+		<!--
+		/// Timeout in seconds for "Login Page" to appear.
+		-->
+		<add key="ASES.Timeout.LoginPage" value="15"/>
+
+		<!--
+		/// Timeout in seconds for any "FindElement" operation to complete.
+		-->
+		<add key="ASES.Timeout.FindElement" value="1" />
+
+		<!--
+		/// Timeout in seconds for any "popup dialog" to appear.
+		-->
+		<add key="ASES.Timeout.Popup" value="1" />
+
+    <!--
+		/// After time pair entry, wait for specified amount of seconds
+    /// to give user the opportunity to review the actual data
+    /// before automatically proceeding with logoout.
+    /// User can cancel the processing by hitting the
+    /// "Cancel Button" within "EZ ASES AutoType" main window.
+		-->
+    <add key="ASES.WaitBefore.Logout" value="2"/>
+
+    <!--
+		/// xPath specifications for elements uses with "findItem".
+		-->
+    <add key="ASES.Application.iFrame.xPath"
+			 value="//iframe[contains(@id,'application')]"/>
+
+    <add key="ASES.LoginPage.Username.xPath"
+			 value="//input[contains(@class,'z-focustextbox-real') and contains(@placeholder,'Benutzername')]"/>
+
+    <add key="ASES.LoginPage.Password.xPath"
+			 value="//input[contains(@class,'z-focustextbox-real') and contains(@placeholder,'Kennwort')]"/>
+
+    <add key="ASES.LoginPage.Client.xPath"
+			 value="//input[contains(@class,'z-combobox-input') and contains(@placeholder,'Mandant')]"/>
+
+    <add key="ASES.LoginPage.Langauge.xPath"
+			 value="//input[contains(@class,'z-combobox-input') and contains(@placeholder,'Sprache')]"/>
+
+    <add key="ASES.LoginPage.LoginButton.xPath"
+			 value="//button[contains(@class,'btn-login') and contains(.,'Anmelden')]"/>
+
+    <add key="ASES.MainPage.iFrame.xPath"
+			 value="//iframe[@class='z-iframe']"/>
+
+    <add key="ASES.MainPage.iFrame.WelcomeImage.xPath"
+			 value="//img[@src='images/willkommen.jpg']"/>
+
+    <add key="ASES.MainPage.NavMenu.xPath"
+			 value="//a[@id='nav_menu' and contains(@class,'z-atossmenuitem')]"/>
+
+    <add key="ASES.MainPage.NavMenu.Zeitbuchung.xPath"
+			 value="//div[contains(@class,'z-atossbutton')]/span[@class='btn-label' and contains(.,'Zeitbuchung')]"/>
+
+    <add key="ASES.MainPage.NavMenu.UserName.xPath"
+			 value="//div[@class='userinfo']/span[@id='nav_user-name']"/>
+
+    <add key="ASES.MainPage.NavMenu.UserName.LogoutButton.xPath"
+			 value="//div[contains(@class,'z-atoss-logout-button')]/button[@type='button' and contains(@class, 'z-logoutbutton')]"/>
+
+    <add key="ASES.TimeGrid.Form.xPath"
+			 value="//div[@class='z-dialogpanel' and @formid='dtime']"/>
+
+    <add key="ASES.TimeGrid.Canvas.xPath"
+			 value="//div[contains(@class,'grid-canvas')]"/>
+
+    <add key="ASES.TimeGrid.Canvas.SaveButton.xPath"
+			 value="//a[@class='z-toolbarbutton']/span[@class='z-toolbarbutton-content']/img[contains(@src,'save.png')]"/>
+
+    <add key="ASES.TimeGrid.Canvas.Sortindicator.Ascending.xPath"
+			 value="//span[contains(@class, 'slick-sort-indicator-asc')]"/>
+
+    <add key="ASES.TimeGrid.Canvas.Sortindicator.Descending.xPath"
+			 value="//span[contains(@class, 'slick-sort-indicator-desc')]"/>
+
+    <add key="ASES.TimeGrid.Canvas.LastRow.xPath"
+			 value="//div[contains(@class,'grid-canvas')]/div[contains(@class,'slick-row')][last()]"/>
+
+		<add key="ASES.TimeGrid.Canvas.LastRow.DateFrom.xPath"
+			 value="//div[contains(@class,'grid-canvas')]/div[contains(@class,'slick-row')][last()]/div[contains(@class,'slick-cell') and contains(@class,'l4') and contains(@class,'r4')]/span"/>
+
+		<add key="ASES.TimeGrid.Canvas.LastRow.DateTo.xPath"
+			 value="//div[contains(@class,'grid-canvas')]/div[contains(@class,'slick-row')][last()]/div[contains(@class,'slick-cell') and contains(@class,'l5') and contains(@class,'r5')]/span"/>
+
+    <add key="ASES.TimePair.FirstRow.TimeFrom.xPath"
+			 value="//div[contains(@class,'l1') and contains(@class,'r1')]/span[contains(@id,'tiledtimedailyinformationtimepairs')]"/>
+
+    <add key="ASES.TimePair.FirstRow.TimeTo.xPath"
+			 value="//div[contains(@class,'l3') and contains(@class,'r3')]/span[contains(@id,'tiledtimedailyinformationtimepairs')]"/>
+
+    <add key="ASES.TimePair.Footer.AccecptButton.xPath"
+			 value="//div[contains(@class,'window-footer')]/button[@class='z-button' and contains(.,'Übernehmen')]"/>
+
+  </appSettings>
+
+	<log4net>
+
+		<appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
+			<threshold value="INFO"/>
+			<file value="${UserProfile}\.EZAsesAutoType\EZAsesAutoType.log" />
+			<appendToFile value="true"/>
+			<rollingStyle value="Size"/>
+			<maxSizeRollBackups value="9"/>
+			<maximumFileSize value="10MB"/>
+			<staticLogFileName value="true"/>
+			<layout type="log4net.Layout.PatternLayout">
+				<conversionPattern value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+			</layout>
+		</appender>
+
+		<appender name="EventLogAppender" type="log4net.Appender.EventLogAppender">
+			<!--
+      /// Log "WARN" (and above) to Windows' EventLog, ignore "INFO" and "DEBUG",
+      /// those shall go to a log file.
+      -->
+			<threshold value="WARN"/>
+			<param name="LogName" value="EZAsesAutoType"/>
+			<param name="ApplicationName" value="EZAsesAutoType"/>
+			<layout type="log4net.Layout.PatternLayout">
+				<conversionPattern value="%message"/>
+			</layout>
+		</appender>
+
+<!--
+//		<appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender">
+//			<threshold value="DEBUG"/>
+//			<layout type="log4net.Layout.PatternLayout">
+//			<conversionPattern value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+//			</layout>
+//		</appender>
+//		<appender name="DebugAppender" type="log4net.Appender.DebugAppender">
+//			<threshold value="DEBUG"/>
+//			<layout type="log4net.Layout.PatternLayout">
+//			<param name="ConversionPattern" value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+//			</layout>
+//		</appender>
+//		<appender name="SystemDebugAppender" type="log4net.Appender.OutputDebugStringAppender">
+//			<threshold value="DEBUG"/>
+//			<layout type="log4net.Layout.PatternLayout">
+//			<param name="ConversionPattern" value="[%date{yyyy-MM-dd HH:mm:ss,ff}] %-5level [%thread] %type-&gt;%method(l:%line): %message%newline"/>
+//			</layout>
+//		</appender>
+-->
+
+		<root>
+			<appender-ref ref="RollingFileAppender"/>
+			<appender-ref ref="EventLogAppender"/>
+<!--
+// 		<appender-ref ref="ConsoleAppender"/>
+// 		<appender-ref ref="DebugAppender"/>
+// 		<appender-ref ref="SystemDebugAppender"/>
+-->
+		</root>
+
+	</log4net>
+
+  <!--
+  /// The "userSettings" is used to initialize the "user.Config",
+  /// which is stored in unser's profile.
+  -->
+  <userSettings>
+    <EZAsesAutoType.Properties.Settings>
+    <setting name="ASESBaseUrl" serializeAs="String">
+      <value>https://ases.noncd.rz.db.de/SES/html?ClientNo=06</value>
+    </setting>
+    <setting name="ASESUserId" serializeAs="String">
+    <value>ChangeIt!</value>
+    </setting>
+    <setting name="ASESPassword" serializeAs="String">
+      <value>ChangeIt!</value>
+    </setting>
+    <setting name="ASESClient" serializeAs="String">
+      <value>06-DB-Systel</value>
+    </setting>
+    <setting name="ASESClientList" serializeAs="Xml">
+      <value>
+        <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <string>01-Zentrale Cargo</string>
+          <string>02-Erfurt Test</string>
+          <string>03-DB Konzernleitung</string>
+          <string>04-P-Zentrale</string>
+          <string>05-Ffm/Fernverk.</string>
+          <string>06-DB-Systel</string>
+          <string>07-Agv MoVe</string>
+          <string>08-DB InfraGO BZ S-B. Berlin</string>
+          <string>09-Ffm/Karlstr.</string>
+          <string>10-DB Sicherheit</string>
+          <string>11-Frankfurt Stephenson</string>
+          <string>12-TARIS-SST-Test</string>
+          <string>13-Hannover</string>
+          <string>14-Hamburg</string>
+          <string>15-DB Systemtechnik</string>
+          <string>16-München</string>
+          <string>17-Berlin sonstige</string>
+          <string>18-DB Regio</string>
+          <string>19-Nürnberg</string>
+          <string>20-Wuppertal</string>
+          <string>21-DBS KT</string>
+          <string>22-JobService</string>
+          <string>23-München Richelstr.</string>
+          <string>24-Cargo Zentrale</string>
+          <string>25-FTZ</string>
+          <string>26-Stuttgart</string>
+          <string>27-Saarbrücken</string>
+          <string>28-DB RegioNetz SOB</string>
+          <string>29-Witten Werk</string>
+          <string>30-DB Regio BWB</string>
+          <string>31-Nürnberg Hbf</string>
+          <string>32-DB Immobilien</string>
+          <string>33-DB T/B</string>
+          <string>34-SSC Buchhaltung</string>
+          <string>35-Bildung</string>
+          <string>36-KS Duisburg</string>
+          <string>37-Cargo NL Ffm</string>
+          <string>38-Netz Ffm</string>
+          <string>39-DB Cargo-Werke</string>
+          <string>40-ICE-BW München</string>
+          <string>41-R&amp;T Region</string>
+          <string>42-Gastronomie (DBG)</string>
+          <string>43-DB Energie</string>
+          <string>44-DBS Süd</string>
+          <string>45-DB Regio Nord</string>
+          <string>46-DB Fernverkehr ICE</string>
+          <string>47-DB Service</string>
+          <string>48-DB Sicherheit</string>
+          <string>49-DB Stiftung</string>
+          <string>50-DB Vertrieb</string>
+          <string>51-DB Connect</string>
+          <string>52-DB Fahrzeuginstandhaltung</string>
+          <string>53-DB Regio Mitte</string>
+          <string>54-DB InfraGO AG (S&amp;S)</string>
+          <string>55-DB Regio NO</string>
+          <string>56-DB E&amp;C</string>
+          <string>57-DB Regio Bayern</string>
+          <string>58-DB Regio SO</string>
+          <string>59-DB Regio NRW</string>
+          <string>60-DB Fern TL</string>
+          <string>61-DB Cargo</string>
+          <string>90-DB Personalservice</string>
+          <string>DB-Schulung</string>
+        </ArrayOfString>
+      </value>
+    </setting>
+    <setting name="ASESLanguage" serializeAs="String">
+      <value>Deutsch</value>
+    </setting>
+    <setting name="ASESLanguageList" serializeAs="Xml">
+      <value>
+        <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <string>Deutsch</string>
+          <string>English</string>
+        </ArrayOfString>
+      </value>
+    </setting>
+    <setting name="ASESPunchIn" serializeAs="String">
+      <value>09:00</value>
+    </setting>
+    <setting name="ASESPunchOut" serializeAs="String">
+      <value>17:18</value>
+    </setting>
+    <setting name="WebDriver" serializeAs="String">
+      <value>Chrome</value>
+    </setting>
+    <setting name="WebDriverList" serializeAs="Xml">
+      <value>
+        <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <string>Chrome</string>
+          <string>Edge</string>
+          <string>Firefox</string>
+        </ArrayOfString>
+      </value>
+    </setting>
+    </EZAsesAutoType.Properties.Settings>
+  </userSettings>
+</configuration>
