@@ -5,6 +5,10 @@
 // Wrapper for "userSettings". 
 //
 // Revision History: 
+// 2024/04/14:TomislavMatas: Version "1.123.4.0"
+// * Rename "ASESPunchIn"  to "ASESPunchInAM".
+// * Rename "ASESPunchOut" to "ASESPunchOutAM".
+// * Add "ASESPunchInPM" and "ASESPunchOutPM".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -40,8 +44,10 @@ namespace EZAsesAutoType
         public StringCollection ASESClientList;
         public string ASESLanguage;
         public StringCollection ASESLanguageList;
-        public string ASESPunchIn;
-        public string ASESPunchOut;
+        public string ASESPunchInAM;
+        public string ASESPunchOutAM;
+        public string ASESPunchInPM;
+        public string ASESPunchOutPM;
         public string WebDriver;
         public StringCollection WebDriverList;
         #endregion
@@ -58,8 +64,10 @@ namespace EZAsesAutoType
             this.ASESClientList = [];
             this.ASESLanguage = string.Empty;
             this.ASESLanguageList = [];
-            this.ASESPunchIn = string.Empty;
-            this.ASESPunchOut = string.Empty;
+            this.ASESPunchInAM = string.Empty;
+            this.ASESPunchOutAM = string.Empty;
+            this.ASESPunchInPM = string.Empty;
+            this.ASESPunchOutPM = string.Empty;
             this.WebDriver = string.Empty;
             this.WebDriverList = [];
         }
@@ -87,8 +95,10 @@ namespace EZAsesAutoType
                 this.ASESClientList   = Properties.Settings.Default.ASESClientList;
                 this.ASESLanguage     = Properties.Settings.Default.ASESLanguage;
                 this.ASESLanguageList = Properties.Settings.Default.ASESLanguageList;
-                this.ASESPunchIn      = Properties.Settings.Default.ASESPunchIn;
-                this.ASESPunchOut     = Properties.Settings.Default.ASESPunchOut;
+                this.ASESPunchInAM    = Properties.Settings.Default.ASESPunchInAM;
+                this.ASESPunchOutAM   = Properties.Settings.Default.ASESPunchOutAM;
+                this.ASESPunchInPM    = Properties.Settings.Default.ASESPunchInPM;
+                this.ASESPunchOutPM   = Properties.Settings.Default.ASESPunchOutPM;
                 this.WebDriver        = Properties.Settings.Default.WebDriver;
                 this.WebDriverList    = Properties.Settings.Default.WebDriverList;
                 return true;
@@ -119,8 +129,10 @@ namespace EZAsesAutoType
                 Properties.Settings.Default.ASESClientList   = this.ASESClientList;
                 Properties.Settings.Default.ASESLanguage     = this.ASESLanguage;
                 Properties.Settings.Default.ASESLanguageList = this.ASESLanguageList;
-                Properties.Settings.Default.ASESPunchIn      = this.ASESPunchIn;
-                Properties.Settings.Default.ASESPunchOut     = this.ASESPunchOut;
+                Properties.Settings.Default.ASESPunchInAM    = this.ASESPunchInAM;
+                Properties.Settings.Default.ASESPunchOutAM   = this.ASESPunchOutAM;
+                Properties.Settings.Default.ASESPunchInPM    = this.ASESPunchInPM;
+                Properties.Settings.Default.ASESPunchOutPM   = this.ASESPunchOutPM;
                 Properties.Settings.Default.WebDriver        = this.WebDriver;
                 Properties.Settings.Default.WebDriverList    = this.WebDriverList;
                 Properties.Settings.Default.Save();

@@ -2,6 +2,10 @@
 // File: "FormMain.Designer.cs"
 //
 // Revision History:
+// 2024/04/14:TomislavMatas: Version "1.123.4.0"
+// * Rename "textBoxPunchIn"  to "textBoxPunchInAM".
+// * Rename "textBoxPunchOut" to "textBoxPunchOutAM".
+// * Add "textBoxPunchInPM" and "textBoxPunchOutPM".
 // 2024/04/04:TomislavMatas: Version "1.123.1"
 // * Set WorkerSupportsCancellation=true.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -43,8 +47,8 @@ namespace EZAsesAutoType
             textBoxUrl = new TextBox();
             textBoxUid = new TextBox();
             textBoxPwd = new TextBox();
-            textBoxPunchIn = new TextBox();
-            textBoxPunchOut = new TextBox();
+            textBoxPunchInAM = new TextBox();
+            textBoxPunchOutAM = new TextBox();
             labelUrl = new Label();
             labelUid = new Label();
             labelPwd = new Label();
@@ -58,8 +62,8 @@ namespace EZAsesAutoType
             labelLanguage = new Label();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             btnCancel = new Button();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            textBoxPunchInPM = new TextBox();
+            textBoxPunchOutPM = new TextBox();
             SuspendLayout();
             // 
             // btnRun
@@ -67,10 +71,10 @@ namespace EZAsesAutoType
             btnRun.BackColor = Color.Gray;
             btnRun.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRun.ForeColor = Color.White;
-            btnRun.Location = new Point(331, 205);
-            btnRun.Margin = new Padding(2, 3, 2, 3);
+            btnRun.Location = new Point(414, 256);
+            btnRun.Margin = new Padding(2, 4, 2, 4);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(144, 43);
+            btnRun.Size = new Size(180, 54);
             btnRun.TabIndex = 30;
             btnRun.Text = "Run";
             btnRun.UseVisualStyleBackColor = false;
@@ -78,68 +82,68 @@ namespace EZAsesAutoType
             // 
             // textBoxUrl
             // 
-            textBoxUrl.Location = new Point(97, 17);
-            textBoxUrl.Margin = new Padding(2, 3, 2, 3);
+            textBoxUrl.Location = new Point(121, 21);
+            textBoxUrl.Margin = new Padding(2, 4, 2, 4);
             textBoxUrl.Name = "textBoxUrl";
-            textBoxUrl.Size = new Size(373, 27);
+            textBoxUrl.Size = new Size(465, 31);
             textBoxUrl.TabIndex = 40;
             textBoxUrl.Text = "https://ases.noncd.rz.db.de/SES/html?ClientNo=06";
             // 
             // textBoxUid
             // 
-            textBoxUid.Location = new Point(97, 56);
-            textBoxUid.Margin = new Padding(2, 3, 2, 3);
+            textBoxUid.Location = new Point(121, 70);
+            textBoxUid.Margin = new Padding(2, 4, 2, 4);
             textBoxUid.Name = "textBoxUid";
-            textBoxUid.Size = new Size(140, 27);
+            textBoxUid.Size = new Size(174, 31);
             textBoxUid.TabIndex = 50;
             textBoxUid.Text = "ChangeIt!";
             // 
             // textBoxPwd
             // 
-            textBoxPwd.Location = new Point(330, 56);
-            textBoxPwd.Margin = new Padding(2, 3, 2, 3);
+            textBoxPwd.Location = new Point(412, 70);
+            textBoxPwd.Margin = new Padding(2, 4, 2, 4);
             textBoxPwd.Name = "textBoxPwd";
             textBoxPwd.PasswordChar = '*';
-            textBoxPwd.Size = new Size(140, 27);
+            textBoxPwd.Size = new Size(174, 31);
             textBoxPwd.TabIndex = 60;
             textBoxPwd.Text = "ChangeIt!";
             textBoxPwd.UseSystemPasswordChar = true;
             // 
-            // textBoxPunchIn
+            // textBoxPunchInAM
             // 
-            textBoxPunchIn.Location = new Point(330, 137);
-            textBoxPunchIn.Margin = new Padding(2, 3, 2, 3);
-            textBoxPunchIn.MaxLength = 5;
-            textBoxPunchIn.Name = "textBoxPunchIn";
-            textBoxPunchIn.Size = new Size(70, 27);
-            textBoxPunchIn.TabIndex = 10;
-            textBoxPunchIn.Text = "09:00";
-            textBoxPunchIn.TextAlign = HorizontalAlignment.Center;
-            textBoxPunchIn.TextChanged += textBoxPunchIn_TextChanged;
-            textBoxPunchIn.Validated += textBoxPunchIn_Validated;
+            textBoxPunchInAM.Location = new Point(412, 171);
+            textBoxPunchInAM.Margin = new Padding(2, 4, 2, 4);
+            textBoxPunchInAM.MaxLength = 5;
+            textBoxPunchInAM.Name = "textBoxPunchInAM";
+            textBoxPunchInAM.Size = new Size(84, 31);
+            textBoxPunchInAM.TabIndex = 10;
+            textBoxPunchInAM.Text = "09:00";
+            textBoxPunchInAM.TextAlign = HorizontalAlignment.Center;
+            textBoxPunchInAM.TextChanged += textBoxPunchInAM_TextChanged;
+            textBoxPunchInAM.Validated += textBoxPunchInAM_Validated;
             // 
-            // textBoxPunchOut
+            // textBoxPunchOutAM
             // 
-            textBoxPunchOut.Location = new Point(403, 137);
-            textBoxPunchOut.Margin = new Padding(2, 3, 2, 3);
-            textBoxPunchOut.MaxLength = 5;
-            textBoxPunchOut.Name = "textBoxPunchOut";
-            textBoxPunchOut.Size = new Size(67, 27);
-            textBoxPunchOut.TabIndex = 20;
-            textBoxPunchOut.Text = "12:00";
-            textBoxPunchOut.TextAlign = HorizontalAlignment.Center;
-            textBoxPunchOut.TextChanged += textBoxPunchOut_TextChanged;
-            textBoxPunchOut.Validated += textBoxPunchOut_Validated;
+            textBoxPunchOutAM.Location = new Point(502, 171);
+            textBoxPunchOutAM.Margin = new Padding(2, 4, 2, 4);
+            textBoxPunchOutAM.MaxLength = 5;
+            textBoxPunchOutAM.Name = "textBoxPunchOutAM";
+            textBoxPunchOutAM.Size = new Size(84, 31);
+            textBoxPunchOutAM.TabIndex = 20;
+            textBoxPunchOutAM.Text = "12:00";
+            textBoxPunchOutAM.TextAlign = HorizontalAlignment.Center;
+            textBoxPunchOutAM.TextChanged += textBoxPunchOutAM_TextChanged;
+            textBoxPunchOutAM.Validated += textBoxPunchOutAM_Validated;
             // 
             // labelUrl
             // 
             labelUrl.AutoSize = true;
             labelUrl.BackColor = Color.Transparent;
             labelUrl.ForeColor = Color.White;
-            labelUrl.Location = new Point(10, 21);
+            labelUrl.Location = new Point(12, 26);
             labelUrl.Margin = new Padding(2, 0, 2, 0);
             labelUrl.Name = "labelUrl";
-            labelUrl.Size = new Size(38, 20);
+            labelUrl.Size = new Size(47, 25);
             labelUrl.TabIndex = 7;
             labelUrl.Text = "URL:";
             // 
@@ -148,10 +152,10 @@ namespace EZAsesAutoType
             labelUid.AutoSize = true;
             labelUid.BackColor = Color.Transparent;
             labelUid.ForeColor = Color.White;
-            labelUid.Location = new Point(10, 61);
+            labelUid.Location = new Point(12, 76);
             labelUid.Margin = new Padding(2, 0, 2, 0);
             labelUid.Name = "labelUid";
-            labelUid.Size = new Size(56, 20);
+            labelUid.Size = new Size(69, 25);
             labelUid.TabIndex = 8;
             labelUid.Text = "UserID:";
             // 
@@ -160,10 +164,10 @@ namespace EZAsesAutoType
             labelPwd.AutoSize = true;
             labelPwd.BackColor = Color.Transparent;
             labelPwd.ForeColor = Color.White;
-            labelPwd.Location = new Point(249, 61);
+            labelPwd.Location = new Point(311, 76);
             labelPwd.Margin = new Padding(2, 0, 2, 0);
             labelPwd.Name = "labelPwd";
-            labelPwd.Size = new Size(73, 20);
+            labelPwd.Size = new Size(91, 25);
             labelPwd.TabIndex = 9;
             labelPwd.Text = "Password:";
             // 
@@ -172,10 +176,10 @@ namespace EZAsesAutoType
             labelPunchIn.AutoSize = true;
             labelPunchIn.BackColor = Color.Transparent;
             labelPunchIn.ForeColor = Color.White;
-            labelPunchIn.Location = new Point(249, 140);
+            labelPunchIn.Location = new Point(311, 174);
             labelPunchIn.Margin = new Padding(2, 0, 2, 0);
             labelPunchIn.Name = "labelPunchIn";
-            labelPunchIn.Size = new Size(62, 20);
+            labelPunchIn.Size = new Size(78, 25);
             labelPunchIn.TabIndex = 10;
             labelPunchIn.Text = "In / Out:";
             // 
@@ -184,10 +188,10 @@ namespace EZAsesAutoType
             comboBoxClientNo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxClientNo.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBoxClientNo.FormattingEnabled = true;
-            comboBoxClientNo.Location = new Point(97, 95);
-            comboBoxClientNo.Margin = new Padding(2, 3, 2, 3);
+            comboBoxClientNo.Location = new Point(121, 119);
+            comboBoxClientNo.Margin = new Padding(2, 4, 2, 4);
             comboBoxClientNo.Name = "comboBoxClientNo";
-            comboBoxClientNo.Size = new Size(140, 28);
+            comboBoxClientNo.Size = new Size(174, 33);
             comboBoxClientNo.TabIndex = 70;
             comboBoxClientNo.Text = "06-DB-Systel";
             comboBoxClientNo.SelectedIndexChanged += comboBoxClientNo_SelectedIndexChanged;
@@ -199,10 +203,10 @@ namespace EZAsesAutoType
             labelClientNo.AutoSize = true;
             labelClientNo.BackColor = Color.Transparent;
             labelClientNo.ForeColor = Color.White;
-            labelClientNo.Location = new Point(10, 100);
+            labelClientNo.Location = new Point(12, 125);
             labelClientNo.Margin = new Padding(2, 0, 2, 0);
             labelClientNo.Name = "labelClientNo";
-            labelClientNo.Size = new Size(50, 20);
+            labelClientNo.Size = new Size(60, 25);
             labelClientNo.TabIndex = 13;
             labelClientNo.Text = "Client:";
             // 
@@ -210,10 +214,10 @@ namespace EZAsesAutoType
             // 
             comboBoxWebDriver.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxWebDriver.FormattingEnabled = true;
-            comboBoxWebDriver.Location = new Point(97, 137);
-            comboBoxWebDriver.Margin = new Padding(2, 3, 2, 3);
+            comboBoxWebDriver.Location = new Point(121, 171);
+            comboBoxWebDriver.Margin = new Padding(2, 4, 2, 4);
             comboBoxWebDriver.Name = "comboBoxWebDriver";
-            comboBoxWebDriver.Size = new Size(140, 28);
+            comboBoxWebDriver.Size = new Size(174, 33);
             comboBoxWebDriver.TabIndex = 90;
             comboBoxWebDriver.SelectedIndexChanged += comboBoxWebDriver_SelectedIndexChanged;
             // 
@@ -222,10 +226,10 @@ namespace EZAsesAutoType
             labelWebDriver.AutoSize = true;
             labelWebDriver.BackColor = Color.Transparent;
             labelWebDriver.ForeColor = Color.White;
-            labelWebDriver.Location = new Point(10, 141);
+            labelWebDriver.Location = new Point(12, 176);
             labelWebDriver.Margin = new Padding(2, 0, 2, 0);
             labelWebDriver.Name = "labelWebDriver";
-            labelWebDriver.Size = new Size(82, 20);
+            labelWebDriver.Size = new Size(99, 25);
             labelWebDriver.TabIndex = 15;
             labelWebDriver.Text = "WebDriver:";
             // 
@@ -234,10 +238,10 @@ namespace EZAsesAutoType
             labelWebDriverVersion.AutoSize = true;
             labelWebDriverVersion.BackColor = Color.Transparent;
             labelWebDriverVersion.ForeColor = Color.White;
-            labelWebDriverVersion.Location = new Point(97, 168);
+            labelWebDriverVersion.Location = new Point(121, 210);
             labelWebDriverVersion.Margin = new Padding(2, 0, 2, 0);
             labelWebDriverVersion.Name = "labelWebDriverVersion";
-            labelWebDriverVersion.Size = new Size(135, 20);
+            labelWebDriverVersion.Size = new Size(156, 25);
             labelWebDriverVersion.TabIndex = 16;
             labelWebDriverVersion.Text = "xxxxxxxxxxxxxxxxxx";
             // 
@@ -245,9 +249,10 @@ namespace EZAsesAutoType
             // 
             comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxLanguage.FormattingEnabled = true;
-            comboBoxLanguage.Location = new Point(330, 95);
+            comboBoxLanguage.Location = new Point(412, 119);
+            comboBoxLanguage.Margin = new Padding(4);
             comboBoxLanguage.Name = "comboBoxLanguage";
-            comboBoxLanguage.Size = new Size(140, 28);
+            comboBoxLanguage.Size = new Size(174, 33);
             comboBoxLanguage.TabIndex = 80;
             // 
             // labelLanguage
@@ -255,10 +260,10 @@ namespace EZAsesAutoType
             labelLanguage.AutoSize = true;
             labelLanguage.BackColor = Color.Transparent;
             labelLanguage.ForeColor = Color.White;
-            labelLanguage.Location = new Point(249, 100);
+            labelLanguage.Location = new Point(311, 125);
             labelLanguage.Margin = new Padding(2, 0, 2, 0);
             labelLanguage.Name = "labelLanguage";
-            labelLanguage.Size = new Size(77, 20);
+            labelLanguage.Size = new Size(93, 25);
             labelLanguage.TabIndex = 18;
             labelLanguage.Text = "Language:";
             // 
@@ -273,48 +278,49 @@ namespace EZAsesAutoType
             btnCancel.Enabled = false;
             btnCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(10, 205);
+            btnCancel.Location = new Point(12, 256);
+            btnCancel.Margin = new Padding(4);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(144, 43);
+            btnCancel.Size = new Size(180, 54);
             btnCancel.TabIndex = 30;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Visible = false;
             btnCancel.Click += btnCancel_Click;
             // 
-            // textBox1
+            // textBoxPunchInPM
             // 
-            textBox1.Location = new Point(330, 165);
-            textBox1.Margin = new Padding(2, 3, 2, 3);
-            textBox1.MaxLength = 5;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(70, 27);
-            textBox1.TabIndex = 91;
-            textBox1.Text = "12:00";
-            textBox1.TextAlign = HorizontalAlignment.Center;
+            textBoxPunchInPM.Location = new Point(412, 206);
+            textBoxPunchInPM.Margin = new Padding(2, 4, 2, 4);
+            textBoxPunchInPM.MaxLength = 5;
+            textBoxPunchInPM.Name = "textBoxPunchInPM";
+            textBoxPunchInPM.Size = new Size(84, 31);
+            textBoxPunchInPM.TabIndex = 91;
+            textBoxPunchInPM.Text = "12:00";
+            textBoxPunchInPM.TextAlign = HorizontalAlignment.Center;
             // 
-            // textBox2
+            // textBoxPunchOutPM
             // 
-            textBox2.Location = new Point(403, 165);
-            textBox2.Margin = new Padding(2, 3, 2, 3);
-            textBox2.MaxLength = 5;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(67, 27);
-            textBox2.TabIndex = 92;
-            textBox2.Text = "17:00";
-            textBox2.TextAlign = HorizontalAlignment.Center;
+            textBoxPunchOutPM.Location = new Point(502, 206);
+            textBoxPunchOutPM.Margin = new Padding(2, 4, 2, 4);
+            textBoxPunchOutPM.MaxLength = 5;
+            textBoxPunchOutPM.Name = "textBoxPunchOutPM";
+            textBoxPunchOutPM.Size = new Size(84, 31);
+            textBoxPunchOutPM.TabIndex = 92;
+            textBoxPunchOutPM.Text = "17:00";
+            textBoxPunchOutPM.TextAlign = HorizontalAlignment.Center;
             // 
             // FormMain
             // 
             AcceptButton = btnRun;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.atoss_504x306;
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnCancel;
-            ClientSize = new Size(486, 256);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            ClientSize = new Size(602, 324);
+            Controls.Add(textBoxPunchOutPM);
+            Controls.Add(textBoxPunchInPM);
             Controls.Add(labelLanguage);
             Controls.Add(comboBoxLanguage);
             Controls.Add(labelWebDriverVersion);
@@ -326,18 +332,19 @@ namespace EZAsesAutoType
             Controls.Add(labelPwd);
             Controls.Add(labelUid);
             Controls.Add(labelUrl);
-            Controls.Add(textBoxPunchOut);
-            Controls.Add(textBoxPunchIn);
+            Controls.Add(textBoxPunchOutAM);
+            Controls.Add(textBoxPunchInAM);
             Controls.Add(textBoxPwd);
             Controls.Add(textBoxUid);
             Controls.Add(textBoxUrl);
             Controls.Add(btnRun);
             Controls.Add(btnCancel);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4);
             MaximizeBox = false;
-            MaximumSize = new Size(504, 303);
+            MaximumSize = new Size(624, 380);
             MinimizeBox = false;
-            MinimumSize = new Size(504, 303);
+            MinimumSize = new Size(624, 380);
             Name = "FormMain";
             Text = "EZAsesAutoType";
             FormClosing += onClosing;
@@ -353,8 +360,8 @@ namespace EZAsesAutoType
         private TextBox textBoxUrl;
         private TextBox textBoxUid;
         private TextBox textBoxPwd;
-        private TextBox textBoxPunchIn;
-        private TextBox textBoxPunchOut;
+        private TextBox textBoxPunchInAM;
+        private TextBox textBoxPunchOutAM;
         private Label labelUrl;
         private Label labelUid;
         private Label labelPwd;
@@ -368,7 +375,7 @@ namespace EZAsesAutoType
         private Label labelLanguage;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Button btnCancel;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox textBoxPunchInPM;
+        private TextBox textBoxPunchOutPM;
     }
 }
