@@ -2,6 +2,10 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/04/14:TomislavMatas: Version "1.123.4.0"
+// * Rename "textBoxPunchIn"  to "textBoxPunchInAM".
+// * Rename "textBoxPunchOut" to "textBoxPunchOutAM".
+// * Add "textBoxPunchInPM" and "textBoxPunchOutPM".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * BugFix in "SaveUserSettings".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -327,8 +331,10 @@ namespace EZAsesAutoType
                 this.textBoxUrl.Text = userSettings.ASESBaseUrl;
                 this.textBoxUid.Text = userSettings.ASESUserId;
                 this.textBoxPwd.Text = userSettings.ASESPassword;
-                this.textBoxPunchIn.Text = userSettings.ASESPunchIn;
-                this.textBoxPunchOut.Text = userSettings.ASESPunchOut;
+                this.textBoxPunchInAM.Text  = userSettings.ASESPunchInAM;
+                this.textBoxPunchOutAM.Text = userSettings.ASESPunchOutAM;
+                this.textBoxPunchInPM.Text  = userSettings.ASESPunchInPM;
+                this.textBoxPunchOutPM.Text = userSettings.ASESPunchOutPM;
 
                 return true;
             }
@@ -442,17 +448,19 @@ namespace EZAsesAutoType
             try
             {
                 UserSettings userSettings = new UserSettings();
-                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
-                userSettings.ASESUserId = this.textBoxUid.Text;
-                userSettings.ASESPassword = this.textBoxPwd.Text;
-                userSettings.ASESClient = this.comboBoxClientNo.Text;
-                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
-                userSettings.ASESLanguage = this.comboBoxLanguage.Text;
+                userSettings.ASESBaseUrl      = this.textBoxUrl.Text;
+                userSettings.ASESUserId       = this.textBoxUid.Text;
+                userSettings.ASESPassword     = this.textBoxPwd.Text;
+                userSettings.ASESClient       = this.comboBoxClientNo.Text;
+                userSettings.ASESClientList   = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
+                userSettings.ASESLanguage     = this.comboBoxLanguage.Text;
                 userSettings.ASESLanguageList = this.GetComboBoxItemsAsStringCollection(this.comboBoxLanguage);
-                userSettings.ASESPunchIn = this.textBoxPunchIn.Text;
-                userSettings.ASESPunchOut = this.textBoxPunchOut.Text;
-                userSettings.WebDriver = this.comboBoxWebDriver.Text;
-                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                userSettings.ASESPunchInAM    = this.textBoxPunchInAM.Text;
+                userSettings.ASESPunchOutAM   = this.textBoxPunchOutAM.Text;
+                userSettings.ASESPunchInPM    = this.textBoxPunchInPM.Text;
+                userSettings.ASESPunchOutPM   = this.textBoxPunchOutPM.Text;
+                userSettings.WebDriver        = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList    = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 return userSettings;
             }
             catch (Exception ex)
@@ -611,8 +619,10 @@ namespace EZAsesAutoType
                     this.comboBoxClientNo.Enabled = false;
                     this.comboBoxLanguage.Enabled = false;
                     this.comboBoxWebDriver.Enabled = false;
-                    this.textBoxPunchIn.Enabled = false;
-                    this.textBoxPunchOut.Enabled = false;
+                    this.textBoxPunchInAM.Enabled = false;
+                    this.textBoxPunchOutAM.Enabled = false;
+                    this.textBoxPunchInPM.Enabled = false;
+                    this.textBoxPunchOutPM.Enabled = false;
                     this.btnRun.Enabled = false;
                     this.btnRun.Visible = true;
                     this.btnCancel.Enabled = true;
@@ -626,8 +636,10 @@ namespace EZAsesAutoType
                 this.comboBoxClientNo.Enabled = true;
                 this.comboBoxLanguage.Enabled = true;
                 this.comboBoxWebDriver.Enabled = true;
-                this.textBoxPunchIn.Enabled = true;
-                this.textBoxPunchOut.Enabled = true;
+                this.textBoxPunchInAM.Enabled = true;
+                this.textBoxPunchOutAM.Enabled = true;
+                this.textBoxPunchInPM.Enabled = true;
+                this.textBoxPunchOutPM.Enabled = true;
                 this.btnRun.Enabled = true;
                 this.btnRun.Visible = true;
                 this.btnCancel.Enabled = true;
@@ -950,13 +962,13 @@ namespace EZAsesAutoType
             return value;
         }
 
-        private void textBoxPunchIn_TextChanged(object sender, EventArgs e)
+        private void textBoxPunchInAM_TextChanged(object sender, EventArgs e)
         {
             if (sender == null)
                 return;
         }
 
-        private void textBoxPunchIn_Validated(object sender, EventArgs e)
+        private void textBoxPunchInAM_Validated(object sender, EventArgs e)
         {
             if (sender == null)
                 return;
@@ -970,16 +982,16 @@ namespace EZAsesAutoType
             if (string.Equals(fragment, expanded))
                 return;
 
-            this.textBoxPunchIn.Text = expanded;
+            this.textBoxPunchInAM.Text = expanded;
         }
 
-        private void textBoxPunchOut_TextChanged(object sender, EventArgs e)
+        private void textBoxPunchOutAM_TextChanged(object sender, EventArgs e)
         {
             if (sender == null)
                 return;
         }
 
-        private void textBoxPunchOut_Validated(object sender, EventArgs e)
+        private void textBoxPunchOutAM_Validated(object sender, EventArgs e)
         {
             if (sender == null)
                 return;
@@ -993,7 +1005,7 @@ namespace EZAsesAutoType
             if (string.Equals(fragment, expanded))
                 return;
 
-            this.textBoxPunchOut.Text = expanded;
+            this.textBoxPunchOutAM.Text = expanded;
         }
 
         #endregion
