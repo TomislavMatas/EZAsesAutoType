@@ -6,7 +6,7 @@ to automate the daily chore of utilizing the virtual punch card system
 ## Overview
 Start the application and set the desired values in the main dialog: 
 
-![MainDialog](res/img/Screenshot-MainDialog-v1.123.3.png)
+![MainDialog](res/img/Screenshot-MainDialog-1.123.4.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
@@ -15,9 +15,10 @@ following for you completely automatically:
 2) Log in with provided credentials.
 3) Open the time entry grid.
 4) Position the cursor to the time entry grid's last row.
-5) Bring up the time pair entry popup dialog and enter the time pair.
-6) Save the time entry grid.
-7) Log out and close browser instance.
+5) Bring up the time pair entry popup dialog.
+6) Enter the time pairs.
+7) Save the time entry grid.
+8) Log out and close browser instance.
 
 For more details please refer to the user's manual:
 ->< [doc/EZAsesAutoType-UserManual.md](doc/EZAsesAutoType-UserManual.md) >
