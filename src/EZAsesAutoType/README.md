@@ -7,7 +7,7 @@ Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
 ## 2024/04/12:TomislavMatas: Version "1.123.4.0"
-* Implement "multiple time pairs" entry.
+* Implement "second time pair" entry on main dialog.
 
 ## 2024/04/10:TomislavMatas: Version "1.123.3"
 * Implement singleton pattern for "WorkerConfig" and "Worker"
