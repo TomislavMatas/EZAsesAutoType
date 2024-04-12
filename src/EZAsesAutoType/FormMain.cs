@@ -6,6 +6,10 @@
 // * Rename "textBoxPunchIn"  to "textBoxPunchInAM".
 // * Rename "textBoxPunchOut" to "textBoxPunchOutAM".
 // * Add "textBoxPunchInPM" and "textBoxPunchOutPM".
+// * Add function "SelectAll()".
+// * Enhance function "EvalTimeByFragment()".
+// * Add "Enter" and "Validated" handlers for the new 
+//   text boxes "textBoxPunchInPM" and "textBoxPunchOutPM".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * BugFix in "SaveUserSettings".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -802,7 +806,7 @@ namespace EZAsesAutoType
 
             if (value.Length == 1)
             {
-                if(int.TryParse(value, out int intValue))
+                if (int.TryParse(value, out int intValue))
                 {
                     return intValue.ToString("00") + ":00";
                 }
@@ -841,7 +845,7 @@ namespace EZAsesAutoType
                 if (int.TryParse(value, out int intValue))
                 {
                     // "nnn"
-                    if (intValue == 0 )
+                    if (intValue == 0)
                     {
                         // "000" --> "00:00"
                         return "00:00";
@@ -851,11 +855,11 @@ namespace EZAsesAutoType
                         // assume "hour" portion with either one or two leading zeroes.
                         return intValue.ToString("00") + ":00";
                     }
-                    if (intValue > 23 && intValue <= 59 )
+                    if (intValue > 23 && intValue <= 59)
                     {
                         // assume "minute" portion with either one or two leading zeroes.
                         // prefix result with current hour portion.
-                        return DateTime.Now.ToString("HH") + ":" + intValue.ToString("00"); 
+                        return DateTime.Now.ToString("HH") + ":" + intValue.ToString("00");
                     }
                     if (intValue >= 100 && intValue <= 959)
                     {
@@ -920,7 +924,7 @@ namespace EZAsesAutoType
                        )
                     {
                         if (intHour >= 0 && intHour <= 23
-                         && intMinute >=0 && intMinute <=59 )
+                         && intMinute >= 0 && intMinute <= 59)
                         {
                             // "hhmm" --> "HH:mm"
                             return intHour.ToString("00") + ":" + intMinute.ToString("00");
@@ -958,16 +962,44 @@ namespace EZAsesAutoType
                 }
             }
 
-            // if none of the above "matched", return unmodified value.
-            return value;
+            if(TimeOnly.TryParse(value, out TimeOnly timeOnly))
+                return timeOnly.ToString("HH:mm");
+
+            // if none of the above "matched", return string.empty.
+            return string.Empty;
         }
 
-        private void textBoxPunchInAM_TextChanged(object sender, EventArgs e)
+        private void SelectAll(TextBox textBox)
+        {
+            if (textBox == null)
+                return;
+
+            textBox.SelectAll();
+        }
+
+        #region "textBoxPunchInAM"
+
+        /// <summary>
+        /// Handle "got focus" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxPunchInAM_Enter(object sender, EventArgs e)
         {
             if (sender == null)
                 return;
+
+            if (sender is not TextBox)
+                return;
+
+            this.SelectAll((TextBox)sender);
         }
 
+        /// <summary>
+        /// Handle "value has changed" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxPunchInAM_Validated(object sender, EventArgs e)
         {
             if (sender == null)
@@ -982,15 +1014,34 @@ namespace EZAsesAutoType
             if (string.Equals(fragment, expanded))
                 return;
 
-            this.textBoxPunchInAM.Text = expanded;
+            textBox.Text = expanded;
         }
 
-        private void textBoxPunchOutAM_TextChanged(object sender, EventArgs e)
+        #endregion
+
+        #region "textBoxPunchOutAM"
+
+        /// <summary>
+        /// Handle "got focus" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxPunchOutAM_Enter(object sender, EventArgs e)
         {
             if (sender == null)
                 return;
+
+            if (sender is not TextBox)
+                return;
+
+            this.SelectAll((TextBox)sender);
         }
 
+        /// <summary>
+        /// Handle "value has changed" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxPunchOutAM_Validated(object sender, EventArgs e)
         {
             if (sender == null)
@@ -1005,8 +1056,94 @@ namespace EZAsesAutoType
             if (string.Equals(fragment, expanded))
                 return;
 
-            this.textBoxPunchOutAM.Text = expanded;
+            textBox.Text = expanded;
         }
+
+        #endregion
+
+        #region "textBoxPunchInPM"
+
+        /// <summary>
+        /// Handle "got focus" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxPunchInPM_Enter(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            this.SelectAll((TextBox)sender);
+        }
+
+        /// <summary>
+        /// Handle "value has changed" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxPunchInPM_Validated(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            TextBox textBox = (TextBox)sender;
+            string fragment = textBox.Text;
+            string expanded = this.EvalTimeByFragment(fragment);
+            if (string.Equals(fragment, expanded))
+                return;
+
+            textBox.Text = expanded;
+        }
+
+        #endregion
+
+        #region "textBoxPunchOutPM"
+
+        /// <summary>
+        /// Handle "got focus" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxPunchOutPM_Enter(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            this.SelectAll((TextBox)sender);
+        }
+
+        /// <summary>
+        /// Handle "value has changed" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxPunchOutPM_Validated(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            TextBox textBox = (TextBox)sender;
+            string fragment = textBox.Text;
+            string expanded = this.EvalTimeByFragment(fragment);
+            if (string.Equals(fragment, expanded))
+                return;
+
+            textBox.Text = expanded;
+        }
+
+        #endregion
 
         #endregion
 
