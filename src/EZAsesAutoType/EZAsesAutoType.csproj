@@ -25,8 +25,8 @@ to automate the daily chore of utilizing the virtual punch card system
     <FileVersion>1.123.4.0</FileVersion>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-Version "1.123.4":
-* Add additional text boxes for second time pair to main dialog.
+Version "1.123.4.0":
+* Add entry fields for second time pair on main dialog.
 * Add signage of release msi with self signed certificate.
 
 Version "1.123.3":
