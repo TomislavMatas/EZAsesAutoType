@@ -5,7 +5,7 @@
 // Project specific constants. 
 //
 // Revision History: 
-// 2024/04/12:TomislavMatas: Version "1.123.4.0"
+// 2024/04/12:TomislavMatas: Version "1.123.4"
 // * Add "AssemblyDisplayName", "AssemblyDisplayVersion" and "AssemblyDisplayTitle".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.

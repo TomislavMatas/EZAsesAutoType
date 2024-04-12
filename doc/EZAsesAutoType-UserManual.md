@@ -83,7 +83,7 @@ All shortcut replacements are implemented within the
 function "FormMain.EvalTimeByFragment()".
 
 # Revision History
-## 2024/04/13:TomislavMatas: Version "1.123.4.0"
+## 2024/04/13:TomislavMatas: Version "1.123.4"
 * Update screenshot of main dialog.
 
 ## 2024/04/10:TomislavMatas: Version "1.123.3"
