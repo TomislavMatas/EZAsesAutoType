@@ -10,6 +10,7 @@
 // * Enhance function "EvalTimeByFragment()".
 // * Add "Enter" and "Validated" handlers for the new 
 //   text boxes "textBoxPunchInPM" and "textBoxPunchOutPM".
+// * Add function "SetTitle()".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * BugFix in "SaveUserSettings".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -121,6 +122,22 @@ namespace EZAsesAutoType
 
         #region initializerz
 
+        private void SetTitle()
+        {
+            try
+            {
+                this.Text = Const.AssemblyDisplayTitle;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
         /// <summary>
         /// Initialize instance.
         /// </summary>
@@ -130,6 +147,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
+                this.SetTitle();
                 this.SetAppHandler(new AppHandler(this));
                 return true;
             }
