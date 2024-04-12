@@ -282,7 +282,7 @@ namespace EZAsesAutoType
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(128, 32);
-            btnCancel.TabIndex = 29;
+            btnCancel.TabIndex = 35;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Visible = false;
@@ -322,7 +322,7 @@ namespace EZAsesAutoType
             BackgroundImage = Properties.Resources.atoss_504x306;
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnCancel;
-            ClientSize = new Size(426, 203);
+            ClientSize = new Size(426, 221);
             Controls.Add(textBoxPunchOutPM);
             Controls.Add(textBoxPunchInPM);
             Controls.Add(labelLanguage);
@@ -346,9 +346,9 @@ namespace EZAsesAutoType
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
-            MaximumSize = new Size(442, 242);
+            MaximumSize = new Size(442, 260);
             MinimizeBox = false;
-            MinimumSize = new Size(442, 242);
+            MinimumSize = new Size(442, 260);
             Name = "FormMain";
             Text = "EZAsesAutoType";
             FormClosing += onClosing;
