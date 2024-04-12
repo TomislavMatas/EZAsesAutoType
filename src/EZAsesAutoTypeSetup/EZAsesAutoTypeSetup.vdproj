@@ -249,9 +249,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:EZ ASES AutoType v1.123.4"
+        "ProductName" = "8:EZ ASES AutoType 1.123.4"
         "ProductCode" = "8:{E34C7578-BA19-48D8-B344-56B04BE5F0A3}"
-        "PackageCode" = "8:{F8EB37FF-52A7-4D69-A5F8-702459F695F1}"
+        "PackageCode" = "8:{5909B00C-8DFB-44A6-8F87-E422F78A395C}"
         "UpgradeCode" = "8:{8A6849D5-37DA-4A40-A26E-88046820FAA1}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -262,7 +262,7 @@
         "Manufacturer" = "8:matas consulting"
         "ARPHELPTELEPHONE" = "8:+49 151 50989124"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:EZ ASES AutoType v1.123.4"
+        "Title" = "8:EZ ASES AutoType 1.123.4"
         "Subject" = "8:"
         "ARPCONTACT" = "8:matas consulting"
         "Keywords" = "8:ATOSS;ASES;AutoType;RemoteControl"
@@ -373,7 +373,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CFFEDDB4A5CC49348C3B328E3D95B8D3"
             {
-            "Name" = "8:EZ ASES AutoType"
+            "Name" = "8:EZ ASES AutoType 1.123.4"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
