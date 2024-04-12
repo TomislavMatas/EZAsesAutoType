@@ -71,10 +71,10 @@ namespace EZAsesAutoType
             btnRun.BackColor = Color.Gray;
             btnRun.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRun.ForeColor = Color.White;
-            btnRun.Location = new Point(283, 161);
+            btnRun.Location = new Point(286, 161);
             btnRun.Margin = new Padding(1, 2, 1, 2);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(134, 32);
+            btnRun.Size = new Size(128, 32);
             btnRun.TabIndex = 30;
             btnRun.Text = "Run";
             btnRun.UseVisualStyleBackColor = false;
@@ -281,7 +281,7 @@ namespace EZAsesAutoType
             btnCancel.Location = new Point(8, 161);
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(126, 32);
+            btnCancel.Size = new Size(128, 32);
             btnCancel.TabIndex = 29;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
@@ -322,7 +322,7 @@ namespace EZAsesAutoType
             BackgroundImage = Properties.Resources.atoss_504x306;
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnCancel;
-            ClientSize = new Size(426, 205);
+            ClientSize = new Size(426, 203);
             Controls.Add(textBoxPunchOutPM);
             Controls.Add(textBoxPunchInPM);
             Controls.Add(labelLanguage);
@@ -346,9 +346,9 @@ namespace EZAsesAutoType
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
-            MaximumSize = new Size(442, 244);
+            MaximumSize = new Size(442, 242);
             MinimizeBox = false;
-            MinimumSize = new Size(442, 244);
+            MinimumSize = new Size(442, 242);
             Name = "FormMain";
             Text = "EZAsesAutoType";
             FormClosing += onClosing;
