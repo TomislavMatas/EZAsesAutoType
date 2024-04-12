@@ -6,7 +6,7 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
-## 2024/04/12:TomislavMatas: Version "1.123.4.0"
+## 2024/04/12:TomislavMatas: Version "1.123.4"
 * Implement "second time pair" entry on main dialog.
 
 ## 2024/04/10:TomislavMatas: Version "1.123.3"

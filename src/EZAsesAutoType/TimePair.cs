@@ -2,7 +2,7 @@
 // File: "TimePair.cs"
 //
 // Revision History: 
-// 2024/04/12:TomislavMatas: Version "1.123.4.0"
+// 2024/04/12:TomislavMatas: Version "1.123.4"
 // * Initial version.
 //
 

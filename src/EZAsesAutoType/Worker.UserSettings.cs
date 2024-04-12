@@ -2,7 +2,7 @@
 // File: "Worker.UserSettings.cs"
 //
 // Revision History: 
-// 2024/04/14:TomislavMatas: Version "1.123.4.0"
+// 2024/04/13:TomislavMatas: Version "1.123.4"
 // * Rename "ASESPunchIn"  to "ASESPunchInAM".
 // * Rename "ASESPunchOut" to "ASESPunchOutAM".
 // * Add "ASESPunchInPM" and "ASESPunchOutPM".
