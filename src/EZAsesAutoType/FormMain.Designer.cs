@@ -2,7 +2,7 @@
 // File: "FormMain.Designer.cs"
 //
 // Revision History:
-// 2024/04/14:TomislavMatas: Version "1.123.4.0"
+// 2024/04/13:TomislavMatas: Version "1.123.4"
 // * Rename "textBoxPunchIn"  to "textBoxPunchInAM".
 // * Rename "textBoxPunchOut" to "textBoxPunchOutAM".
 // * Add "textBoxPunchInPM" and "textBoxPunchOutPM".
