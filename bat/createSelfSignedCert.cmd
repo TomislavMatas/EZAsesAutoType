@@ -1,10 +1,12 @@
 :: -- 
-:: -- File: "createNewSelfSignedCertificate.cmd"
+:: -- File: "createSelfSignedCert.cmd"
 :: -- 
 :: -- For details see:
 :: -- -->< https://learn.microsoft.com/de-de/windows/msix/package/create-certificate-package-signing >
 :: -- 
 :: -- Revision History
+:: -- 2024/04/12:TomislavMatas: Version "1.123.4.0"
+:: -- * Renamed this file from "createNewSelfSignedCertificate.cmd" to "createSelfSignedCert.cmd".
 :: -- 2024/04/10:TomislavMatas: 
 :: -- * Inital version
 :: --
