@@ -6,7 +6,7 @@
 :: -- 
 :: -- Revision History
 :: -- 2024/04/10:TomislavMatas: 
-:: -- * Inital version
+:: -- * Initial version
 :: --
 
 @echo off
