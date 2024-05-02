@@ -42,8 +42,8 @@ echo %WEBDRIVER_HOMEPAGE%
 
 pause 
 
-set "PROJEKT_ROOT=%~dp0.."
-@rem List of project directories under "%PROJEKT_ROOT%\src\", 
+set "PROJECT_ROOT=%~dp0.."
+@rem List of project directories under "%PROJECT_ROOT%\src\", 
 @rem where the downloaded binaries shall be copied to.
 set "PROJEKT_LIST=EZSeleniumLib"
 
@@ -58,7 +58,7 @@ if "%WEBDRIVER_VERSION%" == "" (
 
 
 set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%"
-set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\FireFox"
+set "DOWNLOAD_ROOT=%PROJECT_ROOT%\bin\WebDriver\FireFox"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
 @rem die Liste der Platformen, fuer die jeweils ein 
 @rem WebDriver ZIP Archiv heruntergeladen werden soll.
@@ -142,7 +142,7 @@ for %%f in (%PLATFORMLIST%) do (
 	@rem "Verteile" den treiber in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
 	for %%p in (!PROJEKT_LIST!) do (
 		set "prj=%%p" 
-		set "prjpath=%PROJEKT_ROOT%\src\  !"
+		set "prjpath=%PROJECT_ROOT%\src\  !"
 		echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
 		del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
 		copy "!unzipedpath!\%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
