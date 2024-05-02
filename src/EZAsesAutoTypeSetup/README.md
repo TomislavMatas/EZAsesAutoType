@@ -6,7 +6,7 @@ For some reason, the generated Setup MSI can NOT be executed
 when building with platform "x64". 
 
 # Revision History
-## 2024/04/05:TomislavMatas: Version "1.124.0"
+## 2024/04/05:TomislavMatas: Version "1.123.2"
 * Explicitly add "EZAsesAutoType.exe" in order to make it available 
   for the "User's Programs Menu" shortcut.
 * Add shortcut "EZ ASES AutoType" to the "User's Programs Menu".

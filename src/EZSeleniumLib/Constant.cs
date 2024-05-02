@@ -13,6 +13,8 @@
 // * Update "MicrosoftWebDriver.exe" to version "124.0.2478.19".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
+// 2024/04/04:TomislavMatas: Version "1.0.123"
+// * Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //

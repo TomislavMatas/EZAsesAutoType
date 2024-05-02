@@ -92,21 +92,28 @@
   &lt;string&gt;English&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="ASESPunchIn" Type="System.String" Scope="User">
+    <Setting Name="ASESPunchInAM" Type="System.String" Scope="User">
       <Value Profile="(Default)">09:00</Value>
-    </Setting>
-    <Setting Name="ASESPunchOut" Type="System.String" Scope="User">
-      <Value Profile="(Default)">17:18</Value>
     </Setting>
     <Setting Name="WebDriver" Type="System.String" Scope="User">
       <Value Profile="(Default)">Chrome</Value>
-    </Setting>    <Setting Name="WebDriverList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    </Setting>
+    <Setting Name="WebDriverList" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
   &lt;string&gt;Chrome&lt;/string&gt;
   &lt;string&gt;Edge&lt;/string&gt;
   &lt;string&gt;Firefox&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ASESPunchOutAM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12:00</Value>
+    </Setting>
+    <Setting Name="ASESPunchInPM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12:00</Value>
+    </Setting>
+    <Setting Name="ASESPunchOutPM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">17:00</Value>
     </Setting>
   </Settings>
 </SettingsFile>
