@@ -6,6 +6,13 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/05/02:TomislavMatas: Version "1.124.0"
+* Update "chromedriver.exe" to version "124.0.6367.91".
+* Update "MicrosoftWebDriver.exe" to version "124.0.2477.0".
+
+## 2024/04/12:TomislavMatas: Version "1.123.4.0"
+* Implement "second time pair" entry on main dialog.
+
 ## 2024/04/10:TomislavMatas: Version "1.123.3"
 * Implement singleton pattern for "WorkerConfig" and "Worker"
   within "AppHandler". Now when hitting "Cancel", the already 
