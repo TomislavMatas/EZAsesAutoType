@@ -245,7 +245,7 @@ namespace EZSeleniumLib
                 options.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
-                #endregion Basic Options
+                #endregion
 
                 #region Startup Arguments
 
@@ -286,7 +286,7 @@ namespace EZSeleniumLib
                 if (popupsEnabled)
                     options.AddArguments(String.Format("{0}disable-popup-blocking", argPfx));
 
-                #endregion Startup Arguments
+                #endregion
 
                 # region Capabilities
                 int popups = popupsEnabled ? 1 : 0; // 1: enable popups, 0: supress popups.
@@ -306,7 +306,7 @@ namespace EZSeleniumLib
 
                 options.AddUserProfilePreference("performance_tuning", performanceTuningDict);
 
-                #endregion Capabilities
+                #endregion
 
                 return true;
             }

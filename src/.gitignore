@@ -4,5 +4,6 @@ bin
 obj
 
 # exclude Visual Studio sepcific files by pattern
-*.user
-*.cache
+*.csproj.user
+*.assets.cache
+*.wapproj.user

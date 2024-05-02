@@ -458,7 +458,7 @@ namespace EZAsesAutoType
             }
         }
 
-        #endregion page loaded validatorz
+        #endregion
 
         #region state validators
 
