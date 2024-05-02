@@ -8,12 +8,12 @@
 :: -- 
 :: -- Example:
 :: -- ```
-:: -- CMD> updateWebdriverEdge 124.0.2478.19
+:: -- CMD> updateWebdriverEdge 124.0.2477.0
 :: -- ```
 :: --
 :: -- Revision History
-:: -- 2024/04/04:TomislavMatas: Version "1.0.124"
-:: -- * Set "WEBDRIVER_VERSION_DEFAULT=124.0.2478.19"
+:: -- 2024/05/02:TomislavMatas: Version "1.124.0"
+:: -- * Set "WEBDRIVER_VERSION_DEFAULT=124.0.2477.0"
 :: -- 2024/04/04:TomislavMatas: Version "1.0.123"
 :: -- * Set "WEBDRIVER_VERSION_DEFAULT=123.0.2420.65"
 :: -- * Tidy~Up commentz.
@@ -24,8 +24,8 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=124.0.2478.19"
- 
+set "WEBDRIVER_VERSION_DEFAULT=124.0.2477.0"
+
 echo see current versions of webdriver at:
 echo https://developer.microsoft.com/de-de/microsoft-edge/tools/webdriver/
 
