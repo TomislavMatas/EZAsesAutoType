@@ -147,7 +147,7 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSaveButtonPath();
         }
 
-        #endregion "AppConfig" - wrapperz
+        #endregion
 
     } // class
 
