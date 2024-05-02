@@ -2,9 +2,16 @@
 // File: "Worker.UserSettings.cs"
 //
 // Revision History: 
+// 2024/04/13:TomislavMatas: Version "1.123.4"
+// * Rename "ASESPunchIn"  to "ASESPunchInAM".
+// * Rename "ASESPunchOut" to "ASESPunchOutAM".
+// * Add "ASESPunchInPM" and "ASESPunchOutPM".
+// * Add "GetTimePairListDefault()".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
+
+using System.Collections.Generic;
 
 namespace EZAsesAutoType
 {
@@ -42,17 +49,97 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetUserSettings().ASESLanguage;
         }
 
-        private string GetASESPunchIn()
+        private string GetASESPunchInAM()
         {
-            return this.WorkerConfig.GetUserSettings().ASESPunchIn;
+            return this.WorkerConfig.GetUserSettings().ASESPunchInAM;
         }
 
-        private string GetASESPunchOut()
+        private string GetASESPunchOutAM()
         {
-            return this.WorkerConfig.GetUserSettings().ASESPunchOut;
+            return this.WorkerConfig.GetUserSettings().ASESPunchOutAM;
         }
 
-        #endregion "UserSetting" - wrapperz
+        private string GetASESPunchInPM()
+        {
+            return this.WorkerConfig.GetUserSettings().ASESPunchInPM;
+        }
+
+        private string GetASESPunchOutPM()
+        {
+            return this.WorkerConfig.GetUserSettings().ASESPunchOutPM;
+        }
+
+        private List<TimePair>? GetTimePairListDefault()
+        {
+            try
+            { 
+                string? punchInAM  = this.GetASESPunchInAM();
+                string? punchOutAM = this.GetASESPunchOutAM();
+                string? punchInPM  = this.GetASESPunchInPM();
+                string? punchOutPM = this.GetASESPunchOutPM();
+
+                // 1: " " - " "
+                // 2: " " - " "
+                if( string.IsNullOrEmpty(punchInAM) && string.IsNullOrEmpty(punchOutAM)
+                 && string.IsNullOrEmpty(punchInPM) && string.IsNullOrEmpty(punchOutPM)
+                )
+                {   // --> empty list
+                    return [];
+                }
+
+                // 1: "a" - "b"
+                // 2: " " - " "
+                if( !string.IsNullOrEmpty(punchInAM) && !string.IsNullOrEmpty(punchOutAM)
+                 &&  string.IsNullOrEmpty(punchInPM) &&  string.IsNullOrEmpty(punchOutPM)
+                )
+                {   // --> ["a" - "b"]
+                    return [new TimePair(punchInAM, punchOutAM)];
+                }
+
+                // 1: "a" - " "
+                // 2: " " - "b"
+                if( !string.IsNullOrEmpty(punchInAM) &&  string.IsNullOrEmpty(punchOutAM)        
+                 &&  string.IsNullOrEmpty(punchInPM) && !string.IsNullOrEmpty(punchOutPM)
+                )
+                {
+                    // --> ["a" - "b"]
+                    return [new TimePair(punchInAM, punchOutPM)];
+                }
+
+                // 1: " " - " "
+                // 2: "a" - "b"
+                if(  string.IsNullOrEmpty(punchInAM) &&  string.IsNullOrEmpty(punchOutAM)
+                 && !string.IsNullOrEmpty(punchInPM) && !string.IsNullOrEmpty(punchOutPM)
+                )
+                {   // --> ["a" - "b"]
+                    return [new TimePair(punchInPM, punchOutPM)];
+                }
+
+                // 1: "a" - "b"
+                // 2: "c" - "d"
+                if(!string.IsNullOrEmpty(punchInAM) && !string.IsNullOrEmpty(punchOutAM)
+                && !string.IsNullOrEmpty(punchInPM) && !string.IsNullOrEmpty(punchOutPM)
+                )
+                {   // --> ["a" - "b", "c" - "d"]
+                    return [new TimePair(punchInAM, punchOutAM)
+                           ,new TimePair(punchInPM, punchOutPM)];
+                }
+
+                // no filter matched same as "exception": --> null
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return null; 
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        #endregion
 
     } // class
 

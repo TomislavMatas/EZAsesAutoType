@@ -1,2 +1,6 @@
-﻿# exclude IntelliJ sepcific folders by name
+﻿# exclude IntelliJ sepcific folders by name 
 .idea
+
+# exclude other folders by name 
+cert
+

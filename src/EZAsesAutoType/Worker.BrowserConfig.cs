@@ -25,7 +25,7 @@ namespace EZAsesAutoType
             return browserOptions;
         }
 
-        #endregion "BrowserOptions" - wrapperz
+        #endregion
 
         #region Browser instantiation wrapperz
 
@@ -81,7 +81,7 @@ namespace EZAsesAutoType
             }
         }
 
-        #endregion Browser instantiation wrapperz
+        #endregion
 
     } // class
 
