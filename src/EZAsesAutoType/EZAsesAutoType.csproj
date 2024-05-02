@@ -31,6 +31,10 @@ Version "1.124.0":
 * Update "chromedriver.exe" to version "124.0.6367.91".
 * Update "MicrosoftWebDriver.exe" to version "124.0.2477.0".
 
+Version "1.123.4":
+* Add entry fields for second time pair on main dialog.
+* Add signage of release msi with self signed certificate.
+
 Version "1.123.3":
 * Browser stays active when user hitted the "Cancel" button.
 
@@ -45,7 +49,10 @@ Version "1.0.123":
     </PackageReleaseNotes>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 	<Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
-   </PropertyGroup>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>D:\Projekte\github.com\EZAsesAutoType\cert\MatasConsultingSelfSigned.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.17" />
