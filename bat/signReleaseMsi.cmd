@@ -12,10 +12,10 @@
 @echo off
 setlocal
 
-set "PROJEKT_ROOT=%~dp0.."
+set "PROJECT_ROOT=%~dp0.."
 set "SIGNTOOL_EXE=C:\Program Files (x86)\Windows Kits\10\App Certification Kit\signtool.exe"
-set "MSI_FILE_PATH=%PROJEKT_ROOT%\src\EZAsesAutoTypeSetup\bin\Release"
-set "PFX_FILE_PATH=%PROJEKT_ROOT%\cert\MatasConsultingSelfSigned.pfx"
+set "MSI_FILE_PATH=%PROJECT_ROOT%\src\EZAsesAutoTypeSetup\bin\Release"
+set "PFX_FILE_PATH=%PROJECT_ROOT%\cert\MatasConsultingSelfSigned.pfx"
 set /P "PFX_FILE_PASSWORD=pfx file password : "
 
 if not exist "%SIGNTOOL_EXE%" (

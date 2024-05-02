@@ -42,8 +42,8 @@ echo https://googlechromelabs.github.io/chrome-for-testing/
 
 pause
 
-set "PROJEKT_ROOT=%~dp0.."
-@rem List of project directories under "%PROJEKT_ROOT%\src\", 
+set "PROJECT_ROOT=%~dp0.."
+@rem List of project directories under "%PROJECT_ROOT%\src\", 
 @rem where the downloaded binaries shall be copied to.
 set "PROJEKT_LIST=EZSeleniumLib"
 
@@ -57,7 +57,7 @@ if "%WEBDRIVER_VERSION%" == "" (
 )
 
 set "DOWNLOAD_URL=%WEBDRIVER_HOMEPAGE%/%WEBDRIVER_VERSION%"
-set "DOWNLOAD_ROOT=%PROJEKT_ROOT%\bin\WebDriver\Chrome"
+set "DOWNLOAD_ROOT=%PROJECT_ROOT%\bin\WebDriver\Chrome"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
 @rem die Liste der Platformen, fuer die jeweils ein WebDriver ZIP Archiv heruntergeladen werden sollen.
 @rem set "PLATFORMLIST=win32"
@@ -131,7 +131,7 @@ for %%f in (%PLATFORMLIST%) do (
 	)		
 	for %%p in (!PROJEKT_LIST!) do (
 		set "prj=%%p" 
-		set "prjpath=%PROJEKT_ROOT%\src\!prj!"
+		set "prjpath=%PROJECT_ROOT%\src\!prj!"
 		echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
 		del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
 		set  "subdir=chromedriver-%%f\"
