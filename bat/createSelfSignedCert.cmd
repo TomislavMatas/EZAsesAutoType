@@ -8,7 +8,7 @@
 :: -- 2024/04/12:TomislavMatas: Version "1.123.4"
 :: -- * Renamed this file from "createNewSelfSignedCertificate.cmd" to "createSelfSignedCert.cmd".
 :: -- 2024/04/10:TomislavMatas: 
-:: -- * Inital version
+:: -- * Initial version
 :: --
 
 @echo off
