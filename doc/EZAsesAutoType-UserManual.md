@@ -36,7 +36,7 @@ NOTE: The default location for the log file is "%UserProfile%&#92;.EZAsesAutoTyp
 Start the application "EZAsesAutoType.exe" from the installation location.
 Set the desired values in the main dialog:
 
-![MainDialog](../res/img/Screenshot-MainDialog-1.123.4.png)
+![MainDialog](../res/img/Screenshot-MainDialog-1.124.0.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the
 following for you completely automatically:
