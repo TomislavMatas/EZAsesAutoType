@@ -4,10 +4,8 @@ to automate the daily chore of utilizing the virtual punch card system
 "ATOSS Staff Efficiency Suite" also known as "ASES".
 
 ## Overview
-Start the application and set the desired values in the main dialog: 
-
-![MainDialog](res/img/Screenshot-MainDialog-1.123.4.png)
-
+Start the application and set the desired values in the main dialog:   
+![MainDialog](res/img/Screenshot-MainDialog-v1.124.0.png)  
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
 
