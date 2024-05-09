@@ -6,7 +6,7 @@ be deployed with every major browser version update.
 Resulting in a patch needed apx. every month on "Stable release" 
 channels of Chrome, Edge and Firefox.
 
-The WebDriver main version must be the same as the browser verion.
+The WebDriver major version must be the same as the browser major verion.
 
 ## Using Selenium WebDriver for Chrome
 WebDriver download URL:
@@ -44,6 +44,11 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2024/05/05:TomislavMatas: Version "4.20.0"
+* Update "Selenium" libs to version "4.20.0".
+* Update "log4net" libs to version "2.0.17".
+* Set product version to "4.20.0" reflecting the referenced selenium package version.
+
 ## 2024/05/02:TomislavMatas: Version "1.124.0"
 * Use "chromedriver.exe" version "124.0.6367.91".
 * Use "MicrosoftWebDriver.exe" version "124.0.2477.0".

@@ -5,11 +5,12 @@
 // Browser factory helper class. 
 // 
 // Revision History: 
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
-using System;
 using log4net;
 
 namespace EZSeleniumLib
@@ -21,7 +22,7 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog _log = null;
+        private static ILog? _log = null;
         private static ILog Log
         {
             get
@@ -41,7 +42,7 @@ namespace EZSeleniumLib
         /// Instantiate a specific descendant of "BrowserBase".
         /// </summary>
         /// <returns></returns>
-        public static BrowserBase GetBrowserInstance()
+        public static BrowserBase? GetBrowserInstance()
         {
             try
             {
@@ -65,7 +66,7 @@ namespace EZSeleniumLib
         /// Instantiate a specific descendant of "BrowserBase".
         /// </summary>
         /// <returns></returns>
-        public static BrowserBase GetBrowserInstance(string browserImplementation)
+        public static BrowserBase? GetBrowserInstance(string browserImplementation)
         {
             try
             {
@@ -88,7 +89,7 @@ namespace EZSeleniumLib
         /// Instantiate a specific descendant of "BrowserBase".
         /// </summary>
         /// <returns></returns>
-        public static BrowserBase GetBrowserInstance(string browserImplementation, BrowserOptions browserOptions)
+        public static BrowserBase? GetBrowserInstance(string browserImplementation, BrowserOptions browserOptions)
         {
             try
             {
@@ -128,7 +129,7 @@ namespace EZSeleniumLib
         /// Return instance of class "BorwserEdge".
         /// </summary>
         /// <returns></returns>
-        private static BrowserBase GetBrowserInstanceEdge(BrowserOptions browserOptions)
+        private static BrowserBase? GetBrowserInstanceEdge(BrowserOptions browserOptions)
         {
             try
             {
@@ -150,7 +151,7 @@ namespace EZSeleniumLib
         /// Return instance of class "BorwserChrome".
         /// </summary>
         /// <returns></returns>
-        private static BrowserBase GetBrowserInstanceChrome(BrowserOptions browserOptions)
+        private static BrowserBase? GetBrowserInstanceChrome(BrowserOptions browserOptions)
         {
             try
             {
@@ -172,7 +173,7 @@ namespace EZSeleniumLib
         /// Return instance of class "BorwserFirefox".
         /// </summary>
         /// <returns></returns>
-        private static BrowserBase GetBrowserInstanceFirefox(BrowserOptions browserOptions)
+        private static BrowserBase? GetBrowserInstanceFirefox(BrowserOptions browserOptions)
         {
             try
             {

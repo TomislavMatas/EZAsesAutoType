@@ -6,11 +6,14 @@
 // Wrapper for "WebDriver.Manage().Cookies.*" methods.
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
 using System.Collections.ObjectModel;
+
 using OpenQA.Selenium;
 
 namespace EZSeleniumLib
@@ -34,7 +37,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception("cookieJar  is null");
+                    throw new Exception(nameof(cookieJar)+" is null");
 
                 return cookieJar.AllCookies;
             }
@@ -66,7 +69,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception("cookieJar  is null");
+                    throw new Exception(nameof(cookieJar)+" is null");
 
                 cookieJar.AddCookie(cookie);
                 return true;
@@ -99,7 +102,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception("cookieJar  is null");
+                    throw new Exception(nameof(cookieJar)+" is null");
 
                 cookieJar.DeleteCookie(cookie);
                 return true;
@@ -132,7 +135,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception("cookieJar  is null");
+                    throw new Exception(nameof(cookieJar)+" is null");
 
                 cookieJar.DeleteCookieNamed(name);
                 return true;
@@ -165,7 +168,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception("cookieJar  is null");
+                    throw new Exception(nameof(cookieJar)+" is null");
 
                 cookieJar.DeleteAllCookies();
                 return true;
@@ -184,7 +187,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// Wrapper for "Driver.Manage().Cookies.GetCookieNamed()".
         /// </summary>
-        public Cookie GetCookieNamed(string name)
+        public Cookie? GetCookieNamed(string name)
         {
             try
             {
@@ -198,7 +201,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception("cookieJar  is null");
+                    throw new Exception(nameof(cookieJar)+" is null");
 
                 return cookieJar.GetCookieNamed(name);
             }

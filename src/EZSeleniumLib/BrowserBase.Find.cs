@@ -6,6 +6,8 @@
 // Implementation of wrappers for "WebDriver.Find*" methods.
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -23,7 +25,7 @@ namespace EZSeleniumLib
         /// </summary>
         /// <param name="by"></param>
         /// <returns></returns>
-        public IWebElement FindElement(By by)
+        public IWebElement? FindElement(By by)
         {
             return this.FindElement(by, timeoutInSeconds: 0);
         }
@@ -33,13 +35,49 @@ namespace EZSeleniumLib
         /// </summary>
         /// <param name="xPath"></param>
         /// <returns></returns>
-        public IWebElement FindElementByXPath(string xPath)
+        public IWebElement? FindElementByXPath(string xPath)
         {
             try
             {
                 Log.Debug(DEBUG_START);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds: 0);
+            }
+            catch (OpenQA.Selenium.WebDriverTimeoutException)
+            {
+                Log.Debug("WebDriverTimeout");
+                return null;
+            }
+            catch (OpenQA.Selenium.NoSuchElementException)
+            {
+                Log.Debug("NoSuchElement");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return null;
+            }
+            finally
+            {
+                Log.Debug(DEBUG_DONE);
+            }
+        }
+
+        /// <summary>
+        /// Wrapper for "Driver.FindElement(By.XPath(xPath), timeoutInSeconds);".
+        /// </summary>
+        /// <param name="xPath"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        public IWebElement? FindElementByXPath(string xPath, int timeoutInSeconds)
+        {
+            try
+            {
+                Log.Debug(DEBUG_START);
+                Log.Debug(String.Format("xPath={0}", xPath));
+                Log.Debug(String.Format("timeoutInSeconds={0}", timeoutInSeconds));
+                return this.FindElement(By.XPath(xPath), timeoutInSeconds);
             }
             catch( OpenQA.Selenium.WebDriverTimeoutException)
             {
@@ -70,7 +108,7 @@ namespace EZSeleniumLib
         /// <param name="xPath"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        public IWebElement FindElementByXpath(string xPath, int timeoutInSeconds)
+        public IWebElement? FindElementByXpath(string xPath, int timeoutInSeconds)
         {
             try
             {
@@ -106,7 +144,7 @@ namespace EZSeleniumLib
         /// <param name="by"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        public IWebElement FindElement( By by, int timeoutInSeconds )
+        public IWebElement? FindElement( By by, int timeoutInSeconds )
         {
             TimeSpan revert = TimeSpan.Zero;
             try
@@ -140,7 +178,8 @@ namespace EZSeleniumLib
             finally
             {
                 if(revert != TimeSpan.Zero)
-                    Driver.Manage().Timeouts().ImplicitWait = revert;
+                    if(this.Driver!=null)
+                        this.Driver.Manage().Timeouts().ImplicitWait = revert;
 
                 Log.Debug(DEBUG_DONE);
             }
@@ -151,7 +190,7 @@ namespace EZSeleniumLib
         /// </summary>
         /// <param name="by"></param>
         /// <returns></returns>
-        public ReadOnlyCollection<IWebElement> FindElements(By by)
+        public ReadOnlyCollection<IWebElement>? FindElements(By by)
         {
             return this.FindElements(by, timeoutInSeconds: 0);
         }
@@ -164,7 +203,7 @@ namespace EZSeleniumLib
         /// <param name="by"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        public ReadOnlyCollection<IWebElement> FindElements(By by, int timeoutInSeconds)
+        public ReadOnlyCollection<IWebElement>? FindElements(By by, int timeoutInSeconds)
         {
             TimeSpan revert = TimeSpan.Zero;
             try
@@ -199,7 +238,8 @@ namespace EZSeleniumLib
             finally
             {
                 if (revert != TimeSpan.Zero)
-                    Driver.Manage().Timeouts().ImplicitWait = revert;
+                    if(this.Driver != null)
+                        this.Driver.Manage().Timeouts().ImplicitWait = revert;
 
                 Log.Debug(DEBUG_DONE);
             }
