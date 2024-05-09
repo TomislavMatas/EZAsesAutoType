@@ -6,11 +6,15 @@
 // JavaScript "window.performance.memory".
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
+// * Add Serialization attributes. Some apps referencing 
+//   "EZSeleniumLib" might want to serialze this data class.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace EZSeleniumLib
 {
@@ -18,18 +22,21 @@ namespace EZSeleniumLib
     /// Class representation of json returned by
     /// JavaScript "window.performance.memory".
     /// </summary>
+    [DataContract]
     public class MemoryInfo
     {
         /// <summary>
         /// "totalJsHeapSize" is current size of the JS heap in bytes
         /// including free space not occupied by any JS objects (yet).
         /// </summary>
+        [DataMember]
         public long totalJSHeapSize;
 
         /// <summary>
         /// "usedJsHeapSize" is the total amount of memory in bytes 
         /// being used by JS objects including V8 internal objects.
         /// </summary>
+        [DataMember]
         public long usedJSHeapSize;
 
         /// <summary>
@@ -39,6 +46,7 @@ namespace EZSeleniumLib
         /// that the JavaScript heap of a web application 
         /// is allowed to consume.
         /// </summary>
+        [DataMember]
         public long jsHeapSizeLimit;
 
         /// <summary>
@@ -92,20 +100,20 @@ namespace EZSeleniumLib
             this.InitFromDictionary((Dictionary<string, object>)obj);
         }
 
-        private void InitFromDictionary(Dictionary<string, object> dict)
+        private void InitFromDictionary(Dictionary<string, object>? dict)
         {
             if (dict == null)
                 return;
 
-            if (dict.TryGetValue(nameof(totalJSHeapSize), out object _totalJSHeapSize))
+            if (dict.TryGetValue(nameof(totalJSHeapSize), out object? _totalJSHeapSize))
                 if (_totalJSHeapSize != null)
                     this.totalJSHeapSize = (long)_totalJSHeapSize;
 
-            if (dict.TryGetValue(nameof(usedJSHeapSize), out object _usedJSHeapSize))
+            if (dict.TryGetValue(nameof(usedJSHeapSize), out object? _usedJSHeapSize))
                 if (_usedJSHeapSize != null)
                     this.usedJSHeapSize = (long)_usedJSHeapSize;
 
-            if (dict.TryGetValue(nameof(jsHeapSizeLimit), out object _jsHeapSizeLimit))
+            if (dict.TryGetValue(nameof(jsHeapSizeLimit), out object? _jsHeapSizeLimit))
                 if (_jsHeapSizeLimit != null)
                     this.jsHeapSizeLimit = (long)_jsHeapSizeLimit;
         }

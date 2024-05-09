@@ -5,6 +5,8 @@
 // Constants with "public" relevance.
 //
 // Revision History:
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/05/03:TomislavMatas: Version "1.125.0"
 // * Update "chromedriver.exe"       to version "125.0.6422.26".
 // * Update "MicrosoftWebDriver.exe" to version "125.0.2535.13".

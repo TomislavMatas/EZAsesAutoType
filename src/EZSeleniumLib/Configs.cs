@@ -6,11 +6,12 @@
 // the "App.config" file using specific wrapper methods.
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
-using System;
 using System.Configuration;
 
 using log4net;
@@ -25,7 +26,7 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog _log = null;
+        private static ILog? _log = null;
         private static ILog Log
         {
             get
@@ -97,7 +98,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                string valueString = ConfigurationManager.AppSettings[name];
+                string? valueString = ConfigurationManager.AppSettings[name];
                 if (valueString == null)
                     return defaultValue;
 
@@ -116,7 +117,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                string valueString = ConfigurationManager.AppSettings[name];
+                string? valueString = ConfigurationManager.AppSettings[name];
                 if (valueString == null)
                     return defaultValue;
 
@@ -135,7 +136,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                string value = ConfigurationManager.AppSettings[name];
+                string? value = ConfigurationManager.AppSettings[name];
                 if (value == null)
                     value=defaultValue;
 
