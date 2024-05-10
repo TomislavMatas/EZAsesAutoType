@@ -2,6 +2,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/05/10:TomislavMatas: Version "1.125.0"
+// * Enhance NULL value handling and validation.
 // 2024/04/13:TomislavMatas: Version "1.123.4"
 // * Rename "textBoxPunchIn"  to "textBoxPunchInAM".
 // * Rename "textBoxPunchOut" to "textBoxPunchOutAM".
@@ -803,7 +805,7 @@ namespace EZAsesAutoType
 
         #region textbox handlerz
 
-        private string EvalTimeByFragment(string value)
+        private string? EvalTimeByFragment(string value)
         {
             if (value == null)
                 return null;
@@ -1028,7 +1030,7 @@ namespace EZAsesAutoType
 
             TextBox textBox = (TextBox)sender;
             string fragment = textBox.Text;
-            string expanded = this.EvalTimeByFragment(fragment);
+            string? expanded = this.EvalTimeByFragment(fragment);
             if (string.Equals(fragment, expanded))
                 return;
 
@@ -1070,7 +1072,7 @@ namespace EZAsesAutoType
 
             TextBox textBox = (TextBox)sender;
             string fragment = textBox.Text;
-            string expanded = this.EvalTimeByFragment(fragment);
+            string? expanded = this.EvalTimeByFragment(fragment);
             if (string.Equals(fragment, expanded))
                 return;
 
@@ -1112,7 +1114,7 @@ namespace EZAsesAutoType
 
             TextBox textBox = (TextBox)sender;
             string fragment = textBox.Text;
-            string expanded = this.EvalTimeByFragment(fragment);
+            string? expanded = this.EvalTimeByFragment(fragment);
             if (string.Equals(fragment, expanded))
                 return;
 
@@ -1154,7 +1156,7 @@ namespace EZAsesAutoType
 
             TextBox textBox = (TextBox)sender;
             string fragment = textBox.Text;
-            string expanded = this.EvalTimeByFragment(fragment);
+            string? expanded = this.EvalTimeByFragment(fragment);
             if (string.Equals(fragment, expanded))
                 return;
 
