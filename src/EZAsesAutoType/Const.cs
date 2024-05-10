@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/05/10:TomislavMatas: Version "1.125.0"
+// * Enhance NULL value handling and validation.
 // 2024/04/12:TomislavMatas: Version "1.123.4"
 // * Add "AssemblyDisplayName", "AssemblyDisplayVersion" and "AssemblyDisplayTitle".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -45,7 +47,7 @@ namespace EZAsesAutoType
         /// <summary>
         /// Singleton helper variable.
         /// </summary>
-        private static string m_AssemblyFileName = null;
+        private static string? m_AssemblyFileName = null;
         /// <summary>
         /// Executing assembly's file name.
         /// </summary>
