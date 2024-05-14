@@ -6,6 +6,13 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/05/15:TomislavMatas: Version "1.125.0":
+* Update "chromedriver.exe" to version "125.0.6422.26".
+* Update "MicrosoftWebDriver.exe" to version "125.0.2535.13".
+* Update "log4net" libs to version "2.0.17".
+* Update "Selenium" libs to version "4.20.0".
+* Add handling of commandline argument "/run".
+
 ## 2024/05/02:TomislavMatas: Version "1.124.0"
 * Update "chromedriver.exe" to version "124.0.6367.91".
 * Update "MicrosoftWebDriver.exe" to version "124.0.2477.0".
