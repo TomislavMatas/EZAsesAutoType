@@ -2,6 +2,9 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/05/04:TomislavMatas: Version "1.125.0":
+// * Add handling of commandline arguments in general and 
+//   the switch "/run" in special.
 // 2024/05/10:TomislavMatas: Version "1.125.0"
 // * Enhance NULL value handling and validation.
 // 2024/04/13:TomislavMatas: Version "1.123.4"
@@ -95,9 +98,35 @@ namespace EZAsesAutoType
             return prev;
         }
 
+        private string[]? m_Args = null;
+        private string[]? Args
+        {
+            get
+            {
+                if (m_Args == null)
+                    m_Args = [];
+                return m_Args;
+            }
+            set
+            {
+                m_Args = value;
+            }
+        }
+        private string[]? GetArgs()
+        {
+            return this.Args;
+        }
+        private string[]? SetArgs(string[]? args)
+        {
+            string[]? prev = this.GetArgs();
+            this.Args = args;
+            return prev;
+        }
+
         #endregion
 
         #region constructorz 
+
         /// <summary>
         ///  Default constructor.
         /// </summary>
@@ -107,7 +136,29 @@ namespace EZAsesAutoType
             {
                 Log.Debug(Const.LogStart);
                 InitializeComponent();
-                if (!Initialze())
+                if (!Initialze(args: null))
+                    throw new Exception(nameof(Initialze) + Const.LogFail);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        ///  Custom constructor.
+        /// </summary>
+        public FormMain(string[] args)
+        {
+            try
+            {
+                Log.Debug(Const.LogStart);
+                InitializeComponent();
+                if (!Initialze(args))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
@@ -144,11 +195,12 @@ namespace EZAsesAutoType
         /// Initialize instance.
         /// </summary>
         /// <returns></returns>
-        private bool Initialze()
+        private bool Initialze(string[]? args = null)
         {
             try
             {
                 Log.Debug(Const.LogStart);
+                this.SetArgs(args);
                 this.SetTitle();
                 this.SetAppHandler(new AppHandler(this));
                 return true;
@@ -681,6 +733,84 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// Checks if srting array "args" contains "/Run".
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private bool ArgRunProvided(string[]? args)
+        {
+            if (args == null)
+                return false;
+
+            foreach (string arg in args)
+                if (!string.IsNullOrEmpty(arg))
+                    if (arg.Equals(Const.CommandlineArg_Run, StringComparison.OrdinalIgnoreCase))
+                        return true;
+
+            return false;
+        }
+
+        private bool ArgRunProvided()
+        {
+            if (this.ArgRunProvided(this.GetArgs()))
+                return true;
+
+            return false;
+        }
+
+        private void Run()
+        {
+            try
+            {
+                this.SaveUserSettings();
+
+                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                Global.SetCancelRequested(false);
+                this.RenderControlsWorkerStatus(true);
+                this.backgroundWorker1.RunWorkerAsync(userSettings);
+                bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
+                while (backroundWorkerIsBusy)
+                {
+                    Application.DoEvents();
+                    if (Global.GetCancelRequested())
+                        backgroundWorker1.CancelAsync();
+
+                    backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                this.RenderControlsWorkerStatus(false);
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private void RunOnLoad()
+        {
+            try
+            {
+                this.Show();
+                Application.DoEvents();
+                this.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
         #endregion 
 
         #region form handlerz
@@ -702,6 +832,9 @@ namespace EZAsesAutoType
 
                 if (!RenderControls(userSettings))
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
+
+                if (this.ArgRunProvided())
+                    this.RunOnLoad();
 
             }
             catch (Exception ex)
@@ -758,24 +891,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                this.SaveUserSettings();
-
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
-                if (userSettings == null)
-                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
-
-                Global.SetCancelRequested(false);
-                this.RenderControlsWorkerStatus(true);
-                this.backgroundWorker1.RunWorkerAsync(userSettings);
-                bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
-                while (backroundWorkerIsBusy)
-                {
-                    Application.DoEvents();
-                    if (Global.GetCancelRequested())
-                        backgroundWorker1.CancelAsync();
-
-                    backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
-                }
+                this.Run();
             }
             catch (Exception ex)
             {
