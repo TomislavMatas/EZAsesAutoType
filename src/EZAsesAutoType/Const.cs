@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/05/15:TomislavMatas: Version "1.125.0"
+// * Add "CommandlineArg_Run".
 // 2024/05/10:TomislavMatas: Version "1.125.0"
 // * Enhance NULL value handling and validation.
 // 2024/04/12:TomislavMatas: Version "1.123.4"
@@ -189,6 +191,8 @@ namespace EZAsesAutoType
         #endregion
 
         public const string UrlParmClientNo = "ClientNo=";
+
+        public const string CommandlineArg_Run = "/run";
 
     } // class
 
