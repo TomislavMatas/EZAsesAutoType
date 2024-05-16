@@ -12,6 +12,8 @@
 // See "README.md" for details.
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -37,7 +39,7 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog _log = null;
+        private static ILog? _log = null;
         private static ILog Log
         {
             get
@@ -52,16 +54,23 @@ namespace EZSeleniumLib
 
         #region private memberz
 
-        private ChromeDriver _driver = null;
-        protected override WebDriver GetDriver()
+        private ChromeDriver? _driver = null;
+        protected override WebDriver? GetDriver()
         {
-        	// Explicit type cast below is optional, but kept for the sake of clarity.
+            if (_driver == null)
+                return null;
+
+        	// Explicit type cast below is optional,
+            // but kept for the sake of clarity.
             return (ChromeDriver)_driver;
         }
 
-        private ChromeDriverService _service = null;
-        protected override DriverService GetService()
+        private ChromeDriverService? _service = null;
+        protected override DriverService? GetService()
         {
+            if (_service == null)
+                return null;
+
             return _service;
         }
 
@@ -83,14 +92,20 @@ namespace EZSeleniumLib
 
         #endregion 
 
-        protected override void SetArgPrefix()
+        protected override string GetArgPrefix()
         {
-            _argPfx = Consts.ARG_PREFIX_CHROME;
+            if (_argPfx == null)
+                _argPfx = Consts.ARG_PREFIX_CHROME;
+
+            return _argPfx;
         }
 
-        protected override void SetProcessName()
+        protected override string GetProcessName()
         {
-            _processName = Consts.BROWSER_PROCESSNAME_CHROME;
+            if (_processName == null)
+                _processName = Consts.BROWSER_PROCESSNAME_CHROME;
+
+            return _processName;
         }
 
         /// <summary>
@@ -140,8 +155,9 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                if (!GetDriverOptions(out ChromeOptions options))
-                    throw new Exception("GetDriverOptions failed");
+                ChromeOptions? options = this.GetDriverOptions();
+                if (options==null)
+                    throw new Exception(nameof(this.GetDriverOptions)+Consts.LogFail);
 
                 this._driver = new ChromeDriver(options);
                 return true;
@@ -196,9 +212,9 @@ namespace EZSeleniumLib
                 service.LogPath = null;
 #endif
                 Log.Debug("ChromeDriverService init OK");
-
-                if (!GetDriverOptions(out ChromeOptions options))
-                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
+                ChromeOptions? options = this.GetDriverOptions();
+                if (options == null)
+                    throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
                 Log.Debug("ChromeDriverService start ...");
                 service.Start();
@@ -225,13 +241,13 @@ namespace EZSeleniumLib
             }
         }
 
-        private bool GetDriverOptions(out ChromeOptions options)
+        private ChromeOptions? GetDriverOptions()
         {
             try
             {
                 Log.Debug(DEBUG_START);
 
-                options = new ChromeOptions();
+                ChromeOptions options = new ChromeOptions();
 
                 #region Basic Options
                 options.PageLoadStrategy = PageLoadStrategy.Normal;
@@ -308,13 +324,12 @@ namespace EZSeleniumLib
 
                 #endregion
 
-                return true;
+                return options;
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                options = null;
-                return false;
+                return null;
             }
             finally
             {
@@ -427,7 +442,7 @@ namespace EZSeleniumLib
         /// <param name="script"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public override object ExecuteScript(string script, params object[] args)
+        public override object? ExecuteScript(string script, params object[] args)
         {
             try
             { 
@@ -454,11 +469,14 @@ namespace EZSeleniumLib
         /// returned by the JavaScript call "window.performance.memory".
         /// </summary>
         /// <returns></returns>
-        public override MemoryInfo GetMemoryInfo()
+        public override MemoryInfo? GetMemoryInfo()
         {
             try
             { 
-                object obj = this.ExecuteScript("return window.performance.memory");
+                object? obj = this.ExecuteScript("return window.performance.memory");
+                if (obj == null)
+                    throw new Exception(nameof(obj)+Consts.LogFail);
+
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
             }
@@ -561,7 +579,7 @@ namespace EZSeleniumLib
                 // but Selenium Driver does not transfer control
                 // to the newly opened TAB implizitly.
                 Log.Info("Open new TAB ...");
-                object objOpenResult = this.ExecuteScript("window.open()");
+                object? objOpenResult = this.ExecuteScript("window.open()");
 
                 // although the scipt should execute "synchronously",
                 // give browser some time to render the newly opened TAB.
@@ -581,7 +599,7 @@ namespace EZSeleniumLib
                     // It is still under Selenium Driver's control, as long
                     // as the driver.SwitchTo() command as not been issued.
                     Log.Info("Close old TAB ...");
-                    object objCloseResult = this.ExecuteScript("window.close()");
+                    object? objCloseResult = this.ExecuteScript("window.close()");
                     Thread.Sleep(this.GetDelay());
                 }
 

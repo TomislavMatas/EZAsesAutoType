@@ -12,6 +12,8 @@
 // See "README.md" for details.
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -37,7 +39,7 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog _log = null;
+        private static ILog? _log = null;
         private static ILog Log
         {
             get
@@ -52,16 +54,23 @@ namespace EZSeleniumLib
 
         #region private memberz
 
-        private EdgeDriver _driver = null;
-        protected override WebDriver GetDriver()
+        private EdgeDriver? _driver = null;
+        protected override WebDriver? GetDriver()
         {
-        	// Explicit type cast below is optional, but kept for the sake of clarity.
+            if (_driver == null)
+                return null;
+
+            // Explicit type cast below is optional,
+            // but kept for the sake of clarity.
             return (EdgeDriver)_driver;
         }
 
-        private EdgeDriverService _service = null;
-        protected override DriverService GetService()
+        private EdgeDriverService? _service = null;
+        protected override DriverService? GetService()
         {
+            if (_service == null)
+                return null;
+
             return _service;
         }
 
@@ -83,14 +92,20 @@ namespace EZSeleniumLib
 
         #endregion 
 
-        protected override void SetArgPrefix()
+        protected override string GetArgPrefix()
         {
-            _argPfx = Consts.ARG_PREFIX_EDGE;
+            if (_argPfx == null)
+                _argPfx = Consts.ARG_PREFIX_EDGE;
+
+            return _argPfx;
         }
 
-        protected override void SetProcessName()
+        protected override string GetProcessName()
         {
-            _processName = Consts.BROWSER_PROCESSNAME_EDGE;
+            if (_processName == null)
+                _processName = Consts.BROWSER_PROCESSNAME_EDGE;
+
+            return _processName;
         }
 
         /// <summary>
@@ -140,8 +155,9 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                if (!GetDriverOptions(out EdgeOptions options))
-                    throw new Exception("GetDriverOptions failed");
+                EdgeOptions? options = this.GetDriverOptions();
+                if (options == null)
+                    throw new Exception(nameof(this.GetDriverOptions) +Consts.LogFail);
 
                 this._driver = new EdgeDriver(options);
                 return true;
@@ -189,8 +205,9 @@ namespace EZSeleniumLib
 #endif
                 Log.Debug("EdgeDriverService init OK");
 
-                if (!GetDriverOptions(out EdgeOptions options))
-                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
+                EdgeOptions? options = this.GetDriverOptions();
+                if (options == null)
+                    throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
                 Log.Debug("EdgeDriverService start ...");
                 service.Start();
@@ -216,24 +233,24 @@ namespace EZSeleniumLib
             }
         }
 
-        private bool GetDriverOptions(out EdgeOptions edgeOptions)
+        private EdgeOptions? GetDriverOptions()
         {
             try
             {
                 Log.Debug(DEBUG_START);
 
-                edgeOptions = new EdgeOptions();
+                EdgeOptions options = new EdgeOptions();
 
                 #region Basic Options
 
-                edgeOptions.PageLoadStrategy = PageLoadStrategy.Normal;
-                edgeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
+                options.PageLoadStrategy = PageLoadStrategy.Normal;
+                options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
 #if DEBUG
-                edgeOptions.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Client, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Driver, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
-                edgeOptions.SetLoggingPreference(LogType.Server, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Client, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Driver, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
+                options.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
 
                 #endregion
@@ -272,9 +289,9 @@ namespace EZSeleniumLib
                 #region Capabilities
 
                 // Selenium v3
-                // edgeOptions.AddAdditionalCapability("useAutomationExtension", false);
+                // options.AddAdditionalCapability("useAutomationExtension", false);
                 // Selenium v4
-                edgeOptions.AddAdditionalEdgeOption("useAutomationExtension", false);
+                options.AddAdditionalEdgeOption("useAutomationExtension", false);
 
                 Dictionary<string, object> profilePreferenceDict = new Dictionary<string, object>();
                 bool popupsEnabled = this.BrowserOptions.PopupsEnabled;
@@ -299,7 +316,7 @@ namespace EZSeleniumLib
                 //     optionDict.Add("prefs", profileDict);
                 //
                 // if (optionDict.Count > 0)
-                //    edgeOptions.AddAdditionalEdgeOption("ms:edgeOptions", optionDict);
+                //    options.AddAdditionalEdgeOption("ms:edgeOptions", optionDict);
                 #endregion
 
                 #region Selenium v4
@@ -307,12 +324,12 @@ namespace EZSeleniumLib
                 {
                     try
                     {
-                        edgeOptions.AddArgument(argument);
+                        options.AddArgument(argument);
                     }
                     catch (Exception ex)
                     {
                         Log.Debug(ex);
-                        Log.Info(string.Format("{0}('{1}'){2}", nameof(edgeOptions.AddArgument), argument, Consts.LogFail));
+                        Log.Info(string.Format("{0}('{1}'){2}", nameof(options.AddArgument), argument, Consts.LogFail));
                     }
                 }
 
@@ -320,12 +337,12 @@ namespace EZSeleniumLib
                 {
                     try 
                     { 
-                        edgeOptions.AddExcludedArgument(excludedArgument);
+                        options.AddExcludedArgument(excludedArgument);
                     }
                     catch (Exception ex)
                     {
                         Log.Debug(ex);
-                        Log.Info(string.Format("{0}('{1}'){2}", nameof(edgeOptions.AddExcludedArgument), excludedArgument, Consts.LogFail));
+                        Log.Info(string.Format("{0}('{1}'){2}", nameof(options.AddExcludedArgument), excludedArgument, Consts.LogFail));
                     }
                 }
 
@@ -333,12 +350,12 @@ namespace EZSeleniumLib
                 {
                     try
                     {
-                        edgeOptions.AddUserProfilePreference(profilePrefence.Key, profilePrefence.Value);
+                        options.AddUserProfilePreference(profilePrefence.Key, profilePrefence.Value);
                     }
                     catch (Exception ex)
                     {
                         Log.Debug(ex);
-                        Log.Info(string.Format("{0}('{1}'){2}", nameof(edgeOptions.AddUserProfilePreference), profilePrefence.Key, Consts.LogFail));
+                        Log.Info(string.Format("{0}('{1}'){2}", nameof(options.AddUserProfilePreference), profilePrefence.Key, Consts.LogFail));
                     }
                 }
 
@@ -346,13 +363,12 @@ namespace EZSeleniumLib
 
                 #endregion
 
-                return true;
+                return options;
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                edgeOptions = null;
-                return false;
+                return null;
             }
             finally
             {
@@ -456,12 +472,12 @@ namespace EZSeleniumLib
         /// <param name="script"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public override object ExecuteScript(string script, params object[] args)
+        public override object? ExecuteScript(string script, params object[] args)
         {
             try
             {
                 if (_driver == null)
-                    throw new Exception("_driver is null");
+                    throw new Exception(nameof(_driver)+Consts.LogIsNull);
 
                 IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
                 return js.ExecuteScript(script, args);
@@ -483,11 +499,14 @@ namespace EZSeleniumLib
         /// returned by the JavaScript call "window.performance.memory".
         /// </summary>
         /// <returns></returns>
-        public override MemoryInfo GetMemoryInfo()
+        public override MemoryInfo? GetMemoryInfo()
         {
             try
             {
-                object obj = this.ExecuteScript("return window.performance.memory");
+                object? obj = this.ExecuteScript("return window.performance.memory");
+                if(obj == null)
+                    throw new Exception(nameof(obj)+Consts.LogIsNull);
+
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
             }
