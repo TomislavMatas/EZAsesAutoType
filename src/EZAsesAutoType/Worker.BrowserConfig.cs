@@ -2,6 +2,8 @@
 // File: "Worker.BrowserConfig.cs"
 //
 // Revision History: 
+// 2024/05/10:TomislavMatas: Version "1.125.0"
+// * Enhance NULL value handling and validation.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -36,7 +38,7 @@ namespace EZAsesAutoType
         /// <param name="webDriver"></param>
         /// <param name="browserOptions"></param>
         /// <returns></returns>
-        private BrowserBase GetBrowserInstance(string webDriver, BrowserOptions browserOptions)
+        private BrowserBase? GetBrowserInstance(string webDriver, BrowserOptions browserOptions)
         {
             try
             {
@@ -60,7 +62,7 @@ namespace EZAsesAutoType
         /// <param name="webDriver"></param>
         /// <param name="browserOptions"></param>
         /// <returns></returns>
-        private void TeardownBrowserInstance(BrowserBase browser)
+        private void TeardownBrowserInstance(BrowserBase? browser)
         {
             try
             {

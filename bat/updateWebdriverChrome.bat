@@ -8,7 +8,7 @@
 :: -- 
 :: -- Example:
 :: -- ```
-:: -- CMD> updateWebdriverChrome 124.0.6367.91
+:: -- CMD> updateWebdriverChrome 125.0.6422.26
 :: -- ```
 :: --
 :: -- Notes:
@@ -21,6 +21,8 @@
 :: --   -->< https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE > 
 :: --
 :: -- Revision History
+:: -- 2024/05/03:TomislavMatas: Version "1.125.0"
+:: -- * Set "WEBDRIVER_VERSION_DEFAULT=125.0.6422.26".
 :: -- 2024/05/02:TomislavMatas: Version "1.124.0"
 :: -- * Set "WEBDRIVER_VERSION_DEFAULT=124.0.6367.91".
 :: -- 2024/04/04:TomislavMatas: Version "1.0.124"
@@ -28,13 +30,13 @@
 :: -- 2024/04/04:TomislavMatas: Version "1.0.123"
 :: -- * Tidy~Up commentz.
 :: -- 2024/03/25:TomislavMatas: Version "1.0.0.0"
-:: -- * Inital version with default webdriver version "123.0.6312.58"
+:: -- * Initial version with default webdriver version "123.0.6312.58"
 :: --
 
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=124.0.6367.91"
+set "WEBDRIVER_VERSION_DEFAULT=125.0.6422.26"
 
  
 echo see current versions of webdriver at:

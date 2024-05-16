@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/05/10:TomislavMatas: Version "1.125.0"
+// * Enhance NULL value handling and validation.
 // 2024/04/12:TomislavMatas: Version "1.123.4"
 // * Rename "ASESEnterInOutTimePair" to "ASESEnterInOutTimePairs"
 // * Add "multiple time pairs" capability to function "ASESEnterInOutTimePairs()".
@@ -36,11 +38,8 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
-
-                if (baseUrl == null)
-                    throw new ArgumentNullException(nameof(baseUrl));
+                ArgumentNullException.ThrowIfNull(browser,nameof(browser));
+                ArgumentNullException.ThrowIfNull(baseUrl,nameof(baseUrl));
 
                 if (!browser.GoToUrl(baseUrl, timeoutInSeconds))
                     throw new Exception(nameof(browser.GoToUrl) + Const.LogFail);
@@ -75,17 +74,14 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser,nameof(browser));
+                ArgumentNullException.ThrowIfNull(iFrameXPath, nameof(iFrameXPath));
 
-                if (iFrameXPath == null)
-                    throw new ArgumentNullException(nameof(iFrameXPath));
-
-                IWebElement iFrameElement = browser.FindElementByXpath(iFrameXPath, timeoutInSeconds);
+                IWebElement? iFrameElement = browser.FindElementByXpath(iFrameXPath, timeoutInSeconds);
                 if (iFrameElement == null)
                     throw new Exception(String.Format("'{0}'{1}", iFrameXPath, Const.LogNotFound));
 
-                IWebDriver iFrameDriver = browser.SwitchToIFrame(iFrameElement);
+                IWebDriver? iFrameDriver = browser.SwitchToIFrame(iFrameElement);
                 if (iFrameDriver == null)
                     throw new Exception(nameof(browser.SwitchToIFrame) + Const.LogFail);
 
@@ -113,19 +109,26 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 string xPath = this.GetLoginPageUsernameXPath();
-                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'",xPath));
+
                 if (!browser.MoveToElement(element))
                     throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
                 element.SendKeys(this.GetASESUserId());
 
                 xPath = this.GetLoginPagePasswordXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
                 if (!browser.MoveToElement(element))
                     throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
                 element.SendKeys(this.GetASESPassword());
 
                 if (!ASESUrlContainsClienNoParm(this.GetASESBaseUrl()))
@@ -136,6 +139,9 @@ namespace EZAsesAutoType
                     {   // considered "optional"
                         xPath = this.GetLoginPageClientXPath();
                         element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                        if (element == null)
+                            throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
                         if (browser.MoveToElement(element))
                             element.SendKeys(client);
                     }
@@ -146,12 +152,18 @@ namespace EZAsesAutoType
                 {   // considered "optional"
                     xPath = this.GetLoginPageLanguageXPath();
                     element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                    if (element == null)
+                        throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
                     if (browser.MoveToElement(element))
                         element.SendKeys(langauge);
                 }
 
                 xPath = this.GetLoginPageLoginButtonXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
                 if (browser.MoveToElement(element))
                     if (!browser.ClickElement(element))
                         throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
@@ -184,8 +196,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 if (!this.ASESMainPageIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESMainPageIsLoaded) + Const.LogFail);
@@ -196,9 +207,10 @@ namespace EZAsesAutoType
                 Thread.Sleep(1000);
 
                 string xPath = this.GetNavMenuXPath();
-                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
                 if(!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
@@ -209,6 +221,7 @@ namespace EZAsesAutoType
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                
                 if (!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
@@ -237,8 +250,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
@@ -250,9 +262,10 @@ namespace EZAsesAutoType
                         const string subProcess = "Set sorting state ascending";
                         Log.Info(subProcess + Const.LogInProgress);
                         string sortindicatorXPath = this.GetTimeGridCanvasSortingDescXPath();
-                        IWebElement sortindicatorElement = browser.FindElementByXpath(sortindicatorXPath, timeoutInSeconds);
+                        IWebElement? sortindicatorElement = browser.FindElementByXpath(sortindicatorXPath, timeoutInSeconds);
                         if (sortindicatorElement == null)
                             throw new Exception(string.Format("'{0}'{1}", sortindicatorXPath, Const.LogNotFound));
+                        
                         if (!browser.ClickElement(sortindicatorElement))
                             throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
@@ -299,16 +312,16 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
 
                 string xPath = this.GetTimeGridCanvasLastRowDateFromXPath();
-                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                
                 if (!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
@@ -316,8 +329,8 @@ namespace EZAsesAutoType
                 // embedding a "input" control. Need to click a second time
                 // but only if that "input" control has appeared
                 Thread.Sleep(1000);
-                xPath = xPath + "/input";
-                IWebElement input = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                xPath += "/input";
+                IWebElement? input = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (input == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
 
@@ -358,8 +371,7 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser, nameof(browser));
 
                 if (!this.ASESTimePairEntryPopupIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESTimePairEntryPopupIsLoaded) + Const.LogFail);
@@ -380,7 +392,7 @@ namespace EZAsesAutoType
                     if (rowIndex == 1)
                     {   // On first time pair use FindElement for "validation" 
                         string xPathRow = this.GetTimePairFirstRowTimeFromXPath();
-                        IWebElement rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
+                        IWebElement? rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
                         if (rowElement == null)
                             throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
 
@@ -392,7 +404,7 @@ namespace EZAsesAutoType
                         // has been activated by "mouse click".
                         Thread.Sleep(1000);
 
-                        xPathRow = xPathRow + "/input";
+                        xPathRow += "/input";
                         rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
                         if (rowElement == null)
                             throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
@@ -412,7 +424,7 @@ namespace EZAsesAutoType
                         // will be renderd _after_ the cell item's span element
                         // has been activated by "mouse click".
                         Thread.Sleep(1000);
-                        xPathRow = xPathRow + "/input";
+                        xPathRow += "/input";
                         rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
                         if (rowElement == null)
                             throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
@@ -436,7 +448,11 @@ namespace EZAsesAutoType
                     {   // On rowIndex == 0, cursor should already have been moved to
                         // new time pair row py sending a single "TAB" key stroke.
                         // On rowIndex > 1, simple keyboard navigation can be used.
-                        IWebElement activeElement = browser.GetWebDriver().SwitchTo().ActiveElement();
+                        IWebDriver? webDriver = browser.GetWebDriver();
+                        if(webDriver==null)
+                            throw new Exception(nameof(webDriver) + Const.LogIsNull);
+
+                        IWebElement? activeElement = webDriver.SwitchTo().ActiveElement();
                         if(activeElement==null)
                             throw new Exception(nameof(activeElement) + Const.LogIsNull);
 
@@ -455,7 +471,8 @@ namespace EZAsesAutoType
                         // this sleep is required to give app some time
                         // to render the "PunchOut" element.
                         Thread.Sleep(1000);
-                        activeElement = browser.GetWebDriver().SwitchTo().ActiveElement();
+
+                        activeElement = webDriver.SwitchTo().ActiveElement();
                         if (activeElement == null)
                             throw new Exception(nameof(activeElement) + Const.LogIsNull);
 
@@ -482,7 +499,7 @@ namespace EZAsesAutoType
                 } // foreach (TimePair timePair in timePairList)
 
                 string xPathAcceptButton = this.GetTimePairFooterAcceptButtonPath();
-                IWebElement elementAcceptButton = browser.FindElementByXpath(xPathAcceptButton, timeoutInSeconds);
+                IWebElement? elementAcceptButton = browser.FindElementByXpath(xPathAcceptButton, timeoutInSeconds);
                 if (elementAcceptButton == null)
                     throw new Exception(string.Format("'{0}'{1}", xPathAcceptButton, Const.LogNotFound));
 
@@ -514,16 +531,16 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser, nameof(browser));
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
 
                 string xPath = this.GetTimeGridCanvasSaveButtonPath();
-                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                
                 if (!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
@@ -582,16 +599,16 @@ namespace EZAsesAutoType
             try
             {
                 Log.Debug(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser, nameof(browser));
 
                 if (!this.ASESMainPageIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESMainPageIsLoaded) + Const.LogFail);
 
                 string xPath = this.GetNavMenuUsernameXPath();
-                IWebElement element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                
                 if (!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
@@ -600,6 +617,7 @@ namespace EZAsesAutoType
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+                
                 if (!browser.ClickElement(element))
                     throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
