@@ -11,8 +11,9 @@
 // within system's search path.
 // See "README.md" for details.
 //
-// History:
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -38,7 +39,7 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog _log = null;
+        private static ILog? _log = null;
         private static ILog Log
         {
             get
@@ -53,16 +54,23 @@ namespace EZSeleniumLib
 
         #region private memberz
 
-        private FirefoxDriver _driver = null;
-        protected override WebDriver GetDriver()
+        private FirefoxDriver? _driver = null;
+        protected override WebDriver? GetDriver()
         {
-        	// Explicit type cast below is optional, but kept for the sake of clarity.
+            if (_driver == null)
+                return null;
+
+            // Explicit type cast below is optional,
+            // but kept for the sake of clarity.
             return (FirefoxDriver)_driver;
         }
 
-        private FirefoxDriverService _service = null;
-        protected override DriverService GetService()
+        private FirefoxDriverService? _service = null;
+        protected override DriverService? GetService()
         {
+            if (_service == null)
+                return null;
+
             return _service;
         }
 
@@ -84,14 +92,20 @@ namespace EZSeleniumLib
 
         #endregion 
 
-        protected override void SetArgPrefix()
+        protected override string GetArgPrefix()
         {
-            _argPfx = Consts.ARG_PREFIX_FIREFOX;
+            if (_argPfx == null)
+                _argPfx = Consts.ARG_PREFIX_FIREFOX;
+
+            return _argPfx;
         }
 
-        protected override void SetProcessName()
+        protected override string GetProcessName()
         {
-            _processName = Consts.BROWSER_PROCESSNAME_FIREFOX;
+            if (_processName == null)
+                _processName = Consts.BROWSER_PROCESSNAME_FIREFOX;
+
+            return _processName;
         }
 
         /// <summary>
@@ -141,8 +155,9 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                if (!GetDriverOptions(out FirefoxOptions options))
-                    throw new Exception("GetDriverOptions failed");
+                FirefoxOptions? options = GetDriverOptions();
+                if (options==null)
+                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
                 this._driver = new FirefoxDriver(options);
                 return true;
@@ -198,7 +213,8 @@ namespace EZSeleniumLib
 #endif
                 Log.Debug("FirefoxDriverService init OK");
 
-                if (!GetDriverOptions(out FirefoxOptions options))
+                FirefoxOptions? options = GetDriverOptions();
+                if (options == null)
                     throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
                 Log.Debug("FirefoxDriverService start ...");
@@ -231,13 +247,13 @@ namespace EZSeleniumLib
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private bool GetDriverOptions(out FirefoxOptions options)
+        private FirefoxOptions? GetDriverOptions()
         {
             try
             {
                 Log.Debug(DEBUG_START);
 
-                options = new FirefoxOptions();
+                FirefoxOptions options = new FirefoxOptions();
 
                 #region Basic Options
 
@@ -290,13 +306,12 @@ namespace EZSeleniumLib
 
                 #endregion
 
-                return true;
+                return options;
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                options = null;
-                return false;
+                return null;
             }
             finally
             {
@@ -402,7 +417,7 @@ namespace EZSeleniumLib
         /// <param name="script"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public override object ExecuteScript(string script, params object[] args)
+        public override object? ExecuteScript(string script, params object[] args)
         {
             try
             {
@@ -429,11 +444,14 @@ namespace EZSeleniumLib
         /// returned by the JavaScript call "window.performance.memory".
         /// </summary>
         /// <returns></returns>
-        public override MemoryInfo GetMemoryInfo()
+        public override MemoryInfo? GetMemoryInfo()
         {
             try
             {
-                object obj = this.ExecuteScript("return window.performance.memory");
+                object? obj = this.ExecuteScript("return window.performance.memory");
+                if (obj == null)
+                    throw new Exception("ExecuteScript failed");
+
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
             }

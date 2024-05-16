@@ -7,13 +7,16 @@
 // "Navigation" in general.
 //
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Firefox enhancement in "ClickElement()": 
+//   Use "actions.Click(element).Perform()" instead of "element.Click()".
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 
 namespace EZSeleniumLib
 {
@@ -30,7 +33,10 @@ namespace EZSeleniumLib
             {
                 Log.Debug(DEBUG_START);
 
-                if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult))
+                if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult))
+                    return false;
+
+                if (uriResult == null)
                     return false;
 
 //                if (uriResult.Scheme != Uri.UriSchemeHttps)
@@ -89,16 +95,16 @@ namespace EZSeleniumLib
         /// Wrapper for "return Driver.Url;".
         /// </summary>
         /// <returns></returns>
-        public string GetUrl()
+        public string? GetUrl()
         {
             try
             {
                 Log.Debug(DEBUG_START);
 
-                if (Driver == null)
-                    throw new Exception("Driver is null");
+                if (this.Driver == null)
+                    throw new Exception(nameof(this.Driver)+Consts.LogIsNull);
 
-                return Driver.Url;
+                return this.Driver.Url;
             }
             catch (Exception ex)
             {
@@ -157,7 +163,8 @@ namespace EZSeleniumLib
             finally
             {
                 if (revert != TimeSpan.Zero)
-                    this.Driver.Manage().Timeouts().PageLoad = revert;
+                    if(this.Driver != null)
+                        this.Driver.Manage().Timeouts().PageLoad = revert;
 
                 Log.Debug(DEBUG_DONE);
             }
@@ -228,11 +235,11 @@ namespace EZSeleniumLib
                 if(element==null)
                     throw new ArgumentNullException(nameof(element)); 
 
-                object result = this.ExecuteScript("arguments[0].scrollIntoView(true);", element);
+                object? result = this.ExecuteScript("arguments[0].scrollIntoView(true);", element);
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(element).Perform();
                 Thread.Sleep(this.GetDelay());
-                element.Click();
+                actions.Click(element).Perform();
                 Thread.Sleep(this.GetDelay());
                 return true;
             }

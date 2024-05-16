@@ -1,7 +1,9 @@
 //
 // File: "Program.cs"
 //
-// Revision History: 
+// Revision History:
+// 2024/05/04:TomislavMatas: Version "1.125.0":
+// * Add handling of commandline arguments.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -37,17 +39,19 @@ namespace EZAsesAutoType
         ///  see: < https://aka.ms/applicationconfiguration >
         /// </summary>
         [STAThread]
-        static void Main()
+        static int Main(string[] args)
         {
             try
             {
                 Log.Debug(Const.LogStart);
                 ApplicationConfiguration.Initialize();
-                Application.Run(new FormMain());
+                Application.Run(new FormMain(args));
+                return 0;
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
+                return 1;
             }
             finally
             { 

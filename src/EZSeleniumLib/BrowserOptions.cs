@@ -5,6 +5,8 @@
 // Generic browser options class. 
 // 
 // Revision History: 
+// 2024/05/09:TomislavMatas: Version "4.20.0"
+// * Upgrade "Selenium" libs to version "4.20.0".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
