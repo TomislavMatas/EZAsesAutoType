@@ -6,6 +6,9 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/05/26:TomislavMatas: Version "1.126.0"
+* Increase default timeout values.
+
 ## 2024/05/15:TomislavMatas: Version "1.125.0":
 * Update "chromedriver.exe" to version "125.0.6422.26".
 * Update "MicrosoftWebDriver.exe" to version "125.0.2535.13".
