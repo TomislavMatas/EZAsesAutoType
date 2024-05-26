@@ -5,6 +5,8 @@
 // Project specific configuration settings. 
 //
 // Revision History: 
+// 2024/05/26:TomislavMatas: Version "1.126.0"
+// * Increase default timeout values.
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * Use "WaitBeforeLogoutDefault=2" instead of ""WaitBeforeLogoutDefault=5".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -62,7 +64,7 @@ namespace EZAsesAutoType
         }
 
         private const string TimeoutFindElementKeyName = "ASES.Timeout.FindElement";
-        private const int TimeoutFindElementDefault = 1;
+        private const int TimeoutFindElementDefault = 15;
         private int m_TimeoutFindElement = -1;
         private int TimeoutFindElement
         {
@@ -89,7 +91,7 @@ namespace EZAsesAutoType
         }
 
         private const string TimeoutPopupKeyName = "ASES.Timeout.Popup";
-        private const int TimeoutPopupDefault = 1;
+        private const int TimeoutPopupDefault = 15;
         private int m_TimeoutPopup = -1;
         private int TimeoutPopup
         {
