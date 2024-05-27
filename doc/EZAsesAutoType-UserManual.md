@@ -34,9 +34,13 @@ NOTE: The default location for the log file is "%UserProfile%&#92;.EZAsesAutoTyp
 
 ## Usage
 Start the application "EZAsesAutoType.exe" from the installation location.
+
+When invoked without any arguments the main dialog will be displayed
+alowing interactive user interaction.
+
 Set the desired values in the main dialog:
 
-![MainDialog](../res/img/Screenshot-MainDialog-1.124.0.png)
+![MainDialog](../res/img/Screenshot-MainDialog-v1.126.0.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the
 following for you completely automatically:
@@ -82,7 +86,29 @@ on subsequent starts of the application.
 All shortcut replacements are implemented within the 
 function "FormMain.EvalTimeByFragment()".
 
+## Program startup arguments
+Starting with version 1.126.0 "EZAsesAutoType.exe" can be 
+invoked with optional program startup arguments.
+Syntax: 
+```CMD
+CMD> EZAsesAutoType[.exe] [/run [/close]]
+```
+
+When invoked with argument ""/run"", processing will start immediatly
+using all the settings from the last invokation. 
+Processing can still be stopped at any time by hitting the cancel button.
+Once processing has finished, the main dialog will stay active for
+further user interaction.
+
+When invoked with arguments ""/run"" and ""/close"", processing will also 
+start immediatly. Once processing has finished, the app will close
+automatically except user has hitted the cancel button during processing.
+
 # Revision History
+## 2024/05/27:TomislavMatas: Version "1.126.0"
+* Add section "Program startup arguments".
+* Update screenshot of main dialog.
+
 ## 2024/04/13:TomislavMatas: Version "1.123.4"
 * Update screenshot of main dialog.
 

@@ -29,6 +29,9 @@ to automate the daily chore of utilizing the virtual punch card system
     <PackageReleaseNotes>
 Version "1.126.0"
 * Increase default timeout values.
+* Add handling of commandline argument "/close".
+* Edit "EZAsesAutoType-UserManual.md": 
+  Added section "Program startup arguments".
 
 Version "1.125.0":
 * Update "chromedriver.exe" to version "125.0.6422.26".
