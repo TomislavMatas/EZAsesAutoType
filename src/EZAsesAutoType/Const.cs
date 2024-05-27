@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/05/27:TomislavMatas: Version "1.126.0"
+// * Add "CommandlineArg_Close".
 // 2024/05/15:TomislavMatas: Version "1.125.0"
 // * Add "CommandlineArg_Run".
 // 2024/05/10:TomislavMatas: Version "1.125.0"
@@ -193,6 +195,8 @@ namespace EZAsesAutoType
         public const string UrlParmClientNo = "ClientNo=";
 
         public const string CommandlineArg_Run = "/run";
+
+        public const string CommandlineArg_Close = "/close";
 
     } // class
 
