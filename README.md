@@ -4,8 +4,10 @@ to automate the daily chore of utilizing the virtual punch card system
 "ATOSS Staff Efficiency Suite" also known as "ASES".
 
 ## Overview
-Start the application and set the desired values in the main dialog:   
-![MainDialog](res/img/Screenshot-MainDialog-v1.124.0.png)  
+Start the application and set the desired values in the main dialog:  
+
+![MainDialog](res/img/Screenshot-MainDialog-v1.126.0.png)  
+
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
 
@@ -39,6 +41,9 @@ Most noticeable: "EZAsesAutoType-UserManual.md"
 Contains all source code to build "EZAsesAutoType.exe".
 
 # Revision History
+## 2024/05/27:TomislavMatas: Version "1.126.0"  
+* Update screenshot of main dialog.  
+  
 ## 2024/04/10:TomislavMatas: Version "1.123.3"
 * Add "Overview" section to this "README.md" file.
 
