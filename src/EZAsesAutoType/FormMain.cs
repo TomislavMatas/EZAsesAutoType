@@ -2,6 +2,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/05/27:TomislavMatas: Version "1.126.0":
+// * Add handling of commandline argument switch "/close".
 // 2024/05/04:TomislavMatas: Version "1.125.0":
 // * Add handling of commandline arguments in general and 
 //   the switch "/run" in special.
@@ -734,7 +736,7 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Checks if srting array "args" contains "/Run".
+        /// Checks if string array "args" contains "/Run".
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
@@ -754,6 +756,32 @@ namespace EZAsesAutoType
         private bool ArgRunProvided()
         {
             if (this.ArgRunProvided(this.GetArgs()))
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if string array "args" contains "/Close".
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private bool ArgCloseProvided(string[]? args)
+        {
+            if (args == null)
+                return false;
+
+            foreach (string arg in args)
+                if (!string.IsNullOrEmpty(arg))
+                    if (arg.Equals(Const.CommandlineArg_Close, StringComparison.OrdinalIgnoreCase))
+                        return true;
+
+            return false;
+        }
+
+        private bool ArgCloseProvided()
+        {
+            if (this.ArgCloseProvided(this.GetArgs()))
                 return true;
 
             return false;
@@ -793,6 +821,10 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// Kick of processing by spawning a background task
+        /// using implementation in "this.Run()".
+        /// </summary>
         private void RunOnLoad()
         {
             try
@@ -800,6 +832,24 @@ namespace EZAsesAutoType
                 this.Show();
                 Application.DoEvents();
                 this.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                Log.Debug(Const.LogDone);
+            }
+        }
+
+        private void CloseAfterRun()
+        {
+            try
+            {
+                this.Show();
+                Application.DoEvents();
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -834,8 +884,23 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
 
                 if (this.ArgRunProvided())
+                {
                     this.RunOnLoad();
-
+                    
+                    // although "Run" kicks of a background task,
+                    // control will be passed back to this point after
+                    // processing (regardless if successful or not)
+                    // or if user hits the cancel button.
+                    if (this.ArgCloseProvided())
+                    {
+                        if (!Global.GetCancelRequested())
+                        {   // startup argument "/Close" has been passed in
+                            // and processing has _NOT_ been canceled by user,
+                            // close the app by closing the main form.
+                            this.CloseAfterRun();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
