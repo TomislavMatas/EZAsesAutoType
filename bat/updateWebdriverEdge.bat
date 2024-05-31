@@ -147,22 +147,22 @@ for %%f in (%FILELIST%) do (
 				exit /b 7
 			)	
 			echo OK
-			@rem "Verteile" den win64 in die PROJECT-Verzeichnisse, in denen dieser benoetigt wird.
-			if not "x!fn:win64=!" == "x!fn!" ( 
-				for %%p in (!PROJECT_LIST!) do (
-					set "prj=%%p" 
-					set "prjpath=%PROJECT_ROOT%\src\!prj!"
-					echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
-					del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
-					copy "!unzipedpath!\%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
-					if ERRORLEVEL 1 (
-						echo ERROR copy "%FILENAME_CUSTOM%" to "!prj!" failed
-						exit /b 8
-					)	
-					echo copy "%FILENAME_CUSTOM%" to "!prj!" OK
-				)
-			)
 		)
+    @rem "Verteile" den win64 in die PROJECT-Verzeichnisse, in denen dieser benoetigt wird.
+    if not "x!fn:win64=!" == "x!fn!" ( 
+      for %%p in (!PROJECT_LIST!) do (
+        set "prj=%%p" 
+        set "prjpath=%SOURCE_ROOT%\!prj!"
+        echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
+        del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
+        copy "!unzipedpath!\%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
+        if ERRORLEVEL 1 (
+          echo FAILURE
+          exit /b 8
+        )	
+        echo OK
+      )
+    )    
 	)
 )
 
