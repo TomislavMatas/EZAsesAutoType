@@ -125,6 +125,43 @@ namespace EZAsesAutoType
             return prev;
         }
 
+        private AppConfig? m_AppConfig = null;
+        private AppConfig AppConfig
+        {
+            get
+            {
+                if (m_AppConfig == null)
+                    m_AppConfig = new AppConfig();
+                return m_AppConfig;
+            }
+            set
+            {
+                m_AppConfig = value;
+            }
+        }
+        private AppConfig GetAppConfig()
+        {
+            return this.AppConfig;
+        }
+        private AppConfig SetAppConfig(AppConfig appConfig)
+        {
+            AppConfig prev = this.GetAppConfig();
+            this.AppConfig = appConfig;
+            return prev;
+        }
+
+        private bool m_AlwaysOnTopInitialized = false;
+        private bool m_AlwaysOnTop;
+        private bool GetAlwaysOnTop()
+        {
+            if (!m_AlwaysOnTopInitialized)
+            {
+                m_AlwaysOnTop = this.GetAppConfig().GetMainDialogAlwaysOnTop();
+                m_AlwaysOnTopInitialized = true;
+            }
+            return m_AlwaysOnTop;
+        }
+
         #endregion
 
         #region constructorz 
@@ -803,10 +840,14 @@ namespace EZAsesAutoType
                 bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 while (backroundWorkerIsBusy)
                 {
+                    if (GetAlwaysOnTop())
+                        this.Activate();
+
                     Application.DoEvents();
                     if (Global.GetCancelRequested())
                         backgroundWorker1.CancelAsync();
 
+                    Thread.Sleep(1000);
                     backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 }
             }
@@ -1409,8 +1450,9 @@ namespace EZAsesAutoType
 
                 UserSettings userSettings = (UserSettings)obj;
 
-                if (!this.AppHandler.DoDailyPunch(userSettings))
-                    throw new Exception(nameof(this.AppHandler.DoDailyPunch) + Const.LogFail);
+                AppHandler appHandler = this.GetAppHandler();
+                if (!appHandler.DoDailyPunch(userSettings))
+                    throw new Exception(nameof(appHandler.DoDailyPunch) + Const.LogFail);
             }
             catch (Exception ex)
             {
