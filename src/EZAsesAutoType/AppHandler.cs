@@ -2,11 +2,15 @@
 // File: "AppHandler.cs"
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/04/10:TomislavMatas: Version "1.123.3"
 // * Implement singleton pattern for "WorkerConfig" and "Worker".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
+
+using System.Diagnostics;
 
 using log4net;
 
@@ -19,16 +23,17 @@ namespace EZAsesAutoType
     internal class AppHandler
     {
         #region log4net
-        private static ILog? m_Log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(AppHandler));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(AppHandler));
-                return m_Log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         #region propertiez
@@ -119,7 +124,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.SetRequestor(requestor);
                 return true;
             }
@@ -130,7 +135,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -145,7 +150,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (!Initialze(null))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
@@ -155,7 +160,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -166,7 +171,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (!Initialze(requestor))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
@@ -176,7 +181,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
         
@@ -186,7 +191,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 userSettings = new UserSettings();
                 if(!userSettings.Load())
                     throw new Exception(nameof(userSettings.Load) + Const.LogFail);
@@ -201,7 +206,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -209,7 +214,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if(!userSettings.Save())
                     throw new Exception(nameof(userSettings.Save) + Const.LogFail);
 
@@ -222,7 +227,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -230,7 +235,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 WorkerConfig? workerConfig = this.GetWorkerConfig();
                 if (workerConfig == null)
                     throw new Exception(nameof(workerConfig) + Const.LogIsNull);
@@ -254,7 +259,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 

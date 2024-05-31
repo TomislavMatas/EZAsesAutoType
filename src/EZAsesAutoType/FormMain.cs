@@ -2,6 +2,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/05/27:TomislavMatas: Version "1.126.0":
 // * Add handling of commandline argument switch "/close".
 // 2024/05/04:TomislavMatas: Version "1.125.0":
@@ -25,6 +27,7 @@
 //
 
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 using log4net;
@@ -37,16 +40,17 @@ namespace EZAsesAutoType
     public partial class FormMain : Form
     {
         #region log4net
-        private static ILog? m_Log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(FormMain));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(FormMain));
-                return m_Log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         #region private propertiez
@@ -173,7 +177,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 InitializeComponent();
                 if (!Initialze(args: null))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
@@ -184,7 +188,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -195,7 +199,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 InitializeComponent();
                 if (!Initialze(args))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
@@ -206,7 +210,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -226,7 +230,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -238,7 +242,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.SetArgs(args);
                 this.SetTitle();
                 this.SetAppHandler(new AppHandler(this));
@@ -251,7 +255,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -259,7 +263,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (comboBox == null)
                     throw new ArgumentNullException(nameof(comboBox));
 
@@ -293,7 +297,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -301,7 +305,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -329,7 +333,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -337,7 +341,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -365,7 +369,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -373,7 +377,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -401,7 +405,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -409,7 +413,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -431,7 +435,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -439,7 +443,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -460,7 +464,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -468,7 +472,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.SuspendLayout();
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
@@ -489,7 +493,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.ResumeLayout();
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -501,7 +505,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (!this.AppHandler.LoadUserSettings(out UserSettings? userSettings))
                     throw new Exception(nameof(this.AppHandler.LoadUserSettings) + Const.LogFail);
 
@@ -518,7 +522,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -526,7 +530,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
@@ -543,13 +547,13 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
         private StringCollection GetComboBoxItemsAsStringCollection(ComboBox comboBox)
         {
-            Log.Debug(Const.LogStart);
+            LogTrace(Const.LogStart);
             StringCollection stringCollection = new StringCollection();
             foreach (object item in comboBox.Items)
                 if (item != null)
@@ -585,7 +589,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -597,7 +601,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -630,7 +634,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -638,7 +642,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 UserSettings? userSettings = GetUserSettingsValuesFromControls();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
@@ -653,7 +657,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
 
         }
@@ -662,7 +666,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
@@ -684,7 +688,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -698,7 +702,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.SuspendLayout();
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
@@ -716,7 +720,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.ResumeLayout();
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -724,7 +728,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.SuspendLayout();
                 if (busy)
                 {
@@ -768,7 +772,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.ResumeLayout();
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -858,7 +862,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.RenderControlsWorkerStatus(false);
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -880,7 +884,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -898,7 +902,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -910,7 +914,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (!LoadUserSettings())
                     throw new Exception(nameof(LoadUserSettings) + Const.LogFail);
 
@@ -949,7 +953,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -957,7 +961,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (!SaveUserSettings())
                     throw new Exception(nameof(SaveUserSettings) + Const.LogFail);
 
@@ -968,7 +972,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -976,7 +980,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 RenderControlsWorkerStatus(false);
             }
             catch (Exception ex)
@@ -985,7 +989,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -1006,7 +1010,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.RenderControlsWorkerStatus(false);
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -1410,7 +1414,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 UserSettings? userSettings = GetUserSettingsValuesFromControls();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
@@ -1425,7 +1429,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -1437,7 +1441,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (e == null)
                     throw new ArgumentNullException(nameof(e));
 
@@ -1460,7 +1464,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 

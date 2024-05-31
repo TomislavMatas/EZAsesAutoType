@@ -2,6 +2,8 @@
 // File: "Worker.BrowserConfig.cs"
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/05/10:TomislavMatas: Version "1.125.0"
 // * Enhance NULL value handling and validation.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -42,7 +44,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 return BrowserFactory.GetBrowserInstance(webDriver, browserOptions);
             }
             catch (Exception ex)
@@ -52,7 +54,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -66,7 +68,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser != null)
                 {
                     browser.Cleanup();
@@ -79,7 +81,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
