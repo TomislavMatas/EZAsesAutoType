@@ -5,6 +5,8 @@
 // Wrapper for "userSettings". 
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/04/13:TomislavMatas: Version "1.123.4"
 // * Rename "ASESPunchIn"  to "ASESPunchInAM".
 // * Rename "ASESPunchOut" to "ASESPunchOutAM".
@@ -14,6 +16,7 @@
 //
 
 using System.Collections.Specialized;
+using System.Diagnostics;
 using log4net;
 
 namespace EZAsesAutoType
@@ -24,16 +27,17 @@ namespace EZAsesAutoType
     internal class UserSettings
     {
         #region log4net
-        private static ILog? m_Log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserSettings));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(UserSettings));
-                return m_Log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         #region "userSettings"
@@ -87,7 +91,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.ASESBaseUrl      = Properties.Settings.Default.ASESBaseUrl;
                 this.ASESUserId       = Properties.Settings.Default.ASESUserId;
                 this.ASESPassword     = Properties.Settings.Default.ASESPassword;
@@ -110,7 +114,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -145,7 +149,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 

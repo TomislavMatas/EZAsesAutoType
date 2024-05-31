@@ -2,6 +2,8 @@
 // File: "Program.cs"
 //
 // Revision History:
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/05/04:TomislavMatas: Version "1.125.0":
 // * Add handling of commandline arguments.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -9,6 +11,7 @@
 //
 
 using log4net;
+using System.Diagnostics;
 
 namespace EZAsesAutoType
 {
@@ -20,16 +23,17 @@ namespace EZAsesAutoType
     internal static class Program
     {
         #region log4net
-        private static ILog? m_Log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(Program));
-                return m_Log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ApplicationConfiguration.Initialize();
                 Application.Run(new FormMain(args));
                 return 0;
@@ -55,7 +59,7 @@ namespace EZAsesAutoType
             }
             finally
             { 
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 

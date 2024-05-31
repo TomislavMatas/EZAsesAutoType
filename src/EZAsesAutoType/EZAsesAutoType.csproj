@@ -11,6 +11,8 @@
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
     <Version>1.126.0</Version>
+    <AssemblyVersion>1.126.0</AssemblyVersion>
+    <FileVersion>1.126.0</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -23,8 +25,6 @@ to automate the daily chore of utilizing the virtual punch card system
     <RepositoryType>git</RepositoryType>
     <PackageTags>ATOSS;ASES;Selenium;WebDriver;Chrome;Edge;FireFox;AutoType;RemoteControl</PackageTags>
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
-    <AssemblyVersion>1.125.0</AssemblyVersion>
-    <FileVersion>1.126.0</FileVersion>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 Version "1.126.0"
@@ -32,6 +32,7 @@ Version "1.126.0"
 * Add handling of commandline argument "/close".
 * Edit "EZAsesAutoType-UserManual.md": 
   Added section "Program startup arguments".
+* Simplify log4net implementations.
 
 Version "1.125.0":
 * Update "chromedriver.exe" to version "125.0.6422.26".
