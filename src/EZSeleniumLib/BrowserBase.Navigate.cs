@@ -7,10 +7,13 @@
 // "Navigation" in general.
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
 // 2024/05/09:TomislavMatas: Version "4.20.0"
 // * Firefox enhancement in "ClickElement()": 
 //   Use "actions.Click(element).Perform()" instead of "element.Click()".
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -31,7 +34,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult))
                     return false;
@@ -51,7 +54,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -64,7 +67,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException("url");
@@ -87,7 +90,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -99,7 +102,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (this.Driver == null)
                     throw new Exception(nameof(this.Driver)+Consts.LogIsNull);
@@ -113,7 +116,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -133,7 +136,7 @@ namespace EZSeleniumLib
             TimeSpan revert = TimeSpan.Zero;
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 Log.Debug(String.Format("url={0},timeout={1}",url, timeoutInSeconds));
                 if (String.IsNullOrEmpty(url))
                     throw new ArgumentNullException("url");
@@ -166,7 +169,7 @@ namespace EZSeleniumLib
                     if(this.Driver != null)
                         this.Driver.Manage().Timeouts().PageLoad = revert;
 
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -179,7 +182,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (!this.GoToUrl(url,0))
                     throw new Exception(nameof(this.GoToUrl) + Consts.LogFail);
 
@@ -192,7 +195,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -205,7 +208,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(element).Perform();
                 Thread.Sleep(this.GetDelay());
@@ -218,7 +221,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -231,7 +234,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if(element==null)
                     throw new ArgumentNullException(nameof(element)); 
 
@@ -250,7 +253,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -263,7 +266,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -301,7 +304,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -309,7 +312,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (Driver == null)
                     throw new Exception("Driver is null");
@@ -333,7 +336,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -341,7 +344,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (Driver == null)
                     throw new Exception("Driver is null");
@@ -365,7 +368,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 

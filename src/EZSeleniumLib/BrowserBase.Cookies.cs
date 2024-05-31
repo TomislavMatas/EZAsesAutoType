@@ -6,8 +6,10 @@
 // Wrapper for "WebDriver.Manage().Cookies.*" methods.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -27,7 +29,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -37,7 +39,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception(nameof(cookieJar)+" is null");
+                    throw new Exception("cookieJar is null");
 
                 return cookieJar.AllCookies;
             }
@@ -48,7 +50,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -59,7 +61,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -69,7 +71,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception(nameof(cookieJar)+" is null");
+                    throw new Exception("cookieJar is null");
 
                 cookieJar.AddCookie(cookie);
                 return true;
@@ -81,7 +83,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -92,7 +94,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -102,7 +104,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception(nameof(cookieJar)+" is null");
+                    throw new Exception("cookieJar is null");
 
                 cookieJar.DeleteCookie(cookie);
                 return true;
@@ -114,7 +116,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -125,7 +127,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -135,7 +137,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception(nameof(cookieJar)+" is null");
+                    throw new Exception("cookieJar is null");
 
                 cookieJar.DeleteCookieNamed(name);
                 return true;
@@ -147,7 +149,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -158,7 +160,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -168,7 +170,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception(nameof(cookieJar)+" is null");
+                    throw new Exception("cookieJar is null");
 
                 cookieJar.DeleteAllCookies();
                 return true;
@@ -180,7 +182,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -191,7 +193,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -201,7 +203,7 @@ namespace EZSeleniumLib
 
                 ICookieJar cookieJar = manage.Cookies;
                 if (cookieJar == null)
-                    throw new Exception(nameof(cookieJar)+" is null");
+                    throw new Exception("cookieJar is null");
 
                 return cookieJar.GetCookieNamed(name);
             }
@@ -212,7 +214,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 

@@ -5,11 +5,15 @@
 // Browser factory helper class. 
 // 
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
 // 2024/05/04:TomislavMatas: Version "4.20.0"
 // * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
+
+using System.Diagnostics;
 
 using log4net;
 
@@ -22,21 +26,17 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog? _log = null;
-        private static ILog Log
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BrowserFactory));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (_log == null)
-                    _log = LogManager.GetLogger(typeof(BrowserFactory));
-                return _log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
 
         #endregion
-
-        private const string DEBUG_START = Consts.DEBUG_START;
-        private const string DEBUG_DONE = Consts.DEBUG_DONE;
 
         /// <summary>
         /// Instantiate a specific descendant of "BrowserBase".
@@ -46,7 +46,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 string browserImplementation = Consts.BROWSERIMPLEMENTATATION_DEFAULT;
                 BrowserOptions browserOptions = new BrowserOptions();
                 return GetBrowserInstance(browserImplementation, browserOptions);
@@ -58,7 +58,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -70,7 +70,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 BrowserOptions browserOptions = new BrowserOptions();
                 return GetBrowserInstance(browserImplementation, browserOptions);
             }
@@ -81,7 +81,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -93,7 +93,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if(String.IsNullOrEmpty(browserImplementation))
                     throw new ArgumentNullException(nameof(browserImplementation));
@@ -121,7 +121,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -133,7 +133,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 return new BrowserEdge(browserOptions);
             }
             catch (Exception ex)
@@ -143,7 +143,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -155,7 +155,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 return new BrowserChrome(browserOptions);
             }
             catch (Exception ex)
@@ -165,7 +165,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -177,7 +177,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 return new BrowserFirefox(browserOptions);
             }
             catch (Exception ex)
@@ -187,7 +187,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
