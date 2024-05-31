@@ -36,6 +36,40 @@ namespace EZAsesAutoType
         #endregion
 
         #region propertiez
+
+        private const string MainDialogAlwaysOnTopKeyName = "EZAsesAutoType.MainDialog.AlwaysOnTop";
+        private const bool MainDialogAlwaysOnTopDefault = false;
+        private bool m_MainDialogAlwaysOnTopInitialized = false;
+        private bool m_MainDialogAlwaysOnTop;
+        private bool MainDialogAlwaysOnTop
+        {
+            get
+            {
+                if (!m_MainDialogAlwaysOnTopInitialized)
+                {
+                    m_MainDialogAlwaysOnTop = ConfigApi.GetAppSettingBool(MainDialogAlwaysOnTopKeyName, MainDialogAlwaysOnTopDefault);
+                    m_MainDialogAlwaysOnTopInitialized = true;
+                }
+                return m_MainDialogAlwaysOnTop;
+            }
+            set
+            {
+                m_MainDialogAlwaysOnTop = value;
+                m_MainDialogAlwaysOnTopInitialized = true;
+
+            }
+        }
+        public bool GetMainDialogAlwaysOnTop()
+        {
+            return this.MainDialogAlwaysOnTop;
+        }
+        public bool SetMainDialogAlwaysOnTop(bool value)
+        {
+            bool prev = this.GetMainDialogAlwaysOnTop();
+            this.MainDialogAlwaysOnTop = value;
+            return prev;
+        }
+
         private const string TimeoutLoginPageKeyName = "ASES.Timeout.LoginPage";
         private const int TimeoutLoginPageDefault = 15;
         private int m_TimeoutLoginPage = -1;
