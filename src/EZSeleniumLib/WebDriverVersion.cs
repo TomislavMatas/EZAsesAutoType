@@ -6,8 +6,10 @@
 // updating the installed WebDriver binaries.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -25,16 +27,17 @@ namespace EZSeleniumLib
     public static class WebDriverVersion
     {
         #region log4net
-        private static ILog? m_Log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(WebDriverVersion));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(WebDriverVersion));
-                return m_Log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         /// <summary>
@@ -51,6 +54,8 @@ namespace EZSeleniumLib
         {
             try
             {
+                LogTrace(Consts.LogStart);
+
                 if (string.IsNullOrEmpty(webDriverFullPath))
                     throw new ArgumentNullException(nameof(webDriverFullPath));
                 
@@ -76,15 +81,17 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Consts.LogDone);
+                LogTrace(Consts.LogDone);
             }
         }
 
         public static string? GetWebDriverVersionString(string webDriver)
         {
             try
-            { 
-                if(string.IsNullOrEmpty(webDriver)) 
+            {
+                LogTrace(Consts.LogStart);
+
+                if (string.IsNullOrEmpty(webDriver)) 
                     throw new ArgumentNullException(nameof(webDriver));
 
                 string webDriverExe;
@@ -126,7 +133,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(Consts.LogDone);
+                LogTrace(Consts.LogDone);
             }
         }
 

@@ -6,13 +6,16 @@
 // the "App.config" file using specific wrapper methods.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
 using System.Configuration;
+using System.Diagnostics;
 
 using log4net;
 
@@ -26,15 +29,14 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog? _log = null;
-        private static ILog Log
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Configs));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (_log == null)
-                    _log = LogManager.GetLogger(typeof(Configs));
-                return _log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
 
         #endregion

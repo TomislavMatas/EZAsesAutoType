@@ -5,11 +5,14 @@
 // Constants with "public" relevance.
 //
 // Revision History:
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
-// 2024/05/03:TomislavMatas: Version "1.125.0"
-// * Update "chromedriver.exe"       to version "125.0.6422.26".
-// * Update "MicrosoftWebDriver.exe" to version "125.0.2535.13".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Update "chromedriver.exe" to version "126.0.6478.26".
+// * Update "msedgedriver.exe" to version "126.0.2592.24".
+// 2024/05/16:TomislavMatas: Version "4.20.1"
+// * Update "chromedriver.exe" to version "125.0.6422.60".
+// * Update "msedgedriver.exe" to version "125.0.2535.47".
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/05/02:TomislavMatas: Version "1.124.0"
 // * Update "chromedriver.exe"       to version "124.0.6367.91".
 // * Update "MicrosoftWebDriver.exe" to version "124.0.2477.0".
@@ -48,7 +51,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverChromeVersion = "125.0.6422.26";
+        public const string WebDriverChromeVersion = "126.0.6478.26";
 
         #endregion
 
@@ -62,12 +65,12 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable.
         /// </summary>
-        public const string WebDriverEdgeExe = "MicrosoftWebDriver.exe";
+        public const string WebDriverEdgeExe = "msedgedriver.exe";
 
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverEdgeVersion = "125.0.2535.13";
+        public const string WebDriverEdgeVersion = "126.0.2592.24";
 
         #endregion
 
