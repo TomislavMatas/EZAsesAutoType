@@ -6,8 +6,10 @@
 // Implementation of wrappers for "WebDriver.Find*" methods.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -39,7 +41,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds: 0);
             }
@@ -60,7 +62,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -74,7 +76,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 Log.Debug(String.Format("timeoutInSeconds={0}", timeoutInSeconds));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds);
@@ -96,7 +98,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -112,7 +114,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 Log.Debug(String.Format("xPath={0}", xPath));
                 return this.FindElement(By.XPath(xPath), timeoutInSeconds);
             }
@@ -133,7 +135,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -149,7 +151,7 @@ namespace EZSeleniumLib
             TimeSpan revert = TimeSpan.Zero;
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -181,7 +183,7 @@ namespace EZSeleniumLib
                     if(this.Driver!=null)
                         this.Driver.Manage().Timeouts().ImplicitWait = revert;
 
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -208,7 +210,7 @@ namespace EZSeleniumLib
             TimeSpan revert = TimeSpan.Zero;
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver == null)
                     throw new Exception("Driver is null");
 
@@ -241,7 +243,7 @@ namespace EZSeleniumLib
                     if(this.Driver != null)
                         this.Driver.Manage().Timeouts().ImplicitWait = revert;
 
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 

@@ -44,10 +44,25 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2024/05/31:TomislavMatas: Version "4.21.1"
+* Simplify log4net implementations.
+* Update "chromedriver.exe" to version "126.0.6478.26".
+* Update "msedgedriver.exe" to version "126.0.2592.24".
+
+## 2024/05/29:TomislavMatas: Version "4.21.0"
+* Update "Selenium.Support" to version "4.21.0".
+* Update "Selenium.WebDriver" to version "4.21.0".
+* Update "chromedriver.exe" to version "125.0.6422.113".
+* Update "msedgedriver.exe" to version "125.0.2535.67".
+* Refactoring: Implement specific "SendKeys()" in descendants of "BrowserBase". 
+
+## 2024/05/18:TomislavMatas: Version "4.20.1"
+* Update "chromedriver.exe" to version "125.0.6422.61".
+* Update "msedgedriver.exe" to version "125.0.2535.51".
+
 ## 2024/05/05:TomislavMatas: Version "4.20.0"
-* Update "Selenium" libs to version "4.20.0".
-* Update "log4net" libs to version "2.0.17".
 * Set product version to "4.20.0" reflecting the referenced selenium package version.
+* Upgrade to .NET version 8.
 
 ## 2024/05/02:TomislavMatas: Version "1.124.0"
 * Use "chromedriver.exe" version "124.0.6367.91".

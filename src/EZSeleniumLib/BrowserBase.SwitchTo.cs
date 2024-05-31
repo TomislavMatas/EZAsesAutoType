@@ -6,8 +6,10 @@
 // Implementation of wrappers for "WebDriver.SwitchTo().*" methods.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -28,7 +30,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (iFrame == null)
                     throw new ArgumentNullException(nameof(iFrame));
 
@@ -49,7 +51,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
 
         }

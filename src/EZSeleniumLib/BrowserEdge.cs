@@ -12,18 +12,25 @@
 // See "README.md" for details.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/29:TomislavMatas: Version "4.21.0"
+// * Refactoring: Implement specific "SendKeys(IWebElement? element, string? keysToSend)".
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.123"
 // * Tidy~Up in "InitializeExtended": Change "Log.Info" to "Log.Debug".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
+using System.Diagnostics;
 
 using log4net;
+
+using OpenQA.Selenium;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
 
 namespace EZSeleniumLib
 {
@@ -39,15 +46,14 @@ namespace EZSeleniumLib
     {
         #region log4net
 
-        private static ILog? _log = null;
-        private static ILog Log
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BrowserEdge));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (_log == null)
-                    _log = LogManager.GetLogger(typeof(BrowserEdge));
-                return _log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
 
         #endregion
@@ -116,7 +122,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
  
                 string initMode = this.BrowserOptions.InitMode;
                 if (String.IsNullOrEmpty(initMode))
@@ -137,7 +143,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -153,7 +159,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 EdgeOptions? options = this.GetDriverOptions();
                 if (options == null)
@@ -169,7 +175,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -185,7 +191,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 Log.Debug("EdgeDriverService init ...");
                 EdgeDriverService service = EdgeDriverService.CreateDefaultService();
@@ -229,7 +235,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -237,7 +243,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 EdgeOptions options = new EdgeOptions();
 
@@ -372,7 +378,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -413,7 +419,7 @@ namespace EZSeleniumLib
         //            }
         //            finally
         //            {
-        //                Log.Debug(DEBUG_DONE);
+        //                LogTrace(Consts.LogDone);
         //            }
         //        }
 
@@ -428,7 +434,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 return this.Refresh(RefreshMethod.Driver);
             }
             catch (Exception e)
@@ -438,7 +444,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -462,7 +468,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -489,7 +495,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -517,7 +523,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -540,7 +546,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -553,7 +559,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (_driver == null)
                     throw new Exception("_driver is null");
@@ -576,7 +582,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -590,7 +596,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
 
                 if (_driver == null)
                     throw new Exception("_driver is null");
@@ -647,7 +653,37 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Wrapper for element.SendKeys(keysToSend). 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="keysToSend"></param>
+        /// <returns></returns>
+        public override bool SendKeys(IWebElement? element, string? keysToSend)
+        {
+            try
+            {
+                if (element == null)
+                    throw new ArgumentNullException(nameof(element));
+
+                if (keysToSend == null)
+                    throw new ArgumentNullException(nameof(keysToSend));
+
+                element.SendKeys(keysToSend);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Consts.LogDone);
             }
         }
 
