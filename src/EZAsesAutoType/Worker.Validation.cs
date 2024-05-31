@@ -2,6 +2,8 @@
 // File: "Worker.Validation.cs"
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -10,7 +12,6 @@ using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
 using EZSeleniumLib;
-using OpenQA.Selenium;
 
 namespace EZAsesAutoType
 {
@@ -38,7 +39,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (waitForSeconds < 0)
                     return true;
 
@@ -62,7 +63,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
         #endregion 
@@ -80,7 +81,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -106,7 +107,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -121,7 +122,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -146,7 +147,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -160,7 +161,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -195,7 +196,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -210,7 +211,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -233,7 +234,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -247,7 +248,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -282,7 +283,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -297,7 +298,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -324,7 +325,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -338,7 +339,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -373,7 +374,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
         
@@ -381,7 +382,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -405,7 +406,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -419,7 +420,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -454,7 +455,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -466,7 +467,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -483,7 +484,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -491,7 +492,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
@@ -508,7 +509,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 

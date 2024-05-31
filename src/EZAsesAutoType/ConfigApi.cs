@@ -6,11 +6,14 @@
 // the "App.config" file using specific wrapper methods.
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
 using System.Configuration;
+using System.Diagnostics;
 
 using log4net;
 
@@ -24,16 +27,7 @@ namespace EZAsesAutoType
     {
         #region log4net
 
-        private static ILog? m_Log = null;
-        private static ILog Log
-        {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(ConfigApi));
-                return m_Log;
-            }
-        }
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigApi));
 
         #endregion
 

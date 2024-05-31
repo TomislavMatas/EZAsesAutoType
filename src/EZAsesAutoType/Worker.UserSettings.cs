@@ -2,6 +2,8 @@
 // File: "Worker.UserSettings.cs"
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/04/13:TomislavMatas: Version "1.123.4"
 // * Rename "ASESPunchIn"  to "ASESPunchInAM".
 // * Rename "ASESPunchOut" to "ASESPunchOutAM".
@@ -72,7 +74,9 @@ namespace EZAsesAutoType
         private List<TimePair>? GetTimePairListDefault()
         {
             try
-            { 
+            {
+                LogTrace(Const.LogStart);
+
                 string? punchInAM  = this.GetASESPunchInAM();
                 string? punchOutAM = this.GetASESPunchOutAM();
                 string? punchInPM  = this.GetASESPunchInPM();
@@ -135,7 +139,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 

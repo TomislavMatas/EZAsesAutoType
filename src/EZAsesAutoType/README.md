@@ -6,6 +6,9 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/05/31:TomislavMatas: Version "1.126.0"
+* Simplify log4net implementations.
+
 ## 2024/05/27:TomislavMatas: Version "1.126.0"
 * Add handling of commandline argument "/close".
 * Edit "EZAsesAutoType-UserManual.md": 

@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/05/10:TomislavMatas: Version "1.125.0"
 // * Enhance NULL value handling and validation.
 // 2024/04/12:TomislavMatas: Version "1.123.4"
@@ -37,7 +39,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser,nameof(browser));
                 ArgumentNullException.ThrowIfNull(baseUrl,nameof(baseUrl));
 
@@ -53,7 +55,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -73,7 +75,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser,nameof(browser));
                 ArgumentNullException.ThrowIfNull(iFrameXPath, nameof(iFrameXPath));
 
@@ -94,7 +96,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -108,7 +110,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 string xPath = this.GetLoginPageUsernameXPath();
@@ -180,7 +182,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -195,7 +197,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 if (!this.ASESMainPageIsLoaded(browser, timeoutInSeconds))
@@ -234,7 +236,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -249,7 +251,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
@@ -295,7 +297,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -311,7 +313,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser,nameof(browser));
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
@@ -349,7 +351,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -370,7 +372,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser, nameof(browser));
 
                 if (!this.ASESTimePairEntryPopupIsLoaded(browser, timeoutInSeconds))
@@ -515,7 +517,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -530,7 +532,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser, nameof(browser));
 
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
@@ -553,7 +555,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -569,7 +571,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 int waitTimeInSeconds = this.GetWaitBeforeLogout();
                 if (!this.CancelableWait(waitTimeInSeconds))
                     throw new Exception(nameof(CancelableWait) + Const.LogCanceled);
@@ -583,7 +585,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -598,7 +600,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 ArgumentNullException.ThrowIfNull(browser, nameof(browser));
 
                 if (!this.ASESMainPageIsLoaded(browser, timeoutInSeconds))
@@ -630,7 +632,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
