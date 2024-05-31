@@ -6,10 +6,8 @@
 // JavaScript "window.performance.memory".
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
-// * Add Serialization attributes. Some apps referencing 
-//   "EZSeleniumLib" might want to serialze this data class.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //

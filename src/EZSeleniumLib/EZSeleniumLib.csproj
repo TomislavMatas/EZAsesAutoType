@@ -1,51 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.0.0.0</Version>
+    <Nullable>enable</Nullable>
+    <AssemblyName>EZSeleniumLib</AssemblyName>
+    <RootNamespace>EZSeleniumLib</RootNamespace>
+    <Version>4.21.1</Version>
+    <AssemblyVersion>4.21.1</AssemblyVersion>
+    <FileVersion>4.21.1</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
-    <Description></Description>
-    <Copyright>(c) 2024 $(Company)</Copyright>
-    <NeutralLanguage>de-DE</NeutralLanguage>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Title>EZSeleniumLib</Title>
-    <Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
+    <Copyright>(c) 2021 matas consulting</Copyright>
+    <EnableNETAnalyzers>False</EnableNETAnalyzers>
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <PackageReleaseNotes>
+Version "4.21.1"
+* Simplify log4net implementations.
+
+Version "4.21.0"
+* Update "Selenium.Support" to version "4.21.0".
+* Update "Selenium.WebDriver" to version "4.21.0".
+* Update "chromedriver.exe" to version "125.0.6422.113".
+* Update "msedgedriver.exe" to version "125.0.2535.67".
+* Refactoring: Implement specific "SendKeys()" in descendants of "BrowserBase". 
+
+Version "4.20.1"
+* Update "chromedriver.exe" to version "125.0.6422.61".
+* Update "msedgedriver.exe" to version "125.0.2535.51".
+
+Version 4.20.0
+* Product version refelcts the referenced selenium package version.
+* Initial version using .NET version 8.
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="chromedriver.exe" />
-    <None Remove="MicrosoftWebDriver.exe" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.17" />
-    <PackageReference Include="Selenium.Support" Version="4.20.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.20.0" />
+    <PackageReference Include="Selenium.Support" Version="4.21.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.21.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="chromedriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MicrosoftWebDriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="geckodriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

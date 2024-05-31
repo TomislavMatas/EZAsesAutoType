@@ -5,8 +5,10 @@
 // Assembly specific "internal" constants. 
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -29,8 +31,6 @@ namespace EZSeleniumLib
         public const string DisplayName = "EZSeleniumLib.dll";
 
         #region logging constantz
-        public const string DEBUG_START = "START";
-        public const string DEBUG_DONE = "DONE";
         public const string LogStart = " START";
         public const string LogDone = " DONE";
         public const string LogFail = " FAIL";

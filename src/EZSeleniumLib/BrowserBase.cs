@@ -13,9 +13,15 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History: 
-// 2024/05/09:TomislavMatas: Version "4.20.0"
-// * Upgrade "Selenium" libs to version "4.20.0".
+// 2024/05/31:TomislavMatas: Version "4.21.1"
+// * Simplify log4net implementations.
+// 2024/05/29:TomislavMatas: Version "4.21.0"
+// * Refactoring: Declare "SendKeys(IWebElement? element, string? keysToSend)"
+//   as "abstract" and extend specifically in descendants.
+// 2024/05/08:TomislavMatas: Version "4.20.0"
 // * Implememnt SendKeys() due to a strange behaviour when using Firefox.
+// 2024/05/04:TomislavMatas: Version "4.20.0"
+// * Upgrade to .NET version 8.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -26,8 +32,8 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 using log4net;
+
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 namespace EZSeleniumLib
 {
@@ -41,22 +47,20 @@ namespace EZSeleniumLib
     public abstract partial class BrowserBase
     {
         #region log4net
-        private static ILog? _log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BrowserBase));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (_log == null)
-                    _log = LogManager.GetLogger(typeof(BrowserBase));
-                return _log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         #region protected memberz
-
-        protected const string DEBUG_START = Consts.DEBUG_START;
-        protected const string DEBUG_DONE = Consts.DEBUG_DONE;
 
         private WebDriver? m_Driver = null;
         protected WebDriver? Driver
@@ -257,7 +261,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -291,7 +295,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (!this.Initialize())
                     throw new Exception("Initialize failed");
             }
@@ -301,7 +305,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -312,7 +316,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 this._browserOptions = browserOptions;
                 if (!this.Initialize())
                     throw new Exception("Initialize failed");
@@ -323,7 +327,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -334,7 +338,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if(!this.Cleanup())
                     throw new Exception("Cleanup failed");
             }
@@ -344,7 +348,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -356,7 +360,7 @@ namespace EZSeleniumLib
         {
             try
             {
-                Log.Debug(DEBUG_START);
+                LogTrace(Consts.LogStart);
                 if (Driver != null)
                 {
                     Driver.Close();
@@ -379,7 +383,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -404,7 +408,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -492,46 +496,7 @@ namespace EZSeleniumLib
             }
             finally
             {
-                Log.Debug(DEBUG_DONE);
-            }
-        }
-
-        /// <summary>
-        /// Wrapper for element.SendKeys(keysToSend). 
-        /// This Wrapper is required when using Firefox, because 
-        /// element.SendKeys() will transfer only the first character text for 
-        /// unknown reason, wheras Edge and Chrome work well though.
-        /// Google hits suggested to click the execute element.Click() 
-        /// prior to element.SendKeys(), but that did NOT work. 
-        /// using Actions.SendKeys(pttText, message).Perform() as by 
-        /// another google hit suggestion worked : - ).
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="keysToSend"></param>
-        /// <returns></returns>
-        public bool SendKeys(IWebElement? element, string? keysToSend)
-        {
-            try
-            {
-                if (element == null)
-                    throw new ArgumentNullException(nameof(element));
-
-                if (keysToSend == null)
-                    throw new ArgumentNullException(nameof(keysToSend));
-
-                Actions actions = new Actions(this.GetWebDriver());
-                actions.SendKeys(element, keysToSend).Perform();
-                Thread.Sleep(this.GetDelay());
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                Log.Debug(DEBUG_DONE);
+                LogTrace(Consts.LogDone);
             }
         }
 
@@ -596,6 +561,21 @@ namespace EZSeleniumLib
         /// after the control has been successfully transfered to the newly opened TAB</param>
         /// <returns></returns>
         public abstract bool SwitchToNewTab(bool closeOldTab = true);
+
+        /// <summary>
+        /// Wrapper for element.SendKeys(keysToSend). 
+        /// This Wrapper is required when using Firefox, because 
+        /// element.SendKeys() will transfer only the first character text for 
+        /// unknown reason, wheras Edge and Chrome work well though.
+        /// Google hits suggested to click the execute element.Click() 
+        /// prior to element.SendKeys(), but that did NOT work. 
+        /// using Actions.SendKeys(pttText, message).Perform() as by 
+        /// another google hit suggestion works for Firefox.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="keysToSend"></param>
+        /// <returns></returns>
+        public abstract bool SendKeys(IWebElement? element, string? keysToSend);
 
         #endregion
 
