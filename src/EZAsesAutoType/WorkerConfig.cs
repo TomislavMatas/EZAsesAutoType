@@ -2,12 +2,15 @@
 // File: "WorkerConfig.cs"
 //
 // Revision History: 
+// 2024/05/31:TomislavMatas: Version "1.126.0"
+// * Simplify log4net implementations.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
 
 using EZSeleniumLib;
 using log4net;
+using System.Diagnostics;
 
 namespace EZAsesAutoType
 {
@@ -19,16 +22,17 @@ namespace EZAsesAutoType
     internal class WorkerConfig
     {
         #region log4net
-        private static ILog? m_Log = null;
-        private static ILog Log
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(WorkerConfig));
+
+        [Conditional("DEBUG")]
+        private static void LogTrace(object message)
         {
-            get
-            {
-                if (m_Log == null)
-                    m_Log = LogManager.GetLogger(typeof(WorkerConfig));
-                return m_Log;
-            }
+#if DEBUG
+            Log.Debug(message);
+#endif
         }
+
         #endregion
 
         #region propertiez
@@ -118,7 +122,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 this.SetUserSettings(userSettings);
                 this.SetAppConfig(appConfig);
                 this.SetBrowserOptions(browserOptions);
@@ -131,7 +135,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -142,7 +146,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 UserSettings userSettings = new UserSettings();
                 AppConfig appConfig = new AppConfig();
                 BrowserOptions browserOptions = new BrowserOptions();
@@ -155,7 +159,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
@@ -166,7 +170,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                Log.Debug(Const.LogStart);
+                LogTrace(Const.LogStart);
                 AppConfig appConfig = new AppConfig();
                 BrowserOptions browserOptions = new BrowserOptions();
                 if (!Initialze(userSettings, appConfig, browserOptions))
@@ -178,7 +182,7 @@ namespace EZAsesAutoType
             }
             finally
             {
-                Log.Debug(Const.LogDone);
+                LogTrace(Const.LogDone);
             }
         }
 
