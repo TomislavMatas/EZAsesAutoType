@@ -10,9 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.126.0</Version>
-    <AssemblyVersion>1.126.0</AssemblyVersion>
-    <FileVersion>1.126.0</FileVersion>
+    <Version>1.126.1</Version>
+    <AssemblyVersion>1.126.1</AssemblyVersion>
+    <FileVersion>1.126.1</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -27,6 +27,11 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
+Version "1.126.1"
+* Update "Selenium" libs to version "4.22.0".
+* Update "chromedriver.exe" to version "126.0.6478.115".
+* Update "msedgedriver.exe" to version "126.0.2592.68".
+
 Version "1.126.0"
 * Increase default timeout values.
 * Add handling of commandline argument "/close".
