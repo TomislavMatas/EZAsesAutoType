@@ -8,10 +8,12 @@
 :: -- 
 :: -- Example:
 :: -- ```
-:: -- CMD> updateWebdriverEdge 125.0.2535.13
+:: -- CMD> updateWebdriverEdge 126.0.2592.68
 :: -- ```
 :: --
 :: -- Revision History
+:: -- 2024/06/24:TomislavMatas: Version "1.126.0"
+:: -- * Set "WEBDRIVER_VERSION_DEFAULT=126.0.2592.68"
 :: -- 2024/05/31:TomislavMatas: Version "1.126.0"
 :: -- * Custom renaming from "msedgedriver.exe" to 
 :: --   "MicrosoftWebDriver.exe" is obsolete 
@@ -30,7 +32,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=125.0.2535.13"
+set "WEBDRIVER_VERSION_DEFAULT=126.0.2592.68"
 
 set "WEBDRIVER_HOMEPAGE=https://developer.microsoft.com/de-de/microsoft-edge/tools/webdriver"
 
