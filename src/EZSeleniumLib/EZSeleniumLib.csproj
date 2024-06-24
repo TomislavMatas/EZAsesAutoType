@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.21.1</Version>
-    <AssemblyVersion>4.21.1</AssemblyVersion>
-    <FileVersion>4.21.1</FileVersion>
+    <Version>4.22.0</Version>
+    <AssemblyVersion>4.22.0</AssemblyVersion>
+    <FileVersion>4.22.0</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
@@ -16,6 +16,12 @@
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageReleaseNotes>
+Version "4.22.0"
+* Update "Selenium.Support" to version "4.22.0".
+* Update "Selenium.WebDriver" to version "4.22.0".
+* Update "chromedriver.exe" to version "126.0.6478.115".
+* Update "msedgedriver.exe" to version "126.0.2592.68".
+
 Version "4.21.1"
 * Simplify log4net implementations.
 
