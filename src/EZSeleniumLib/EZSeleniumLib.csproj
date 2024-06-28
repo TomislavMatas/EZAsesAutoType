@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.22.0</Version>
-    <AssemblyVersion>4.22.0</AssemblyVersion>
-    <FileVersion>4.22.0</FileVersion>
+    <Version>4.22.1</Version>
+    <AssemblyVersion>4.22.1</AssemblyVersion>
+    <FileVersion>4.22.1</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
@@ -16,6 +16,9 @@
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageReleaseNotes>
+Version "4.22.1"
+* BugFix: Re~Add packaging of web driver binaries during build.
+
 Version "4.22.0"
 * Update "Selenium.Support" to version "4.22.0".
 * Update "Selenium.WebDriver" to version "4.22.0".
@@ -48,6 +51,18 @@ Version 4.20.0
     <PackageReference Include="Selenium.WebDriver" Version="4.21.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="chromedriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="geckodriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="msedgedriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
