@@ -29,7 +29,7 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-
+using EZSeleniumLib;
 using log4net;
 
 namespace EZAsesAutoType
@@ -450,9 +450,9 @@ namespace EZAsesAutoType
                 this.textBoxUrl.Text = userSettings.ASESBaseUrl;
                 this.textBoxUid.Text = userSettings.ASESUserId;
                 this.textBoxPwd.Text = userSettings.ASESPassword;
-                this.textBoxPunchInAM.Text  = userSettings.ASESPunchInAM;
+                this.textBoxPunchInAM.Text = userSettings.ASESPunchInAM;
                 this.textBoxPunchOutAM.Text = userSettings.ASESPunchOutAM;
-                this.textBoxPunchInPM.Text  = userSettings.ASESPunchInPM;
+                this.textBoxPunchInPM.Text = userSettings.ASESPunchInPM;
                 this.textBoxPunchOutPM.Text = userSettings.ASESPunchOutPM;
 
                 return true;
@@ -567,19 +567,19 @@ namespace EZAsesAutoType
             try
             {
                 UserSettings userSettings = new UserSettings();
-                userSettings.ASESBaseUrl      = this.textBoxUrl.Text;
-                userSettings.ASESUserId       = this.textBoxUid.Text;
-                userSettings.ASESPassword     = this.textBoxPwd.Text;
-                userSettings.ASESClient       = this.comboBoxClientNo.Text;
-                userSettings.ASESClientList   = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
-                userSettings.ASESLanguage     = this.comboBoxLanguage.Text;
+                userSettings.ASESBaseUrl = this.textBoxUrl.Text;
+                userSettings.ASESUserId = this.textBoxUid.Text;
+                userSettings.ASESPassword = this.textBoxPwd.Text;
+                userSettings.ASESClient = this.comboBoxClientNo.Text;
+                userSettings.ASESClientList = this.GetComboBoxItemsAsStringCollection(this.comboBoxClientNo);
+                userSettings.ASESLanguage = this.comboBoxLanguage.Text;
                 userSettings.ASESLanguageList = this.GetComboBoxItemsAsStringCollection(this.comboBoxLanguage);
-                userSettings.ASESPunchInAM    = this.textBoxPunchInAM.Text;
-                userSettings.ASESPunchOutAM   = this.textBoxPunchOutAM.Text;
-                userSettings.ASESPunchInPM    = this.textBoxPunchInPM.Text;
-                userSettings.ASESPunchOutPM   = this.textBoxPunchOutPM.Text;
-                userSettings.WebDriver        = this.comboBoxWebDriver.Text;
-                userSettings.WebDriverList    = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                userSettings.ASESPunchInAM = this.textBoxPunchInAM.Text;
+                userSettings.ASESPunchOutAM = this.textBoxPunchOutAM.Text;
+                userSettings.ASESPunchInPM = this.textBoxPunchInPM.Text;
+                userSettings.ASESPunchOutPM = this.textBoxPunchOutPM.Text;
+                userSettings.WebDriver = this.comboBoxWebDriver.Text;
+                userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 return userSettings;
             }
             catch (Exception ex)
@@ -648,7 +648,7 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
                 if (!RenderUrl(userSettings))
-                    throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
+                    throw new Exception(nameof(RenderUrl) + Const.LogFail);
 
             }
             catch (Exception ex)
@@ -706,6 +706,9 @@ namespace EZAsesAutoType
                 this.SuspendLayout();
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
+
+                if (!RenderUrl(userSettings))
+                    throw new Exception(nameof(RenderUrl) + Const.LogFail);
 
                 if (!RenderWebDriverVersion(userSettings))
                     throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
@@ -876,6 +879,7 @@ namespace EZAsesAutoType
             {
                 this.Show();
                 Application.DoEvents();
+                this.Refresh();
                 this.Run();
             }
             catch (Exception ex)
@@ -894,6 +898,7 @@ namespace EZAsesAutoType
             {
                 this.Show();
                 Application.DoEvents();
+                this.Refresh();
                 this.Close();
             }
             catch (Exception ex)
@@ -931,7 +936,7 @@ namespace EZAsesAutoType
                 if (this.ArgRunProvided())
                 {
                     this.RunOnLoad();
-                    
+
                     // although "Run" kicks of a background task,
                     // control will be passed back to this point after
                     // processing (regardless if successful or not)

@@ -407,43 +407,52 @@ namespace EZAsesAutoType
                         Thread.Sleep(1000);
 
                         xPathRow += "/input";
-                        rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
-                        if (rowElement == null)
+                        IWebElement? inputElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
+                        if (inputElement == null)
                             throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
 
                         string punchInValue = timePair.PunchIn;
-                        rowElement.SendKeys(punchInValue);
+                        inputElement.SendKeys(punchInValue);
 
+                        // sending a single "TAB" key stroke _now_ 
+                        // to trigger "validated" event on input element.
+                        inputElement.SendKeys(Keys.Tab);
+
+                        // although, weh should be positioned on "punch out" span element,
+                        // doblecheck by using FIndElement.
                         xPathRow = this.GetTimePairFirstRowTimeToXPath();
                         rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
                         if (rowElement == null)
                             throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
 
                         if (!browser.ClickElement(rowElement))
-                            throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+                            throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
                         // this sleep is required, because the input element 
                         // will be renderd _after_ the cell item's span element
                         // has been activated by "mouse click".
                         Thread.Sleep(1000);
+
                         xPathRow += "/input";
-                        rowElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
-                        if (rowElement == null)
+                        inputElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
+                        if (inputElement == null)
                             throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
 
                         string punchOutValue = timePair.PunchOut;
-                        rowElement.SendKeys(punchOutValue);
+                        inputElement.SendKeys(punchOutValue);
 
                         if (timePairList.Count == 1)
                             break; // nothing left to do
 
                         // sending a single "TAB" key stroke _now_
-                        // should implicitly add a new time pair entry row.
-                        rowElement.SendKeys(Keys.Tab);
+                        // to trigger "validated" event on input element.
+                        // THis should implicitly add a new time pair entry row.
+                        inputElement.SendKeys(Keys.Tab);
 
                         // this sleep is required to give app some time
                         // to render the "new row".
                         Thread.Sleep(1000);
+
                     } // rowIndex == 1
 
                     if (rowIndex > 1)
@@ -458,10 +467,22 @@ namespace EZAsesAutoType
                         if(activeElement==null)
                             throw new Exception(nameof(activeElement) + Const.LogIsNull);
 
-                        // do additional inspections to check if theactive element is the expected one.
+                        // do additional inspections to check if the active element is the expected one.
                         string tagName = activeElement.TagName;
-                        if(!string.Equals(tagName, "input", StringComparison.OrdinalIgnoreCase))
-                            throw new Exception(nameof(activeElement) + Const.LogInvalid);
+//                        if (!string.Equals(tagName, "input", StringComparison.OrdinalIgnoreCase))
+//                            throw new Exception(nameof(activeElement) + Const.LogInvalid);
+
+                        if (!browser.ClickElement(activeElement))
+                            throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                        // this sleep is required, because the input element 
+                        // will be renderd _after_ the cell item's span element
+                        // has been activated by "mouse click".
+                        Thread.Sleep(1000);
+
+                        activeElement = webDriver.SwitchTo().ActiveElement();
+                        if (activeElement == null)
+                            throw new Exception(nameof(activeElement) + Const.LogIsNull);
 
                         string punchInValue = timePair.PunchIn;
                         activeElement.SendKeys(punchInValue);
