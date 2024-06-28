@@ -6,6 +6,12 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/06/24:TomislavMatas: Version "1.126.2"
+* Improve fault tolerance on time slice entry.
+* Force "repaint" when app has been startet with "/run" argument in order
+  to show the correct driver versions.
+* Fix a bug in edge driver version evaluation.
+
 ## 2024/06/24:TomislavMatas: Version "1.126.1"
 * Update "Selenium" libs to version "4.22.0".
 * Update "chromedriver.exe" to version "126.0.6478.115".
