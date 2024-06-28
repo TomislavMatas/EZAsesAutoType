@@ -44,6 +44,9 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2024/06/29:TomislavMatas: Version "4.22.1"
+* BugFix: Re~Add packaging of web driver binaries during build.
+
 ## 2024/06/24:TomislavMatas: Version "4.22.0"
 * Update "Selenium.Support" to version "4.22.0".
 * Update "Selenium.WebDriver" to version "4.22.0".
