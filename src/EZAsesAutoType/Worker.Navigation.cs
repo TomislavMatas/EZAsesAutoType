@@ -414,6 +414,11 @@ namespace EZAsesAutoType
                         string punchInValue = timePair.PunchIn;
                         inputElement.SendKeys(punchInValue);
 
+                        // repeat findElement to avoid "stale element" errors due to context change after typing the value
+                        inputElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
+                        if (inputElement == null)
+                            throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
+
                         // sending a single "TAB" key stroke _now_ 
                         // to trigger "validated" event on input element.
                         inputElement.SendKeys(Keys.Tab);
@@ -443,6 +448,11 @@ namespace EZAsesAutoType
 
                         if (timePairList.Count == 1)
                             break; // nothing left to do
+
+                        // repeat findElement to avoid "stale element" errors due to context change after typing the value
+                        inputElement = browser.FindElementByXpath(xPathRow, timeoutInSeconds);
+                        if (inputElement == null)
+                            throw new Exception(string.Format("'{0}'{1}", xPathRow, Const.LogNotFound));
 
                         // sending a single "TAB" key stroke _now_
                         // to trigger "validated" event on input element.
