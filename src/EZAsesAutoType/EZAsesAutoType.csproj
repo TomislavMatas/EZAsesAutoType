@@ -10,9 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.126.1</Version>
-    <AssemblyVersion>1.126.1</AssemblyVersion>
-    <FileVersion>1.126.1</FileVersion>
+    <Version>1.126.2</Version>
+    <AssemblyVersion>1.126.2</AssemblyVersion>
+    <FileVersion>1.126.2</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -27,6 +27,12 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
+Version "1.126.2"
+* Improve fault tolerance on time slice entry.
+* Force "repaint" when app has been startet with "/run" argument in order
+  to show the correct driver versions.
+* Fix a bug in edge driver version evaluation.
+  
 Version "1.126.1"
 * Update "Selenium" libs to version "4.22.0".
 * Update "chromedriver.exe" to version "126.0.6478.115".
