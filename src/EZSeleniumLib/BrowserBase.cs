@@ -13,6 +13,10 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History: 
+// 2024/07/01:TomislavMatas: Version "4.22.2"
+// * Add "SendKeysWithRetry" and "ClickElementWithRetry" as custom wrappers
+//   for "IWebElement.SendKeys()" and "IWebElement.Click()"
+//   to mitigate "stale element reference" errors.
 // 2024/05/31:TomislavMatas: Version "4.21.1"
 // * Simplify log4net implementations.
 // 2024/05/29:TomislavMatas: Version "4.21.0"
@@ -72,9 +76,9 @@ namespace EZSeleniumLib
 
                 return m_Driver;
             }
-            set 
-            { 
-                m_Driver = value; 
+            set
+            {
+                m_Driver = value;
             }
         }
         protected abstract WebDriver? GetDriver();
@@ -98,9 +102,9 @@ namespace EZSeleniumLib
 
                 return m_Service;
             }
-            set 
-            { 
-                m_Service = value; 
+            set
+            {
+                m_Service = value;
             }
         }
         protected abstract DriverService? GetService();
@@ -454,6 +458,7 @@ namespace EZSeleniumLib
         {
             try
             {
+                LogTrace(Consts.LogStart);
                 Process? p = this.Process;
                 if (p == null)
                     throw new Exception("process is null");
@@ -488,6 +493,127 @@ namespace EZSeleniumLib
                         return true;
                 }
                 return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Consts.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Customized "IWebElement.SendKeys()" implementation including 
+        /// a retry mechanism to avoid "StaleElementReferenceException".
+        /// See -->< https://reflect.run/articles/how-to-deal-with-staleelementreferenceexception-in-selenium/ >
+        /// </summary>
+        /// <param name="by"></param>
+        /// <param name="text"></param>
+        /// <param name="maxRetries"></param>
+        /// <returns></returns>
+        public bool SendKeysWithRetry(By by, string text, int maxRetries)
+        {
+            try
+            {
+                LogTrace(Consts.LogStart);
+                WebDriver? driver = this.GetDriver();
+                if (driver == null)
+                    throw new Exception(nameof(driver)+"is null");
+
+                bool result = false;
+                int attempts = 0;
+                while (attempts <= maxRetries)
+                {
+                    attempts++;
+                    IWebElement? element;
+                    try
+                    {
+                        element = driver.FindElement(by);
+                        if (element == null)
+                            continue;
+
+                        element.SendKeys(text);
+                        result = true;
+                        break;
+                    }
+                    catch (StaleElementReferenceException staleElementReferenceException)
+                    {
+                        Log.Error(staleElementReferenceException);
+                        // overwriting the WebElement reference by
+                        // re-retrieving the desired HTML element
+                        // according to the By locator strategy
+                        element = driver.FindElement(by);
+                    }
+                    catch (Exception innerException)
+                    {
+                        Log.Error(innerException);
+                        continue;
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Consts.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Custom "IWebElement.Click()" implementation including 
+        /// a retry mechanism to avoid "StaleElementReferenceException".
+        /// See -->< https://reflect.run/articles/how-to-deal-with-staleelementreferenceexception-in-selenium/ >
+        /// </summary>
+        /// <param name="by"></param>
+        /// <param name="maxRetries"></param>
+        /// <returns></returns>
+        public bool ClickElementWithRetry(By by, int maxRetries)
+        {
+            try
+            {
+                LogTrace(Consts.LogStart);
+                WebDriver? driver = this.GetDriver();
+                if (driver == null)
+                    throw new Exception(nameof(driver)+" is null");
+
+                bool result = false;
+                int attempts = 0;
+                while (attempts <= maxRetries)
+                {
+                    attempts++;
+                    IWebElement? element;
+                    try
+                    {
+                        element = driver.FindElement(by);
+                        if (element == null)
+                            continue;
+
+                        element.Click();
+                        result = true;
+                        break;
+                    }
+                    catch (StaleElementReferenceException staleElementReferenceException)
+                    {
+                        Log.Error(staleElementReferenceException);
+                        // overwriting the WebElement reference by
+                        // re-retrieving the desired HTML element
+                        // according to the By locator strategy
+                        element = driver.FindElement(by);
+                    }
+                    catch (Exception innerException)
+                    {
+                        Log.Error(innerException);
+                        continue;
+                    }
+                }
+                return result;
             }
             catch (Exception ex)
             {
