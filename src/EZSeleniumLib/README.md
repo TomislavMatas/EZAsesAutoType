@@ -44,6 +44,10 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2024/06/29:TomislavMatas: Version "4.22.2"
+* Add new wrappers for "IWebElement.SendKeys()" and "IWebElement.Click()"
+  to mitigate "stale element reference" errors.
+
 ## 2024/06/29:TomislavMatas: Version "4.22.1"
 * BugFix: Re~Add packaging of web driver binaries during build.
 

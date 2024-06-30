@@ -6,6 +6,8 @@
 // the "App.config" file using specific wrapper methods.
 //
 // Revision History: 
+// 2024/07/01:TomislavMatas: Version "4.22.2"
+// * Add masking of "passwd" to "GetAppSettingString".
 // 2024/05/31:TomislavMatas: Version "4.21.1"
 // * Simplify log4net implementations.
 // 2024/05/04:TomislavMatas: Version "4.20.0"
@@ -142,7 +144,9 @@ namespace EZSeleniumLib
                 if (value == null)
                     value=defaultValue;
 
-                if(name.ToLower().Contains("password") || name.ToLower().Contains("pwd"))
+                if( name.ToLower().Contains("password") 
+                 || name.ToLower().Contains("pwd")
+                 || name.ToLower().Contains("passwd") )
                     Log.Debug(String.Format("name='{0}' value='{1}'", name, "***"));
                 else
                     Log.Debug(String.Format("name='{0}' value='{1}'", name, value));
