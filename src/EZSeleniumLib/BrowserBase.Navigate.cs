@@ -120,9 +120,6 @@ namespace EZSeleniumLib
             }
         }
 
-
-
-
         /// <summary>
         /// Wrapper for "Driver.Navigate().GoToUrl(url);".
         /// If "timeoutInSeconds > 0", than change the 
