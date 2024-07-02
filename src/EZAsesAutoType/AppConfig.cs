@@ -5,6 +5,10 @@
 // Project specific configuration settings. 
 //
 // Revision History: 
+// 2024/07/02:TomislavMatas: Version "1.126.2"
+// * Rename "ASES.TimeGrid.*" to "ASES.DateGrid.*".
+// * Rename "ASES.TimePair.FirstRow.*" to "ASES.TimePair.*".
+// * Add new property "MaxRetriesElementOperations".
 // 2024/05/31:TomislavMatas: Version "1.126.0"
 // * Simplify log4net implementations.
 // 2024/05/26:TomislavMatas: Version "1.126.0"
@@ -107,7 +111,34 @@ namespace EZAsesAutoType
         public int SetTimeoutFindElement(int value)
         {
             int prev = this.GetTimeoutFindElement();
-            this.TimeoutFindElement = value;
+            this.TimeoutFindElement = value;    
+            return prev;
+        }
+
+        private const string MaxRetriesElementOperationsKeyName = "ASES.MaxRetries.ElementOperations";
+        private const int MaxRetriesElementOperationsDefault = 5;
+        private int m_MaxRetriesElementOperations = -1;
+        private int MaxRetriesElementOperations
+        {
+            get
+            {
+                if (m_MaxRetriesElementOperations == -1)
+                    m_MaxRetriesElementOperations = ConfigApi.GetAppSettingInt(MaxRetriesElementOperationsKeyName, MaxRetriesElementOperationsDefault);
+                return m_MaxRetriesElementOperations;
+            }
+            set
+            {
+                m_MaxRetriesElementOperations = value;
+            }
+        }
+        public int GetMaxRetriesForElementOperations()
+        {
+            return this.MaxRetriesElementOperations;
+        }
+        public int SetMaxRetriesForElementOperations(int value)
+        {
+            int prev = this.GetMaxRetriesForElementOperations();
+            this.MaxRetriesElementOperations = value;
             return prev;
         }
 
@@ -477,237 +508,237 @@ namespace EZAsesAutoType
             return prev;
         }
 
-        private const string TimeGridFormXPathKeyName = "ASES.TimeGrid.Form.xPath";
-        private string? m_TimeGridFormXPath = null;
-        private string TimeGridFormXPath
+        private const string DateGridFormXPathKeyName = "ASES.DateGrid.Form.xPath";
+        private string? m_DateGridFormXPath = null;
+        private string DateGridFormXPath
         {
             get
             {
-                if (m_TimeGridFormXPath == null)
-                    m_TimeGridFormXPath = ConfigApi.GetAppSettingString(TimeGridFormXPathKeyName, string.Empty);
-                return m_TimeGridFormXPath;
+                if (m_DateGridFormXPath == null)
+                    m_DateGridFormXPath = ConfigApi.GetAppSettingString(DateGridFormXPathKeyName, string.Empty);
+                return m_DateGridFormXPath;
             }
             set
             {
-                m_TimeGridFormXPath = value;
+                m_DateGridFormXPath = value;
             }
         }
-        public string GetTimeGridFormXPath()
+        public string GetDateGridFormXPath()
         {
-            return this.TimeGridFormXPath;
+            return this.DateGridFormXPath;
         }
-        public string SetTimeGridFormXPath(string value)
+        public string SetDateGridFormXPath(string value)
         {
-            string prev = this.GetTimeGridFormXPath();
-            this.TimeGridFormXPath = value;
+            string prev = this.GetDateGridFormXPath();
+            this.DateGridFormXPath = value;
             return prev;
         }
 
-        private const string TimeGridCanvasXPathKeyName = "ASES.TimeGrid.Canvas.xPath";
-        private string? m_TimeGridCanvasXPath = null;
-        private string TimeGridCanvasXPath
+        private const string DateGridCanvasXPathKeyName = "ASES.DateGrid.Canvas.xPath";
+        private string? m_DateGridCanvasXPath = null;
+        private string DateGridCanvasXPath
         {
             get
             {
-                if (m_TimeGridCanvasXPath == null)
-                    m_TimeGridCanvasXPath = ConfigApi.GetAppSettingString(TimeGridCanvasXPathKeyName, string.Empty);
-                return m_TimeGridCanvasXPath;
+                if (m_DateGridCanvasXPath == null)
+                    m_DateGridCanvasXPath = ConfigApi.GetAppSettingString(DateGridCanvasXPathKeyName, string.Empty);
+                return m_DateGridCanvasXPath;
             }
             set
             {
-                m_TimeGridCanvasXPath = value;
+                m_DateGridCanvasXPath = value;
             }
         }
-        public string GetTimeGridCanvasXPath()
+        public string GetDateGridCanvasXPath()
         {
-            return this.TimeGridCanvasXPath;
+            return this.DateGridCanvasXPath;
         }
-        public string SetTimeGridCanvasXPath(string value)
+        public string SetDateGridCanvasXPath(string value)
         {
-            string prev = this.GetTimeGridCanvasXPath();
-            this.TimeGridCanvasXPath = value;
+            string prev = this.GetDateGridCanvasXPath();
+            this.DateGridCanvasXPath = value;
             return prev;
         }
 
-        private const string TimeGridCanvasSortingAscXPathKeyName = "ASES.TimeGrid.Canvas.Sortindicator.Ascending.xPath";
-        private string? m_TimeGridCanvasSortingAscXPath = null;
-        private string TimeGridCanvasSortingAscXPath
+        private const string DateGridCanvasSortingAscXPathKeyName = "ASES.DateGrid.Canvas.Sortindicator.Ascending.xPath";
+        private string? m_DateGridCanvasSortingAscXPath = null;
+        private string DateGridCanvasSortingAscXPath
         {
             get
             {
-                if (m_TimeGridCanvasSortingAscXPath == null)
-                    m_TimeGridCanvasSortingAscXPath = ConfigApi.GetAppSettingString(TimeGridCanvasSortingAscXPathKeyName, string.Empty);
-                return m_TimeGridCanvasSortingAscXPath;
+                if (m_DateGridCanvasSortingAscXPath == null)
+                    m_DateGridCanvasSortingAscXPath = ConfigApi.GetAppSettingString(DateGridCanvasSortingAscXPathKeyName, string.Empty);
+                return m_DateGridCanvasSortingAscXPath;
             }
             set
             {
-                m_TimeGridCanvasSortingAscXPath = value;
+                m_DateGridCanvasSortingAscXPath = value;
             }
         }
-        public string GetTimeGridCanvasSortingAscXPath()
+        public string GetDateGridCanvasSortingAscXPath()
         {
-            return this.TimeGridCanvasSortingAscXPath;
+            return this.DateGridCanvasSortingAscXPath;
         }
-        public string SetTimeGridCanvasSortingAscXPath(string value)
+        public string SetDateGridCanvasSortingAscXPath(string value)
         {
-            string prev = this.GetTimeGridCanvasSortingAscXPath();
-            this.TimeGridCanvasSortingAscXPath = value;
+            string prev = this.GetDateGridCanvasSortingAscXPath();
+            this.DateGridCanvasSortingAscXPath = value;
             return prev;
         }
 
-        private const string TimeGridCanvasSortingDescXPathKeyName = "ASES.TimeGrid.Canvas.Sortindicator.Descending.xPath";
-        private string? m_TimeGridCanvasSortingDescXPath = null;
-        private string TimeGridCanvasSortingDescXPath
+        private const string DateGridCanvasSortingDescXPathKeyName = "ASES.DateGrid.Canvas.Sortindicator.Descending.xPath";
+        private string? m_DateGridCanvasSortingDescXPath = null;
+        private string DateGridCanvasSortingDescXPath
         {
             get
             {
-                if (m_TimeGridCanvasSortingDescXPath == null)
-                    m_TimeGridCanvasSortingDescXPath = ConfigApi.GetAppSettingString(TimeGridCanvasSortingDescXPathKeyName, string.Empty);
-                return m_TimeGridCanvasSortingDescXPath;
+                if (m_DateGridCanvasSortingDescXPath == null)
+                    m_DateGridCanvasSortingDescXPath = ConfigApi.GetAppSettingString(DateGridCanvasSortingDescXPathKeyName, string.Empty);
+                return m_DateGridCanvasSortingDescXPath;
             }
             set
             {
-                m_TimeGridCanvasSortingDescXPath = value;
+                m_DateGridCanvasSortingDescXPath = value;
             }
         }
-        public string GetTimeGridCanvasSortingDescXPath()
+        public string GetDateGridCanvasSortingDescXPath()
         {
-            return this.TimeGridCanvasSortingDescXPath;
+            return this.DateGridCanvasSortingDescXPath;
         }
-        public string SetTimeGridCanvasSortingDescXPath(string value)
+        public string SetDateGridCanvasSortingDescXPath(string value)
         {
-            string prev = this.GetTimeGridCanvasSortingDescXPath();
-            this.TimeGridCanvasSortingDescXPath = value;
+            string prev = this.GetDateGridCanvasSortingDescXPath();
+            this.DateGridCanvasSortingDescXPath = value;
             return prev;
         }
 
-        private const string TimeGridCanvasLastRowXPathKeyName = "ASES.TimeGrid.Canvas.LastRow.xPath";
-        private string? m_TimeGridCanvasLastRowXPath = null;
-        private string TimeGridCanvasLastRowXPath
+        private const string DateGridCanvasLastRowXPathKeyName = "ASES.DateGrid.Canvas.LastRow.xPath";
+        private string? m_DateGridCanvasLastRowXPath = null;
+        private string DateGridCanvasLastRowXPath
         {
             get
             {
-                if (m_TimeGridCanvasLastRowXPath == null)
-                    m_TimeGridCanvasLastRowXPath = ConfigApi.GetAppSettingString(TimeGridCanvasLastRowXPathKeyName, string.Empty);
-                return m_TimeGridCanvasLastRowXPath;
+                if (m_DateGridCanvasLastRowXPath == null)
+                    m_DateGridCanvasLastRowXPath = ConfigApi.GetAppSettingString(DateGridCanvasLastRowXPathKeyName, string.Empty);
+                return m_DateGridCanvasLastRowXPath;
             }
             set
             {
-                m_TimeGridCanvasLastRowXPath = value;
+                m_DateGridCanvasLastRowXPath = value;
             }
         }
-        public string GetTimeGridCanvasLastRowXPath()
+        public string GetDateGridCanvasLastRowXPath()
         {
-            return this.TimeGridCanvasLastRowXPath;
+            return this.DateGridCanvasLastRowXPath;
         }
-        public string SetTimeGridCanvasLastRowXPath(string value)
+        public string SetDateGridCanvasLastRowXPath(string value)
         {
-            string prev = this.GetTimeGridCanvasLastRowXPath();
-            this.TimeGridCanvasLastRowXPath = value;
+            string prev = this.GetDateGridCanvasLastRowXPath();
+            this.DateGridCanvasLastRowXPath = value;
             return prev;
         }
 
-        private const string TimeGridCanvasLastRowDateFromXPathKeyName = "ASES.TimeGrid.Canvas.LastRow.DateFrom.xPath";
-        private string? m_TimeGridCanvasLastRowDateFromXPath = null;
-        private string TimeGridCanvasLastRowDateFromXPath
+        private const string DateGridCanvasLastRowDateFromXPathKeyName = "ASES.DateGrid.Canvas.LastRow.DateFrom.xPath";
+        private string? m_DateGridCanvasLastRowDateFromXPath = null;
+        private string DateGridCanvasLastRowDateFromXPath
         {
             get
             {
-                if (m_TimeGridCanvasLastRowDateFromXPath == null)
-                    m_TimeGridCanvasLastRowDateFromXPath = ConfigApi.GetAppSettingString(TimeGridCanvasLastRowDateFromXPathKeyName, string.Empty);
-                return m_TimeGridCanvasLastRowDateFromXPath;
+                if (m_DateGridCanvasLastRowDateFromXPath == null)
+                    m_DateGridCanvasLastRowDateFromXPath = ConfigApi.GetAppSettingString(DateGridCanvasLastRowDateFromXPathKeyName, string.Empty);
+                return m_DateGridCanvasLastRowDateFromXPath;
             }
             set
             {
-                m_TimeGridCanvasLastRowDateFromXPath = value;
+                m_DateGridCanvasLastRowDateFromXPath = value;
             }
         }
-        public string GetTimeGridCanvasLastRowDateFromXPath()
+        public string GetDateGridCanvasLastRowDateFromXPath()
         {
-            return this.TimeGridCanvasLastRowDateFromXPath;
+            return this.DateGridCanvasLastRowDateFromXPath;
         }
-        public string SetTimeGridCanvasLastRowDateFromXPath(string value)
+        public string SetDateGridCanvasLastRowDateFromXPath(string value)
         {
-            string prev = this.GetTimeGridCanvasLastRowDateFromXPath();
-            this.TimeGridCanvasLastRowDateFromXPath = value;
+            string prev = this.GetDateGridCanvasLastRowDateFromXPath();
+            this.DateGridCanvasLastRowDateFromXPath = value;
             return prev;
         }
 
-        private const string TimeGridCanvasLastRowDateToXPathKeyName = "ASES.TimeGrid.Canvas.LastRow.DateTo.xPath";
-        private string? m_TimeGridCanvasLastRowDateToXPath = null;
-        private string TimeGridCanvasLastRowDateToXPath
+        private const string DateGridCanvasLastRowDateToXPathKeyName = "ASES.DateGrid.Canvas.LastRow.DateTo.xPath";
+        private string? m_DateGridCanvasLastRowDateToXPath = null;
+        private string DateGridCanvasLastRowDateToXPath
         {
             get
             {
-                if (m_TimeGridCanvasLastRowDateToXPath == null)
-                    m_TimeGridCanvasLastRowDateToXPath = ConfigApi.GetAppSettingString(TimeGridCanvasLastRowDateToXPathKeyName, string.Empty);
-                return m_TimeGridCanvasLastRowDateToXPath;
+                if (m_DateGridCanvasLastRowDateToXPath == null)
+                    m_DateGridCanvasLastRowDateToXPath = ConfigApi.GetAppSettingString(DateGridCanvasLastRowDateToXPathKeyName, string.Empty);
+                return m_DateGridCanvasLastRowDateToXPath;
             }
             set
             {
-                m_TimeGridCanvasLastRowDateToXPath = value;
+                m_DateGridCanvasLastRowDateToXPath = value;
             }
         }
-        public string GetTimeGridCanvasLastRowDateToXPath()
+        public string GetDateGridCanvasLastRowDateToXPath()
         {
-            return this.TimeGridCanvasLastRowDateToXPath;
+            return this.DateGridCanvasLastRowDateToXPath;
         }
-        public string SetTimeGridCanvasLastRowDateToXPath(string value)
+        public string SetDateGridCanvasLastRowDateToXPath(string value)
         {
-            string prev = this.GetTimeGridCanvasLastRowDateToXPath();
-            this.TimeGridCanvasLastRowDateToXPath = value;
+            string prev = this.GetDateGridCanvasLastRowDateToXPath();
+            this.DateGridCanvasLastRowDateToXPath = value;
             return prev;
         }
 
-        private const string TimePairFirstRowTimeFromXPathKeyName = "ASES.TimePair.FirstRow.TimeFrom.xPath";
-        private string? m_TimePairFirstRowTimeFromXPath = null;
-        private string TimePairFirstRowTimeFromXPath
+        private const string TimePairTimeFromXPathKeyName = "ASES.TimePair.TimeFrom.xPath";
+        private string? m_TimePairTimeFromXPath = null;
+        private string TimePairTimeFromXPath
         {
             get
             {
-                if (m_TimePairFirstRowTimeFromXPath == null)
-                    m_TimePairFirstRowTimeFromXPath = ConfigApi.GetAppSettingString(TimePairFirstRowTimeFromXPathKeyName, string.Empty);
-                return m_TimePairFirstRowTimeFromXPath;
+                if (m_TimePairTimeFromXPath == null)
+                    m_TimePairTimeFromXPath = ConfigApi.GetAppSettingString(TimePairTimeFromXPathKeyName, string.Empty);
+                return m_TimePairTimeFromXPath;
             }
             set
             {
-                m_TimePairFirstRowTimeFromXPath = value;
+                m_TimePairTimeFromXPath = value;
             }
         }
-        public string GetTimePairFirstRowTimeFromXPath()
+        public string GetTimePairTimeFromXPath()
         {
-            return this.TimePairFirstRowTimeFromXPath;
+            return this.TimePairTimeFromXPath;
         }
-        public string SetTimePairFirstRowTimeFromXPath(string value)
+        public string SetTimePairTimeFromXPath(string value)
         {
-            string prev = this.GetTimePairFirstRowTimeFromXPath();
-            this.TimePairFirstRowTimeFromXPath = value;
+            string prev = this.GetTimePairTimeFromXPath();
+            this.TimePairTimeFromXPath = value;
             return prev;
         }
 
-        private const string TimePairFirstRowTimeToXPathKeyName = "ASES.TimePair.FirstRow.TimeTo.xPath";
-        private string? m_TimePairFirstRowTimeToXPath = null;
-        private string TimePairFirstRowTimeToXPath
+        private const string TimePairTimeToXPathKeyName = "ASES.TimePair.TimeTo.xPath";
+        private string? m_TimePairTimeToXPath = null;
+        private string TimePairTimeToXPath
         {
             get
             {
-                if (m_TimePairFirstRowTimeToXPath == null)
-                    m_TimePairFirstRowTimeToXPath = ConfigApi.GetAppSettingString(TimePairFirstRowTimeToXPathKeyName, string.Empty);
-                return m_TimePairFirstRowTimeToXPath;
+                if (m_TimePairTimeToXPath == null)
+                    m_TimePairTimeToXPath = ConfigApi.GetAppSettingString(TimePairTimeToXPathKeyName, string.Empty);
+                return m_TimePairTimeToXPath;
             }
             set
             {
-                m_TimePairFirstRowTimeToXPath = value;
+                m_TimePairTimeToXPath = value;
             }
         }
-        public string GetTimePairFirstRowTimeToXPath()
+        public string GetTimePairTimeToXPath()
         {
-            return this.TimePairFirstRowTimeToXPath;
+            return this.TimePairTimeToXPath;
         }
-        public string SetTimePairFirstRowTimeToXPath(string value)
+        public string SetTimePairTimeToXPath(string value)
         {
-            string prev = this.GetTimePairFirstRowTimeToXPath();
-            this.TimePairFirstRowTimeToXPath = value;
+            string prev = this.GetTimePairTimeToXPath();
+            this.TimePairTimeToXPath = value;
             return prev;
         }
 
@@ -737,29 +768,29 @@ namespace EZAsesAutoType
             return prev;
         }
 
-        private const string TimeGridCanvasSaveButtonPathKeyName = "ASES.TimeGrid.Canvas.SaveButton.xPath";
-        private string? m_TimeGridCanvasSaveButtonPath = null;
-        private string TimeGridCanvasSaveButtonPath
+        private const string DateGridCanvasSaveButtonPathKeyName = "ASES.DateGrid.Canvas.SaveButton.xPath";
+        private string? m_DateGridCanvasSaveButtonPath = null;
+        private string DateGridCanvasSaveButtonPath
         {
             get
             {
-                if (m_TimeGridCanvasSaveButtonPath == null)
-                    m_TimeGridCanvasSaveButtonPath = ConfigApi.GetAppSettingString(TimeGridCanvasSaveButtonPathKeyName, string.Empty);
-                return m_TimeGridCanvasSaveButtonPath;
+                if (m_DateGridCanvasSaveButtonPath == null)
+                    m_DateGridCanvasSaveButtonPath = ConfigApi.GetAppSettingString(DateGridCanvasSaveButtonPathKeyName, string.Empty);
+                return m_DateGridCanvasSaveButtonPath;
             }
             set
             {
-                m_TimeGridCanvasSaveButtonPath = value;
+                m_DateGridCanvasSaveButtonPath = value;
             }
         }
-        public string GetTimeGridCanvasSaveButtonPath()
+        public string GetDateGridCanvasSaveButtonPath()
         {
-            return this.TimeGridCanvasSaveButtonPath;
+            return this.DateGridCanvasSaveButtonPath;
         }
-        public string SetTimeGridCanvasSaveButtonPath(string value)
+        public string SetDateGridCanvasSaveButtonPath(string value)
         {
-            string prev = this.GetTimeGridCanvasSaveButtonPath();
-            this.TimeGridCanvasSaveButtonPath = value;
+            string prev = this.GetDateGridCanvasSaveButtonPath();
+            this.DateGridCanvasSaveButtonPath = value;
             return prev;
         }
 
