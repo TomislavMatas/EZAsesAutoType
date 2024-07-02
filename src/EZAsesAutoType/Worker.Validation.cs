@@ -304,11 +304,11 @@ namespace EZAsesAutoType
 
                 // consider "correct page displayd" only when all required elements can be found.
                 StringCollection requiredElementXPathCollection = [
-                  this.GetTimeGridFormXPath()
-                , this.GetTimeGridCanvasXPath()
-                , this.GetTimeGridCanvasLastRowXPath()
-                , this.GetTimeGridCanvasLastRowDateFromXPath()
-                , this.GetTimeGridCanvasLastRowDateToXPath()
+                  this.GetDateGridFormXPath()
+                , this.GetDateGridCanvasXPath()
+                , this.GetDateGridCanvasLastRowXPath()
+                , this.GetDateGridCanvasLastRowDateFromXPath()
+                , this.GetDateGridCanvasLastRowDateToXPath()
                 ];
 
                 foreach (string? requiredElementXPath in requiredElementXPathCollection)
@@ -388,8 +388,8 @@ namespace EZAsesAutoType
 
                 // consider "correct page displayd" only when all required elements can be found.
                 StringCollection requiredElementXPathCollection = [
-                  this.GetTimePairFirstRowTimeFromXPath()
-                , this.GetTimePairFirstRowTimeToXPath()
+                  this.GetTimePairTimeFromXPath()
+                , this.GetTimePairTimeToXPath()
                 ];
 
                 foreach (string? requiredElementXPath in requiredElementXPathCollection)
@@ -471,7 +471,7 @@ namespace EZAsesAutoType
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
-                string xPath = this.GetTimeGridCanvasSortingAscXPath();
+                string xPath = this.GetDateGridCanvasSortingAscXPath();
                 if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
                     return true;
 
@@ -496,7 +496,7 @@ namespace EZAsesAutoType
                 if (browser == null)
                     throw new ArgumentNullException(nameof(browser));
 
-                string xPath = this.GetTimeGridCanvasSortingDescXPath();
+                string xPath = this.GetDateGridCanvasSortingDescXPath();
                 if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
                     return true;
 
