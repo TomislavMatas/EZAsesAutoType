@@ -2,6 +2,9 @@
 // File: "Worker.AppConfig.cs"
 //
 // Revision History: 
+// 2024/07/02:TomislavMatas: Version "1.126.2"
+// * Rename "ASES.TimeGrid.*" to "ASES.DateGrid.*".
+// * Rename "ASES.TimePair.FirstRow.*" to "ASES.TimePair.*".
 // 2024/04/04:TomislavMatas: Version "1.0.0"
 // * Initial version.
 //
@@ -20,6 +23,11 @@ namespace EZAsesAutoType
         private int GetTimeoutFindElement()
         {
             return this.WorkerConfig.GetAppConfig().GetTimeoutFindElement();
+        }
+
+        private int GetMaxRetriesForElementOperations()
+        {
+            return this.WorkerConfig.GetAppConfig().GetMaxRetriesForElementOperations();
         }
 
         private int GetTimeoutPopup()
@@ -92,49 +100,49 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetAppConfig().GetNavMenuUsernameLogoutButtonXPath();
         }
 
-        private string GetTimeGridFormXPath()
+        private string GetDateGridFormXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridFormXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridFormXPath();
         }
 
-        private string GetTimeGridCanvasXPath()
+        private string GetDateGridCanvasXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasXPath();
         }
 
-        private string GetTimeGridCanvasSortingAscXPath()
+        private string GetDateGridCanvasSortingAscXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSortingAscXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasSortingAscXPath();
         }
 
-        private string GetTimeGridCanvasSortingDescXPath()
+        private string GetDateGridCanvasSortingDescXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSortingDescXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasSortingDescXPath();
         }
 
-        private string GetTimeGridCanvasLastRowXPath()
+        private string GetDateGridCanvasLastRowXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasLastRowXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasLastRowXPath();
         }
 
-        private string GetTimeGridCanvasLastRowDateFromXPath()
+        private string GetDateGridCanvasLastRowDateFromXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasLastRowDateFromXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasLastRowDateFromXPath();
         }
 
-        private string GetTimeGridCanvasLastRowDateToXPath()
+        private string GetDateGridCanvasLastRowDateToXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasLastRowDateToXPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasLastRowDateToXPath();
         }
 
-        private string GetTimePairFirstRowTimeFromXPath()
+        private string GetTimePairTimeFromXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimePairFirstRowTimeFromXPath();
+            return this.WorkerConfig.GetAppConfig().GetTimePairTimeFromXPath();
         }
 
-        private string GetTimePairFirstRowTimeToXPath()
+        private string GetTimePairTimeToXPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimePairFirstRowTimeToXPath();
+            return this.WorkerConfig.GetAppConfig().GetTimePairTimeToXPath();
         }
 
         private string GetTimePairFooterAcceptButtonPath()
@@ -142,9 +150,9 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetAppConfig().GetTimePairFooterAcceptButtonPath();
         }
         
-        private string GetTimeGridCanvasSaveButtonPath()
+        private string GetDateGridCanvasSaveButtonPath()
         {
-            return this.WorkerConfig.GetAppConfig().GetTimeGridCanvasSaveButtonPath();
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasSaveButtonPath();
         }
 
         #endregion
