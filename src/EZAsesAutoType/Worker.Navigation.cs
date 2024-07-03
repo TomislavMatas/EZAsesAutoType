@@ -2,7 +2,9 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
-// 2024/07/011:TomislavMatas: Version "1.126.2"
+// 2024/07/03:TomislavMatas: Version "1.126.2"
+// * Handle UserSetting "DoLogin" and "DoPunch".
+// 2024/07/01:TomislavMatas: Version "1.126.2"
 // * Replace calls to "ClickElement" with calls to "ClickElementWithRetry".
 //   in function "ASESEnterInOutTimePairs".
 // * Add new parameter "maxRetries" to function "ASESEnterInOutTimePairs".
@@ -24,6 +26,7 @@
 
 using EZSeleniumLib;
 using OpenQA.Selenium;
+using System.Windows.Forms.VisualStyles;
 using Keys = OpenQA.Selenium.Keys;
 
 namespace EZAsesAutoType
@@ -684,6 +687,16 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
+                bool doLogin = this.GetWorkerConfig().GetUserSettings().DoLogin;
+                if (!doLogin)
+                {   // Login automation shall not be executed.
+                    // Raise "CancelRequested" to quit automation,
+                    // but leave browser up and running.
+                    // See "finally" part of this method.
+                    Global.SetCancelRequested(true);
+                    return true;
+                }
+
                 string iFrameXPath = this.GetApplicationIFrameXPath();
                 int timeoutFindElement = this.GetTimeoutFindElement();
                 int maxRetriesForElementOperations = this.GetMaxRetriesForElementOperations();
@@ -725,6 +738,16 @@ namespace EZAsesAutoType
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                bool doPunch = this.GetWorkerConfig().GetUserSettings().DoPunch;
+                if (!doPunch)
+                {   // Punch-Automation shall not be executed.
+                    // Raise "CancelRequested" to quit automation,
+                    // but leave browser up and running.
+                    // See "finally" part of this method.
+                    Global.SetCancelRequested(true);
+                    return true;
+                }
 
                 Log.Info("Open time pair" + Const.LogInProgress);
                 if (!this.ASESOpenTimePairEntryPopup(browser, timeoutFindElement))

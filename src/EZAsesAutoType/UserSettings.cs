@@ -4,7 +4,9 @@
 // Summary:
 // Wrapper for "userSettings". 
 //
-// Revision History: 
+// Revision History:
+// 2024/07/03:TomislavMatas: Version "1.126.2"
+// * Add UserSetting "DoLogin" and "DoPunch".
 // 2024/05/31:TomislavMatas: Version "1.126.0"
 // * Simplify log4net implementations.
 // 2024/04/13:TomislavMatas: Version "1.123.4"
@@ -54,6 +56,14 @@ namespace EZAsesAutoType
         public string ASESPunchOutPM;
         public string WebDriver;
         public StringCollection WebDriverList;
+        /// <summary>
+        /// Perform (at least) "Login" when "Run" button has been clicked.
+        /// </summary>
+        public bool DoLogin;
+        /// <summary>
+        /// Perform "Login" and "time punch" when "Run" button has been clicked
+        /// </summary>
+        public bool DoPunch;
         #endregion
 
         /// <summary>
@@ -74,6 +84,8 @@ namespace EZAsesAutoType
             this.ASESPunchOutPM = string.Empty;
             this.WebDriver = string.Empty;
             this.WebDriverList = [];
+            this.DoLogin = true;
+            this.DoPunch = true;
         }
 
         /// <summary>
@@ -105,6 +117,8 @@ namespace EZAsesAutoType
                 this.ASESPunchOutPM   = Properties.Settings.Default.ASESPunchOutPM;
                 this.WebDriver        = Properties.Settings.Default.WebDriver;
                 this.WebDriverList    = Properties.Settings.Default.WebDriverList;
+                this.DoLogin          = Properties.Settings.Default.ASESDoLogin;
+                this.DoPunch          = Properties.Settings.Default.ASESDoPunch;
                 return true;
             }
             catch (Exception ex)
@@ -139,6 +153,8 @@ namespace EZAsesAutoType
                 Properties.Settings.Default.ASESPunchOutPM   = this.ASESPunchOutPM;
                 Properties.Settings.Default.WebDriver        = this.WebDriver;
                 Properties.Settings.Default.WebDriverList    = this.WebDriverList;
+                Properties.Settings.Default.ASESDoLogin      = this.DoLogin;
+                Properties.Settings.Default.ASESDoPunch      = this.DoPunch;
                 Properties.Settings.Default.Save();
                 return true;
             }
