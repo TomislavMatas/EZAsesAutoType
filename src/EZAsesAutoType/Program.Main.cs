@@ -20,7 +20,7 @@ namespace EZAsesAutoType
     ///  Provides the "Main()" function as the 
     ///  main entry point for the application.
     /// </summary>
-    internal static class Program
+    internal static partial class Program
     {
         #region log4net
 
@@ -48,8 +48,9 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
+                Program.Args = args;
                 ApplicationConfiguration.Initialize();
-                Application.Run(new FormMain(args));
+                Application.Run(new FormMain());
                 return 0;
             }
             catch (Exception ex)

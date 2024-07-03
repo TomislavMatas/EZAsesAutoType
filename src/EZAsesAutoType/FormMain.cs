@@ -29,8 +29,8 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using EZSeleniumLib;
 using log4net;
+using Microsoft.VisualBasic;
 
 namespace EZAsesAutoType
 {
@@ -104,31 +104,6 @@ namespace EZAsesAutoType
             return prev;
         }
 
-        private string[]? m_Args = null;
-        private string[]? Args
-        {
-            get
-            {
-                if (m_Args == null)
-                    m_Args = [];
-                return m_Args;
-            }
-            set
-            {
-                m_Args = value;
-            }
-        }
-        private string[]? GetArgs()
-        {
-            return this.Args;
-        }
-        private string[]? SetArgs(string[]? args)
-        {
-            string[]? prev = this.GetArgs();
-            this.Args = args;
-            return prev;
-        }
-
         private AppConfig? m_AppConfig = null;
         private AppConfig AppConfig
         {
@@ -179,29 +154,7 @@ namespace EZAsesAutoType
             {
                 LogTrace(Const.LogStart);
                 InitializeComponent();
-                if (!Initialze(args: null))
-                    throw new Exception(nameof(Initialze) + Const.LogFail);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-            }
-            finally
-            {
-                LogTrace(Const.LogDone);
-            }
-        }
-
-        /// <summary>
-        ///  Custom constructor.
-        /// </summary>
-        public FormMain(string[] args)
-        {
-            try
-            {
-                LogTrace(Const.LogStart);
-                InitializeComponent();
-                if (!Initialze(args))
+                if (!Initialze(Program.GetArgs()))
                     throw new Exception(nameof(Initialze) + Const.LogFail);
             }
             catch (Exception ex)
@@ -243,7 +196,6 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                this.SetArgs(args);
                 this.SetTitle();
                 this.SetAppHandler(new AppHandler(this));
                 return true;
@@ -779,56 +731,44 @@ namespace EZAsesAutoType
             }
         }
 
+        #endregion
+
+        #region automations
+
         /// <summary>
-        /// Checks if string array "args" contains "/Run".
+        /// Check if command line argument "/Run" has been provided.
         /// </summary>
-        /// <param name="args"></param>
         /// <returns></returns>
-        private bool ArgRunProvided(string[]? args)
+        private bool IsArgRunProvided()
         {
-            if (args == null)
-                return false;
-
-            foreach (string arg in args)
-                if (!string.IsNullOrEmpty(arg))
-                    if (arg.Equals(Const.CommandlineArg_Run, StringComparison.OrdinalIgnoreCase))
-                        return true;
-
-            return false;
-        }
-
-        private bool ArgRunProvided()
-        {
-            if (this.ArgRunProvided(this.GetArgs()))
-                return true;
-
-            return false;
+            return Program.IsArgProvided(Const.CommandlineArg_Run);
         }
 
         /// <summary>
-        /// Checks if string array "args" contains "/Close".
+        /// Check if command line argument "/Close" has been provided.
         /// </summary>
-        /// <param name="args"></param>
         /// <returns></returns>
-        private bool ArgCloseProvided(string[]? args)
+        private bool IsArgCloseProvided()
         {
-            if (args == null)
-                return false;
-
-            foreach (string arg in args)
-                if (!string.IsNullOrEmpty(arg))
-                    if (arg.Equals(Const.CommandlineArg_Close, StringComparison.OrdinalIgnoreCase))
-                        return true;
-
-            return false;
+            return Program.IsArgProvided(Const.CommandlineArg_Close);
         }
 
-        private bool ArgCloseProvided()
+        /// <summary>
+        /// Check if command line argument "/DoLogin" has been provided.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsArgDoLoginProvided()
         {
-            if (this.ArgCloseProvided(this.GetArgs()))
-                return true;
+            return Program.IsArgProvided(Const.CommandlineArg_DoLogin);
+        }
 
-            return false;
+        /// <summary>
+        /// Check if command line argument "/DoPunch" has been provided.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsArgDoPunchProvided()
+        {
+            return Program.IsArgProvided(Const.CommandlineArg_DoPunch);
         }
 
         private void Run()
@@ -933,7 +873,7 @@ namespace EZAsesAutoType
                 if (!RenderControls(userSettings))
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
 
-                if (this.ArgRunProvided())
+                if (this.IsArgRunProvided())
                 {
                     this.RunOnLoad();
 
@@ -941,7 +881,7 @@ namespace EZAsesAutoType
                     // control will be passed back to this point after
                     // processing (regardless if successful or not)
                     // or if user hits the cancel button.
-                    if (this.ArgCloseProvided())
+                    if (this.IsArgCloseProvided())
                     {
                         if (!Global.GetCancelRequested())
                         {   // startup argument "/Close" has been passed in
