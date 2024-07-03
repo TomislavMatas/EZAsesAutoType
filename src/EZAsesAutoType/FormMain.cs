@@ -2,6 +2,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/07/03:TomislavMatas: Version "1.126.2"
+// * Add new controls "checkBox_DoLogin" and "checkBox_DoPunch".
 // 2024/05/31:TomislavMatas: Version "1.126.0"
 // * Simplify log4net implementations.
 // 2024/05/27:TomislavMatas: Version "1.126.0":
@@ -29,8 +31,8 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+
 using log4net;
-using Microsoft.VisualBasic;
 
 namespace EZAsesAutoType
 {
@@ -532,6 +534,8 @@ namespace EZAsesAutoType
                 userSettings.ASESPunchOutPM = this.textBoxPunchOutPM.Text;
                 userSettings.WebDriver = this.comboBoxWebDriver.Text;
                 userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
+                userSettings.DoLogin = this.checkBox_DoLogin.Checked;
+                userSettings.DoPunch = this.checkBox_DoPunch.Checked;
                 return userSettings;
             }
             catch (Exception ex)
@@ -644,6 +648,92 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool RenderCeckBoxes(UserSettings userSettings)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                this.checkBox_DoLogin.Checked = userSettings.DoLogin;
+                this.checkBox_DoPunch.Checked = userSettings.DoPunch;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private bool RenderControlsDoLoginChanged(bool flag)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                this.SuspendLayout();
+                if (!flag)
+                {
+                    // "DoPunch" without "DoLogin" does not make sense.
+                    // Change checked state for "DoPunch" when
+                    // turning off "DoLogin".
+                    this.checkBox_DoPunch.Checked = false;
+                    if (!RenderControlsDoPunchChanged(false))
+                        throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                this.ResumeLayout();
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private bool RenderControlsDoPunchChanged(bool flag)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                this.SuspendLayout();
+                this.textBoxPunchInAM.Enabled = flag;
+                this.textBoxPunchInPM.Enabled = flag;
+                this.textBoxPunchOutAM.Enabled = flag;
+                this.textBoxPunchOutPM.Enabled = flag;
+                if (flag)
+                {
+                    // "DoPunch" without "DoLogin" does not make sense.
+                    // Change checked state for "DoLogin" only when
+                    // turning on "DoPunch".
+                    this.checkBox_DoLogin.Checked = true;
+                    if (!RenderControlsDoLoginChanged(true))
+                        throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                this.ResumeLayout(); 
+                LogTrace(Const.LogDone);
+            }
+        }
+
         /// <summary>
         /// Render controls depending on their actual values.
         /// Individual controls layout and content might
@@ -664,6 +754,15 @@ namespace EZAsesAutoType
 
                 if (!RenderWebDriverVersion(userSettings))
                     throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
+
+                if (!RenderCeckBoxes(userSettings))
+                    throw new Exception(nameof(RenderCeckBoxes) + Const.LogFail);
+
+                if (!RenderControlsDoLoginChanged(userSettings.DoLogin))
+                    throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
+
+                if (!RenderControlsDoPunchChanged(userSettings.DoPunch))
+                    throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
 
                 return true;
             }
@@ -697,6 +796,8 @@ namespace EZAsesAutoType
                     this.textBoxPunchOutAM.Enabled = false;
                     this.textBoxPunchInPM.Enabled = false;
                     this.textBoxPunchOutPM.Enabled = false;
+                    this.checkBox_DoLogin.Enabled = false;
+                    this.checkBox_DoPunch.Enabled = false;
                     this.btnRun.Enabled = false;
                     this.btnRun.Visible = true;
                     this.btnCancel.Enabled = true;
@@ -714,6 +815,8 @@ namespace EZAsesAutoType
                 this.textBoxPunchOutAM.Enabled = true;
                 this.textBoxPunchInPM.Enabled = true;
                 this.textBoxPunchOutPM.Enabled = true;
+                this.checkBox_DoLogin.Enabled = true;
+                this.checkBox_DoPunch.Enabled = true;
                 this.btnRun.Enabled = true;
                 this.btnRun.Visible = true;
                 this.btnCancel.Enabled = true;
@@ -867,13 +970,35 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
+                bool doAutomationOnLoad = false;
+                if (this.IsArgDoLoginProvided())
+                {
+                    this.UserSettings.DoLogin = true;
+                    this.UserSettings.DoPunch = false;
+                    doAutomationOnLoad = true;
+                }
+
+                if (this.IsArgDoPunchProvided())
+                {
+                    this.UserSettings.DoLogin = true;
+                    this.UserSettings.DoPunch = true;
+                    doAutomationOnLoad = true;
+                }
+
+                if (this.IsArgRunProvided())
+                {
+                    this.UserSettings.DoLogin = true;
+                    this.UserSettings.DoPunch = true;
+                    doAutomationOnLoad = true;
+                }
+
                 if (!InitializeControls(userSettings))
                     throw new Exception(nameof(InitializeControls) + Const.LogFail);
 
                 if (!RenderControls(userSettings))
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
 
-                if (this.IsArgRunProvided())
+                if (doAutomationOnLoad)
                 {
                     this.RunOnLoad();
 
@@ -890,6 +1015,7 @@ namespace EZAsesAutoType
                             this.CloseAfterRun();
                         }
                     }
+                    return;
                 }
             }
             catch (Exception ex)
@@ -982,7 +1108,7 @@ namespace EZAsesAutoType
                 return null;
 
             value = value.Trim();
-            if ( string.Equals(value, "now", StringComparison.OrdinalIgnoreCase)
+            if (string.Equals(value, "now", StringComparison.OrdinalIgnoreCase)
               || string.Equals(value, ".")
                )
             {
@@ -1025,7 +1151,7 @@ namespace EZAsesAutoType
                     // "a:b"
                     string hour = value.Substring(0, 1);
                     string minute = value.Substring(2, 1);
-                    if ( int.TryParse(hour, out int intHour) 
+                    if (int.TryParse(hour, out int intHour)
                       && int.TryParse(minute, out int intMinute)
                        )
                     {
@@ -1153,7 +1279,7 @@ namespace EZAsesAutoType
                 }
             }
 
-            if(TimeOnly.TryParse(value, out TimeOnly timeOnly))
+            if (TimeOnly.TryParse(value, out TimeOnly timeOnly))
                 return timeOnly.ToString("HH:mm");
 
             // if none of the above "matched", return string.empty.
@@ -1378,6 +1504,58 @@ namespace EZAsesAutoType
             }
         }
 
+        private void checkBox_DoLogin_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (!RenderCeckBoxes(userSettings))
+                    throw new Exception(nameof(RenderCeckBoxes) + Const.LogFail);
+
+                if (!RenderControlsDoLoginChanged(userSettings.DoLogin))
+                    throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private void checkBox_DoPunch_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (!RenderCeckBoxes(userSettings))
+                    throw new Exception(nameof(RenderCeckBoxes) + Const.LogFail);
+
+                if (!RenderControlsDoPunchChanged(userSettings.DoPunch))
+                    throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
         #endregion
 
         #region background worker taskz
@@ -1414,6 +1592,7 @@ namespace EZAsesAutoType
         }
 
         #endregion
+
 
     } // class
 
