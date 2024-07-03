@@ -2,6 +2,12 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/07/04:TomislavMatas: Version "1.126.2"
+// * Implement handling of "${RowIndex}" token replacement for
+//   time pair xPathes: During processing of the time pairs,
+//   for each time pair, the literal "${RowIndex}" within
+//   the xPath string from "App.config" will be
+//   replaced by respective "rowIndex" value.
 // 2024/07/03:TomislavMatas: Version "1.126.2"
 // * Handle UserSetting "DoLogin" and "DoPunch".
 // 2024/07/01:TomislavMatas: Version "1.126.2"
@@ -33,6 +39,8 @@ namespace EZAsesAutoType
 {
     internal partial class Worker
     {
+        private const string ReplacmentToken_RowIndex = @"${RowIndex}";
+
         #region Navigation 
 
         /// <summary>
@@ -399,10 +407,8 @@ namespace EZAsesAutoType
                         continue;
 
                     rowIndex++;
-                    // On first time pair use FindElement for "validation" 
-                    // if the time pair pop up dialog has been rendered 
-                    // as expected.
                     string xPathTimeFrom = this.GetTimePairTimeFromXPath();
+                    xPathTimeFrom = xPathTimeFrom.Replace(ReplacmentToken_RowIndex, rowIndex.ToString());
                     IWebElement? rowElement = browser.FindElementByXpath(xPathTimeFrom, timeoutInSeconds);
                     if (rowElement == null)
                         throw new Exception(string.Format("'{0}'{1}", xPathTimeFrom, Const.LogNotFound));
@@ -425,9 +431,8 @@ namespace EZAsesAutoType
                     if (!browser.SendKeysWithRetry(By.XPath(xPathTimeFromInput), Keys.Tab, maxRetries))
                         throw new Exception(nameof(browser.SendKeysWithRetry) + Const.LogFail);
 
-                    // although, we should be positioned on "punch out"
-                    // element _now_ doublecheck anyway.
                     string xPathTimeTo = this.GetTimePairTimeToXPath();
+                    xPathTimeTo = xPathTimeFrom.Replace(ReplacmentToken_RowIndex, rowIndex.ToString());
                     rowElement = browser.FindElementByXpath(xPathTimeTo, timeoutInSeconds);
                     if (rowElement == null)
                         throw new Exception(string.Format("'{0}'{1}", xPathTimeTo, Const.LogNotFound));
@@ -449,73 +454,6 @@ namespace EZAsesAutoType
                     // to trigger "validated" event on input element.
                     if (!browser.SendKeysWithRetry(By.XPath(xPathTimeToInput), Keys.Tab, maxRetries))
                         throw new Exception(nameof(browser.SendKeysWithRetry) + Const.LogFail);
-
-                    if (timePairList.Count == 1)
-                        break; // nothing left to do
-
-//                    if (rowIndex > 1)
-//                    {   // On all subsequent rows, cursor should already have been moved to
-//                        // new time pair row py sending "TAB" key strokes. 
-//                        // Use simple keyboard navigation in this case.
-//                        IWebDriver? webDriver = browser.GetWebDriver();
-//                        if(webDriver==null)
-//                            throw new Exception(nameof(webDriver) + Const.LogIsNull);
-
-//                        IWebElement? activeElement = webDriver.SwitchTo().ActiveElement();
-//                        if(activeElement==null)
-//                            throw new Exception(nameof(activeElement) + Const.LogIsNull);
-
-//                        // do additional inspections to check if the active element is the expected one.
-//                        string tagName = activeElement.TagName;
-////                        if (!string.Equals(tagName, "input", StringComparison.OrdinalIgnoreCase))
-////                            throw new Exception(nameof(activeElement) + Const.LogInvalid);
-
-//                        if (!browser.ClickElement(activeElement))
-//                            throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
-
-//                        // this sleep is required, because the input element 
-//                        // will be renderd _after_ the cell item's span element
-//                        // has been activated by "mouse click".
-//                        Thread.Sleep(1000);
-
-//                        activeElement = webDriver.SwitchTo().ActiveElement();
-//                        if (activeElement == null)
-//                            throw new Exception(nameof(activeElement) + Const.LogIsNull);
-
-//                        string punchInValue = timePair.PunchIn;
-//                        activeElement.SendKeys(punchInValue);
-
-//                        // sending a single "TAB" key stroke _now_ to move
-//                        // out from "PunchIn" element and proceed to "PunchOut".
-//                        activeElement.SendKeys(Keys.Tab);
-
-//                        // this sleep is required to give app some time
-//                        // to render the "PunchOut" element.
-//                        Thread.Sleep(1000);
-
-//                        activeElement = webDriver.SwitchTo().ActiveElement();
-//                        if (activeElement == null)
-//                            throw new Exception(nameof(activeElement) + Const.LogIsNull);
-
-//                        tagName = activeElement.TagName;
-//                        if (!string.Equals(tagName, "input", StringComparison.OrdinalIgnoreCase))
-//                            throw new Exception(nameof(activeElement) + Const.LogInvalid);
-
-//                        string punchOutValue = timePair.PunchOut;
-//                        activeElement.SendKeys(punchOutValue);
-
-//                        if (rowIndex == timePairList.Count)
-//                            break; // nothing left to do
-
-//                        // sending a single "TAB" key stroke _now_
-//                        // should implicitly add a new time pair entry row.
-//                        activeElement.SendKeys(Keys.Tab);
-
-//                        // this sleep is required to give app some time
-//                        // to render the "new row".
-//                        Thread.Sleep(1000);
-
-//                    } 
 
                 } // foreach (TimePair timePair in timePairList)
 
