@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/07/03:TomislavMatas: Version "1.126.2"
+// * Add "CommandlineArg_DoLogin" and "CommandlineArg_DoPunch"
 // 2024/05/27:TomislavMatas: Version "1.126.0"
 // * Add "CommandlineArg_Close".
 // 2024/05/15:TomislavMatas: Version "1.125.0"
@@ -194,9 +196,30 @@ namespace EZAsesAutoType
 
         public const string UrlParmClientNo = "ClientNo=";
 
+        /// <summary>
+        /// When "/run" or "/dopunch" has been supplied,
+        /// the time punch sequence will be executed at
+        /// programm startup automatically.
+        /// </summary>
         public const string CommandlineArg_Run = "/run";
 
+        /// <summary>
+        /// If "/run" or "/dopunch" has been supplied,
+        /// in conjunction with "/close", the application will
+        /// be closed implictly after processing.
+        /// </summary>
         public const string CommandlineArg_Close = "/close";
+
+        /// <summary>
+        /// Do automated login and than stop. 
+        /// Can be helpful to review current content in ASES.
+        /// </summary>
+        public const string CommandlineArg_DoLogin = "/dologin";
+
+        /// <summary>
+        /// Do automated login and execute time pair punches. 
+        /// </summary>
+        public const string CommandlineArg_DoPunch = "/dopunch";
 
     } // class
 
