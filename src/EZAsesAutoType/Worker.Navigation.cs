@@ -33,7 +33,7 @@
 
 using EZSeleniumLib;
 using OpenQA.Selenium;
-using System.Windows.Forms.VisualStyles;
+
 using Keys = OpenQA.Selenium.Keys;
 
 namespace EZAsesAutoType
