@@ -3,4 +3,4 @@
 
 # exclude other folders by name 
 cert
-
+bin/release
