@@ -1,10 +1,13 @@
 :: -- 
-:: -- File: "signReleaseMsi.cmd"
+:: -- File: "signReleasedBinaries.cmd"
 :: -- 
 :: -- For details see:
 :: -- -->< https://learn.microsoft.com/de-de/windows/msix/package/create-certificate-package-signing >
 :: -- 
 :: -- Revision History
+:: -- 2024/06/24:TomislavMatas: webdriver/126 Version "1.126.2"
+:: -- * Renamed this file from "signReleaseMsi.cmd" 
+:: --   to "signReleasedBinaries.cmd" for the sake of clarity.
 :: -- 2024/06/24:TomislavMatas: 
 :: -- * Add signage of exe file.
 :: -- 2024/04/10:TomislavMatas: 
