@@ -3,6 +3,7 @@
 //
 // Revision History: 
 // 2024/07/04:TomislavMatas: Version "1.126.2"
+// * Prevent (possible, but unlikely) null references.
 // * Implement handling of "${RowIndex}" token replacement for
 //   time pair xPathes: During processing of the time pairs,
 //   for each time pair, the literal "${RowIndex}" within
@@ -407,7 +408,11 @@ namespace EZAsesAutoType
                         continue;
 
                     rowIndex++;
+
                     string xPathTimeFrom = this.GetTimePairTimeFromXPath();
+                    if(xPathTimeFrom == null)
+                        throw new Exception(nameof(xPathTimeFrom)+Const.LogIsNull);
+
                     xPathTimeFrom = xPathTimeFrom.Replace(ReplacmentToken_RowIndex, rowIndex.ToString());
                     IWebElement? rowElement = browser.FindElementByXpath(xPathTimeFrom, timeoutInSeconds);
                     if (rowElement == null)
@@ -432,7 +437,10 @@ namespace EZAsesAutoType
                         throw new Exception(nameof(browser.SendKeysWithRetry) + Const.LogFail);
 
                     string xPathTimeTo = this.GetTimePairTimeToXPath();
-                    xPathTimeTo = xPathTimeFrom.Replace(ReplacmentToken_RowIndex, rowIndex.ToString());
+                    if (xPathTimeTo == null)
+                        throw new Exception(nameof(xPathTimeTo) + Const.LogIsNull);
+
+                    xPathTimeTo = xPathTimeTo.Replace(ReplacmentToken_RowIndex, rowIndex.ToString());
                     rowElement = browser.FindElementByXpath(xPathTimeTo, timeoutInSeconds);
                     if (rowElement == null)
                         throw new Exception(string.Format("'{0}'{1}", xPathTimeTo, Const.LogNotFound));
