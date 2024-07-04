@@ -1,7 +1,10 @@
 ﻿//
 // File: "Worker.Validation.cs"
 //
-// Revision History: 
+// Revision History:
+// 2024/07/04:TomislavMatas: Version "1.126.2"
+// * Fix in "ASESTimePairEntryPopupIsLoaded": Implement handling of
+//   "${RowIndex}" token replacement for time pair xPathes.
 // 2024/05/31:TomislavMatas: Version "1.126.0"
 // * Simplify log4net implementations.
 // 2024/04/04:TomislavMatas: Version "1.0.0"
@@ -393,10 +396,20 @@ namespace EZAsesAutoType
                 ];
 
                 foreach (string? requiredElementXPath in requiredElementXPathCollection)
+                {
                     if (requiredElementXPath != null)
-                        if (browser.FindElementByXpath(requiredElementXPath, timeoutInSeconds) == null)
-                            throw new Exception(String.Format("'{0}'{1}", requiredElementXPath, Const.LogNotFound));
+                    {
+                        string elementXPath = requiredElementXPath.Replace(ReplacmentToken_RowIndex, "1");
+                        if (browser.FindElementByXpath(elementXPath, timeoutInSeconds) == null)
+                            throw new Exception(String.Format("'{0}'{1}", elementXPath, Const.LogNotFound));
 
+                        // found this particular required element
+                        Log.Debug(string.Format("required element '{0}' found", elementXPath));
+                    }
+                }
+
+                // this point can only be reached, if all elements in 
+                // "requiredElementXPathCollection" have been found
                 return true;
             }
             catch (Exception ex)
