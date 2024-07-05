@@ -40,7 +40,7 @@ alowing interactive user interaction.
 
 Set the desired values in the main dialog:
 
-![MainDialog](../res/img/Screenshot-MainDialog-v1.126.0.png)
+![MainDialog](../res/img/Screenshot-MainDialog-v1.126.2.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the
 following for you completely automatically:
@@ -91,20 +91,33 @@ Starting with version 1.126.0 "EZAsesAutoType.exe" can be
 invoked with optional program startup arguments.
 Syntax: 
 ```CMD
-CMD> EZAsesAutoType[.exe] [/run [/close]]
+CMD> EZAsesAutoType[.exe] [/DoLogin] [/DoPunch] [/Run] [/Close]
 ```
 
-When invoked with argument ""/run"", processing will start immediatly
-using all the settings from the last invokation. 
+When invoked with argument ""/DoLogin"", processing will start immediatly
+using the settings from the last invokation, processing commences until 
+the date grid has been displayed. Usefull option do review current data.
+
+When argument ""/DoLogin"" and "/DoPunch" have been prvoded, processing 
+will start immediatly using all the settings from the last invokation. 
+Same as if "/Run" has been provided.
+
+When invoked with argument ""/Run"", processing will start immediatly
+using all the settings from the last invokation. Same as if "/DoLogin"
+and "/DoPunch" have been provided.
 Processing can still be stopped at any time by hitting the cancel button.
 Once processing has finished, the main dialog will stay active for
 further user interaction.
 
-When invoked with arguments ""/run"" and ""/close"", processing will also 
-start immediatly. Once processing has finished, the app will close
+When invoked with ""/DoPunch"" or ""/Run"" and ""/Close"", processing 
+will also start immediatly. Once processing has finished, the app will close
 automatically except user has hitted the cancel button during processing.
 
 # Revision History
+## 2024/07/05:TomislavMatas: Version "1.126.2"
+* Add info about new program startup arguments ""/DoLogin"" and ""/DoPunch"".
+* Update screenshot of main dialog.
+
 ## 2024/05/27:TomislavMatas: Version "1.126.0"
 * Add section "Program startup arguments".
 * Update screenshot of main dialog.
