@@ -2,6 +2,9 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/07/05:TomislavMatas: Version "1.126.3"
+// * Add input.Clear() call to improve editing of values already 
+//   present in time pair entry panel.
 // 2024/07/04:TomislavMatas: Version "1.126.2"
 // * Prevent (possible, but unlikely) null references.
 // * Implement handling of "${RowIndex}" token replacement for
@@ -427,6 +430,9 @@ namespace EZAsesAutoType
                     Thread.Sleep(1000);
 
                     string xPathTimeFromInput = xPathTimeFrom + "/input";
+                    if (!browser.ClearElementWithRetry(By.XPath(xPathTimeFromInput), maxRetries))
+                        throw new Exception(nameof(browser.ClearElementWithRetry) + Const.LogFail);
+
                     string punchInValue = timePair.PunchIn;
                     if (!browser.SendKeysWithRetry(By.XPath(xPathTimeFromInput), punchInValue, maxRetries))
                         throw new Exception(nameof(browser.SendKeysWithRetry) + Const.LogFail);
@@ -454,6 +460,9 @@ namespace EZAsesAutoType
                     Thread.Sleep(1000);
 
                     string xPathTimeToInput = xPathTimeTo + "/input";
+                    if (!browser.ClearElementWithRetry(By.XPath(xPathTimeToInput), maxRetries))
+                        throw new Exception(nameof(browser.ClearElementWithRetry) + Const.LogFail);
+
                     string punchOutValue = timePair.PunchOut;
                     if (!browser.SendKeysWithRetry(By.XPath(xPathTimeToInput), punchOutValue, maxRetries))
                         throw new Exception(nameof(browser.SendKeysWithRetry) + Const.LogFail);
