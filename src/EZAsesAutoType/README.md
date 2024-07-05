@@ -6,6 +6,10 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/06/24:TomislavMatas: Version "1.126.3"
+* Add input.Clear() call to improve editing of values already 
+  present in time pair entry panel.
+
 ## 2024/06/24:TomislavMatas: Version "1.126.2"
 * Update "EZSeleniumLib" to version "4.22.2" to 
   mitigate "stale element reference" errors.
