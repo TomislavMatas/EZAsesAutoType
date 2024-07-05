@@ -10,9 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.126.2</Version>
-    <AssemblyVersion>1.126.2</AssemblyVersion>
-    <FileVersion>1.126.2</FileVersion>
+    <Version>1.126.3</Version>
+    <AssemblyVersion>1.126.3</AssemblyVersion>
+    <FileVersion>1.126.3</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -27,6 +27,10 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
+Version "1.126.3"
+* Add input.Clear() call to improve editing of values already 
+  present in time pair entry panel.
+
 Version "1.126.2"
 * Add checkboxes "Do Login" and "Do Punch" to main window.
 * Implement handling of new command line arguments "/DoLogin" and "/DoPunch".
