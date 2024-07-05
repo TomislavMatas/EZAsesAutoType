@@ -28,7 +28,8 @@ to automate the daily chore of utilizing the virtual punch card system
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 Version "1.126.2"
-* Add checkboxes "DoLogin" and "DoPunch" to GUI and as commandline options.
+* Add checkboxes "Do Login" and "Do Punch" to main window.
+* Implement handling of new command line arguments "/DoLogin" and "/DoPunch".
 * Update "EZSeleniumLib" to version "4.22.2" to 
   mitigate "stale element reference" errors.
 * Improve fault tolerance on time slice entry.
