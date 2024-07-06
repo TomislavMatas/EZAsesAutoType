@@ -13,6 +13,9 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History: 
+// 2024/07/05:TomislavMatas: Version "4.22.3"
+// * Add "ClearElementWithRetry" as wrapper for "IWebElement.Clear()".
+//   to mitigate "stale element reference" errors.
 // 2024/07/01:TomislavMatas: Version "4.22.2"
 // * Add "SendKeysWithRetry" and "ClickElementWithRetry" as custom wrappers
 //   for "IWebElement.SendKeys()" and "IWebElement.Click()"
@@ -596,6 +599,66 @@ namespace EZSeleniumLib
                             continue;
 
                         element.Click();
+                        result = true;
+                        break;
+                    }
+                    catch (StaleElementReferenceException staleElementReferenceException)
+                    {
+                        Log.Error(staleElementReferenceException);
+                        // overwriting the WebElement reference by
+                        // re-retrieving the desired HTML element
+                        // according to the By locator strategy
+                        element = driver.FindElement(by);
+                    }
+                    catch (Exception innerException)
+                    {
+                        Log.Error(innerException);
+                        continue;
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Consts.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Custom "IWebElement.Clear()" implementation including 
+        /// a retry mechanism to avoid "StaleElementReferenceException".
+        /// See -->< https://reflect.run/articles/how-to-deal-with-staleelementreferenceexception-in-selenium/ >
+        /// </summary>
+        /// <param name="by"></param>
+        /// <param name="maxRetries"></param>
+        /// <returns></returns>
+        public bool ClearElementWithRetry(By by, int maxRetries)
+        {
+            try
+            {
+                LogTrace(Consts.LogStart);
+                WebDriver? driver = this.GetDriver();
+                if (driver == null)
+                    throw new Exception(nameof(driver) + " is null");
+
+                bool result = false;
+                int attempts = 0;
+                while (attempts <= maxRetries)
+                {
+                    attempts++;
+                    IWebElement? element;
+                    try
+                    {
+                        element = driver.FindElement(by);
+                        if (element == null)
+                            continue;
+
+                        element.Clear();
                         result = true;
                         break;
                     }
