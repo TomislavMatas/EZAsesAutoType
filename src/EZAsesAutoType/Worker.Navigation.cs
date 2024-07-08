@@ -2,9 +2,10 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
-// 2024/07/05:TomislavMatas: Version "1.126.3"
-// * Add input.Clear() call to improve editing of values already 
-//   present in time pair entry panel.
+// 2024/07/08:TomislavMatas: Version "1.126.4"
+// * Handle UserSetting "DoLogout".
+// * Removed input.Clear() call, because it was interfering with other 
+//   implementations when punching in time pairs.
 // 2024/07/04:TomislavMatas: Version "1.126.2"
 // * Prevent (possible, but unlikely) null references.
 // * Implement handling of "${RowIndex}" token replacement for
@@ -430,8 +431,8 @@ namespace EZAsesAutoType
                     Thread.Sleep(1000);
 
                     string xPathTimeFromInput = xPathTimeFrom + "/input";
-                    if (!browser.ClearElementWithRetry(By.XPath(xPathTimeFromInput), maxRetries))
-                        throw new Exception(nameof(browser.ClearElementWithRetry) + Const.LogFail);
+//                    if (!browser.ClearElementWithRetry(By.XPath(xPathTimeFromInput), maxRetries))
+//                        throw new Exception(nameof(browser.ClearElementWithRetry) + Const.LogFail);
 
                     string punchInValue = timePair.PunchIn;
                     if (!browser.SendKeysWithRetry(By.XPath(xPathTimeFromInput), punchInValue, maxRetries))
@@ -460,8 +461,8 @@ namespace EZAsesAutoType
                     Thread.Sleep(1000);
 
                     string xPathTimeToInput = xPathTimeTo + "/input";
-                    if (!browser.ClearElementWithRetry(By.XPath(xPathTimeToInput), maxRetries))
-                        throw new Exception(nameof(browser.ClearElementWithRetry) + Const.LogFail);
+//                    if (!browser.ClearElementWithRetry(By.XPath(xPathTimeToInput), maxRetries))
+//                        throw new Exception(nameof(browser.ClearElementWithRetry) + Const.LogFail);
 
                     string punchOutValue = timePair.PunchOut;
                     if (!browser.SendKeysWithRetry(By.XPath(xPathTimeToInput), punchOutValue, maxRetries))
@@ -731,6 +732,16 @@ namespace EZAsesAutoType
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                bool doLogout= this.GetWorkerConfig().GetUserSettings().DoLogout;
+                if (!doLogout)
+                {   // Logout-Automation shall not be executed.
+                    // Raise "CancelRequested" to quit automation,
+                    // but leave browser up and running.
+                    // See "finally" part of this method.
+                    Global.SetCancelRequested(true);
+                    return true;
+                }
 
                 Log.Info("Wait before logout" + Const.LogInProgress);
                 if(!this.ASESWaitBeforeLogout())
