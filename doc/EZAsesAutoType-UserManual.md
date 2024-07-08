@@ -40,7 +40,7 @@ alowing interactive user interaction.
 
 Set the desired values in the main dialog:
 
-![MainDialog](../res/img/Screenshot-MainDialog-v1.126.2.png)
+![MainDialog](../res/img/Screenshot-MainDialog-v1.126.4.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the
 following for you completely automatically:
@@ -91,31 +91,41 @@ Starting with version 1.126.0 "EZAsesAutoType.exe" can be
 invoked with optional program startup arguments.
 Syntax: 
 ```CMD
-CMD> EZAsesAutoType[.exe] [/DoLogin] [/DoPunch] [/Run] [/Close]
+CMD> EZAsesAutoType[.exe] [/DoLogin] [/DoPunch] [/DoLogout] [/Run] [/Close]
 ```
 
-When invoked with argument ""/DoLogin"", processing will start immediatly
-using the settings from the last invokation, processing commences until 
+When invoked with argument "/DoLogin", processing will start immediatly
+using the settings from the last invokation. Processing commences until 
 the date grid has been displayed. Usefull option do review current data.
 
-When argument ""/DoLogin"" and "/DoPunch" have been prvoded, processing 
-will start immediatly using all the settings from the last invokation. 
+When argument "/DoLogin" and "/DoPunch" have been provided, processing 
+will start immediatly using all the settings from the last invokation.
+Processing commences until the punch data has been typed and then stops. 
+Usefull option do review current data.
+
+When argument "/DoLogin", "/DoPunch" and "/DoLogout" have been provided,
+processing will start immediatly using all the settings from the last invokation.
 Same as if "/Run" has been provided.
 
-When invoked with argument ""/Run"", processing will start immediatly
-using all the settings from the last invokation. Same as if "/DoLogin"
-and "/DoPunch" have been provided.
+When invoked with argument "/Run", processing will start immediatly
+using all the settings from the last invokation. Same as if "/DoLogin",
+"/DoPunch" and "/DoLogout" have been provided.
+
 Processing can still be stopped at any time by hitting the cancel button.
 Once processing has finished, the main dialog will stay active for
 further user interaction.
 
-When invoked with ""/DoPunch"" or ""/Run"" and ""/Close"", processing 
+When invoked with "/DoPunch" or "/Run" and "/Close", processing 
 will also start immediatly. Once processing has finished, the app will close
 automatically except user has hitted the cancel button during processing.
 
 # Revision History
+## 2024/07/08:TomislavMatas: Version "1.126.4"
+* Add info about new program startup argument "/DoLogout".
+* Update screenshot of main dialog within this file.
+ 
 ## 2024/07/05:TomislavMatas: Version "1.126.2"
-* Add info about new program startup arguments ""/DoLogin"" and ""/DoPunch"".
+* Add info about new program startup arguments "/DoLogin" and "/DoPunch".
 * Update screenshot of main dialog.
 
 ## 2024/05/27:TomislavMatas: Version "1.126.0"
