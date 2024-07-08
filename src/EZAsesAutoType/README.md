@@ -10,6 +10,12 @@ Please refer to "EZSeleniumLib" project for details.
 * Update "chromedriver.exe" to version "127.0.6533.26".
 * Update "msedgedriver.exe" to version "127.0.2651.31".
 
+## 2024/07/08:TomislavMatas: Version "1.126.4"
+* Add checkbox "Do Logout" to main window.
+* Implement handling of new command line arguments "/DoLogout".
+* Removed input.Clear() call, because it was interfering with other 
+  implementations when punching in time pairs.
+
 ## 2024/06/24:TomislavMatas: Version "1.126.3"
 * Add input.Clear() call to improve editing of values already 
   present in time pair entry panel.
