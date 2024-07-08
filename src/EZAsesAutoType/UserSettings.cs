@@ -5,6 +5,8 @@
 // Wrapper for "userSettings". 
 //
 // Revision History:
+// 2024/07/08:TomislavMatas: Version "1.126.4"
+// * Add UserSetting "DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
 // * Add UserSetting "DoLogin" and "DoPunch".
 // 2024/05/31:TomislavMatas: Version "1.126.0"
@@ -61,9 +63,13 @@ namespace EZAsesAutoType
         /// </summary>
         public bool DoLogin;
         /// <summary>
-        /// Perform "Login" and "time punch" when "Run" button has been clicked
+        /// Perform "Login" and "time punch" when "Run" button has been clicked.
         /// </summary>
         public bool DoPunch;
+        /// <summary>
+        /// Perform "Login", "time punch" and "Logout" when "Run" button has been clicked.
+        /// </summary>
+        public bool DoLogout;
         #endregion
 
         /// <summary>
@@ -86,6 +92,7 @@ namespace EZAsesAutoType
             this.WebDriverList = [];
             this.DoLogin = true;
             this.DoPunch = true;
+            this.DoLogout = true;
         }
 
         /// <summary>
@@ -119,6 +126,7 @@ namespace EZAsesAutoType
                 this.WebDriverList    = Properties.Settings.Default.WebDriverList;
                 this.DoLogin          = Properties.Settings.Default.ASESDoLogin;
                 this.DoPunch          = Properties.Settings.Default.ASESDoPunch;
+                this.DoLogout         = Properties.Settings.Default.ASESDoLogout;
                 return true;
             }
             catch (Exception ex)
@@ -155,6 +163,7 @@ namespace EZAsesAutoType
                 Properties.Settings.Default.WebDriverList    = this.WebDriverList;
                 Properties.Settings.Default.ASESDoLogin      = this.DoLogin;
                 Properties.Settings.Default.ASESDoPunch      = this.DoPunch;
+                Properties.Settings.Default.ASESDoLogout     = this.DoLogout;
                 Properties.Settings.Default.Save();
                 return true;
             }
