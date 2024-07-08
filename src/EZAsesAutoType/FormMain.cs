@@ -2,6 +2,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/07/08:TomislavMatas: Version "1.126.4"
+// * Add new control "checkBox_DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
 // * Add new controls "checkBox_DoLogin" and "checkBox_DoPunch".
 // 2024/05/31:TomislavMatas: Version "1.126.0"
@@ -536,6 +538,7 @@ namespace EZAsesAutoType
                 userSettings.WebDriverList = this.GetComboBoxItemsAsStringCollection(this.comboBoxWebDriver);
                 userSettings.DoLogin = this.checkBox_DoLogin.Checked;
                 userSettings.DoPunch = this.checkBox_DoPunch.Checked;
+                userSettings.DoLogout = this.checkBox_DoLogout.Checked;
                 return userSettings;
             }
             catch (Exception ex)
@@ -658,6 +661,7 @@ namespace EZAsesAutoType
 
                 this.checkBox_DoLogin.Checked = userSettings.DoLogin;
                 this.checkBox_DoPunch.Checked = userSettings.DoPunch;
+                this.checkBox_DoLogout.Checked = userSettings.DoLogout;
 
                 return true;
             }
@@ -684,6 +688,12 @@ namespace EZAsesAutoType
                     // Change checked state for "DoPunch" when
                     // turning off "DoLogin".
                     this.checkBox_DoPunch.Checked = false;
+
+                    // "DoLogout" without "DoLogin" does not make sense.
+                    // Change checked state for "DoLogout" when
+                    // turning off "DoLogin".
+                    this.checkBox_DoLogout.Checked = false;
+
                     if (!RenderControlsDoPunchChanged(false))
                         throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
                 }
@@ -720,6 +730,16 @@ namespace EZAsesAutoType
                     if (!RenderControlsDoLoginChanged(true))
                         throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
                 }
+
+                if (!flag)
+                {
+                    // if "DoPunch" has been "unchecked", there's no sense
+                    // in performing "DoLogout".
+                    this.checkBox_DoLogout.Checked = false;
+                    if (!RenderControlsDoLogoutChanged(false))
+                        throw new Exception(nameof(RenderControlsDoLogoutChanged) + Const.LogFail);
+                }
+
                 return true;
             }
             catch (Exception ex)
@@ -729,7 +749,44 @@ namespace EZAsesAutoType
             }
             finally
             {
-                this.ResumeLayout(); 
+                this.ResumeLayout();
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private bool RenderControlsDoLogoutChanged(bool flag)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);       
+                this.SuspendLayout();
+                this.textBoxPunchInAM.Enabled = flag;
+                this.textBoxPunchInPM.Enabled = flag;
+                this.textBoxPunchOutAM.Enabled = flag;
+                this.textBoxPunchOutPM.Enabled = flag;
+                if (flag)
+                {
+                    // If "DoLogout" has been checked, enable "DoLogin" and "DoPunch".
+                    this.checkBox_DoLogin.Checked = true;
+                    this.checkBox_DoPunch.Checked = true;
+
+                    if (!RenderControlsDoLoginChanged(true))
+                        throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
+
+                    if (!RenderControlsDoPunchChanged(true))
+                        throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
+                }
+                this.checkBox_DoLogout.Checked = flag;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                this.ResumeLayout();
                 LogTrace(Const.LogDone);
             }
         }
@@ -798,6 +855,7 @@ namespace EZAsesAutoType
                     this.textBoxPunchOutPM.Enabled = false;
                     this.checkBox_DoLogin.Enabled = false;
                     this.checkBox_DoPunch.Enabled = false;
+                    this.checkBox_DoLogout.Enabled = false;
                     this.btnRun.Enabled = false;
                     this.btnRun.Visible = true;
                     this.btnCancel.Enabled = true;
@@ -817,6 +875,7 @@ namespace EZAsesAutoType
                 this.textBoxPunchOutPM.Enabled = true;
                 this.checkBox_DoLogin.Enabled = true;
                 this.checkBox_DoPunch.Enabled = true;
+                this.checkBox_DoLogout.Enabled = true;
                 this.btnRun.Enabled = true;
                 this.btnRun.Visible = true;
                 this.btnCancel.Enabled = true;
@@ -872,6 +931,15 @@ namespace EZAsesAutoType
         private bool IsArgDoPunchProvided()
         {
             return Program.IsArgProvided(Const.CommandlineArg_DoPunch);
+        }
+
+        /// <summary>
+        /// Check if command line argument "/DoLogout" has been provided.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsArgDoLogoutProvided()
+        {
+            return Program.IsArgProvided(Const.CommandlineArg_DoLogout);
         }
 
         private void Run()
@@ -975,6 +1043,7 @@ namespace EZAsesAutoType
                 {
                     this.UserSettings.DoLogin = true;
                     this.UserSettings.DoPunch = false;
+                    this.UserSettings.DoLogout = false;
                     doAutomationOnLoad = true;
                 }
 
@@ -982,6 +1051,15 @@ namespace EZAsesAutoType
                 {
                     this.UserSettings.DoLogin = true;
                     this.UserSettings.DoPunch = true;
+                    this.UserSettings.DoLogout = false;
+                    doAutomationOnLoad = true;
+                }
+
+                if (this.IsArgDoLogoutProvided())
+                {
+                    this.UserSettings.DoLogin = true;
+                    this.UserSettings.DoPunch = true;
+                    this.UserSettings.DoLogout = true;
                     doAutomationOnLoad = true;
                 }
 
@@ -989,6 +1067,7 @@ namespace EZAsesAutoType
                 {
                     this.UserSettings.DoLogin = true;
                     this.UserSettings.DoPunch = true;
+                    this.UserSettings.DoLogout = true;
                     doAutomationOnLoad = true;
                 }
 
@@ -1544,6 +1623,29 @@ namespace EZAsesAutoType
 
                 if (!RenderControlsDoPunchChanged(userSettings.DoPunch))
                     throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private void checkBox_DoLogout_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (!RenderControlsDoLogoutChanged(userSettings.DoLogout))
+                    throw new Exception(nameof(RenderControlsDoLogoutChanged) + Const.LogFail);
 
             }
             catch (Exception ex)
