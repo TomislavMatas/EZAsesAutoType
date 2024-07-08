@@ -5,8 +5,10 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/07/08:TomislavMatas: Version "1.126.4"
+// * Add "CommandlineArg_DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
-// * Add "CommandlineArg_DoLogin" and "CommandlineArg_DoPunch"
+// * Add "CommandlineArg_DoLogin" and "CommandlineArg_DoPunch".
 // 2024/05/27:TomislavMatas: Version "1.126.0"
 // * Add "CommandlineArg_Close".
 // 2024/05/15:TomislavMatas: Version "1.125.0"
@@ -220,6 +222,11 @@ namespace EZAsesAutoType
         /// Do automated login and execute time pair punches. 
         /// </summary>
         public const string CommandlineArg_DoPunch = "/dopunch";
+
+        /// <summary>
+        /// Do automated logout after time pair punches. 
+        /// </summary>
+        public const string CommandlineArg_DoLogout = "/dologout";
 
     } // class
 
