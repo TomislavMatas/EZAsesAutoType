@@ -237,5 +237,17 @@ namespace EZAsesAutoType.Properties {
                 this["ASESDoPunch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ASESDoLogout {
+            get {
+                return ((bool)(this["ASESDoLogout"]));
+            }
+            set {
+                this["ASESDoLogout"] = value;
+            }
+        }
     }
 }
