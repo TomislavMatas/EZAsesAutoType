@@ -11,7 +11,10 @@
 // within system's search path.
 // See "README.md" for details.
 //
-// Revision History: 
+// Revision History:
+// 2024/07/26:TomislavMatas: Version "4.22.4"
+// * Implement handling of browser specific "App.config"
+//   setting "EZSeleniumLib.Browser.AdditionalOptions.Chrome".
 // 2024/05/31:TomislavMatas: Version "4.21.1"
 // * Simplify log4net implementations.
 // 2024/05/29:TomislavMatas: Version "4.21.0"
@@ -306,6 +309,18 @@ namespace EZSeleniumLib
                 bool popupsEnabled = this.BrowserOptions.PopupsEnabled;
                 if (popupsEnabled)
                     options.AddArguments(String.Format("{0}disable-popup-blocking", argPfx));
+
+                string customAdditionalOptions = this.BrowserOptions.AdditionalOptions;
+                if (!string.IsNullOrEmpty(customAdditionalOptions))
+                {
+                    string splitSeparator = ";";
+                    StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
+                    string[] customAdditionalOptionsArray = customAdditionalOptions.Split(splitSeparator, stringSplitOptions);
+                    int customAdditionalOptionsArrayLength = customAdditionalOptionsArray.Length;
+                    for (int i = 0; i < customAdditionalOptionsArrayLength; i++)
+                        options.AddArguments(customAdditionalOptionsArray[i]);
+
+                }
 
                 #endregion
 

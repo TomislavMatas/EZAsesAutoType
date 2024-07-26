@@ -4,7 +4,11 @@
 // Summary:
 // Assembly specific "internal" constants. 
 //
-// Revision History: 
+// Revision History:
+// * Implement handling of browser specific "App.config"
+//   settings "EZSeleniumLib.Browser.AdditionalOptions.Chrome",
+//   "EZSeleniumLib.Browser.AdditionalOptions.Edge" and
+//   "EZSeleniumLib.Browser.AdditionalOptions.Firefox".
 // 2024/05/31:TomislavMatas: Version "4.21.1"
 // * Simplify log4net implementations.
 // 2024/05/04:TomislavMatas: Version "4.20.0"
@@ -49,6 +53,10 @@ namespace EZSeleniumLib
         public const string BrowserDisableGPUKeyName = "EZSeleniumLib.Browser.DisableGPU";
         public const string BrowserExposeGCKeyName = "EZSeleniumLib.Browser.ExposeGC";
         public const string BrowserPreciseMemoryInfoEnabledKeyName = "EZSeleniumLib.Browser.PreciseMemoryInfo.Enabled";
+        /// <summary>
+        /// The specific webdriver name gets appended during initialization in "BrowserOptions".
+        /// </summary>
+        public const string BrowserAdditionalOptionsKeyNamePfx = "EZSeleniumLib.Browser.AdditionalOptions.";
 
         #endregion
 
@@ -107,6 +115,19 @@ namespace EZSeleniumLib
         /// Default value if "EZSeleniumLib.Browser.PreciseMemoryInfo.Enabled" is missing in "App.config".
         /// </summary>
         public const bool PRECISEMEMORYINFO_DEFAULT = false;
+
+        /// <summary>
+        /// Specifies the default value if value "EZSeleniumLib.Browser.AdditionalOptions.Chrome" 
+        /// is missing in "App.config". Multiple options can be provided using ';' (semicolon) as separator.
+        /// Note: When supplying values for this option in "App.config" file,
+        /// use the appropriate argument prefix:
+        /// Chrome usually expects "double dash", e.g: "--OptionName".
+        /// Added "--search-engine-choice-country" to avoid the nagging popup 
+        /// that appears after upgrading to Chrome version 127.
+        /// </summary>
+        public const string CHROME_ADDITIONALOPTIONS_DEFAULT = "--search-engine-choice-country";
+        public const string EDGE_ADDITIONALOPTIONS_DEFAULT = "";
+        public const string FIREFOX_ADDITIONALOPTIONS_DEFAULT = "";
 
         public const string BROWSERIMPLEMENTATATION_CHROME = Constant.WebDriverChrome;
         public const string BROWSERIMPLEMENTATATION_EDGE = Constant.WebDriverEdge;
