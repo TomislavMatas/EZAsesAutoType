@@ -16,6 +16,12 @@
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageReleaseNotes>
+Version "4.22.4"
+* Implement handling of browser specific "App.config" settings
+  "EZSeleniumLib.Browser.AdditionalOptions.Chrome",
+  "EZSeleniumLib.Browser.AdditionalOptions.Edge" and
+  "EZSeleniumLib.Browser.AdditionalOptions.Firefox".
+
 Version "4.22.3"
 * Update "chromedriver.exe" to version "127.0.6533.26".
 * Update "msedgedriver.exe" to version "127.0.2651.31".
