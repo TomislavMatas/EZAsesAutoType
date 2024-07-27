@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.22.3</Version>
-    <AssemblyVersion>4.22.3</AssemblyVersion>
-    <FileVersion>4.22.3</FileVersion>
+    <Version>4.22.4</Version>
+    <AssemblyVersion>4.22.4</AssemblyVersion>
+    <FileVersion>4.22.4</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
@@ -21,6 +21,9 @@ Version "4.22.4"
   "EZSeleniumLib.Browser.AdditionalOptions.Chrome",
   "EZSeleniumLib.Browser.AdditionalOptions.Edge" and
   "EZSeleniumLib.Browser.AdditionalOptions.Firefox".
+* Update "chromedriver.exe" to version "127.0.6533.72".
+* Update "msedgedriver.exe" to version "127.0.2651.74".
+
 
 Version "4.22.3"
 * Update "chromedriver.exe" to version "127.0.6533.26".
