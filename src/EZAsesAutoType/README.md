@@ -6,6 +6,17 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/07/31:TomislavMatas: Version "1.127.0"
+* Add "--search-engine-choice-country" to "EZSeleniumLib.Browser.AdditionalOptions.Chrome"
+  to avoid the nagging popup that appears after upgrading to Chrome version 127.
+* Update "chromedriver.exe" to version "127.0.6533.88".
+* Update "msedgedriver.exe" to version "127.0.2651.74".
+* Use EZSeleniumLib version "4.22.4".
+
+## 2024/07/06:TomislavMatas: Version "1.127.0"
+* Update "chromedriver.exe" to version "127.0.6533.26".
+* Update "msedgedriver.exe" to version "127.0.2651.31".
+
 ## 2024/07/08:TomislavMatas: Version "1.126.4"
 * Add checkbox "Do Logout" to main window.
 * Implement handling of new command line arguments "/DoLogout".

@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.22.2</Version>
-    <AssemblyVersion>4.22.2</AssemblyVersion>
-    <FileVersion>4.22.2</FileVersion>
+    <Version>4.22.4</Version>
+    <AssemblyVersion>4.22.4</AssemblyVersion>
+    <FileVersion>4.22.4</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
@@ -16,6 +16,18 @@
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <PackageReleaseNotes>
+Version "4.22.4"
+* Implement handling of browser specific "App.config" settings
+  "EZSeleniumLib.Browser.AdditionalOptions.Chrome",
+  "EZSeleniumLib.Browser.AdditionalOptions.Edge" and
+  "EZSeleniumLib.Browser.AdditionalOptions.Firefox".
+* Update "chromedriver.exe" to version "127.0.6533.88".
+* Update "msedgedriver.exe" to version "127.0.2651.74".
+
+Version "4.22.3"
+* Update "chromedriver.exe" to version "127.0.6533.26".
+* Update "msedgedriver.exe" to version "127.0.2651.31".
+
 Version "4.22.2"
 * Add new wrappers for "IWebElement.SendKeys()" and "IWebElement.Click()"
   to mitigate "stale element reference" errors.
