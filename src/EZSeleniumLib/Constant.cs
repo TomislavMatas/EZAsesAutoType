@@ -57,7 +57,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverChromeVersion = "127.0.6533.72";
+        public const string WebDriverChromeVersion = "127.0.6533.88";
         
         #endregion
 
