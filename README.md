@@ -6,7 +6,7 @@ to automate the daily chore of utilizing the virtual punch card system
 ## Overview
 Start the application and set the desired values in the main dialog:  
 
-![MainDialog](res/img/Screenshot-MainDialog-v1.126.4.png)  
+![MainDialog](res/img/Screenshot-MainDialog-v1.127.1.png)  
 
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
@@ -41,6 +41,9 @@ Most noticeable: "EZAsesAutoType-UserManual.md"
 Contains all source code to build "EZAsesAutoType.exe".
 
 # Revision History
+## 2024/08/05:TomislavMatas: Version "1.127.1"
+* Update screenshot of main dialog within this "README.md" file.
+
 ## 2024/07/08:TomislavMatas: Version "1.126.4"
 * Update screenshot of main dialog within this "README.md" file.
 
