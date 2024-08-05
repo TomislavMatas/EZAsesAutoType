@@ -1,7 +1,10 @@
+
 //
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2024/08/05:TomislavMatas: Version "1.127.1"
+// * Add new control "checkBox_DoLogout".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
 // * Add new control "checkBox_DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
@@ -410,6 +413,7 @@ namespace EZAsesAutoType
                 this.textBoxPunchOutAM.Text = userSettings.ASESPunchOutAM;
                 this.textBoxPunchInPM.Text = userSettings.ASESPunchInPM;
                 this.textBoxPunchOutPM.Text = userSettings.ASESPunchOutPM;
+                this.textBox_Deviation.Text = userSettings.ASESPunchDeviation.ToString();
 
                 return true;
             }
@@ -518,6 +522,14 @@ namespace EZAsesAutoType
             return stringCollection;
         }
 
+        private int toInt(string strValue)
+        {
+            if (int.TryParse(strValue, out int result))
+                return result;
+
+            return 0;
+        }
+
         private UserSettings? GetUserSettingsValuesFromControls()
         {
             try
@@ -539,6 +551,7 @@ namespace EZAsesAutoType
                 userSettings.DoLogin = this.checkBox_DoLogin.Checked;
                 userSettings.DoPunch = this.checkBox_DoPunch.Checked;
                 userSettings.DoLogout = this.checkBox_DoLogout.Checked;
+                userSettings.ASESPunchDeviation = toInt(this.textBox_Deviation.Text);
                 return userSettings;
             }
             catch (Exception ex)
@@ -758,7 +771,7 @@ namespace EZAsesAutoType
         {
             try
             {
-                LogTrace(Const.LogStart);       
+                LogTrace(Const.LogStart);
                 this.SuspendLayout();
                 this.textBoxPunchInAM.Enabled = flag;
                 this.textBoxPunchInPM.Enabled = flag;
@@ -856,6 +869,7 @@ namespace EZAsesAutoType
                     this.checkBox_DoLogin.Enabled = false;
                     this.checkBox_DoPunch.Enabled = false;
                     this.checkBox_DoLogout.Enabled = false;
+                    this.textBox_Deviation.Enabled = false;
                     this.btnRun.Enabled = false;
                     this.btnRun.Visible = true;
                     this.btnCancel.Enabled = true;
@@ -876,6 +890,7 @@ namespace EZAsesAutoType
                 this.checkBox_DoLogin.Enabled = true;
                 this.checkBox_DoPunch.Enabled = true;
                 this.checkBox_DoLogout.Enabled = true;
+                this.textBox_Deviation.Enabled = true;
                 this.btnRun.Enabled = true;
                 this.btnRun.Visible = true;
                 this.btnCancel.Enabled = true;
@@ -1540,6 +1555,29 @@ namespace EZAsesAutoType
         }
 
         #endregion
+
+        #region "textBox_Deviation"
+
+        private void textBox_Deviation_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void textBox_Deviation_Validated(object sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            if (sender is not TextBox)
+                return;
+
+            TextBox textBox = (TextBox)sender;
+            string entered = textBox.Text;
+            if (!int.TryParse(entered, out int value))
+                textBox.Text = "0";
+
+        }
+
+        #endregion 
 
         #endregion
 

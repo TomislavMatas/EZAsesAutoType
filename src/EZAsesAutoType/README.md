@@ -6,6 +6,9 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/08/05:TomislavMatas: Version "1.127.1"
+* Add new UserSetting "ASESPunchDeviation".
+
 ## 2024/07/31:TomislavMatas: Version "1.127.0"
 * Add "--search-engine-choice-country" to "EZSeleniumLib.Browser.AdditionalOptions.Chrome"
   to avoid the nagging popup that appears after upgrading to Chrome version 127.
