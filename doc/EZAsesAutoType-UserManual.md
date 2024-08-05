@@ -40,7 +40,7 @@ alowing interactive user interaction.
 
 Set the desired values in the main dialog:
 
-![MainDialog](../res/img/Screenshot-MainDialog-v1.126.4.png)
+![MainDialog](../res/img/Screenshot-MainDialog-v1.127.1.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the
 following for you completely automatically:
@@ -86,6 +86,13 @@ on subsequent starts of the application.
 All shortcut replacements are implemented within the 
 function "FormMain.EvalTimeByFragment()".
 
+## Deviation
+With a value greater than 0 (zero) the punch in and punch out time
+will be added or substracted by a random number of minutes up to 
+the maximum deviation in minutes provided. This will make the 
+punch values vary on each processing. This should result in
+a more organic look of the individual punches added.
+
 ## Program startup arguments
 Starting with version 1.126.0 "EZAsesAutoType.exe" can be 
 invoked with optional program startup arguments.
@@ -120,6 +127,10 @@ will also start immediatly. Once processing has finished, the app will close
 automatically except user has hitted the cancel button during processing.
 
 # Revision History
+## 2024/08/05:TomislavMatas: Version "1.127.1"
+* Add info about new UserSetting "Deviation".
+* Update screenshot of main dialog.
+
 ## 2024/07/08:TomislavMatas: Version "1.126.4"
 * Add info about new program startup argument "/DoLogout".
 * Update screenshot of main dialog within this file.
