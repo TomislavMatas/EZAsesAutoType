@@ -10,9 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.127.0</Version>
-    <AssemblyVersion>1.127.0</AssemblyVersion>
-    <FileVersion>1.127.0</FileVersion>
+    <Version>1.127.1</Version>
+    <AssemblyVersion>1.127.1</AssemblyVersion>
+    <FileVersion>1.127.1</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -27,6 +27,9 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
+Version "1.127.1"
+* Add new UserSetting "ASESPunchDeviation".
+
 Version "1.127.0"
 * Add "--search-engine-choice-country" to "App.config" file setting
   "EZSeleniumLib.Browser.AdditionalOptions.Chrome" to avoid the nagging 

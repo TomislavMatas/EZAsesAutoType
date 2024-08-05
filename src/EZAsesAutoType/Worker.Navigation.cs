@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/08/05:TomislavMatas: Version "1.127.1"
+// * Handle UserSetting "ASESPunchDeviation".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
 // * Handle UserSetting "DoLogout".
 // * Removed input.Clear() call, because it was interfering with other 
@@ -712,12 +714,16 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                List<TimePair>? timePairList = this.GetTimePairListDefault();
+                List<TimePair> timePairList = this.GetTimePairListDefault();
                 if (timePairList == null)
                     throw new Exception(nameof(timePairList) + Const.LogIsNull);
 
                 if (timePairList.Count == 0)
                     throw new Exception(nameof(timePairList) + Const.LogInvalid);
+
+                int asesPunchDeviation = this.GetASESPunchDeviation();
+                if(asesPunchDeviation > 0) 
+                    timePairList = this.applyDeviation(timePairList, asesPunchDeviation);
 
                 Log.Info("Type time pairs" + Const.LogInProgress);
                 if (!this.ASESEnterInOutTimePairs(browser, timeoutFindElement, timePairList, maxRetriesForElementOperations))

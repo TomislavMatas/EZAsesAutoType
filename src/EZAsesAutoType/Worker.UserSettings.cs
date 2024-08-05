@@ -14,6 +14,7 @@
 //
 
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 
 namespace EZAsesAutoType
 {
@@ -71,7 +72,12 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetUserSettings().ASESPunchOutPM;
         }
 
-        private List<TimePair>? GetTimePairListDefault()
+        private int GetASESPunchDeviation()
+        {
+            return this.WorkerConfig.GetUserSettings().ASESPunchDeviation;
+        }
+
+        private List<TimePair> GetTimePairListDefault()
         {
             try
             {
@@ -129,13 +135,114 @@ namespace EZAsesAutoType
                            ,new TimePair(punchInPM, punchOutPM)];
                 }
 
-                // no filter matched same as "exception": --> null
-                return null;
+                // no filter matched same as "exception":
+                // return empty array
+                return [];
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                return null; 
+                return []; 
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Singelton helper variable.
+        /// </summary>
+        private Random _randomizer = null;
+
+        /// <summary>
+        /// Instance of class "Random".
+        /// </summary>
+        private Random Randomizer
+        {
+            get
+            {
+                if (_randomizer == null)
+                    _randomizer = new Random();
+                return _randomizer;
+            }
+        }
+
+        /// <summary>
+        /// Flip a coin using private "Randomizer" class instance.
+        /// </summary>
+        /// <returns>
+        /// true = head, false = tail
+        /// </returns>
+        private bool FlipCoin()
+        {
+            int coinFlip = Randomizer.Next(
+                  0 /* tail */
+                , 1 /* head */ );
+            return (coinFlip == 1);
+        }
+
+        /// <summary>
+        /// Return a random integer between 1 and maxValue (inklusivly).
+        /// </summary>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        private int RollDice(int maxValue)
+        {
+            return Randomizer.Next(1, maxValue + 1);
+        }
+
+        private string? addMinutes(string? timeStr, int minutes)
+        {
+            if(timeStr == null)
+                return null;
+
+            if (DateTime.TryParse(timeStr, out DateTime dateTime))
+                return dateTime.AddMinutes(minutes).ToString("HH:mm");
+
+            return null;
+        }
+
+        private List<TimePair> applyDeviation(List<TimePair> timePairs, int maxDeviation)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                if (maxDeviation == 0)
+                    return timePairs;
+                
+                // make a random deviation to make the 
+                // deviation look "organic".
+                int deviation = RollDice(maxDeviation);
+
+                // flip a coin to decide either to "add"
+                // or to "substract" deviation.
+                if(FlipCoin())
+                    deviation = deviation * (-1);
+
+                int timePairsCount = timePairs.Count;
+                switch (timePairsCount)
+                {
+                    case 1:
+                        // adjust punch in and punch out value
+                        timePairs[0].PunchIn = addMinutes(timePairs[0].PunchIn, deviation);
+                        timePairs[0].PunchOut = addMinutes(timePairs[0].PunchOut, deviation);
+                        break;
+                    case 2:
+                        // adjust "first" punch in and "last" punch out value
+                        // and leave "lunch break" as is.
+                        timePairs[0].PunchIn = addMinutes(timePairs[0].PunchIn, deviation);
+                        timePairs[1].PunchOut = addMinutes(timePairs[1].PunchOut, deviation);
+                        break;
+                    default:
+                        break;
+                }
+                return timePairs;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return timePairs;
             }
             finally
             {
