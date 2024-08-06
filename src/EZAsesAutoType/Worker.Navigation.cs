@@ -2,6 +2,9 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/08/06:TomislavMatas: Version "1.127.1"
+// * Implement "RandomizeDeviation" and "RoundDown" 
+//   to make punches look more "human~like".
 // 2024/08/05:TomislavMatas: Version "1.127.1"
 // * Handle UserSetting "ASESPunchDeviation".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
@@ -722,8 +725,11 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(timePairList) + Const.LogInvalid);
 
                 int asesPunchDeviation = this.GetASESPunchDeviation();
-                if(asesPunchDeviation > 0) 
-                    timePairList = this.applyDeviation(timePairList, asesPunchDeviation);
+                if (asesPunchDeviation > 0)
+                {
+                    int deviationToApply = this.RandomizeDeviation(asesPunchDeviation);
+                    timePairList = this.ApplyDeviation(timePairList, deviationToApply);
+                }
 
                 Log.Info("Type time pairs" + Const.LogInProgress);
                 if (!this.ASESEnterInOutTimePairs(browser, timeoutFindElement, timePairList, maxRetriesForElementOperations))
