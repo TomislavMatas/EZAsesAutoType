@@ -70,6 +70,14 @@ namespace EZAsesAutoType
         /// Perform "Login", "time punch" and "Logout" when "Run" button has been clicked.
         /// </summary>
         public bool DoLogout;
+        /// <summary>
+        /// If a deviation value greater than 0 (zero) is set,
+        /// than the punch in and punch out times will be 
+        /// randomized up to a maximum of the sepcified value.
+        /// The deviation shall help to generate organic looking
+        /// punch in and punch out times.
+        /// </summary>
+        public int ASESPunchDeviation;
         #endregion
 
         /// <summary>
@@ -93,6 +101,7 @@ namespace EZAsesAutoType
             this.DoLogin = true;
             this.DoPunch = true;
             this.DoLogout = true;
+            this.ASESPunchDeviation = 60;
         }
 
         /// <summary>
@@ -111,22 +120,23 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                this.ASESBaseUrl      = Properties.Settings.Default.ASESBaseUrl;
-                this.ASESUserId       = Properties.Settings.Default.ASESUserId;
-                this.ASESPassword     = Properties.Settings.Default.ASESPassword;
-                this.ASESClient       = Properties.Settings.Default.ASESClient;
-                this.ASESClientList   = Properties.Settings.Default.ASESClientList;
-                this.ASESLanguage     = Properties.Settings.Default.ASESLanguage;
-                this.ASESLanguageList = Properties.Settings.Default.ASESLanguageList;
-                this.ASESPunchInAM    = Properties.Settings.Default.ASESPunchInAM;
-                this.ASESPunchOutAM   = Properties.Settings.Default.ASESPunchOutAM;
-                this.ASESPunchInPM    = Properties.Settings.Default.ASESPunchInPM;
-                this.ASESPunchOutPM   = Properties.Settings.Default.ASESPunchOutPM;
-                this.WebDriver        = Properties.Settings.Default.WebDriver;
-                this.WebDriverList    = Properties.Settings.Default.WebDriverList;
-                this.DoLogin          = Properties.Settings.Default.ASESDoLogin;
-                this.DoPunch          = Properties.Settings.Default.ASESDoPunch;
-                this.DoLogout         = Properties.Settings.Default.ASESDoLogout;
+                this.ASESBaseUrl        = Properties.Settings.Default.ASESBaseUrl;
+                this.ASESUserId         = Properties.Settings.Default.ASESUserId;
+                this.ASESPassword       = Properties.Settings.Default.ASESPassword;
+                this.ASESClient         = Properties.Settings.Default.ASESClient;
+                this.ASESClientList     = Properties.Settings.Default.ASESClientList;
+                this.ASESLanguage       = Properties.Settings.Default.ASESLanguage;
+                this.ASESLanguageList   = Properties.Settings.Default.ASESLanguageList;
+                this.ASESPunchInAM      = Properties.Settings.Default.ASESPunchInAM;
+                this.ASESPunchOutAM     = Properties.Settings.Default.ASESPunchOutAM;
+                this.ASESPunchInPM      = Properties.Settings.Default.ASESPunchInPM;
+                this.ASESPunchOutPM     = Properties.Settings.Default.ASESPunchOutPM;
+                this.WebDriver          = Properties.Settings.Default.WebDriver;
+                this.WebDriverList      = Properties.Settings.Default.WebDriverList;
+                this.DoLogin            = Properties.Settings.Default.ASESDoLogin;
+                this.DoPunch            = Properties.Settings.Default.ASESDoPunch;
+                this.DoLogout           = Properties.Settings.Default.ASESDoLogout;
+                this.ASESPunchDeviation = Properties.Settings.Default.ASESPunchDeviation;
                 return true;
             }
             catch (Exception ex)
@@ -148,22 +158,23 @@ namespace EZAsesAutoType
         {
             try 
             { 
-                Properties.Settings.Default.ASESBaseUrl      = this.ASESBaseUrl;
-                Properties.Settings.Default.ASESUserId       = this.ASESUserId;
-                Properties.Settings.Default.ASESPassword     = this.ASESPassword;
-                Properties.Settings.Default.ASESClient       = this.ASESClient;
-                Properties.Settings.Default.ASESClientList   = this.ASESClientList;
-                Properties.Settings.Default.ASESLanguage     = this.ASESLanguage;
-                Properties.Settings.Default.ASESLanguageList = this.ASESLanguageList;
-                Properties.Settings.Default.ASESPunchInAM    = this.ASESPunchInAM;
-                Properties.Settings.Default.ASESPunchOutAM   = this.ASESPunchOutAM;
-                Properties.Settings.Default.ASESPunchInPM    = this.ASESPunchInPM;
-                Properties.Settings.Default.ASESPunchOutPM   = this.ASESPunchOutPM;
-                Properties.Settings.Default.WebDriver        = this.WebDriver;
-                Properties.Settings.Default.WebDriverList    = this.WebDriverList;
-                Properties.Settings.Default.ASESDoLogin      = this.DoLogin;
-                Properties.Settings.Default.ASESDoPunch      = this.DoPunch;
-                Properties.Settings.Default.ASESDoLogout     = this.DoLogout;
+                Properties.Settings.Default.ASESBaseUrl        = this.ASESBaseUrl;
+                Properties.Settings.Default.ASESUserId         = this.ASESUserId;
+                Properties.Settings.Default.ASESPassword       = this.ASESPassword;
+                Properties.Settings.Default.ASESClient         = this.ASESClient;
+                Properties.Settings.Default.ASESClientList     = this.ASESClientList;
+                Properties.Settings.Default.ASESLanguage       = this.ASESLanguage;
+                Properties.Settings.Default.ASESLanguageList   = this.ASESLanguageList;
+                Properties.Settings.Default.ASESPunchInAM      = this.ASESPunchInAM;
+                Properties.Settings.Default.ASESPunchOutAM     = this.ASESPunchOutAM;
+                Properties.Settings.Default.ASESPunchInPM      = this.ASESPunchInPM;
+                Properties.Settings.Default.ASESPunchOutPM     = this.ASESPunchOutPM;
+                Properties.Settings.Default.WebDriver          = this.WebDriver;
+                Properties.Settings.Default.WebDriverList      = this.WebDriverList;
+                Properties.Settings.Default.ASESDoLogin        = this.DoLogin;
+                Properties.Settings.Default.ASESDoPunch        = this.DoPunch;
+                Properties.Settings.Default.ASESDoLogout       = this.DoLogout;
+                Properties.Settings.Default.ASESPunchDeviation = this.ASESPunchDeviation;
                 Properties.Settings.Default.Save();
                 return true;
             }
