@@ -28,6 +28,7 @@ to automate the daily chore of utilizing the virtual punch card system
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 Version "1.127.1"
+* Implement management of version independent UserSettings in windows registry.
 * Add new UserSetting "ASESPunchDeviation".
 
 Version "1.127.0"
