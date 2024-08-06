@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/08/06:TomislavMatas: Version "1.127.1"
+// * Add "AssemblyCompanyName".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
 // * Add "CommandlineArg_DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
@@ -106,6 +108,27 @@ namespace EZAsesAutoType
                     m_AssemblyDisplayName = Const.AssemblyProductName;
 
                 return m_AssemblyDisplayName;
+            }
+        }
+
+        /// <summary>
+        /// Singleton helper variable.
+        /// </summary>
+        private static string? m_AssemblyCompanyName = null;
+        /// <summary>
+        /// Executing assembly's company name.
+        /// </summary>
+        public static string AssemblyCompanyName
+        {
+            get
+            {
+                if (m_AssemblyCompanyName == null)
+                    m_AssemblyCompanyName = Const.AssemblyVersionInfo.CompanyName;
+
+                if (string.IsNullOrEmpty(m_AssemblyCompanyName))
+                    m_AssemblyCompanyName = "matas consulting";
+
+                return m_AssemblyCompanyName;
             }
         }
 
