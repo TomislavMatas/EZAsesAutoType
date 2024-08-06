@@ -2,6 +2,10 @@
 // File: "Worker.UserSettings.cs"
 //
 // Revision History: 
+// 2024/08/05:TomislavMatas: Version "1.127.1"
+// * Implement "RandomizeDeviation" and "RoundDown" 
+//   to make punches look more "human~like".
+// * Fix FlipCoin.
 // 2024/05/31:TomislavMatas: Version "1.126.0"
 // * Simplify log4net implementations.
 // 2024/04/13:TomislavMatas: Version "1.123.4"
@@ -170,15 +174,15 @@ namespace EZAsesAutoType
 
         /// <summary>
         /// Flip a coin using private "Randomizer" class instance.
+        /// Note: Randomizer.Next(0,2) returns either 0 or 1.
         /// </summary>
         /// <returns>
         /// true = head, false = tail
         /// </returns>
         private bool FlipCoin()
         {
-            int coinFlip = Randomizer.Next(
-                  0 /* tail */
-                , 1 /* head */ );
+
+            int coinFlip = Randomizer.Next(0,2);
             return (coinFlip == 1);
         }
 
@@ -203,23 +207,58 @@ namespace EZAsesAutoType
             return null;
         }
 
-        private List<TimePair> applyDeviation(List<TimePair> timePairs, int maxDeviation)
+        /// <summary>
+        /// Round down value to given fraction.
+        /// Expected results:
+        /// RoundDown( 0,5) =  0
+        /// RoundDown( 6,5) =  5
+        /// RoundDown(10,5) = 10
+        /// RoundDown(11,5) = 10
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="fraction"></param>
+        /// <returns></returns>
+        private int RoundDown(int value, int fraction)
+        {
+            if (value < 0 || value > 60)
+                value = 0;
+
+            if (fraction<0 || fraction>60)
+                fraction = 0;
+
+            var delta = value % fraction;
+            return value - delta;
+        }
+
+        private int RandomizeDeviation(int maxDeviation)
+        {
+            if (maxDeviation <= 0)
+                maxDeviation = 0;
+
+            // Generate a random deviation up to the maximum value
+            // to make the deviation look "organic".
+            int deviation = this.RollDice(maxDeviation);
+
+            // do not use "exact minutes" like "09:01" or "09:02",
+            // because no human would punch in exactly to the minute.
+            // Use a stepping spread of five minutes .
+            deviation = this.RoundDown(deviation, 5);
+
+            // flip a coin to decide wether to "add" or "substract" deviation.
+            if (FlipCoin())
+                deviation = deviation * (-1);
+
+            return deviation;
+        }
+
+        private List<TimePair> ApplyDeviation(List<TimePair> timePairs, int deviation)
         {
             try
             {
                 LogTrace(Const.LogStart);
-                if (maxDeviation == 0)
+                if (deviation == 0)
                     return timePairs;
                 
-                // make a random deviation to make the 
-                // deviation look "organic".
-                int deviation = RollDice(maxDeviation);
-
-                // flip a coin to decide either to "add"
-                // or to "substract" deviation.
-                if(FlipCoin())
-                    deviation = deviation * (-1);
-
                 int timePairsCount = timePairs.Count;
                 switch (timePairsCount)
                 {
