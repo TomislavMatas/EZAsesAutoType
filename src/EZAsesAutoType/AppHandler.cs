@@ -2,6 +2,8 @@
 // File: "AppHandler.cs"
 //
 // Revision History: 
+// 2024/08/06:TomislavMatas: Version "1.127.1"
+// * Implement RegistryHelper.
 // 2024/05/31:TomislavMatas: Version "1.126.0"
 // * Simplify log4net implementations.
 // 2024/04/10:TomislavMatas: Version "1.123.3"
@@ -111,6 +113,33 @@ namespace EZAsesAutoType
             this.Worker = worker;
             return prev;
         }
+
+        private RegistryHelper? m_RegistryHelper = null;
+        private RegistryHelper? RegistryHelper
+        {
+            get
+            {
+                if (m_RegistryHelper == null)
+                    m_RegistryHelper = new RegistryHelper();
+
+                return m_RegistryHelper;
+            }
+            set
+            {
+                m_RegistryHelper = value;
+            }
+        }
+        private RegistryHelper? GetRegistryHelper()
+        {
+            return this.RegistryHelper;
+        }
+        private RegistryHelper? SetRegistryHelper(RegistryHelper? registryHelper)
+        {
+            RegistryHelper? prev = this.GetRegistryHelper();
+            this.RegistryHelper = registryHelper;
+            return prev;
+        }
+
         #endregion
 
         #region initializerz
@@ -192,6 +221,12 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
+                RegistryHelper? registryHelper = this.GetRegistryHelper();
+                if (registryHelper != null)
+                    if (registryHelper.LoadVersionIndependentUserSettings(out userSettings))
+                        return true;
+
+                // nothing in registry yet try to initialze with UserSettings default values.
                 userSettings = new UserSettings();
                 if(!userSettings.Load())
                     throw new Exception(nameof(userSettings.Load) + Const.LogFail);
@@ -217,6 +252,11 @@ namespace EZAsesAutoType
                 LogTrace(Const.LogStart);
                 if(!userSettings.Save())
                     throw new Exception(nameof(userSettings.Save) + Const.LogFail);
+
+                RegistryHelper? registryHelper = this.GetRegistryHelper();
+                if (registryHelper != null)
+                    if (!registryHelper.SaveVersionIndependentUserSettings(userSettings))
+                        throw new Exception(nameof(registryHelper.SaveVersionIndependentUserSettings) + Const.LogFail);
 
                 return true;
             }
