@@ -6,6 +6,9 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/08/06:TomislavMatas: Version "1.127.1"
+* Implement management of version independent UserSettings in windows registry. 
+
 ## 2024/08/05:TomislavMatas: Version "1.127.1"
 * Add new UserSetting "ASESPunchDeviation".
 
