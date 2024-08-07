@@ -2,6 +2,9 @@
 // File: "AppHandler.cs"
 //
 // Revision History: 
+// 2024/08/07:TomislavMatas: Version "1.127.2"
+// * Fix writing of values to registry.
+// * Add "GetValueInt".
 // 2024/08/06:TomislavMatas: Version "1.127.1"
 // * Initial version.
 //
@@ -46,6 +49,15 @@ namespace EZAsesAutoType
                 return defaultValue;
 
             return (string)value;
+        }
+
+        private int GetValueInt(RegistryKey key, string name, int defaultValue)
+        {
+            object? value = key.GetValue(name, defaultValue);
+            if (value == null)
+                return defaultValue;
+
+            return (int)value;
         }
 
         public bool LoadVersionIndependentUserSettings(out UserSettings? userSettings)
@@ -104,8 +116,7 @@ namespace EZAsesAutoType
                 if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.DoLogout), string.Empty)))
                     bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogout), string.Empty), out userSettings.DoLogout);
 
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESPunchDeviation), string.Empty)))
-                    int.TryParse(this.GetValueString(key, nameof(userSettings.ASESPunchDeviation), string.Empty), out userSettings.ASESPunchDeviation);
+                userSettings.ASESPunchDeviation = this.GetValueInt(key, nameof(userSettings.ASESPunchDeviation), 0);
 
                 return true;
             }
@@ -129,9 +140,14 @@ namespace EZAsesAutoType
                 if (registrySubKeyPath == null)
                     throw new Exception(nameof(this.GetRegistrySubKeyPath) + Const.LogFail);
 
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(registrySubKeyPath);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(registrySubKeyPath, true);
                 if (key == null)
+                {   // might be the first time this function has been called.
+                    // create registry hive now.
                     key = Registry.CurrentUser.CreateSubKey(registrySubKeyPath, true);
+                    if (key == null)
+                        throw new Exception(nameof(this.GetRegistrySubKeyPath) + Const.LogFail);
+                }
 
                 key.SetValue(nameof(userSettings.ASESBaseUrl), userSettings.ASESBaseUrl);
                 key.SetValue(nameof(userSettings.ASESUserId), userSettings.ASESUserId);
