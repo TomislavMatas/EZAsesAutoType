@@ -5,6 +5,8 @@
 // Project specific configuration settings. 
 //
 // Revision History: 
+// 2024/08/07:TomislavMatas: Version "1.127.2"
+// * Add new property "DateGridCanvasSortingheaderXPath". 
 // 2024/07/02:TomislavMatas: Version "1.126.2"
 // * Rename "ASES.TimeGrid.*" to "ASES.DateGrid.*".
 // * Rename "ASES.TimePair.FirstRow.*" to "ASES.TimePair.*".
@@ -557,6 +559,32 @@ namespace EZAsesAutoType
         {
             string prev = this.GetDateGridCanvasXPath();
             this.DateGridCanvasXPath = value;
+            return prev;
+        }
+
+        private const string DateGridCanvasSortingheaderXPathKeyName = "ASES.DateGrid.Canvas.Sortingheader.xPath";
+        private string? m_DateGridCanvasSortingheaderXPath = null;
+        private string DateGridCanvasSortingheaderXPath
+        {
+            get
+            {
+                if (m_DateGridCanvasSortingheaderXPath == null)
+                    m_DateGridCanvasSortingheaderXPath = ConfigApi.GetAppSettingString(DateGridCanvasSortingheaderXPathKeyName, string.Empty);
+                return m_DateGridCanvasSortingheaderXPath;
+            }
+            set
+            {
+                m_DateGridCanvasSortingheaderXPath = value;
+            }
+        }
+        public string GetDateGridCanvasSortingheaderXPath()
+        {
+            return this.DateGridCanvasSortingheaderXPath;
+        }
+        public string SetDateGridCanvasSortingheaderXPath(string value)
+        {
+            string prev = this.GetDateGridCanvasSortingheaderXPath();
+            this.DateGridCanvasSortingheaderXPath = value;
             return prev;
         }
 
