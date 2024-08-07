@@ -2,6 +2,8 @@
 // File: "Worker.AppConfig.cs"
 //
 // Revision History: 
+// 2024/08/07:TomislavMatas: Version "1.127.2"
+// * Add "GetDateGridCanvasSortingheaderXPath".
 // 2024/07/02:TomislavMatas: Version "1.126.2"
 // * Rename "ASES.TimeGrid.*" to "ASES.DateGrid.*".
 // * Rename "ASES.TimePair.FirstRow.*" to "ASES.TimePair.*".
@@ -108,6 +110,11 @@ namespace EZAsesAutoType
         private string GetDateGridCanvasXPath()
         {
             return this.WorkerConfig.GetAppConfig().GetDateGridCanvasXPath();
+        }
+
+        private string GetDateGridCanvasSortingheaderXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasSortingheaderXPath();
         }
 
         private string GetDateGridCanvasSortingAscXPath()
