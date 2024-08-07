@@ -2,6 +2,8 @@
 // File: "Worker.Validation.cs"
 //
 // Revision History:
+// 2024/08/07:TomislavMatas: Version "1.127.2"
+// * Add "ASESTimeEntryCanvasIsSortedByDate".
 // 2024/07/04:TomislavMatas: Version "1.126.2"
 // * Fix in "ASESTimePairEntryPopupIsLoaded": Implement handling of
 //   "${RowIndex}" token replacement for time pair xPathes.
@@ -475,6 +477,42 @@ namespace EZAsesAutoType
         #endregion
 
         #region state validators
+
+        /// <summary>
+        /// Check if any of the sortindicators for date is displayed.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private bool ASESTimeEntryCanvasIsSortedByDate(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                if (browser == null)
+                    throw new ArgumentNullException(nameof(browser));
+
+                string xPath = this.GetDateGridCanvasSortingAscXPath();
+                if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
+                    return true;
+
+                xPath = this.GetDateGridCanvasSortingDescXPath();
+                if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
+                    return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
 
         private bool ASESTimeEntryCanvasIsSortedAscending(BrowserBase browser, int timeoutInSeconds)
         {
