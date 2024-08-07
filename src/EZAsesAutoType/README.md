@@ -6,6 +6,10 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/08/07:TomislavMatas: Version "1.127.2"
+* Assure that canvas has been sorted by date ascending before punching.
+* Fix a bug while writing version independent UserSettings in windows registry.
+
 ## 2024/08/06:TomislavMatas: Version "1.127.1"
 * Implement management of version independent UserSettings in windows registry. 
 
