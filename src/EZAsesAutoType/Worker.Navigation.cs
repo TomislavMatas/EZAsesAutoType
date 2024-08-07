@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/08/07:TomislavMatas: Version "1.127.2"
+// * Assure that canvas has been sorted by date ascending before punching.
 // 2024/08/06:TomislavMatas: Version "1.127.1"
 // * Implement "RandomizeDeviation" and "RoundDown" 
 //   to make punches look more "human~like".
@@ -266,13 +268,47 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Use Browser-Interop Helper to navigate to sort the "Time Entry Grid Canvas" ascending.
-        /// In Essence: Click the respective header item.
+        /// Click the Date column header to sort canvas by date ascending.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        private bool ASESSortTimeEntryCanvasAscending(BrowserBase browser, int timeoutInSeconds)
+        private bool ClickSortingheader(BrowserBase browser, int timeoutInSeconds)
+        {
+            try { 
+                string sortingheaderXPath = this.GetDateGridCanvasSortingheaderXPath();
+                IWebElement? sortingheaderElement = browser.FindElementByXpath(sortingheaderXPath, timeoutInSeconds);
+                if (sortingheaderElement == null)
+                    throw new Exception(string.Format("'{0}'{1}", sortingheaderXPath, Const.LogNotFound));
+
+                if (!browser.ClickElement(sortingheaderElement))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                // sorting may take some time - await rendering
+                Thread.Sleep(1000);
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to navigate to sort the "Time Entry Grid Canvas" ascending.
+        /// In Essence: Click the respective header items to make sure, the canvas
+        /// is sorted by column date in ascending order.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        private bool ASESSortTimeEntryCanvasByDateAscending(BrowserBase browser, int timeoutInSeconds)
         {
             try
             {
@@ -282,37 +318,47 @@ namespace EZAsesAutoType
                 if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
                     throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
 
+                // It is not guaranteed, that the canvas is sorted by the date
+                // column in ascending order, because user might have sorted
+                // by other column by default or has sorted by date descending
+                // by default. In either case, click header for date column once.
+                // This should implicitly sort the canvas by date ascending.
+                // Use a short timeout for fast results.
+                const int shortTimeout = 1;
+                if (!this.ASESTimeEntryCanvasIsSortedByDate(browser, shortTimeout))
+                    if(!this.ClickSortingheader(browser, shortTimeout))
+                        throw new Exception(nameof(this.ClickSortingheader) + Const.LogFail);
+
+                // Should be sorted by date ascending now,
+                // but must not be true in any case.
+                if (this.ASESTimeEntryCanvasIsSortedAscending(browser, timeoutInSeconds))
+                    return true;
+
+                // If not sorted by date ascending now,
+                // check if sorted by date descending.
+                if (!this.ASESTimeEntryCanvasIsSortedDescending(browser, timeoutInSeconds))
+                    throw new Exception("SortingState" + Const.LogInvalid);
+
+                // canvas seems to be sorted by date descending.
+                // Click sortindicator to toggle sort order to ascending.
+                string sortindicatorXPath = this.GetDateGridCanvasSortingDescXPath();
+                IWebElement? sortindicatorElement = browser.FindElementByXpath(sortindicatorXPath, timeoutInSeconds);
+                if (sortindicatorElement == null)
+                    throw new Exception(string.Format("'{0}'{1}", sortindicatorXPath, Const.LogNotFound));
+                        
+                if (!browser.ClickElement(sortindicatorElement))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                // sleep a while before validating succes of "sort" operation
+                Thread.Sleep(1000);
+
+                if(!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+
+                // doublecheck sort order to be by date ascending.
                 if (!this.ASESTimeEntryCanvasIsSortedAscending(browser, timeoutInSeconds))
-                {
-                    if (this.ASESTimeEntryCanvasIsSortedDescending(browser, timeoutInSeconds))
-                    {
-                        const string subProcess = "Set sorting state ascending";
-                        Log.Info(subProcess + Const.LogInProgress);
-                        string sortindicatorXPath = this.GetDateGridCanvasSortingDescXPath();
-                        IWebElement? sortindicatorElement = browser.FindElementByXpath(sortindicatorXPath, timeoutInSeconds);
-                        if (sortindicatorElement == null)
-                            throw new Exception(string.Format("'{0}'{1}", sortindicatorXPath, Const.LogNotFound));
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsSortedAscending) + Const.LogFail);
                         
-                        if (!browser.ClickElement(sortindicatorElement))
-                            throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
-
-                        // sleep a while before validating succes of "sort" operation
-                        Thread.Sleep(1000);
-
-                        if(!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutInSeconds))
-                            throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
-
-                        if (!this.ASESTimeEntryCanvasIsSortedAscending(browser, timeoutInSeconds))
-                            throw new Exception(subProcess + Const.LogFail);
-                        
-                        Log.Info(subProcess + Const.LogDone);
-                    }
-                    else
-                    {
-                        throw new Exception("SortingState"+Const.LogInvalid);
-                    }
-                }
-
                 return true;
             }
             catch (Exception ex)
@@ -694,8 +740,8 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                if (!this.ASESSortTimeEntryCanvasAscending(browser, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESSortTimeEntryCanvasAscending) + Const.LogFail);
+                if (!this.ASESSortTimeEntryCanvasByDateAscending(browser, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESSortTimeEntryCanvasByDateAscending) + Const.LogFail);
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
