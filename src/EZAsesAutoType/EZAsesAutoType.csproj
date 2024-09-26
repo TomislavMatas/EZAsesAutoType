@@ -28,6 +28,9 @@ to automate the daily chore of utilizing the virtual punch card system
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 Version "1.129.0"
+* Make sure that version independent values from registry 
+  supersede/override version dependent values from "App.config" 
+  and implement more distinct handling of time pairs.
 * Update "EZSeleniumLib" to version "4.25.0".
 * Update "chromedriver.exe" to version "129.0.6668.71".
 * Update "msedgedriver.exe" to version "129.0.2792.52".

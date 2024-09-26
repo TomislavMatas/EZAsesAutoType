@@ -7,6 +7,9 @@ Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
 ## 2024/09/26:TomislavMatas: Version "1.129.0"
+* Edit "RegistryHelper.cs": Make sure that version independent values from 
+  registry supersede/override version dependent values from "App.config" and 
+  implement more distinct handling of time pairs.
 * Update "EZSeleniumLib" to version "4.25.0".
 * Update "chromedriver.exe" to version "129.0.6668.71".
 * Update "msedgedriver.exe" to version "129.0.2792.52".
