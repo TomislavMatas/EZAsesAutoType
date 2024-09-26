@@ -5,22 +5,26 @@
 :: --            supplied, user will be prompted to enter a value.
 :: -- 
 :: -- Revision History
+:: -- 2024/09/26:TomislavMatas: webdriver/129 Version "1.129.0"
+:: -- * set "VersionLabelDefault=1.129.0".
+:: -- * Implement usage of variable "VersionLabelDefault".
 :: -- 2024/07/04:TomislavMatas: webdriver/126 Version "1.126.2"
 :: -- * Initial version.
 :: --
 
 @echo off
 setlocal
-
+set "VersionLabelDefault=1.129.0"
+  
 :: cast batch file input arguments to variables with meaningfull name.
 set "VersionLabel=%1"
 if "%VersionLabel%" == "" (
-	echo VersionLabel: ^(hit enter for default 1.126.2^) :
+	echo VersionLabel: ^(hit enter for default %VersionLabelDefault%^) :
 	set /P "VersionLabel="
 )
 
 if "%VersionLabel%" == "" (
-	set "VersionLabel=1.126.2"
+	set "VersionLabel=%VersionLabelDefault%"
 )
 
 set "PROJECT_ROOT=%~dp0.."
