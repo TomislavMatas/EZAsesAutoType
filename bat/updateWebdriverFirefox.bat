@@ -8,15 +8,15 @@
 :: --
 :: -- Example: 
 :: -- ```
-:: -- CMD> updateWebdriverFirefox 0.34.0
+:: -- CMD> updateWebdriverFirefox 0.35.0
 :: -- ```
 :: --
 :: -- Download-URL deeplink:
-:: -- https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-win64.zip
+:: -- https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-win64.zip
 :: -- Obacht: Bei "github.com" muss bei der Verwendung von curl der 
 :: -- Parameter -L verwendet werden, sonst klappt der Download nicht.
 :: -- 
-:: -- Mit der WebDriver Version "v0.34.0" koennen aktuell die
+:: -- Mit der WebDriver Version "v0.35.0" koennen aktuell die
 :: -- FireFox Versionen ab "115" ferngesteuert werden.
 :: -- Mit der WebDriver Version "v0.33.0" konnten zuletzt die
 :: -- FireFox Versionen von "102" bis "120" ferngesteuert werden.
@@ -26,10 +26,13 @@
 :: -- https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
 :: -- 
 :: -- Revision History
+:: -- 2024/09/26:TomislavMatas: Version "1.129.0"
+:: -- * set "WEBDRIVER_VERSION_DEFAULT=0.35.0".
+:: -- * BugFix: Propagation to projects should work now as expectd.
 :: -- 2024/04/04:TomislavMatas: Version "1.0.123"
 :: -- * Tidy~Up commentz.
 :: -- 2024/03/22:TomislavMatas: Version 1.0.0.0
-:: -- * Initale version with default "0.34.0".
+:: -- * Initial version with default "0.34.0".
 :: --
 
 @echo off
@@ -48,7 +51,7 @@ set "PROJECT_ROOT=%~dp0.."
 set "PROJEKT_LIST=EZSeleniumLib"
 
 set "WEBDRIVER_VERSION=%1"
-set "WEBDRIVER_VERSION_DEFAULT=0.34.0"
+set "WEBDRIVER_VERSION_DEFAULT=0.35.0"
 if "%WEBDRIVER_VERSION%" == "" (
 	set /P "WEBDRIVER_VERSION=Version eingeben oder [Enter] fuer Default '%WEBDRIVER_VERSION_DEFAULT%' : "
 )
@@ -142,7 +145,7 @@ for %%f in (%PLATFORMLIST%) do (
 	@rem "Verteile" den treiber in die Projekt-Verzeichnisse, in denen dieser benoetigt wird.
 	for %%p in (!PROJEKT_LIST!) do (
 		set "prj=%%p" 
-		set "prjpath=%PROJECT_ROOT%\src\  !"
+		set "prjpath=%PROJECT_ROOT%\src\!prj!"
 		echo copy "%FILENAME_CUSTOM%" to "!prj!" ...
 		del "!prjpath!\%FILENAME_CUSTOM%" 1>nul 2>nul
 		copy "!unzipedpath!\%FILENAME_CUSTOM%" "!prjpath!\%FILENAME_CUSTOM%" 1>nul
