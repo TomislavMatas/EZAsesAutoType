@@ -2,6 +2,13 @@
 // File: "AppHandler.cs"
 //
 // Revision History: 
+// 2024/09/26:TomislavMatas: Version "1.129.0"
+// * Make sure that version independent values from registry
+//   supersede/override version dependent values from "App.config".
+// * Implement more distinct handling of TimePairs in new method
+//   "LoadVersionIndependentUserSettingsTimePairs".
+// * Extract handling of boolean flags into new method
+//   "LoadVersionIndependentUserSettingsBoolFlags".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
 // * Fix writing of values to registry.
 // * Add "GetValueInt".
@@ -42,6 +49,28 @@ namespace EZAsesAutoType
             return string.Format(@"Software\{0}\{1}", companyName, productName);
         }
 
+        /// <summary>
+        /// Returns null, if value not found.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string? GetValueString(RegistryKey key, string name)
+        {
+            object? value = key.GetValue(name);
+            if (value == null)
+                return null;
+
+            return (string)value;
+        }
+
+        /// <summary>
+        /// Returns defaultValue, if value not found.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="name"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
         private string GetValueString(RegistryKey key, string name, string defaultValue)
         {
             object? value = key.GetValue(name, defaultValue);
@@ -60,6 +89,14 @@ namespace EZAsesAutoType
             return (int)value;
         }
 
+        /// <summary>
+        /// Lookup version independent individual values from registry.
+        /// Version dependent values are loaded from "App.config" first and
+        /// shall be used as defaults, if version independent values 
+        /// are not (yet) present in registry.
+        /// </summary>
+        /// <param name="userSettings"></param>
+        /// <returns></returns>
         public bool LoadVersionIndependentUserSettings(out UserSettings? userSettings)
         {
             try
@@ -72,52 +109,17 @@ namespace EZAsesAutoType
                 if(key == null)
                     throw new Exception(nameof(Registry.CurrentUser.OpenSubKey) + Const.LogFail);
 
-                // make sure version dependent settings are loaded in any case.
                 userSettings = new UserSettings();
                 userSettings.Load(); 
-
-                // lookup individual values and assign only if valuable.
-                if(!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESBaseUrl), string.Empty)) )
-                    userSettings.ASESBaseUrl = this.GetValueString(key, nameof(userSettings.ASESBaseUrl), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESUserId), string.Empty)))
-                    userSettings.ASESUserId = this.GetValueString(key, nameof(userSettings.ASESUserId), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESPassword), string.Empty)))
-                    userSettings.ASESPassword = this.GetValueString(key, nameof(userSettings.ASESPassword), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESClient), string.Empty)))
-                    userSettings.ASESClient = this.GetValueString(key, nameof(userSettings.ASESClient), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESLanguage), string.Empty)))
-                    userSettings.ASESLanguage = this.GetValueString(key, nameof(userSettings.ASESLanguage), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESPunchInAM), string.Empty)))
-                    userSettings.ASESPunchInAM = this.GetValueString(key, nameof(userSettings.ASESPunchInAM), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESPunchOutAM), string.Empty)))
-                    userSettings.ASESPunchOutAM = this.GetValueString(key, nameof(userSettings.ASESPunchOutAM), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESPunchInPM), string.Empty)))
-                    userSettings.ASESPunchInPM = this.GetValueString(key, nameof(userSettings.ASESPunchInPM), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.ASESPunchOutPM), string.Empty)))
-                    userSettings.ASESPunchOutPM = this.GetValueString(key, nameof(userSettings.ASESPunchOutPM), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.WebDriver), string.Empty)))
-                    userSettings.WebDriver = this.GetValueString(key, nameof(userSettings.WebDriver), string.Empty);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.DoLogin), string.Empty)))
-                    bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogin), string.Empty), out userSettings.DoLogin);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.DoPunch), string.Empty)))
-                    bool.TryParse(this.GetValueString(key, nameof(userSettings.DoPunch), string.Empty), out userSettings.DoPunch);
-
-                if (!String.IsNullOrEmpty(this.GetValueString(key, nameof(userSettings.DoLogout), string.Empty)))
-                    bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogout), string.Empty), out userSettings.DoLogout);
-
-                userSettings.ASESPunchDeviation = this.GetValueInt(key, nameof(userSettings.ASESPunchDeviation), 0);
-
+                userSettings.ASESBaseUrl        = this.GetValueString(key, nameof(userSettings.ASESBaseUrl),        userSettings.ASESBaseUrl        );
+                userSettings.ASESUserId         = this.GetValueString(key, nameof(userSettings.ASESUserId),         userSettings.ASESUserId         );
+                userSettings.ASESPassword       = this.GetValueString(key, nameof(userSettings.ASESPassword),       userSettings.ASESPassword       );
+                userSettings.ASESClient         = this.GetValueString(key, nameof(userSettings.ASESClient),         userSettings.ASESClient         );
+                userSettings.ASESLanguage       = this.GetValueString(key, nameof(userSettings.ASESLanguage),       userSettings.ASESLanguage       );
+                userSettings.WebDriver          = this.GetValueString(key, nameof(userSettings.WebDriver),          userSettings.WebDriver          );
+                userSettings.ASESPunchDeviation = this.GetValueInt(key,    nameof(userSettings.ASESPunchDeviation), userSettings.ASESPunchDeviation );
+                LoadVersionIndependentUserSettingsTimePairs(key, userSettings);
+                LoadVersionIndependentUserSettingsBoolFlags(key, userSettings);
                 return true;
             }
             catch (Exception ex)
@@ -132,6 +134,83 @@ namespace EZAsesAutoType
             }
         }
 
+        /// <summary>
+        /// The processing flags and their combinations are arbitary and optional depending to individual needs.
+        /// The boolean flag values required dedicated type casts.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="userSettings"></param>
+        private void LoadVersionIndependentUserSettingsBoolFlags(RegistryKey key, UserSettings userSettings)
+        {
+            if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogin), userSettings.DoLogin.ToString()), out userSettings.DoLogin))
+                userSettings.DoLogin = true;
+
+            if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.DoPunch), userSettings.DoPunch.ToString()), out userSettings.DoPunch))
+                userSettings.DoPunch = true;
+
+            if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogout), userSettings.DoLogout.ToString()), out userSettings.DoLogout))
+                userSettings.DoLogout = true;
+        }
+
+        /// <summary>
+        /// The TimePair combinations are arbitary and optional depending to individual needs.
+        /// See --> Worker.GetTimePairListDefault() for some typical normalizations.
+        /// The first TimePair (AM) is assumed the default use case and thus "mandatory".
+        /// In such cases (and only this case) use the default from "App.config".
+        /// The second TimePair (PM) is optional and utilized by users,
+        /// which require a "lunch break" or need to split working time for 
+        /// other reasons. If only one single pair is stored to registry,
+        /// the default mimic does not work here.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="userSettings"></param>
+        /// <returns></returns>
+        private void LoadVersionIndependentUserSettingsTimePairs(RegistryKey key, UserSettings userSettings)
+        {
+            string? registryValue;
+
+            // The more sophisticate handling of the TimePairs
+            // will allow some of the most common combinations:
+            //   1: "09:00" to "17:00"
+            //   2: "     " to "     "
+            // --> Handle as single TimePair
+            //   1: "09:00" to "     "
+            //   2: "     " to "17:00"
+            // --> Handle as single TimePair
+            //   1: "09:00" to "12:00"
+            //   2: "12:00" to "17:00"
+            // --> Handle as two TimePairs
+            registryValue = this.GetValueString(key, nameof(userSettings.ASESPunchInAM));
+            if (registryValue == null)
+                userSettings.ASESPunchInAM = string.Empty;
+            else
+                userSettings.ASESPunchInAM = registryValue;
+
+            registryValue = this.GetValueString(key, nameof(userSettings.ASESPunchOutAM));
+            if (registryValue == null)
+                userSettings.ASESPunchOutAM = string.Empty;
+            else
+                userSettings.ASESPunchOutAM = registryValue;
+
+            registryValue = this.GetValueString(key, nameof(userSettings.ASESPunchInPM));
+            if (registryValue == null)
+                userSettings.ASESPunchInPM = string.Empty;
+            else
+                userSettings.ASESPunchInPM = registryValue;
+
+            registryValue = this.GetValueString(key, nameof(userSettings.ASESPunchOutPM));
+            if (registryValue == null)
+                userSettings.ASESPunchOutPM = string.Empty;
+            else
+                userSettings.ASESPunchOutPM = registryValue;
+
+        }
+
+        /// <summary>
+        /// Store version independent individual values to registry.
+        /// </summary>
+        /// <param name="userSettings"></param>
+        /// <returns></returns>
         public bool SaveVersionIndependentUserSettings(UserSettings userSettings)
         {
             try
