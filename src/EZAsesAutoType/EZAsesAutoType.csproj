@@ -10,9 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.127.2</Version>
-    <AssemblyVersion>1.127.2</AssemblyVersion>
-    <FileVersion>1.127.2</FileVersion>
+    <Version>1.129.0</Version>
+    <AssemblyVersion>1.129.0</AssemblyVersion>
+    <FileVersion>1.129.0</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -27,6 +27,13 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
+Version "1.129.0"
+* Update "EZSeleniumLib" to version "4.25.0".
+* Update "chromedriver.exe" to version "129.0.6668.71".
+* Update "msedgedriver.exe" to version "129.0.2792.52".
+* Update "geckodriver.exe"  to version "0.35.0".
+* Update "log4net" to version "3.0.0".
+
 Version "1.127.2"
 * Fix a bug while writing version independent UserSettings in windows registry.
 * Assure that canvas has been sorted by date ascendeing before punching.
@@ -114,7 +121,7 @@ Version "1.0.123":
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.17" />
+    <PackageReference Include="log4net" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
