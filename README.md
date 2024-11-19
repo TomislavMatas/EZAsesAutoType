@@ -6,7 +6,7 @@ to automate the daily chore of utilizing the virtual punch card system
 # Overview
 Start the application and set the desired values in the main dialog:  
 
-![MainDialog](res/img/Screenshot-MainDialog-v1.127.1.png)  
+![MainDialog](res/img/Screenshot-MainDialog-v1.131.0.png){width=426 height=265}
 
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
@@ -142,6 +142,14 @@ Most noticeable: "EZAsesAutoType-UserManual.md"
 Contains all source code to build "EZAsesAutoType.exe".
 
 # Revision History
+## 2024/11/19:TomislavMatas: Version "1.131.0"
+* Update "EZSeleniumLib" to version "4.25.1".
+* Update "chromedriver.exe" to version "131.0.6778.69".
+* Update "msedgedriver.exe" to version "131.0.2903.51".
+* Update "log4net" to version "3.0.3".
+* Update main dialog screenshot for this "README.md"
+  file to "Screenshot-MainDialog-v1.131.0.png".
+
 ## 2024/08/06:TomislavMatas: Version "1.127.1"
 * Merged content of "EZAsesAutoType-UserManual.md" into this "README.md"
   to have a single point of reference.
