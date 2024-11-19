@@ -10,9 +10,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.129.0</Version>
-    <AssemblyVersion>1.129.0</AssemblyVersion>
-    <FileVersion>1.129.0</FileVersion>
+    <Version>1.131.0</Version>
+    <AssemblyVersion>1.131.0</AssemblyVersion>
+    <FileVersion>1.131.0</FileVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -27,6 +27,12 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
+Version "1.131.0"
+* Update "EZSeleniumLib" to version "4.25.1".
+* Update "chromedriver.exe" to version "131.0.6778.69".
+* Update "msedgedriver.exe" to version "131.0.2903.51".
+* Update "log4net" to version "3.0.3".
+
 Version "1.129.0"
 * Make sure that version independent values from registry 
   supersede/override version dependent values from "App.config" 
@@ -124,7 +130,7 @@ Version "1.0.123":
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.0.0" />
+    <PackageReference Include="log4net" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup>
