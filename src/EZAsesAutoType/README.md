@@ -6,6 +6,12 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/11/19:TomislavMatas: Version "1.131.0"
+* Update "EZSeleniumLib" to version "4.25.1".
+* Update "chromedriver.exe" to version "131.0.6778.69".
+* Update "msedgedriver.exe" to version "131.0.2903.51".
+* Update "log4net" to version "3.0.3".
+
 ## 2024/09/26:TomislavMatas: Version "1.129.0"
 * Edit "RegistryHelper.cs": Make sure that version independent values from 
   registry supersede/override version dependent values from "App.config" and 
