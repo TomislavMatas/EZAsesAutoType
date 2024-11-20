@@ -4,3 +4,5 @@
 # exclude other folders by name 
 cert
 bin/release
+/src/EZAsesAutoTypeMSIX/AppPackages
+/src/EZAsesAutoTypeMSIX/BundleArtifacts
