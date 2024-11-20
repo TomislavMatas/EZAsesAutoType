@@ -1,18 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <!-- build props -->
+    <OutputType>WinExe</OutputType>
+    <StartupObject>EZAsesAutoType.Program</StartupObject>
     <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>    
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StartupObject>EZAsesAutoType.Program</StartupObject>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>D:\Projekte\github.com\EZAsesAutoType\cert\MatasConsultingSelfSigned.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <!-- package props -->
+    <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
     <Version>1.131.1</Version>
-    <AssemblyVersion>1.131.1</AssemblyVersion>
     <FileVersion>1.131.1</FileVersion>
+    <AssemblyVersion>1.131.1</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -122,13 +131,6 @@ Version "1.123.1":
 Version "1.0.123":
 * Update "MicrosoftWebDriver.exe" to version "123.0.2420.65".
     </PackageReleaseNotes>
-    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-	<Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
-    <SignAssembly>False</SignAssembly>
-    <AssemblyOriginatorKeyFile>D:\Projekte\github.com\EZAsesAutoType\cert\MatasConsultingSelfSigned.pfx</AssemblyOriginatorKeyFile>
-    <DelaySign>True</DelaySign>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
