@@ -8,12 +8,12 @@
 
   <Identity
     Name="EZAsesAutoType"
-    Publisher="CN=slove"
-    Version="1.124.0.0" />
+    Publisher="CN=D5171930-ADB5-4375-9BD0-365C8D0E495E, O=matas consulting"
+    Version="1.131.1.0" />
 
   <Properties>
     <DisplayName>EZ ASES AutoType</DisplayName>
-    <PublisherDisplayName>slove</PublisherDisplayName>
+    <PublisherDisplayName>matas consulting</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
