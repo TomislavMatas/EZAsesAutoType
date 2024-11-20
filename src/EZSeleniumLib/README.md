@@ -48,6 +48,9 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 * Udpdate "Selenium.Support" to version "4.26.1".
 * Udpdate "Selenium.WebDriver" to version="4.26.1".
 * Udpdate "System.Management" to version="9.0.0".
+* Adding "PlatformTarget=AnyCPU" explicitly solved the MSIX
+  packaging error "MSB3270".
+* WIP: Prototyping "EZAsesAutoTypeMSIX.wapproj".
 
 ## 2024/11/19:TomislavMatas: Version "4.25.1"
 * Update "chromedriver.exe" to version "131.0.6778.69".
