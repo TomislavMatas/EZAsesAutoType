@@ -6,6 +6,12 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2024/11/20:TomislavMatas: Version "1.131.1"
+* Update "EZSeleniumLib" to version "4.26.1".
+* Adding "PlatformTarget=AnyCPU" explicitly solved the MSIX
+  packaging error "MSB3270".
+* WIP: Prototyping "EZAsesAutoTypeMSIX.wapproj".
+
 ## 2024/11/19:TomislavMatas: Version "1.131.0"
 * Update "EZSeleniumLib" to version "4.25.1".
 * Update "chromedriver.exe" to version "131.0.6778.69".

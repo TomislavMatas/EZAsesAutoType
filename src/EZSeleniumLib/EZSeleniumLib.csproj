@@ -1,20 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <!-- build props -->
     <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>EZSeleniumLib</AssemblyName>
-    <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.26.1</Version>
-    <AssemblyVersion>4.26.1</AssemblyVersion>
-    <FileVersion>4.26.1</FileVersion>
-    <Authors>Tomislav Matas</Authors>
-    <Company>matas consulting</Company>
-    <Copyright>(c) 2021 matas consulting</Copyright>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <EnableNETAnalyzers>False</EnableNETAnalyzers>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <!-- package props -->
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyName>EZSeleniumLib</AssemblyName>
+    <RootNamespace>EZSeleniumLib</RootNamespace>
+    <Version>4.26.1</Version>
+    <FileVersion>4.26.1</FileVersion>
+    <AssemblyVersion>4.26.1</AssemblyVersion>
+    <Authors>Tomislav Matas</Authors>
+    <Company>matas consulting</Company>
+    <Copyright>(c) 2021 matas consulting</Copyright>
     <PackageReleaseNotes>
 Version "4.26.1"
 Udpdate "Selenium.Support" to version "4.26.1".
@@ -79,9 +84,6 @@ Version 4.20.0
 * Product version refelcts the referenced selenium package version.
 * Initial version using .NET version 8.
     </PackageReleaseNotes>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <Platforms>AnyCPU;ARM;ARM64;x86;x64</Platforms>
-
   </PropertyGroup>
 
   <ItemGroup>
