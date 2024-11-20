@@ -2,6 +2,7 @@
   <PropertyGroup>
     <!-- build props -->
     <OutputType>WinExe</OutputType>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>    
     <StartupObject>EZAsesAutoType.Program</StartupObject>
     <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>    
