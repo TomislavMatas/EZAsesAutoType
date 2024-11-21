@@ -5,6 +5,8 @@
 :: --            supplied, user will be prompted to enter a value.
 :: -- 
 :: -- Revision History
+:: -- 2024/11/22:TomislavMatas: webdriver/131 Version "1.131.1"
+:: -- * Change path from "net8.0-windows" to "net8.0-windows10.0.26100.0".
 :: -- 2024/09/26:TomislavMatas: webdriver/129 Version "1.129.0"
 :: -- * set "VersionLabelDefault=1.129.0".
 :: -- * Implement usage of variable "VersionLabelDefault".
@@ -29,7 +31,7 @@ if "%VersionLabel%" == "" (
 
 set "PROJECT_ROOT=%~dp0.."
 set "SIGNAGE_BAT=%PROJECT_ROOT%\bat\signReleaseBinaries.cmd"
-set "PORTABLE_BIN_PATH=%PROJECT_ROOT%\src\EZAsesAutoType\bin\Release\net8.0-windows"
+set "PORTABLE_BIN_PATH=%PROJECT_ROOT%\src\EZAsesAutoType\bin\Release\net8.0-windows10.0.26100.0"
 set "SETUP_MSI_BIN_FILE=%PROJECT_ROOT%\src\EZAsesAutoTypeSetup\bin\Release\EZAsesAutoType-setup.msi"
 set "BIN_RELEASE_PATH=%PROJECT_ROOT%\bin\release"
 
