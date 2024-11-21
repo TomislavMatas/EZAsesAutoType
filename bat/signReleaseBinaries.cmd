@@ -5,6 +5,8 @@
 :: -- -->< https://learn.microsoft.com/de-de/windows/msix/package/create-certificate-package-signing >
 :: -- 
 :: -- Revision History
+:: -- 2024/11/22:TomislavMatas: webdriver/131 Version "1.131.1"
+:: -- * Change path from "net8.0-windows" to "net8.0-windows10.0.26100.0".
 :: -- 2024/07/04:TomislavMatas: webdriver/126 Version "1.126.2"
 :: -- * Renamed this file from "signReleaseMsi.cmd" 
 :: --   to "signReleaseBinaries.cmd" for the sake of clarity.
@@ -19,7 +21,7 @@ setlocal
 
 set "PROJECT_ROOT=%~dp0.."
 set "SIGNTOOL_EXE=C:\Program Files (x86)\Windows Kits\10\App Certification Kit\signtool.exe"
-set "EXE_FILE=%PROJECT_ROOT%\src\EZAsesAutoType\bin\Release\net8.0-windows\EZAsesAutoType.exe"
+set "EXE_FILE=%PROJECT_ROOT%\src\EZAsesAutoType\bin\Release\net8.0-windows10.0.26100.0\EZAsesAutoType.exe"
 set "PFX_FILE=%PROJECT_ROOT%\cert\MatasConsultingSelfSigned.pfx"
 set "MSI_PATH=%PROJECT_ROOT%\src\EZAsesAutoTypeSetup\bin\Release"
 set /P "PFX_FILE_PASSWORD=pfx file password : "

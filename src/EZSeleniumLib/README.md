@@ -44,6 +44,14 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2024/11/20:TomislavMatas: Version "4.26.1"
+* Update "Selenium.Support" to version "4.26.1".
+* Update "Selenium.WebDriver" to version="4.26.1".
+* Update "System.Management" to version="9.0.0".
+* Adding "PlatformTarget=AnyCPU" explicitly solved the MSIX
+  packaging error "MSB3270".
+* WIP: Prototyping "EZAsesAutoTypeMSIX.wapproj".
+
 ## 2024/11/19:TomislavMatas: Version "4.25.1"
 * Update "chromedriver.exe" to version "131.0.6778.69".
 * Update "msedgedriver.exe" to version "131.0.2903.51".
