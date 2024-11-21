@@ -176,7 +176,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E591DDFE26E24B09BE8BE93271E9A0AA"
             {
-            "SourcePath" = "8:..\\EZAsesAutoType\\bin\\Release\\net8.0-windows\\EZAsesAutoType.exe"
+            "SourcePath" = "8:..\\EZAsesAutoType\\bin\\Release\\net8.0-windows10.0.26100.0\\EZAsesAutoType.exe"
             "TargetName" = "8:EZAsesAutoType.exe"
             "Tag" = "8:"
             "Folder" = "8:_1104C379D14F46E8977131739157E861"
