@@ -2,6 +2,8 @@
 // File: "Worker.AppConfig.cs"
 //
 // Revision History: 
+// 2024/11/22:TomislavMatas: Version "1.131.2"
+// * Add "GetDateGridCanvasLoadButtonPath".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
 // * Add "GetDateGridCanvasSortingheaderXPath".
 // 2024/07/02:TomislavMatas: Version "1.126.2"
@@ -160,6 +162,11 @@ namespace EZAsesAutoType
         private string GetDateGridCanvasSaveButtonPath()
         {
             return this.WorkerConfig.GetAppConfig().GetDateGridCanvasSaveButtonPath();
+        }
+
+        private string GetDateGridCanvasLoadButtonPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetDateGridCanvasLoadButtonPath();
         }
 
         #endregion
