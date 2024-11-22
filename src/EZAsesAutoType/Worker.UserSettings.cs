@@ -2,6 +2,8 @@
 // File: "Worker.UserSettings.cs"
 //
 // Revision History: 
+// 2024/11/22:TomislavMatas: Version "1.131.2"
+// * Various code changes to meet code style conventions.
 // 2024/08/05:TomislavMatas: Version "1.127.1"
 // * Implement "RandomizeDeviation" and "RoundDown" 
 //   to make punches look more "human~like".
@@ -196,7 +198,7 @@ namespace EZAsesAutoType
             return Randomizer.Next(1, maxValue + 1);
         }
 
-        private string? addMinutes(string? timeStr, int minutes)
+        private static string? AddMinutes(string? timeStr, int minutes)
         {
             if(timeStr == null)
                 return null;
@@ -218,7 +220,7 @@ namespace EZAsesAutoType
         /// <param name="dt"></param>
         /// <param name="fraction"></param>
         /// <returns></returns>
-        private int RoundDown(int value, int fraction)
+        private static int RoundDown(int value, int fraction)
         {
             if (value < 0 || value > 60)
                 value = 0;
@@ -242,16 +244,16 @@ namespace EZAsesAutoType
             // do not use "exact minutes" like "09:01" or "09:02",
             // because no human would punch in exactly to the minute.
             // Use a stepping spread of five minutes .
-            deviation = this.RoundDown(deviation, 5);
+            deviation = RoundDown(deviation, 5);
 
             // flip a coin to decide wether to "add" or "substract" deviation.
             if (FlipCoin())
-                deviation = deviation * (-1);
+                deviation *= (-1);
 
             return deviation;
         }
 
-        private List<TimePair> ApplyDeviation(List<TimePair> timePairs, int deviation)
+        private static List<TimePair> ApplyDeviation(List<TimePair> timePairs, int deviation)
         {
             try
             {
@@ -264,14 +266,14 @@ namespace EZAsesAutoType
                 {
                     case 1:
                         // adjust punch in and punch out value
-                        timePairs[0].PunchIn = addMinutes(timePairs[0].PunchIn, deviation);
-                        timePairs[0].PunchOut = addMinutes(timePairs[0].PunchOut, deviation);
+                        timePairs[0].PunchIn = AddMinutes(timePairs[0].PunchIn, deviation);
+                        timePairs[0].PunchOut = AddMinutes(timePairs[0].PunchOut, deviation);
                         break;
                     case 2:
                         // adjust "first" punch in and "last" punch out value
                         // and leave "lunch break" as is.
-                        timePairs[0].PunchIn = addMinutes(timePairs[0].PunchIn, deviation);
-                        timePairs[1].PunchOut = addMinutes(timePairs[1].PunchOut, deviation);
+                        timePairs[0].PunchIn = AddMinutes(timePairs[0].PunchIn, deviation);
+                        timePairs[1].PunchOut = AddMinutes(timePairs[1].PunchOut, deviation);
                         break;
                     default:
                         break;

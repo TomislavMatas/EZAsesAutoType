@@ -2,6 +2,9 @@
 // File: "Worker.Validation.cs"
 //
 // Revision History:
+// 2024/11/22:TomislavMatas: Version "1.131.2"
+// * Various code changes to meet code style conventions.
+// * Custom handling for Client="24-Cargo Zentrale".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
 // * Add "ASESTimeEntryCanvasIsSortedByDate".
 // 2024/07/04:TomislavMatas: Version "1.126.2"
@@ -87,8 +90,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 StringCollection requiredElementsXPathCollection = [
                   this.GetLoginPageUsernameXPath()
@@ -128,8 +130,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 // consider "correct page displayd" only when all required elements can be found.
                 StringCollection requiredElementXPathCollection = [
@@ -167,8 +168,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 int timeoutFindElement = this.GetTimeoutFindElement();
                 int secondsElapsed = 0;
@@ -217,8 +217,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 // consider "correct page displayd" only when all required elements can be found.
                 StringCollection requiredElementXPathCollection = [
@@ -254,8 +253,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 int timeoutFindElement = this.GetTimeoutFindElement();
                 int secondsElapsed = 0;
@@ -297,24 +295,17 @@ namespace EZAsesAutoType
         /// that shall be present on the app's time entry page.
         /// </summary>
         /// <param name="browser"></param>
+        /// <param name="requiredElementXPathCollection"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
-        private bool ASESTimeEntryCanvasIsLoaded(BrowserBase browser, int timeoutInSeconds)
+        /// <exception cref="ArgumentNullException"></exception>
+        private bool ASESTimeEntryCanvasIsLoadedImpl(BrowserBase browser, StringCollection requiredElementXPathCollection, int timeoutInSeconds)
         {
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
-
-                // consider "correct page displayd" only when all required elements can be found.
-                StringCollection requiredElementXPathCollection = [
-                  this.GetDateGridFormXPath()
-                , this.GetDateGridCanvasXPath()
-                , this.GetDateGridCanvasLastRowXPath()
-                , this.GetDateGridCanvasLastRowDateFromXPath()
-                , this.GetDateGridCanvasLastRowDateToXPath()
-                ];
+                ArgumentNullException.ThrowIfNull(browser);
+                ArgumentNullException.ThrowIfNull(requiredElementXPathCollection);
 
                 foreach (string? requiredElementXPath in requiredElementXPathCollection)
                     if (requiredElementXPath != null)
@@ -335,11 +326,102 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
+        /// Use Browser-Interop Helper to find a specific set of all the elements,
+        /// that shall be present on the app's time entry page.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private bool ASESTimeEntryCanvasIsLoadedClientSpecific(BrowserBase browser, string clientId, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser);
+                ArgumentNullException.ThrowIfNull(clientId);
+
+                // #TODO: Implement ore generic throug clever App.config settings.
+                StringCollection requiredElementXPathCollection;
+                if (clientId == Const.Client_DbSystel)
+                {
+                    requiredElementXPathCollection = [
+                          this.GetDateGridFormXPath()
+                        , this.GetDateGridCanvasXPath()
+                        , this.GetDateGridCanvasLastRowXPath()
+                        , this.GetDateGridCanvasLastRowDateFromXPath()
+                        , this.GetDateGridCanvasLastRowDateToXPath()
+                    ];
+                }
+                else if (clientId == Const.Client_DbCargo)
+                {
+                    requiredElementXPathCollection = [
+                          this.GetDateGridFormXPath()
+                        , this.GetDateGridCanvasXPath()
+                        , this.GetDateGridCanvasLastRowXPath()
+                        , this.GetDateGridCanvasLastRowDateFromXPath()
+                        , this.GetDateGridCanvasLastRowDateToXPath()
+                    ];
+                }
+                else 
+                {
+                    throw new Exception(nameof(clientId) + Const.LogInvalid);
+                }
+
+                if (!this.ASESTimeEntryCanvasIsLoadedImpl(browser,requiredElementXPathCollection, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoadedImpl) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to find a specific set of all the elements,
+        /// that shall be present on the app's time entry page.
+        /// Use custom sepcific handling for client "06-DB-Systel".
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        private bool ASESTimeEntryCanvasIsLoaded(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser);
+
+                if (!this.ASESTimeEntryCanvasIsLoadedClientSpecific(browser, Const.Client_DbSystel, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoadedClientSpecific) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
         /// Wait until a specific content has been loaded.
         /// </summary>
         /// <param name="browser"></param>
         /// <param name="timeoutInSeconds"></param>
         /// <returns></returns>
+/*
         private bool WaitUntilTimeEntryCanvasHasLoaded(BrowserBase browser, int timeoutInSeconds)
         {
             try
@@ -355,6 +437,7 @@ namespace EZAsesAutoType
                     if (this.CancelRequested())
                         throw new Exception(nameof(WaitUntilTimeEntryCanvasHasLoaded) + Const.LogCanceled);
 
+                    string clientId = WorkerConfig.GetUserSettings().ASESClient;
                     try
                     {
                         if (this.ASESTimeEntryCanvasIsLoaded(browser, timeoutFindElement))
@@ -369,6 +452,7 @@ namespace EZAsesAutoType
                     if (secondsElapsed >= timeoutInSeconds)
                         throw new Exception(nameof(WaitUntilTimeEntryCanvasHasLoaded) + Const.LogTimeout);
 
+
                 }
                 return false;
             }
@@ -382,14 +466,14 @@ namespace EZAsesAutoType
                 LogTrace(Const.LogDone);
             }
         }
+*/
         
         private bool ASESTimePairEntryPopupIsLoaded(BrowserBase browser, int timeoutInSeconds)
         {
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 // consider "correct page displayd" only when all required elements can be found.
                 StringCollection requiredElementXPathCollection = [
@@ -436,8 +520,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 int timeoutFindElement = this.GetTimeoutFindElement();
                 bool timeoutReached = false;
@@ -490,8 +573,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 string xPath = this.GetDateGridCanvasSortingAscXPath();
                 if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
@@ -519,8 +601,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 string xPath = this.GetDateGridCanvasSortingAscXPath();
                 if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
@@ -544,14 +625,119 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                if (browser == null)
-                    throw new ArgumentNullException(nameof(browser));
+                ArgumentNullException.ThrowIfNull(browser);
 
                 string xPath = this.GetDateGridCanvasSortingDescXPath();
                 if (browser.FindElementByXpath(xPath, timeoutInSeconds) != null)
                     return true;
 
                 return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private bool ASESTimeEntrySideBarIsLoadedImpl(BrowserBase browser, StringCollection requiredElementXPathCollection, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser);
+                ArgumentNullException.ThrowIfNull(requiredElementXPathCollection);
+
+                foreach (string? requiredElementXPath in requiredElementXPathCollection)
+                    if (requiredElementXPath != null)
+                        if (browser.FindElementByXpath(requiredElementXPath, timeoutInSeconds) == null)
+                            throw new Exception(String.Format("'{0}'{1}", requiredElementXPath, Const.LogNotFound));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// for some clients there is a sidebar displayed containing
+        /// a "load data" button to be clicked to actually "load" 
+        /// the time entry canvas for a specific time range.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="clientId"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private bool ASESTimeEntrySideBarIsLoaded(BrowserBase browser, string clientId, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser);
+                ArgumentNullException.ThrowIfNull(clientId);
+
+                if (clientId == Const.Client_DbSystel)
+                    return true; // This client does not have a sidbar
+
+                // Other clients are assumed to have a sidbar
+                StringCollection requiredElementXPathCollection = [
+                    this.GetDateGridCanvasSaveButtonPath()
+                ];
+
+                if(!this.ASESTimeEntrySideBarIsLoadedImpl(browser, requiredElementXPathCollection, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESTimeEntrySideBarIsLoadedImpl) + Const.LogFail);
+
+                return true; 
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// for some clients there is a button on the sidebar
+        /// to be clicked to actually "load" the time entry canvas
+        /// for a specific time range.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="clientId"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private bool ASESTimeEntrySideBarClickLoadButton(BrowserBase browser, string clientId, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser);
+                ArgumentNullException.ThrowIfNull(clientId);
+
+                if (clientId == Const.Client_DbSystel)
+                    return true; // this client does not have a sidbar
+
+                // Other clients are assumed to have a sidbar
+                if (this.ASESClickLoadTimeEntryCanvas(browser, timeoutInSeconds))
+                    throw new Exception(nameof(this.ASESClickLoadTimeEntryCanvas) + Const.LogFail);
+
+                return true;
             }
             catch (Exception ex)
             {
