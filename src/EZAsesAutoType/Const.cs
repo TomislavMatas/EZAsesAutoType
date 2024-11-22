@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2024/11/22:TomislavMatas: Version "1.131.2"
+// * Add "Client_DbSystel" and "Client_DbCargo".
 // 2024/08/06:TomislavMatas: Version "1.127.1"
 // * Add "AssemblyCompanyName".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
@@ -250,6 +252,9 @@ namespace EZAsesAutoType
         /// Do automated logout after time pair punches. 
         /// </summary>
         public const string CommandlineArg_DoLogout = "/dologout";
+
+        public const string Client_DbSystel ="06-DB-Systel";
+        public const string Client_DbCargo = "24-Cargo Zentrale";
 
     } // class
 
