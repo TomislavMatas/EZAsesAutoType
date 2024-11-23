@@ -88,10 +88,13 @@ jobs:
       run: dotnet restore --force $env:Solution_Name
       env:
         Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform}}
+        Platform: ${{ matrix.platform }}
 
     - name: Restore the application 2
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform="$env:Platform"
+      env:
+        Configuration: ${{ matrix.configuration }}
+        Platform: ${{ matrix.platform }}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
