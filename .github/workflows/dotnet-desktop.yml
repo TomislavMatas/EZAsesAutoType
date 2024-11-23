@@ -88,7 +88,7 @@ jobs:
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform="$env:Platform"
       env:
         Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.cplatform}}
+        Platform: ${{ matrix.platform}}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
@@ -105,7 +105,7 @@ jobs:
         Appx_Bundle_Platforms: AnyCPU
         Appx_Package_Build_Mode: StoreUpload
         Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.cplatform}}
+        Platform: ${{ matrix.platform}}
 
     # Remove the pfx
     - name: Remove the pfx
