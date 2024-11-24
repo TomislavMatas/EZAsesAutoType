@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/11/24:TomislavMatas: Version "1.131.2"
+// * Prevent browser teardown on exception.
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Add "ASESClickLoadTimeEntryCanvas".
 // * Custom handling for Client="24-Cargo Zentrale".
@@ -700,6 +702,7 @@ namespace EZAsesAutoType
         /// <returns></returns>
         public bool DoDailyPunch()
         {
+            bool doTeardown = true;
             BrowserBase? browser = null;
             try
             {
@@ -877,13 +880,15 @@ namespace EZAsesAutoType
             catch (Exception ex)
             {
                 Log.Error(ex);
+                doTeardown = false;
                 return false;
             }
             finally
             {
                 if(browser != null)
                     if (!this.CancelRequested())
-                        TeardownBrowserInstance(browser);
+                        if(doTeardown)
+                            TeardownBrowserInstance(browser);
 
                 Log.Info(Const.LogDone);
             }
