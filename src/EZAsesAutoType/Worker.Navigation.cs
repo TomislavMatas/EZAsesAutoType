@@ -2,6 +2,11 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History: 
+// 2024/11/24:TomislavMatas: Version "1.131.2"
+// * Prevent browser teardown on exception.
+// 2024/11/22:TomislavMatas: Version "1.131.2"
+// * Add "ASESClickLoadTimeEntryCanvas".
+// * Custom handling for Client="24-Cargo Zentrale".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
 // * Assure that canvas has been sorted by date ascending before punching.
 // 2024/08/06:TomislavMatas: Version "1.127.1"
@@ -585,6 +590,34 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool ASESClickLoadTimeEntryCanvas(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser, nameof(browser));
+
+                string xPath = this.GetDateGridCanvasLoadButtonPath();
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("'{0}'{1}", xPath, Const.LogNotFound));
+
+                if (!browser.ClickElement(element))
+                    throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
         /// <summary>
         /// After time pair entry, wait for the amount of seconds 
         /// configured in "App.config" to give user the opportunity to review 
@@ -669,6 +702,7 @@ namespace EZAsesAutoType
         /// <returns></returns>
         public bool DoDailyPunch()
         {
+            bool doTeardown = true;
             BrowserBase? browser = null;
             try
             {
@@ -684,6 +718,10 @@ namespace EZAsesAutoType
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                // client specific flow of sequence might differ slightly
+                // deppending on client specific templates.
+                string asesClient = this.GetASESClient();
 
                 string baseUrl = this.GetASESBaseUrl();
                 Log.Info(String.Format("Navigate to '{0}'{1}", baseUrl, Const.LogInProgress));
@@ -734,8 +772,20 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                if (!this.ASESTimeEntryCanvasIsLoaded(browser, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoaded) + Const.LogFail);
+                if (!this.ASESTimeEntrySideBarIsLoaded(browser, asesClient, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESTimeEntrySideBarIsLoaded) + Const.LogFail);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                if (!this.ASESTimeEntrySideBarClickLoadButton(browser, asesClient, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESTimeEntrySideBarClickLoadButton) + Const.LogFail);
+
+                if (this.CancelRequested())
+                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                if (!this.ASESTimeEntryCanvasIsLoadedClientSpecific(browser, asesClient, timeoutFindElement))
+                    throw new Exception(nameof(this.ASESTimeEntryCanvasIsLoadedClientSpecific) + Const.LogFail);
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
@@ -774,7 +824,7 @@ namespace EZAsesAutoType
                 if (asesPunchDeviation > 0)
                 {
                     int deviationToApply = this.RandomizeDeviation(asesPunchDeviation);
-                    timePairList = this.ApplyDeviation(timePairList, deviationToApply);
+                    timePairList = ApplyDeviation(timePairList, deviationToApply);
                 }
 
                 Log.Info("Type time pairs" + Const.LogInProgress);
@@ -830,13 +880,15 @@ namespace EZAsesAutoType
             catch (Exception ex)
             {
                 Log.Error(ex);
+                doTeardown = false;
                 return false;
             }
             finally
             {
                 if(browser != null)
                     if (!this.CancelRequested())
-                        TeardownBrowserInstance(browser);
+                        if(doTeardown)
+                            TeardownBrowserInstance(browser);
 
                 Log.Info(Const.LogDone);
             }
