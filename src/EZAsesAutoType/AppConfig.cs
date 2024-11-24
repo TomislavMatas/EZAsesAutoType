@@ -5,6 +5,8 @@
 // Project specific configuration settings. 
 //
 // Revision History: 
+/// 2024/11/22:TomislavMatas: Version "1.131.2"
+/// * Add new property "GetDateGridCanvasLoadButtonPath".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
 // * Add new property "DateGridCanvasSortingheaderXPath". 
 // 2024/07/02:TomislavMatas: Version "1.126.2"
@@ -819,6 +821,32 @@ namespace EZAsesAutoType
         {
             string prev = this.GetDateGridCanvasSaveButtonPath();
             this.DateGridCanvasSaveButtonPath = value;
+            return prev;
+        }
+
+        private const string DateGridCanvasLoadButtonPathKeyName = "ASES.DateGrid.Canvas.LoadButton.xPath";
+        private string? m_DateGridCanvasLoadButtonPath = null;
+        private string DateGridCanvasLoadButtonPath
+        {
+            get
+            {
+                if (m_DateGridCanvasLoadButtonPath == null)
+                    m_DateGridCanvasLoadButtonPath = ConfigApi.GetAppSettingString(DateGridCanvasLoadButtonPathKeyName, string.Empty);
+                return m_DateGridCanvasLoadButtonPath;
+            }
+            set
+            {
+                m_DateGridCanvasLoadButtonPath = value;
+            }
+        }
+        public string GetDateGridCanvasLoadButtonPath()
+        {
+            return this.DateGridCanvasLoadButtonPath;
+        }
+        public string SetDateGridCanvasLoadButtonPath(string value)
+        {
+            string prev = this.GetDateGridCanvasLoadButtonPath();
+            this.DateGridCanvasLoadButtonPath = value;
             return prev;
         }
 

@@ -33,6 +33,9 @@ with the same value for, e.G.:
 ```
 
 # Revision History
+## 2024/11/24:TomislavMatas: Version "1.131.2"
+* First successful build with ".github/workflows/dotnet-desktop.yml".
+
 ## 2024/11/20:TomislavMatas: Version "1.131.1"
 * WIP: Prototyping.
 * Add section "Troubleshooting" to this "README.md" file.
