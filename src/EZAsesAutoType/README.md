@@ -7,6 +7,7 @@ Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
 ## 2024/11/22:TomislavMatas: Version "1.131.2"
+* Prevent browser teardown if an exception occoured during processing.
 * Custom handling for Client="24-Cargo Zentrale".
 
 ## 2024/11/20:TomislavMatas: Version "1.131.1"
