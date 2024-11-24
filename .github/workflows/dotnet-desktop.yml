@@ -1,13 +1,15 @@
 #
+# File: "dotnet-desktop.yml"
+#
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
 #
-# This workflow will build, test, sign and package a WPF or Windows Forms desktop application
-# built on .NET Core.
-# To learn how to migrate your existing application to .NET Core,
-# refer to https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
+# This workflow will build, test, sign and package a WPF or 
+# Windows Forms desktop application built on .NET Core.
+# To learn how to migrate your existing application to .NET Core, refer to:
+# -->< https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework >
 #
 # To configure this workflow:
 #
@@ -36,8 +38,15 @@
 # For more information on GitHub Actions, refer to https://github.com/features/actions
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
+#
+# Revision History
+# 2024/11/24:TomislavMatas: webdriver/131 v.131.3
+# * Do not use "matrix.platform" anymore, because it is not required.
+# * Set more meaingfull name "CI/CD Release for this workflow.
 
-name: .NET Core Desktop
+#
+
+name: "CI/CD Release"
 
 on:
   push:
@@ -52,11 +61,12 @@ jobs:
     strategy:
       matrix:
         configuration: [Release]
-        platform: [x86, x64]
+#       platform: [x86, x64]
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
-
+# For a list of available runner types (values for "runs-on"), refer to
+# -->< https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on >
+    runs-on: windows-latest  
+                             
     env:
       Solution_Name: "src/EZAsesAutoType-VS2022.sln"
 #     Test_Project_Path: # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
@@ -88,7 +98,7 @@ jobs:
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform=$env:Platform
       env:
         Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform }}
+#       Platform: ${{ matrix.platform }}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
@@ -101,13 +111,13 @@ jobs:
     - name: Create the app package
       run: | 
         dotnet restore --force ./src/EZAsesAutoType/EZAsesAutoType.csproj 
-        msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:AppxBundlePlatforms="$env:Appx_Bundle_Platforms" /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+        msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:AppxBundlePlatforms="$env:Appx_Bundle_Platforms" /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
       env:
         Appx_Bundle: Always
         Appx_Bundle_Platforms: "x86|x64"
         Appx_Package_Build_Mode: StoreUpload
         Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform }}
+#       Platform: ${{ matrix.platform }}
 
     # Remove the pfx
     - name: Remove the pfx
