@@ -159,7 +159,7 @@ namespace EZAsesAutoType
         /// <summary>
         /// Singelton helper variable.
         /// </summary>
-        private Random _randomizer = null;
+        private Random? _randomizer = null;
 
         /// <summary>
         /// Instance of class "Random".
@@ -189,7 +189,7 @@ namespace EZAsesAutoType
         }
 
         /// <summary>
-        /// Return a random integer between 1 and maxValue (inklusivly).
+        /// Return a random integer between 1 and maxValue (inclusive).
         /// </summary>
         /// <param name="maxValue"></param>
         /// <returns></returns>
