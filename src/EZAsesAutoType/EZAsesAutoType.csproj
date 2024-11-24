@@ -38,6 +38,7 @@ to automate the daily chore of utilizing the virtual punch card system
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 Version "1.131.2"
+* Prevent browser teardown if an exception occoured during processing.
 * Custom handling for Client="24-Cargo Zentrale".
 * WIP: Prototyping "EZAsesAutoTypeMSIX.wapproj".
 
