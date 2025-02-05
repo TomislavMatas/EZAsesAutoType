@@ -21,6 +21,8 @@
 :: --   -->< https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE > 
 :: --
 :: -- Revision History
+:: -- 2025/02/05:TomislavMatas: Version "1.133.0"
+:: -- * Set "WEBDRIVER_VERSION_DEFAULT=133.0.6943.53".
 :: -- 2024/07/06:TomislavMatas: Version "1.127.0"
 :: -- * Set "WEBDRIVER_VERSION_DEFAULT=127.0.6533.26".
 :: -- 2024/06/24:TomislavMatas: Version "1.126.0"
@@ -40,7 +42,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=127.0.6533.26"
+set "WEBDRIVER_VERSION_DEFAULT=133.0.6943.53"
 
  
 echo see current versions of webdriver at:

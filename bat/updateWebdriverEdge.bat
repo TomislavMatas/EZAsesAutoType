@@ -12,6 +12,8 @@
 :: -- ```
 :: --
 :: -- Revision History
+:: -- 2025/02/05:TomislavMatas: Version "1.133.0"
+:: -- * Set "WEBDRIVER_VERSION_DEFAULT=133.0.3065.39".
 :: -- 2024/07/06:TomislavMatas: Version "1.127.0"
 :: -- * Set "WEBDRIVER_VERSION_DEFAULT=127.0.2651.31".
 :: -- 2024/06/24:TomislavMatas: Version "1.126.0"
@@ -34,7 +36,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "WEBDRIVER_VERSION_DEFAULT=127.0.2651.31"
+set "WEBDRIVER_VERSION_DEFAULT=133.0.3065.39"
 
 set "WEBDRIVER_HOMEPAGE=https://developer.microsoft.com/de-de/microsoft-edge/tools/webdriver"
 

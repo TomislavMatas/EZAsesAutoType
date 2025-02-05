@@ -6,6 +6,11 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2025/02/05:TomislavMatas: Version "1.133.0"
+* Update "EZSeleniumLib" to version "4.26.2".
+* Update "chromedriver.exe" to version "133.0.6943.53".
+* Update "msedgedriver.exe" to version "133.0.3065.39".
+
 ## 2024/11/22:TomislavMatas: Version "1.131.2"
 * Prevent browser teardown if an exception occoured during processing.
 * Custom handling for Client="24-Cargo Zentrale".
