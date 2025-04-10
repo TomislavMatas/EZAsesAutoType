@@ -105,11 +105,11 @@ v4.20.0:
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.0.3" />
-    <PackageReference Include="Selenium.Support" Version="4.28.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.28.0" />
+    <PackageReference Include="log4net" Version="3.0.4" />
+    <PackageReference Include="Selenium.Support" Version="4.31.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.31.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
-    <PackageReference Include="System.Management" Version="9.0.1" />
+    <PackageReference Include="System.Management" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
