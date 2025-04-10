@@ -15,13 +15,16 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.31.0</Version>
-    <FileVersion>4.31.0</FileVersion>
-    <AssemblyVersion>4.31.0</AssemblyVersion>
+    <Version>4.31.1</Version>
+    <FileVersion>4.31.1</FileVersion>
+    <AssemblyVersion>4.31.1</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <PackageReleaseNotes>
+v4.31.1:
+* Read version info for WebDriver "Chrome" from executable "chromedriver.exe".
+
 v4.31.0:
 * Update "Selenium.Support" to version "4.31.0".
 * Update "Selenium.WebDriver" to version "4.31.0".
