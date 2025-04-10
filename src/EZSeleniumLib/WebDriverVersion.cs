@@ -6,11 +6,14 @@
 // updating the installed WebDriver binaries.
 //
 // Revision History: 
-// 2024/05/31:TomislavMatas: Version "4.21.1"
+// 2025/04/10:TomislavMatas: v4.31.1
+// * Google finally decided to compile executable "chromedriver.exe"
+//   with version info resource, so read version from executable.
+// 2024/05/31:TomislavMatas: Version "4.21.1
 // * Simplify log4net implementations.
-// 2024/05/04:TomislavMatas: Version "4.20.0"
+// 2024/05/04:TomislavMatas: v4.20.0
 // * Upgrade to .NET version 8.
-// 2024/04/04:TomislavMatas: Version "1.0.0"
+// 2024/04/04:TomislavMatas: v1.0.0
 // * Initial version.
 //
 
@@ -41,10 +44,7 @@ namespace EZSeleniumLib
         #endregion
 
         /// <summary>
-        /// For unknown reason, Google and Mozilla decided not to add a version info 
-        /// ressource to their WebDriver executables. 
-        /// So this implementation will work for the Edge WebDriver 
-        /// "MicrosoftWebDriver.exe" only.
+        /// Read version info from binary provided by parameter `webDriverFullPath`.
         /// </summary>
         /// <param name="webDriverFullPath"></param>
         /// <returns></returns>
@@ -85,6 +85,16 @@ namespace EZSeleniumLib
             }
         }
 
+        /// <summary>
+        /// Read version info from respective WebDriver executable binary.
+        /// This works only for Edge and Chrome at the moment. For some 
+        /// unknown reason, Mozilla decided not to add a version info 
+        /// ressource to WebDriver "geckodriver.exe". For FireFox, 
+        /// a constant value is returned, see: <see cref="Constant.WebDriverFirefoxVersion"/>.
+        /// </summary>
+        /// <param name="webDriver"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static string? GetWebDriverVersionString(string webDriver)
         {
             try
@@ -96,18 +106,10 @@ namespace EZSeleniumLib
 
                 string webDriverExe;
                 if (Constant.WebDriverChrome.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
-                {
-                    // For unknown reason, Google decided not to add a version
-                    // info ressource to Chrome WebDriver "chromedriver.exe". 
-                    // so simply return the version used on build.
-                    return Constant.WebDriverChromeVersion;
-                }
+                    webDriverExe = Constant.WebDriverChromeExe;
                 else if (Constant.WebDriverEdge.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
                     webDriverExe = Constant.WebDriverEdgeExe;
                 else if (Constant.WebDriverFirefox.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
-                    // For unknown reason, Mozilla decided not to add a version
-                    // info ressource to Chrome WebDriver "geckodriver.exe". 
-                    // so simply return the version used on build.
                     return Constant.WebDriverFirefoxVersion;
                 else
                     throw new Exception(nameof(webDriver) + Consts.LogNotImpl);
