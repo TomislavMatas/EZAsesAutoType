@@ -45,10 +45,11 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 
 # Revision History
 ## 2025/04/10:TomislavMatas: v4.31.0
-* Update "Selenium.Support" to v4.31.0".
-* Update "Selenium.WebDriver" to version="4.31.0".
-* Update "System.Management" to version="9.0.4".
-* Update "System.Text.Json" to version="9.0.4".
+* Update "Selenium.Support" to version "4.31.0".
+* Update "Selenium.WebDriver" to version "4.31.0".
+* Update "System.Management" to version "9.0.4".
+* Update "System.Text.Json" to version= 9.0.4".
+* Update "log4net" to version "3.0.4".
 
 ## 2025/04/10:TomislavMatas: v4.28.0
 * Update "chromedriver.exe" to version "135.0.7049.84".
