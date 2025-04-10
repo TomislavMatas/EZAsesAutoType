@@ -38,14 +38,14 @@ to automate the daily chore of utilizing the virtual punch card system
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
 v1.135.0:
-* Update "EZSeleniumLib" to version "4.31.0".
+* Update "Selenium.Support" to version "4.31.0".
+* Update "Selenium.WebDriver" to version "4.31.0".
+* Update "System.Management" to version "9.0.4".
+* Update "System.Text.Json" to version "9.0.4".
+* Update "log4net" to version "3.0.4".
 * Update "chromedriver.exe" to version "135.0.7049.84".
 * Update "msedgedriver.exe" to version "135.0.3179.54".
 * Update "geckodriver.exe" to version "0.36.0".
-* Update "Selenium.Support" to version=4.31.0".
-* Update "Selenium.WebDriver" to version="4.31.0".
-* Update "System.Management" to version="9.0.4".
-* Update "System.Text.Json" to version="9.0.4".
 
 v1.133.0:
 * Update "EZSeleniumLib" to v4.28.0".
