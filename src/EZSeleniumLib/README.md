@@ -44,6 +44,14 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2025/06/03:TomislavMatas: v4.33.0
+* Update "Selenium.Support" to version "4.33.0".
+* Update "Selenium.WebDriver" to version "4.33.0".
+* Update "chromedriver.exe" to version "137.0.7151.68".
+* Update "msedgedriver.exe" to version "137.0.3296.62".
+* Update "log4net" to version "3.1.0".
+* Update "System.Management" to version="9.0.5".
+
 ## 2025/04/10:TomislavMatas: v4.31.1
 * Google finally decided to compile executable "chromedriver.exe"
   with version info resource, so read version from executable.

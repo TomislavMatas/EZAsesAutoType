@@ -250,15 +250,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EZ ASES AutoType"
-        "ProductCode" = "8:{31A5388E-19A9-45C6-A77A-46A3A4E5DFE4}"
-        "PackageCode" = "8:{9DB56C1F-5821-4D89-9173-E29F9D533A16}"
+        "ProductCode" = "8:{BB81D168-5D8F-4FF1-AFDA-0F76728D9BD6}"
+        "PackageCode" = "8:{2DB153E0-A8A1-4AB2-8C67-D3B46E501A3B}"
         "UpgradeCode" = "8:{8A6849D5-37DA-4A40-A26E-88046820FAA1}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.135.1"
+        "ProductVersion" = "8:1.137.0"
         "Manufacturer" = "8:matas consulting"
         "ARPHELPTELEPHONE" = "8:+49 151 50989124"
         "ARPHELPLINK" = "8:http://consulting.matas.de"
@@ -796,7 +796,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D71885C7E7C84103A3AA0DC700FF3BBB"
             {
-            "SourcePath" = "8:..\\EZAsesAutoType\\obj\\Debug\\net8.0-windows10.0.26100.0\\apphost.exe"
+            "SourcePath" = "8:..\\EZAsesAutoType\\obj\\Release\\net8.0-windows10.0.26100.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1104C379D14F46E8977131739157E861"
