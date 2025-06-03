@@ -142,6 +142,10 @@ Most noticeable: "EZAsesAutoType-UserManual.md"
 Contains all source code to build "EZAsesAutoType.exe".
 
 # Revision History
+## 2025/06/03:TomislavMatas: Version "1.137.0"
+* Update "chromedriver.exe" to version "137.0.7151.68".
+* Update "msedgedriver.exe" to version "137.0.3296.62".
+
 ## 2024/11/19:TomislavMatas: Version "1.131.0"
 * Update "EZSeleniumLib" to version "4.25.1".
 * Update "chromedriver.exe" to version "131.0.6778.69".
