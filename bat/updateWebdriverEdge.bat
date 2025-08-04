@@ -64,7 +64,7 @@ if "%WEBDRIVER_VERSION%" == "" (
 
 set "PROJECT_ROOT=%~dp0.."
 set "SOURCE_ROOT=%PROJECT_ROOT%\src"
-set "DOWNLOAD_CDN=https://msedgedriver.azureedge.net"
+set "DOWNLOAD_CDN=https://msedgedriver.microsoft.com"
 set "DOWNLOAD_URL=%DOWNLOAD_CDN%/%WEBDRIVER_VERSION%"
 set "DOWNLOAD_ROOT=%PROJECT_ROOT%\bin\WebDriver\Edge"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
