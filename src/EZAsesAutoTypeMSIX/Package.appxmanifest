@@ -11,7 +11,7 @@
   <Identity
     Name="EZAsesAutoType"
     Publisher="CN=D5171930-ADB5-4375-9BD0-365C8D0E495E, O=matas consulting"
-    Version="1.133.0.0" />
+    Version="1.139.0.0" />
 
   <Properties>
     <DisplayName>EZ ASES AutoType</DisplayName>

@@ -53,7 +53,7 @@ set "PROJECT_ROOT=%~dp0.."
 @rem where the downloaded binaries shall be copied to.
 set "PROJECT_LIST=EZSeleniumLib"
 
-set "WEBDRIVER_HOMEPAGE=https://msedgedriver.azureedge.net"
+set "WEBDRIVER_HOMEPAGE=https://msedgedriver.microsoft.com"
 set "WEBDRIVER_VERSION=%1"
 if "%WEBDRIVER_VERSION%" == "" (
 	set /P "WEBDRIVER_VERSION=Version eingeben oder [Enter] fuer Default '%WEBDRIVER_VERSION_DEFAULT%' : "
@@ -64,7 +64,7 @@ if "%WEBDRIVER_VERSION%" == "" (
 
 set "PROJECT_ROOT=%~dp0.."
 set "SOURCE_ROOT=%PROJECT_ROOT%\src"
-set "DOWNLOAD_CDN=https://msedgedriver.azureedge.net"
+set "DOWNLOAD_CDN=https://msedgedriver.microsoft.com"
 set "DOWNLOAD_URL=%DOWNLOAD_CDN%/%WEBDRIVER_VERSION%"
 set "DOWNLOAD_ROOT=%PROJECT_ROOT%\bin\WebDriver\Edge"
 set "DOWNLOAD_DIR=%DOWNLOAD_ROOT%\%WEBDRIVER_VERSION%"
