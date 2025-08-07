@@ -22,96 +22,12 @@
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <PackageReleaseNotes>
-v4.33.0:
-* Update "Selenium.Support" to version "4.33.0".
-* Update "Selenium.WebDriver" to version "4.33.0".
-* Update "chromedriver.exe" to version "137.0.7151.68".
-* Update "msedgedriver.exe" to version "137.0.3296.62".
-* Update "log4net" to version "3.1.0".
-* Update "System.Management" to version="9.0.5".
-
-v4.31.1:
-* Read version info for WebDriver "Chrome" from executable "chromedriver.exe".
-
-v4.31.0:
-* Update "Selenium.Support" to version "4.31.0".
-* Update "Selenium.WebDriver" to version "4.31.0".
-* Update "System.Management" to version "9.0.4".
-* Update "System.Text.Json" to version "9.0.4".
-* Update "chromedriver.exe" to version "135.0.7049.84".
-* Update "msedgedriver.exe" to version "135.0.3179.54".
-* Update "geckodriver.exe" to version "0.36.0".
-
-v4.28.0:
-* Update "Selenium.Support" to version "4.28.0".
-* Update "Selenium.WebDriver" to version="4.28.0".
-* Update "System.Management" to version="9.0.1".
-* Update "System.Text.Json" to version="9.0.1".
-* Update "chromedriver.exe" to version "133.0.6943.53".
-* Update "msedgedriver.exe" to version "133.0.3065.39".
-
-v4.26.1:
-* Update "Selenium.Support" to version "4.26.1".
-* Update "Selenium.WebDriver" to version="4.26.1".
-* Update "System.Management" to version="9.0.0".
-
-v4.25.1:
-* Update "chromedriver.exe" to version "131.0.6778.69".
-* Update "msedgedriver.exe" to version "131.0.2903.51".
-* Update "log4net" to version "3.0.3".
-
-v4.25.0:
-* Update "chromedriver.exe" to version "129.0.6668.71".
-* Update "msedgedriver.exe" to version "129.0.2792.52".
-* Update "geckodriver.exe"  to version "0.35.0".
-* Update "log4net" to version "3.0.0".
-
-v4.23.0:
-* Update "Selenium.Support" to version "4.23.0".
-* Update "Selenium.WebDriver" to version "4.23.0".
-      
-v4.22.4:
-* Implement handling of browser specific "App.config" settings
-  "EZSeleniumLib.Browser.AdditionalOptions.Chrome",
-  "EZSeleniumLib.Browser.AdditionalOptions.Edge" and
-  "EZSeleniumLib.Browser.AdditionalOptions.Firefox".
-* Update "chromedriver.exe" to version "127.0.6533.88".
-* Update "msedgedriver.exe" to version "127.0.2651.74".
-
-v4.22.3:
-* Update "chromedriver.exe" to version "127.0.6533.26".
-* Update "msedgedriver.exe" to version "127.0.2651.31".
-
-v4.22.2:
-* Add new wrappers for "IWebElement.SendKeys()" and "IWebElement.Click()"
-  to mitigate "stale element reference" errors.
-
-v4.22.1:
-* BugFix: Re~Add packaging of web driver binaries during build.
-
-v4.22.0:
-* Update "Selenium.Support" to version "4.22.0".
-* Update "Selenium.WebDriver" to version "4.22.0".
-* Update "chromedriver.exe" to version "126.0.6478.115".
-* Update "msedgedriver.exe" to version "126.0.2592.68".
-
-v4.21.1:
-* Simplify log4net implementations.
-
-v4.21.0:
-* Update "Selenium.Support" to version "4.21.0".
-* Update "Selenium.WebDriver" to version "4.21.0".
-* Update "chromedriver.exe" to version "125.0.6422.113".
-* Update "msedgedriver.exe" to version "125.0.2535.67".
-* Refactoring: Implement specific "SendKeys()" in descendants of "BrowserBase". 
-
-v4.20.1:
-* Update "chromedriver.exe" to version "125.0.6422.61".
-* Update "msedgedriver.exe" to version "125.0.2535.51".
-
-v4.20.0:
-* Product version refelcts the referenced selenium package version.
-* Initial version using .NET version 8.
+v4.34.0:
+* Update "Selenium.Support" to version "4.34.0".
+* Update "Selenium.WebDriver" to version "4.34.0".
+* Update "chromedriver.exe" to version "139.0.7258.66".
+* Update "msedgedriver.exe" to version "139.0.3405.83".
+* Update "System.Management" to version="9.0.8".
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -120,7 +36,7 @@ v4.20.0:
     <PackageReference Include="Selenium.Support" Version="4.34.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.34.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
-    <PackageReference Include="System.Management" Version="9.0.7" />
+    <PackageReference Include="System.Management" Version="9.0.8" />
   </ItemGroup>
 
   <ItemGroup>
