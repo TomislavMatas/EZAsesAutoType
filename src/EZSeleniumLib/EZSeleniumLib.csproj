@@ -15,27 +15,27 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.34.143</Version>
-    <FileVersion>4.34.143</FileVersion>
-    <AssemblyVersion>4.34.143</AssemblyVersion>
-    <AssemblyInformationalVersion>4.34.143</AssemblyInformationalVersion>
+    <Version>4.35.143</Version>
+    <FileVersion>4.35.143</FileVersion>
+    <AssemblyVersion>4.35.143</AssemblyVersion>
+    <AssemblyInformationalVersion>4.35.143</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
-        v4.34.143:
-        * Add `DotNetSeleniumExtras.WaitHelpers` version "3.11.0".
-        * Implement browser specific startup argument `disable-build-check`.
+        v4.35.141:
+        * Use `Selenium.Support` version "4.35.0".
+        * Use `Selenium.WebDriver` version "4.35.0".
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="log4net" Version="3.2.0" />
-    <PackageReference Include="Selenium.Support" Version="4.34.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.34.0" />
+    <PackageReference Include="Selenium.Support" Version="4.35.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.35.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
     <PackageReference Include="System.Management" Version="9.0.9" />
   </ItemGroup>

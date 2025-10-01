@@ -6,6 +6,10 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2025/10/01:TomislavMatas: v4.35.143
+* Use `Selenium.Support` version "4.35.0".
+* Use `Selenium.WebDriver` version "4.35.0".
+
 ## 2025/10/01:TomislavMatas: v4.34.143
 * Implement browser specific startup argument `disable-build-check`.
 
@@ -59,7 +63,7 @@ Please refer to "EZSeleniumLib" project for details.
 
 ## 2024/08/07:TomislavMatas: v1.127.2
 * Assure that canvas has been sorted by date ascending before punching.
-* Fix a bug while writing version independent UserSettings in windows registry.
+* Fix a bug while writing version independent UserSettings in Windows registry.
 
 ## 2024/08/06:TomislavMatas: v1.127.1
 * Implement management of version independent UserSettings in windows registry. 
@@ -131,7 +135,7 @@ Please refer to "EZSeleniumLib" project for details.
   within "AppHandler". Now when hitting "Cancel", the already 
   loaded browser instance stays "active". Otherwise,
   when processing has not been canceled by user, the
-  browser instance will be closed immediatly after "logout".
+  browser instance will be closed immediately after "logout".
 
 ## 2024/04/04:TomislavMatas: v1.123.1
 * BugFix in "FormMain": Set WorkerSupportsCancellation = true.
@@ -156,7 +160,7 @@ Please refer to "EZSeleniumLib" project for details.
   within "AppHandler". Now when hitting "Cancel", the already 
   loaded browser instance stays "active". Otherwise,
   when processing has not been canceled by user, the
-  browser instance will be closed immediatly after "logout".
+  browser instance will be closed immediately after "logout".
 
 ## 2024/04/04:TomislavMatas: v1.123.1
 * BugFix in "FormMain": Set WorkerSupportsCancellation = true.
@@ -170,4 +174,4 @@ Please refer to "EZSeleniumLib" project for details.
 * Change product name from "EZAsesAutoType" to "EZ ASES AutoType".
 
 ## 2024/04/04:TomislavMatas: v1.0.0
-* Initial Version.
+* Initial version.
