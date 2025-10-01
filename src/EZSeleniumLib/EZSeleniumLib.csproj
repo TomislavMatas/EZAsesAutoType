@@ -18,9 +18,12 @@
     <Version>4.34.143</Version>
     <FileVersion>4.34.143</FileVersion>
     <AssemblyVersion>4.34.143</AssemblyVersion>
+    <AssemblyInformationalVersion>4.34.143</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
         v4.34.143:
         * Add `DotNetSeleniumExtras.WaitHelpers` version "3.11.0".

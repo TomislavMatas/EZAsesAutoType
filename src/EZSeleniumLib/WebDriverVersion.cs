@@ -110,6 +110,9 @@ namespace EZSeleniumLib
                 else if (Constant.WebDriverEdge.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
                     webDriverExe = Constant.WebDriverEdgeExe;
                 else if (Constant.WebDriverFirefox.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
+                    // For unknown reason, Mozilla decided not to add a version
+                    // info ressource to Chrome WebDriver "geckodriver.exe". 
+                    // so simply return the version used on build.
                     return Constant.WebDriverFirefoxVersion;
                 else
                     throw new Exception(nameof(webDriver) + Consts.LogNotImpl);

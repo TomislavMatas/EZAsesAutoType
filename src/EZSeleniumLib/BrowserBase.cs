@@ -13,7 +13,7 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History:
-// 2025/10/01:TomislavMatas: v4.34.143
+// 2025/08/08:TomislavMatas: Version "4.32.1"
 // * Add `DecorateArgument`.
 // 2024/07/05:TomislavMatas: Version "4.22.3"
 // * Add "ClearElementWithRetry" as wrapper for "IWebElement.Clear()".
@@ -39,6 +39,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+
 using log4net;
 
 using OpenQA.Selenium;
@@ -127,14 +128,14 @@ namespace EZSeleniumLib
         {
             get
             {
-                if (_browserOptions == null)
+                if(_browserOptions == null)
                     _browserOptions = new BrowserOptions();
 
                 return _browserOptions;
             }
             set
             {
-                _browserOptions = value;
+                _browserOptions= value;
             }
         }
 
@@ -187,7 +188,7 @@ namespace EZSeleniumLib
         /// </summary>
         protected void SetScriptPID(int scriptPID)
         {
-            _scriptPID = scriptPID;
+            _scriptPID = scriptPID; 
         }
 
         /// <summary>
@@ -253,10 +254,10 @@ namespace EZSeleniumLib
         private Process? EvalProcessByScriptPID()
         {
             try
-            {
+            { 
                 int scriptPID = this.BrowserOptions.ScriptPID;
                 if (scriptPID <= 0)
-                    throw new Exception(nameof(this.BrowserOptions.ScriptPID) + Consts.LogInvalid);
+                    throw new Exception(nameof(this.BrowserOptions.ScriptPID)+Consts.LogInvalid);
 
                 string processName = this.GetProcessName();
                 System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName(processName);
@@ -361,7 +362,7 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
-                if (!this.Cleanup())
+                if(!this.Cleanup())
                     throw new Exception("Cleanup failed");
             }
             catch (Exception ex)
@@ -420,7 +421,7 @@ namespace EZSeleniumLib
             {
                 MemoryInfo? memoryInfo = this.GetMemoryInfo();
                 if (memoryInfo == null)
-                    throw new Exception(nameof(this.GetMemoryInfo) + Consts.LogFail);
+                    throw new Exception(nameof(this.GetMemoryInfo)+Consts.LogFail);
 
                 this.DumpMemoryInfo(memoryInfo);
             }
@@ -539,7 +540,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
                 WebDriver? driver = this.GetDriver();
                 if (driver == null)
-                    throw new Exception(nameof(driver) + "is null");
+                    throw new Exception(nameof(driver)+"is null");
 
                 bool result = false;
                 int attempts = 0;
@@ -599,7 +600,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
                 WebDriver? driver = this.GetDriver();
                 if (driver == null)
-                    throw new Exception(nameof(driver) + " is null");
+                    throw new Exception(nameof(driver)+" is null");
 
                 bool result = false;
                 int attempts = 0;

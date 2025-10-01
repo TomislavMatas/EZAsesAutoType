@@ -67,13 +67,18 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 * Update "log4net" to version "3.1.0".
 * Update "System.Management" to version="9.0.5".
 
-## 2025/04/10:TomislavMatas: v4.31.1
-* Google finally decided to compile executable "chromedriver.exe"
-  with version info resource, so read version from executable.
+## 2025/08/08:TomislavMatas: v4.32.1
+* Use `log4net` version "3.1.0".
+* Add `DotNetSeleniumExtras.WaitHelpers` version "3.11.0".
+* Update "chromedriver.exe" to version "139.0.7258.66_x64".
+* Update "msedgedriver.exe" to version "139.0.3405.73_x64".
 
-## 2025/04/10:TomislavMatas: v4.31.0
-* Update "Selenium.Support" to version "4.31.0".
-* Update "Selenium.WebDriver" to version "4.31.0".
+## 2025/05/08:TomislavMatas: Version "4.32.0"
+* Update "Selenium.Support" to version "4.32.0".
+* Update "Selenium.WebDriver" to version="4.32.0".
+* Update "chromedriver.exe" to version "136.0.7103.92".
+* Update "msedgedriver.exe" to version "136.0.3240.50".
+* Update "geckodriver.exe"  to version "0.36.0".
 * Update "System.Management" to version "9.0.4".
 * Update "System.Text.Json" to version= 9.0.4".
 * Update "log4net" to version "3.0.4".

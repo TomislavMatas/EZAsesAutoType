@@ -21,6 +21,9 @@
 // 2025/02/05:TomislavMatas: Version "1.133.0"
 // * Update "chromedriver.exe" to version "133.0.6943.53".
 // * Update "msedgedriver.exe" to version "133.0.3065.39".
+// 2024/11/28:TomislavMatas: Version "4.26.2"
+// * Update "chromedriver.exe" to version "131.0.6778.85".
+// * Update "msedgedriver.exe" to version "131.0.2903.70".
 // 2024/11/19:TomislavMatas: Version "4.25.1"
 // * Update "chromedriver.exe" to version "131.0.6778.69".
 // * Update "msedgedriver.exe" to version "131.0.2903.51".

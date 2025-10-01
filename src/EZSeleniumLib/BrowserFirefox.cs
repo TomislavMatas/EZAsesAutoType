@@ -12,7 +12,7 @@
 // See "README.md" for details.
 //
 // Revision History:
-// 2025/10/01:TomislavMatas: v4.34.143
+// 2025/08/08:TomislavMatas: Version "4.32.1"
 // * Implement usage of `DecorateArgument`.
 // * Add startup argument `disable-build-check`.
 // 2024/07/26:TomislavMatas: Version "4.22.4"

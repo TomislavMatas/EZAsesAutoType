@@ -12,7 +12,7 @@
 // See "README.md" for details.
 //
 // Revision History:
-// 2025/10/01:TomislavMatas: v4.34.143
+// 2025/08/08:TomislavMatas: Version "4.32.1"
 // * Implement usage of `DecorateArgument`.
 // * Add startup argument `disable-build-check`.
 // 2024/07/26:TomislavMatas: Version "4.22.4"
@@ -130,7 +130,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 string initMode = this.BrowserOptions.InitMode;
-                if (String.IsNullOrEmpty(initMode))
+                if(String.IsNullOrEmpty(initMode))
                     throw new Exception("InitMode invalid");
 
                 if (Consts.INITMODE_SIMPLE.Equals(initMode, StringComparison.OrdinalIgnoreCase))
@@ -167,8 +167,8 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 ChromeOptions? options = this.GetDriverOptions();
-                if (options == null)
-                    throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
+                if (options==null)
+                    throw new Exception(nameof(this.GetDriverOptions)+Consts.LogFail);
 
                 this._driver = new ChromeDriver(options);
                 return true;
@@ -285,9 +285,9 @@ namespace EZSeleniumLib
 //              options.AddArguments(DecorateArgument("disable-dev-shm-usage"));
 
                 bool disableGPU = this.BrowserOptions.DisableGPU;
-                if (disableGPU)
+                if(disableGPU)
                     options.AddArguments(DecorateArgument("disable-gpu"));
-
+                
                 bool exposeGC = this.BrowserOptions.ExposeGC;
                 if (exposeGC)
                     options.AddArguments(DecorateArgument("js-flags=--expose-gc"));
@@ -498,7 +498,7 @@ namespace EZSeleniumLib
             {
                 object? obj = this.ExecuteScript("return window.performance.memory");
                 if (obj == null)
-                    throw new Exception(nameof(obj) + Consts.LogFail);
+                    throw new Exception(nameof(obj)+Consts.LogFail);
 
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
