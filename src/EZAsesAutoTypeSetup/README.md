@@ -6,6 +6,12 @@ For some reason, the generated Setup MSI can NOT be executed
 when building with platform "x64". 
 
 # Revision History
+## 2025/10/02:TomislavMatas: Version v4.35.141
+* Removed the explicitly added "EZAsesAutoType.exe" from 
+  packaging. Due to most recent update in tool chain,
+  the proper shortcut is generated correctly in 
+  user's programs menu now without that tweak.
+
 ## 2024/04/05:TomislavMatas: Version "1.123.2"
 * Explicitly add "EZAsesAutoType.exe" in order to make it available 
   for the "User's Programs Menu" shortcut.

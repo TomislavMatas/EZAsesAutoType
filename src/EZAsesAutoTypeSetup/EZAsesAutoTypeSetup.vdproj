@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_4F1E38C2E20E4174A7485B7850089063"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_50068045F57848C69B79060B6279E07C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -22,18 +28,6 @@
         "Entry"
         {
         "MsmKey" = "8:_D23ED5F6B9A643829B45D42EFCE23C4C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D71885C7E7C84103A3AA0DC700FF3BBB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E591DDFE26E24B09BE8BE93271E9A0AA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -174,26 +168,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E591DDFE26E24B09BE8BE93271E9A0AA"
-            {
-            "SourcePath" = "8:..\\EZAsesAutoType\\bin\\Release\\net8.0-windows10.0.26100.0\\EZAsesAutoType.exe"
-            "TargetName" = "8:EZAsesAutoType.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_1104C379D14F46E8977131739157E861"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -251,7 +225,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EZ ASES AutoType"
         "ProductCode" = "8:{E36887F8-7C79-4CEF-A05F-D7A491FDB904}"
-        "PackageCode" = "8:{C1B5123B-4079-45AB-963A-0C117716890D}"
+        "PackageCode" = "8:{C6831DEC-658B-46D9-9A8B-77D015EBB3EE}"
         "UpgradeCode" = "8:{8A6849D5-37DA-4A40-A26E-88046820FAA1}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -371,7 +345,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_799849159AC740389D07C5B5D070CB92"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_49FF254A5B404EBBA3459996A73337F2"
             {
             "Name" = "8:EZ ASES AutoType"
             "Arguments" = "8:"
@@ -379,7 +353,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_E591DDFE26E24B09BE8BE93271E9A0AA"
+            "Target" = "8:_4F1E38C2E20E4174A7485B7850089063"
             "Folder" = "8:_7F544D843E7D43AD90DF5A3AE0A54139"
             "WorkingFolder" = "8:_1104C379D14F46E8977131739157E861"
             "Icon" = "8:_50068045F57848C69B79060B6279E07C"
@@ -794,7 +768,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D71885C7E7C84103A3AA0DC700FF3BBB"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4F1E38C2E20E4174A7485B7850089063"
             {
             "SourcePath" = "8:..\\EZAsesAutoType\\obj\\Release\\net8.0-windows10.0.26100.0\\apphost.exe"
             "TargetName" = "8:"
