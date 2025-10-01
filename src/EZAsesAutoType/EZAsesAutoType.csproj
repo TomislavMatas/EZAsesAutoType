@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>1.139.0</Version>
-    <FileVersion>1.139.0</FileVersion>
-    <AssemblyVersion>1.139.0</AssemblyVersion>
+    <Version>4.35.141</Version>
+    <FileVersion>4.35.141</FileVersion>
+    <AssemblyVersion>4.35.141</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -37,9 +37,8 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-v1.139.0:
-* Update "chromedriver.exe" to version "139.0.7258.66".
-* Update "msedgedriver.exe" to version "139.0.3405.83".
+      v4.35.141:
+      * Update "log4net" to version "3.2.0".
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -48,7 +47,7 @@ v1.139.0:
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.1.0" />
+    <PackageReference Include="log4net" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
