@@ -5,7 +5,7 @@
 // Constants with "public" relevance.
 //
 // Revision History:
-// 2025/10/01:TomislavMatas: v4.35.141
+// 2025/10/01:TomislavMatas: v4.34.141
 // * Update "chromedriver.exe" to version "141.0.7390.54".
 // * Update "msedgedriver.exe" to version "141.0.3537.44".
 // 2025/08/07:TomislavMatas: v4.33.0
