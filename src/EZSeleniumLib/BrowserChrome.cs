@@ -12,6 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2025/10/01:TomislavMatas: v4.34.143
+// * Implement usage of `DecorateArgument`.
+// * Add startup argument `disable-build-check`.
 // 2024/07/26:TomislavMatas: Version "4.22.4"
 // * Implement handling of browser specific "App.config"
 //   setting "EZSeleniumLib.Browser.AdditionalOptions.Chrome".
@@ -68,7 +71,7 @@ namespace EZSeleniumLib
             if (_driver == null)
                 return null;
 
-        	// Explicit type cast below is optional,
+            // Explicit type cast below is optional,
             // but kept for the sake of clarity.
             return (ChromeDriver)_driver;
         }
@@ -125,9 +128,9 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
- 
+
                 string initMode = this.BrowserOptions.InitMode;
-                if(String.IsNullOrEmpty(initMode))
+                if (String.IsNullOrEmpty(initMode))
                     throw new Exception("InitMode invalid");
 
                 if (Consts.INITMODE_SIMPLE.Equals(initMode, StringComparison.OrdinalIgnoreCase))
@@ -164,8 +167,8 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 ChromeOptions? options = this.GetDriverOptions();
-                if (options==null)
-                    throw new Exception(nameof(this.GetDriverOptions)+Consts.LogFail);
+                if (options == null)
+                    throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
                 this._driver = new ChromeDriver(options);
                 return true;
@@ -260,8 +263,8 @@ namespace EZSeleniumLib
                 #region Basic Options
                 options.PageLoadStrategy = PageLoadStrategy.Normal;
                 options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-				// Selenium v3
-				// options.UseSpecCompliantProtocol = true;
+                // Selenium v3
+                // options.UseSpecCompliantProtocol = true;
 #if DEBUG
                 options.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Client, LogLevel.Debug);
@@ -273,25 +276,25 @@ namespace EZSeleniumLib
 
                 #region Startup Arguments
 
-                string argPfx = this.GetArgPrefix();
-                options.AddArguments(String.Format("{0}disable-infobars", argPfx));
-                options.AddArguments(String.Format("{0}disable-automation", argPfx));
+                options.AddArguments(DecorateArgument("disable-build-check"));
+                options.AddArguments(DecorateArgument("disable-infobars"));
+                options.AddArguments(DecorateArgument("disable-automation"));
 // Use "--no-sandbox" with caution - exposes unsecure exploits!
-//              options.AddArguments(String.Format("{0}no-sandbox", argPfx));
+//              options.AddArguments(DecorateArgument("no-sandbox"));
 // "--disable-dev-shm-usage" is only on linux / docker helpfull
-//              options.AddArguments(String.Format("{0}disable-dev-shm-usage", argPfx));
+//              options.AddArguments(DecorateArgument("disable-dev-shm-usage"));
 
                 bool disableGPU = this.BrowserOptions.DisableGPU;
-                if(disableGPU)
-                    options.AddArguments(String.Format("{0}disable-gpu", argPfx));
-                
+                if (disableGPU)
+                    options.AddArguments(DecorateArgument("disable-gpu"));
+
                 bool exposeGC = this.BrowserOptions.ExposeGC;
                 if (exposeGC)
-                    options.AddArguments(String.Format("{0}js-flags=--expose-gc", argPfx));
+                    options.AddArguments(DecorateArgument("js-flags=--expose-gc"));
 
                 bool preciseMemoryInfo = this.BrowserOptions.PreciseMemoryInfo;
                 if (preciseMemoryInfo)
-                    options.AddArguments(String.Format("{0}enable-precise-memory-info", argPfx));
+                    options.AddArguments(DecorateArgument("enable-precise-memory-info"));
 
                 int scriptPID = this.BrowserOptions.ScriptPID;
                 if (scriptPID > 0)
@@ -300,15 +303,15 @@ namespace EZSeleniumLib
                     options.AddArguments(GetArgScriptPID());
                 }
 
-                options.AddExcludedArguments(String.Format("{0}enable-automation", argPfx));
+                options.AddExcludedArguments(DecorateArgument("enable-automation"));
 
                 bool notificationsEnabled = this.BrowserOptions.NotificationsEnabled;
                 if (!notificationsEnabled)
-                    options.AddArguments(String.Format("{0}disable-notifications",argPfx));
+                    options.AddArguments(DecorateArgument("disable-notifications"));
 
                 bool popupsEnabled = this.BrowserOptions.PopupsEnabled;
                 if (popupsEnabled)
-                    options.AddArguments(String.Format("{0}disable-popup-blocking", argPfx));
+                    options.AddArguments(DecorateArgument("disable-popup-blocking"));
 
                 string customAdditionalOptions = this.BrowserOptions.AdditionalOptions;
                 if (!string.IsNullOrEmpty(customAdditionalOptions))
@@ -415,9 +418,9 @@ namespace EZSeleniumLib
 
                 Dictionary<string, object> details = new Dictionary<string, object>();
                 details["ignoreCache"] = ignoreCache;
-				// Selenium v3
-				// _driver.ExecuteChromeCommand("Page.reload", details);
-				// Selenium v4				
+                // Selenium v3
+                // _driver.ExecuteChromeCommand("Page.reload", details);
+                // Selenium v4				
                 _driver.ExecuteCustomDriverCommand("Page.reload", details);
                 return true;
             }
@@ -465,7 +468,7 @@ namespace EZSeleniumLib
         public override object? ExecuteScript(string script, params object[] args)
         {
             try
-            { 
+            {
                 if (_driver == null)
                     throw new Exception("_driver is null");
 
@@ -492,10 +495,10 @@ namespace EZSeleniumLib
         public override MemoryInfo? GetMemoryInfo()
         {
             try
-            { 
+            {
                 object? obj = this.ExecuteScript("return window.performance.memory");
                 if (obj == null)
-                    throw new Exception(nameof(obj)+Consts.LogFail);
+                    throw new Exception(nameof(obj) + Consts.LogFail);
 
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
@@ -553,7 +556,7 @@ namespace EZSeleniumLib
 
                 Log.Info(string.Format("Switch to TAB '{0}' ...", handle));
                 IWebDriver _newDriver = _driver.SwitchTo().Window(handle);
-                if(_newDriver == null )
+                if (_newDriver == null)
                     throw new Exception("_newDriver is null");
 
                 Log.Info(string.Format("Switch to TAB '{0}' OK", handle));

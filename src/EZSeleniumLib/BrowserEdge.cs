@@ -12,6 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2025/10/01:TomislavMatas: v4.34.143
+// * Implement usage of `DecorateArgument`.
+// * Add startup argument `disable-build-check`.
 // 2024/07/26:TomislavMatas: Version "4.22.4"
 // * Implement handling of browser specific "App.config"
 //   setting "EZSeleniumLib.Browser.AdditionalOptions.Edge".
@@ -126,7 +129,7 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
- 
+
                 string initMode = this.BrowserOptions.InitMode;
                 if (String.IsNullOrEmpty(initMode))
                     throw new Exception("InitMode invalid");
@@ -166,7 +169,7 @@ namespace EZSeleniumLib
 
                 EdgeOptions? options = this.GetDriverOptions();
                 if (options == null)
-                    throw new Exception(nameof(this.GetDriverOptions) +Consts.LogFail);
+                    throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
                 this._driver = new EdgeDriver(options);
                 return true;
@@ -266,22 +269,22 @@ namespace EZSeleniumLib
 
                 #region Startup Arguments
 
-                string argPfx = this.GetArgPrefix();
                 List<string> argumentList = new List<string>();
-                argumentList.Add(String.Format("{0}disable-infobars", argPfx));
-                argumentList.Add(String.Format("{0}disable-automation", argPfx));
+                argumentList.Add(DecorateArgument("disable-build-check"));
+                argumentList.Add(DecorateArgument("disable-infobars"));
+                argumentList.Add(DecorateArgument("disable-automation"));
 
                 bool disableGPU = this.BrowserOptions.DisableGPU;
                 if (disableGPU)
-                    argumentList.Add(String.Format("{0}disable-gpu", argPfx));
+                    argumentList.Add(DecorateArgument("disable-gpu"));
 
                 bool exposeGC = this.BrowserOptions.ExposeGC;
                 if (exposeGC)
-                    argumentList.Add(String.Format("{0}js-flags=--expose-gc", argPfx));
+                    argumentList.Add(DecorateArgument("js-flags=--expose-gc"));
 
                 bool preciseMemoryInfo = this.BrowserOptions.PreciseMemoryInfo;
                 if (preciseMemoryInfo)
-                    argumentList.Add(String.Format("{0}enable-precise-memory-info", argPfx));
+                    argumentList.Add(DecorateArgument("enable-precise-memory-info"));
 
                 int scriptPID = this.BrowserOptions.ScriptPID;
                 if (scriptPID > 0)
@@ -291,7 +294,7 @@ namespace EZSeleniumLib
                 }
 
                 List<string> excludedArgumentList = new List<string>();
-                excludedArgumentList.Add(String.Format("{0}enable-automation", argPfx));
+                excludedArgumentList.Add(DecorateArgument("enable-automation"));
 
                 string customAdditionalOptions = this.BrowserOptions.AdditionalOptions;
                 if (!string.IsNullOrEmpty(customAdditionalOptions))
@@ -356,8 +359,8 @@ namespace EZSeleniumLib
 
                 foreach (string excludedArgument in excludedArgumentList)
                 {
-                    try 
-                    { 
+                    try
+                    {
                         options.AddExcludedArgument(excludedArgument);
                     }
                     catch (Exception ex)
@@ -498,7 +501,7 @@ namespace EZSeleniumLib
             try
             {
                 if (_driver == null)
-                    throw new Exception(nameof(_driver)+Consts.LogIsNull);
+                    throw new Exception(nameof(_driver) + Consts.LogIsNull);
 
                 IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
                 return js.ExecuteScript(script, args);
@@ -525,8 +528,8 @@ namespace EZSeleniumLib
             try
             {
                 object? obj = this.ExecuteScript("return window.performance.memory");
-                if(obj == null)
-                    throw new Exception(nameof(obj)+Consts.LogIsNull);
+                if (obj == null)
+                    throw new Exception(nameof(obj) + Consts.LogIsNull);
 
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
