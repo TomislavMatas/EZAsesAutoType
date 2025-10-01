@@ -6,7 +6,7 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
-## 2025/10/01:TomislavMatas: v4.35.143
+## 2025/10/02:TomislavMatas: v4.35.141
 * Use `Selenium.Support` version "4.35.0".
 * Use `Selenium.WebDriver` version "4.35.0".
 

@@ -15,10 +15,10 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.35.143</Version>
-    <FileVersion>4.35.143</FileVersion>
-    <AssemblyVersion>4.35.143</AssemblyVersion>
-    <AssemblyInformationalVersion>4.35.143</AssemblyInformationalVersion>
+    <Version>4.35.141</Version>
+    <FileVersion>4.35.141</FileVersion>
+    <AssemblyVersion>4.35.141</AssemblyVersion>
+    <AssemblyInformationalVersion>4.35.141</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>

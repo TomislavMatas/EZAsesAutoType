@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.35.143</Version>
-    <FileVersion>4.35.143</FileVersion>
-    <AssemblyVersion>4.35.143</AssemblyVersion>
+    <Version>4.35.141</Version>
+    <FileVersion>4.35.141</FileVersion>
+    <AssemblyVersion>4.35.141</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
