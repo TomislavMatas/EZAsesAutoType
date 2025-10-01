@@ -6,3 +6,4 @@ cert
 bin/release
 /src/EZAsesAutoTypeMSIX/AppPackages
 /src/EZAsesAutoTypeMSIX/BundleArtifacts
+/bin/WebDriver
