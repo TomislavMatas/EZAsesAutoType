@@ -15,28 +15,25 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.33.0</Version>
-    <FileVersion>4.33.0</FileVersion>
-    <AssemblyVersion>4.33.0</AssemblyVersion>
+    <Version>4.34.141</Version>
+    <FileVersion>4.34.141</FileVersion>
+    <AssemblyVersion>4.34.141</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <PackageReleaseNotes>
-v4.34.0:
-* Update "Selenium.Support" to version "4.34.0".
-* Update "Selenium.WebDriver" to version "4.34.0".
-* Update "chromedriver.exe" to version "139.0.7258.66".
-* Update "msedgedriver.exe" to version "139.0.3405.83".
-* Update "System.Management" to version="9.0.8".
+      v4.34.141:
+      * Update "chromedriver.exe" to version "141.0.7390.54".
+      * Update "msedgedriver.exe" to version "141.0.3537.44".
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.1.0" />
+    <PackageReference Include="log4net" Version="3.2.0" />
     <PackageReference Include="Selenium.Support" Version="4.34.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.34.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
-    <PackageReference Include="System.Management" Version="9.0.8" />
+    <PackageReference Include="System.Management" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
