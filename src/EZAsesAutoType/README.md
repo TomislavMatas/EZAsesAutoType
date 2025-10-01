@@ -6,7 +6,10 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
-## 2025/10/01:TomislavMatas: 4.34.141
+## 2025/10/01:TomislavMatas: v4.34.143
+* Implement browser specific startup argument `disable-build-check`.
+
+## 2025/10/01:TomislavMatas: v4.34.141
 * Update "log4net" to version "3.2.0".
 
 ## 2025/08/04:TomislavMatas: v1.139.0
