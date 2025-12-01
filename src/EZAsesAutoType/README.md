@@ -6,6 +6,13 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2025/10/01:TomislavMatas: v4.38.143
+* Use `chromedriver.exe` version "143.0.7499.40".
+* Use `msedgedriver.exe` version "143.0.3650.46".
+* Use `Selenium.Support` version "4.38.0".
+* Use `Selenium.WebDriver` version "4.38.0".
+* Use `EZSeleniumLib` version "4.38.143".
+
 ## 2025/10/01:TomislavMatas: v4.35.143
 * Use `Selenium.Support` version "4.35.0".
 * Use `Selenium.WebDriver` version "4.35.0".
