@@ -44,6 +44,13 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2025/12/01:TomislavMatas: v4.38.143
+* Use `chromedriver.exe` version "143.0.7499.40".
+* Use `msedgedriver.exe` version "143.0.3650.46".
+* Use `Selenium.Support` version "4.38.0".
+* Use `Selenium.WebDriver` version "4.38.0".
+* Use `System.Management` version "10.0.0".
+
 ## 2025/10/01:TomislavMatas: v4.34.143
 * Add `DotNetSeleniumExtras.WaitHelpers` version "3.11.0".
 * Implement browser specific startup argument `disable-build-check`.
