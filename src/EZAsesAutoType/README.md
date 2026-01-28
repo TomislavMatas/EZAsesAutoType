@@ -6,6 +6,16 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+
+## 2026/01/28:TomislavMatas: v4.40.145.0
+* Use `chromedriver.exe` version "145.0.7632.18".
+* Use `msedgedriver.exe` version "145.0.3800.22".
+* Use `Selenium.Support` version "4.40.0".
+* Use `Selenium.WebDriver` version "4.40.0".
+* Use `System.Management` version "10.0.2".
+* Use `EZSeleniumLib` version "4.40.145.0".
+* Enable the Minimize button on main form.
+
 ## 2025/10/01:TomislavMatas: v4.38.143
 * Use `chromedriver.exe` version "143.0.7499.40".
 * Use `msedgedriver.exe` version "143.0.3650.46".
