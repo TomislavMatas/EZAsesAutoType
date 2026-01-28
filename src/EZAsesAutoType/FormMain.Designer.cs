@@ -468,7 +468,6 @@ namespace EZAsesAutoType
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
-            MinimizeBox = false;
             MinimumSize = new Size(440, 272);
             Name = "FormMain";
             Text = "EZAsesAutoType";
