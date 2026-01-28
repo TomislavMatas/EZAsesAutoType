@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2026/01/28:TomislavMatas: Version "4.40.145.0"
+// * Add `FilePrivatePart` (Revision) to version info literals.
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Add "Client_DbSystel" and "Client_DbCargo".
 // 2024/08/06:TomislavMatas: Version "1.127.1"
@@ -145,8 +147,8 @@ namespace EZAsesAutoType
         /// </summary>
         private static string? m_AssemblyVersionString = null;
         /// <summary>
-        /// Return AssemblyFileVersion as dot seperated string.
-        /// Format: Major.Minor.Build.Private[ (dbg)]
+        /// Return AssemblyFileVersion as dot separated string.
+        /// Format: Major.Minor.Build.Revision[ (dbg)]
         /// </summary>
         public static string AssemblyVersionString
         {
@@ -158,7 +160,8 @@ namespace EZAsesAutoType
                         , Const.AssemblyVersionInfo.FileMinorPart
                         , Const.AssemblyVersionInfo.FileBuildPart
                         , Const.AssemblyVersionInfo.FilePrivatePart
-                        , Const.DEBUGSUFFIX);
+                        , Const.DEBUGSUFFIX
+                        );
 
                 return m_AssemblyVersionString;
             }
@@ -169,18 +172,20 @@ namespace EZAsesAutoType
         /// </summary>
         private static string? m_AssemblyVersionDisplayed = null;
         /// <summary>
-        /// Return AssemblyFileVersion as dot seperated string.
-        /// Format: Major.Minor.Build
+        /// Return AssemblyFileVersion as dot separated string.
+        /// Format: Major.Minor.Build.Revision
         /// </summary>
         public static string AssemblyDisplayVersion
         {
             get
             {
                 if (m_AssemblyVersionDisplayed == null)
-                    m_AssemblyVersionDisplayed = string.Format("{0}.{1}.{2}"
+                    m_AssemblyVersionDisplayed = string.Format("{0}.{1}.{2}.{3}{4}"
                         , Const.AssemblyVersionInfo.FileMajorPart
                         , Const.AssemblyVersionInfo.FileMinorPart
                         , Const.AssemblyVersionInfo.FileBuildPart
+                        , Const.AssemblyVersionInfo.FilePrivatePart
+                        , Const.DEBUGSUFFIX
                         );
 
                 return m_AssemblyVersionDisplayed;
