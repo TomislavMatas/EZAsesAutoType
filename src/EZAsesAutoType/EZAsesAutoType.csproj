@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.38.143</Version>
-    <FileVersion>4.38.143</FileVersion>
-    <AssemblyVersion>4.38.143</AssemblyVersion>
+    <Version>4.40.145.0</Version>
+    <FileVersion>4.40.145.0</FileVersion>
+    <AssemblyVersion>4.40.145.0</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -37,12 +37,14 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-      v4.38.143
-      * Use `chromedriver.exe` version "143.0.7499.40".
-      * Use `msedgedriver.exe` version "143.0.3650.46".
-      * Use `Selenium.Support` version "4.38.0".
-      * Use `Selenium.WebDriver` version "4.38.0".
-      * Use `EZSeleniumLib` version "4.38.143".
+      v4.40.145.0
+      * Use `chromedriver.exe` version "145.0.7632.18".
+      * Use `msedgedriver.exe` version "145.0.3800.22".
+      * Use `Selenium.Support` version "4.40.0".
+      * Use `Selenium.WebDriver` version "4.40.0".
+      * Use `System.Management` version "10.0.2".
+	  * Enable the Minimize button on main form.
+      * Use `EZSeleniumLib` version "4.40.145.0".
     </PackageReleaseNotes>
   </PropertyGroup>
 
