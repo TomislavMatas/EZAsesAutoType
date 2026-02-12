@@ -3,6 +3,8 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2026/02/12:TomislavMatas: v4.38.1450
+// * Add control "checkBox_Sso".
 // 2024/08/05:TomislavMatas: Version "1.127.1"
 // * Add new control "checkBox_DoLogout".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
@@ -552,6 +554,7 @@ namespace EZAsesAutoType
                 userSettings.DoPunch = this.checkBox_DoPunch.Checked;
                 userSettings.DoLogout = this.checkBox_DoLogout.Checked;
                 userSettings.ASESPunchDeviation = toInt(this.textBox_Deviation.Text);
+                userSettings.UseSSO = this.checkBox_Sso.Checked;
                 return userSettings;
             }
             catch (Exception ex)
@@ -664,7 +667,7 @@ namespace EZAsesAutoType
             }
         }
 
-        private bool RenderCeckBoxes(UserSettings userSettings)
+        private bool RenderCheckBoxes(UserSettings userSettings)
         {
             try
             {
@@ -675,6 +678,7 @@ namespace EZAsesAutoType
                 this.checkBox_DoLogin.Checked = userSettings.DoLogin;
                 this.checkBox_DoPunch.Checked = userSettings.DoPunch;
                 this.checkBox_DoLogout.Checked = userSettings.DoLogout;
+                this.checkBox_Sso.Checked = userSettings.UseSSO;
 
                 return true;
             }
@@ -804,6 +808,55 @@ namespace EZAsesAutoType
             }
         }
 
+        private const int tabIndexUid = 50;
+        private const int tabIndexPwd = 60;
+        private const int tabIndexClient = 70;
+        private const int tabIndexLanguage = 80;
+
+        /// <summary>
+        /// If "UseSSO" has been checked, disable all controlls,
+        /// which usually are required for legacy login.
+        /// When uncheck, toggle them the opposite.
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        private bool RenderControlsUseSsoChanged(bool flag)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                this.SuspendLayout();
+
+                bool enabled = !flag;
+                this.textBoxUid.Enabled = enabled;
+                this.textBoxPwd.Enabled = enabled;
+                this.comboBoxClientNo.Enabled = enabled;
+                this.comboBoxLanguage.Enabled = enabled;
+                this.textBoxUid.TabIndex = enabled ? tabIndexUid : 0;
+                this.textBoxPwd.TabIndex = enabled ? tabIndexPwd : 0;
+                this.comboBoxClientNo.TabIndex = enabled ? tabIndexClient : 0;
+                this.comboBoxLanguage.TabIndex = enabled ? tabIndexLanguage : 0;
+
+                bool readOnly = flag;
+                this.textBoxUid.ReadOnly = readOnly;
+                this.textBoxPwd.ReadOnly = readOnly;
+
+                this.ActiveControl = flag ? this.btnRun : this.textBoxUid;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                this.ResumeLayout();
+                LogTrace(Const.LogDone);
+            }
+        }
+
         /// <summary>
         /// Render controls depending on their actual values.
         /// Individual controls layout and content might
@@ -825,8 +878,8 @@ namespace EZAsesAutoType
                 if (!RenderWebDriverVersion(userSettings))
                     throw new Exception(nameof(RenderWebDriverVersion) + Const.LogFail);
 
-                if (!RenderCeckBoxes(userSettings))
-                    throw new Exception(nameof(RenderCeckBoxes) + Const.LogFail);
+                if (!RenderCheckBoxes(userSettings))
+                    throw new Exception(nameof(RenderCheckBoxes) + Const.LogFail);
 
                 if (!RenderControlsDoLoginChanged(userSettings.DoLogin))
                     throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
@@ -834,6 +887,9 @@ namespace EZAsesAutoType
                 if (!RenderControlsDoPunchChanged(userSettings.DoPunch))
                     throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
 
+                if (!RenderControlsUseSsoChanged(userSettings.UseSSO))
+                    throw new Exception(nameof(RenderControlsUseSsoChanged) + Const.LogFail);
+                
                 return true;
             }
             catch (Exception ex)
@@ -869,6 +925,7 @@ namespace EZAsesAutoType
                     this.checkBox_DoLogin.Enabled = false;
                     this.checkBox_DoPunch.Enabled = false;
                     this.checkBox_DoLogout.Enabled = false;
+                    this.checkBox_Sso.Enabled = false;
                     this.textBox_Deviation.Enabled = false;
                     this.btnRun.Enabled = false;
                     this.btnRun.Visible = true;
@@ -890,6 +947,7 @@ namespace EZAsesAutoType
                 this.checkBox_DoLogin.Enabled = true;
                 this.checkBox_DoPunch.Enabled = true;
                 this.checkBox_DoLogout.Enabled = true;
+                this.checkBox_Sso.Enabled = true;
                 this.textBox_Deviation.Enabled = true;
                 this.btnRun.Enabled = true;
                 this.btnRun.Visible = true;
@@ -955,6 +1013,15 @@ namespace EZAsesAutoType
         private bool IsArgDoLogoutProvided()
         {
             return Program.IsArgProvided(Const.CommandlineArg_DoLogout);
+        }
+
+        /// <summary>
+        /// Check if command line argument "/SSO" has been provided.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsArgSsoProvided()
+        {
+            return Program.IsArgProvided(Const.CommandlineArg_UseSso);
         }
 
         private void Run()
@@ -1086,11 +1153,20 @@ namespace EZAsesAutoType
                     doAutomationOnLoad = true;
                 }
 
+                if (this.IsArgSsoProvided())
+                {
+                    this.UserSettings.UseSSO = true;
+                    this.UserSettings.DoLogin = false;
+                    doAutomationOnLoad = true;
+                }
+
                 if (!InitializeControls(userSettings))
                     throw new Exception(nameof(InitializeControls) + Const.LogFail);
 
                 if (!RenderControls(userSettings))
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
+
+                this.ActiveControl = this.btnRun ;
 
                 if (doAutomationOnLoad)
                 {
@@ -1621,6 +1697,10 @@ namespace EZAsesAutoType
             }
         }
 
+        #endregion
+
+        #region checkbox handlerz
+
         private void checkBox_DoLogin_CheckedChanged(object sender, EventArgs e)
         {
             try
@@ -1630,8 +1710,8 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                if (!RenderCeckBoxes(userSettings))
-                    throw new Exception(nameof(RenderCeckBoxes) + Const.LogFail);
+                if (!RenderCheckBoxes(userSettings))
+                    throw new Exception(nameof(RenderCheckBoxes) + Const.LogFail);
 
                 if (!RenderControlsDoLoginChanged(userSettings.DoLogin))
                     throw new Exception(nameof(RenderControlsDoLoginChanged) + Const.LogFail);
@@ -1656,8 +1736,8 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                if (!RenderCeckBoxes(userSettings))
-                    throw new Exception(nameof(RenderCeckBoxes) + Const.LogFail);
+                if (!RenderCheckBoxes(userSettings))
+                    throw new Exception(nameof(RenderCheckBoxes) + Const.LogFail);
 
                 if (!RenderControlsDoPunchChanged(userSettings.DoPunch))
                     throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
@@ -1684,6 +1764,29 @@ namespace EZAsesAutoType
 
                 if (!RenderControlsDoLogoutChanged(userSettings.DoLogout))
                     throw new Exception(nameof(RenderControlsDoLogoutChanged) + Const.LogFail);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        private void checkBox_Sso_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                if (userSettings == null)
+                    throw new Exception(nameof(userSettings) + Const.LogIsNull);
+
+                if (!RenderControlsUseSsoChanged(userSettings.UseSSO))
+                    throw new Exception(nameof(RenderControlsUseSsoChanged) + Const.LogFail);
 
             }
             catch (Exception ex)
@@ -1732,7 +1835,6 @@ namespace EZAsesAutoType
         }
 
         #endregion
-
 
     } // class
 

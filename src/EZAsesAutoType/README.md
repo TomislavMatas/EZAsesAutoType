@@ -9,7 +9,8 @@ Please refer to "EZSeleniumLib" project for details.
 ## 2026/02/12:TomislavMatas: v4.38.1450
 * Use `chromedriver.exe` version "145.0.7632.45".
 * Use `msedgedriver.exe` version "145.0.3800.53".
-
+* Add check "Use Single Sign On".
+ 
 ## 2025/10/01:TomislavMatas: v4.38.143
 * Use `chromedriver.exe` version "143.0.7499.40".
 * Use `msedgedriver.exe` version "143.0.3650.46".

@@ -83,6 +83,11 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetUserSettings().ASESPunchDeviation;
         }
 
+        private bool GetASESuseSso()
+        {
+            return this.WorkerConfig.GetUserSettings().UseSSO;
+        }
+
         private List<TimePair> GetTimePairListDefault()
         {
             try

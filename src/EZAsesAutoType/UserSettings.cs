@@ -5,6 +5,8 @@
 // Wrapper for "userSettings". 
 //
 // Revision History:
+// 2026/02/12:TomislavMatas: v4.38.1450
+// * Add UserSetting "UseSSO", tied to "checkBox_Sso".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
 // * Add UserSetting "DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
@@ -78,6 +80,15 @@ namespace EZAsesAutoType
         /// punch in and punch out times.
         /// </summary>
         public int ASESPunchDeviation;
+        /// <summary>
+        /// Recently the company added automatically performed 
+        /// "Single Sign-On (SSO)" as soon as the respective 
+        /// base URL is accessed. This setting allows to control,
+        /// if this app shall still try to type Username and Password
+        /// into the respective fields, or if it shall just wait 
+        /// for the SSO to complete.
+        /// </summary>
+        public bool UseSSO;
         #endregion
 
         /// <summary>
@@ -102,6 +113,7 @@ namespace EZAsesAutoType
             this.DoPunch = true;
             this.DoLogout = true;
             this.ASESPunchDeviation = 60;
+            this.UseSSO = true;
         }
 
         /// <summary>
@@ -137,6 +149,7 @@ namespace EZAsesAutoType
                 this.DoPunch            = Properties.Settings.Default.ASESDoPunch;
                 this.DoLogout           = Properties.Settings.Default.ASESDoLogout;
                 this.ASESPunchDeviation = Properties.Settings.Default.ASESPunchDeviation;
+                this.UseSSO             = Properties.Settings.Default.ASESUseSSO;
                 return true;
             }
             catch (Exception ex)
@@ -175,6 +188,7 @@ namespace EZAsesAutoType
                 Properties.Settings.Default.ASESDoPunch        = this.DoPunch;
                 Properties.Settings.Default.ASESDoLogout       = this.DoLogout;
                 Properties.Settings.Default.ASESPunchDeviation = this.ASESPunchDeviation;
+                Properties.Settings.Default.ASESUseSSO         = this.UseSSO;
                 Properties.Settings.Default.Save();
                 return true;
             }

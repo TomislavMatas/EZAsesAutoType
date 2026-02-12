@@ -12,7 +12,7 @@ namespace EZAsesAutoType.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -73,37 +73,36 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
-            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
-            "tring>01-Zentrale Cargo</string>\r\n  <string>02-Erfurt Test</string>\r\n  <string>0" +
-            "3-DB Konzernleitung</string>\r\n  <string>04-P-Zentrale</string>\r\n  <string>05-Ffm" +
-            "/Fernverk.</string>\r\n  <string>06-DB-Systel</string>\r\n  <string>07-Agv MoVe</str" +
-            "ing>\r\n  <string>08-DB InfraGO BZ S-B. Berlin</string>\r\n  <string>09-Ffm/Karlstr." +
-            "</string>\r\n  <string>10-DB Sicherheit</string>\r\n  <string>11-Frankfurt Stephenso" +
-            "n</string>\r\n  <string>12-TARIS-SST-Test</string>\r\n  <string>13-Hannover</string>" +
-            "\r\n  <string>14-Hamburg</string>\r\n  <string>15-DB Systemtechnik</string>\r\n  <stri" +
-            "ng>16-München</string>\r\n  <string>17-Berlin sonstige</string>\r\n  <string>18-DB R" +
-            "egio</string>\r\n  <string>19-Nürnberg</string>\r\n  <string>20-Wuppertal</string>\r\n" +
-            "  <string>21-DBS KT</string>\r\n  <string>22-JobService</string>\r\n  <string>23-Mün" +
-            "chen Richelstr.</string>\r\n  <string>24-Cargo Zentrale</string>\r\n  <string>25-FTZ" +
-            "</string>\r\n  <string>26-Stuttgart</string>\r\n  <string>27-Saarbrücken</string>\r\n " +
-            " <string>28-DB RegioNetz SOB</string>\r\n  <string>29-Witten Werk</string>\r\n  <str" +
-            "ing>30-DB Regio BWB</string>\r\n  <string>31-Nürnberg Hbf</string>\r\n  <string>32-D" +
-            "B Immobilien</string>\r\n  <string>33-DB T/B</string>\r\n  <string>34-SSC Buchhaltun" +
-            "g</string>\r\n  <string>35-Bildung</string>\r\n  <string>36-KS Duisburg</string>\r\n  " +
-            "<string>37-Cargo NL Ffm</string>\r\n  <string>38-Netz Ffm</string>\r\n  <string>39-D" +
-            "B Cargo-Werke</string>\r\n  <string>40-ICE-BW München</string>\r\n  <string>41-R&amp" +
-            ";T Region</string>\r\n  <string>42-Gastronomie (DBG)</string>\r\n  <string>43-DB Ene" +
-            "rgie</string>\r\n  <string>44-DBS Süd</string>\r\n  <string>45-DB Regio Nord</string" +
-            ">\r\n  <string>46-DB Fernverkehr ICE</string>\r\n  <string>47-DB Service</string>\r\n " +
-            " <string>48-DB Sicherheit</string>\r\n  <string>49-DB Stiftung</string>\r\n  <string" +
-            ">50-DB Vertrieb</string>\r\n  <string>51-DB Connect</string>\r\n  <string>52-DB Fahr" +
-            "zeuginstandhaltung</string>\r\n  <string>53-DB Regio Mitte</string>\r\n  <string>54-" +
-            "DB InfraGO AG (S&amp;S)</string>\r\n  <string>55-DB Regio NO</string>\r\n  <string>5" +
-            "6-DB E&amp;C</string>\r\n  <string>57-DB Regio Bayern</string>\r\n  <string>58-DB Re" +
-            "gio SO</string>\r\n  <string>59-DB Regio NRW</string>\r\n  <string>60-DB Fern TL</st" +
-            "ring>\r\n  <string>61-DB Cargo</string>\r\n  <string>90-DB Personalservice</string>\r" +
-            "\n  <string>DB-Schulung</string>\r\n</ArrayOfString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<ArrayOfString xmlns:xsd=\"http://www.w3.o" +
+            "rg/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n  <str" +
+            "ing>01-Zentrale Cargo</string>\n  <string>02-Erfurt Test</string>\n  <string>03-DB" +
+            " Konzernleitung</string>\n  <string>04-P-Zentrale</string>\n  <string>05-Ffm/Fernv" +
+            "erk.</string>\n  <string>06-DB-Systel</string>\n  <string>07-Agv MoVe</string>\n  <" +
+            "string>08-DB InfraGO BZ S-B. Berlin</string>\n  <string>09-Ffm/Karlstr.</string>\n" +
+            "  <string>10-DB Sicherheit</string>\n  <string>11-Frankfurt Stephenson</string>\n " +
+            " <string>12-TARIS-SST-Test</string>\n  <string>13-Hannover</string>\n  <string>14-" +
+            "Hamburg</string>\n  <string>15-DB Systemtechnik</string>\n  <string>16-München</st" +
+            "ring>\n  <string>17-Berlin sonstige</string>\n  <string>18-DB Regio</string>\n  <st" +
+            "ring>19-Nürnberg</string>\n  <string>20-Wuppertal</string>\n  <string>21-DBS KT</s" +
+            "tring>\n  <string>22-JobService</string>\n  <string>23-München Richelstr.</string>" +
+            "\n  <string>24-Cargo Zentrale</string>\n  <string>25-FTZ</string>\n  <string>26-Stu" +
+            "ttgart</string>\n  <string>27-Saarbrücken</string>\n  <string>28-DB RegioNetz SOB<" +
+            "/string>\n  <string>29-Witten Werk</string>\n  <string>30-DB Regio BWB</string>\n  " +
+            "<string>31-Nürnberg Hbf</string>\n  <string>32-DB Immobilien</string>\n  <string>3" +
+            "3-DB T/B</string>\n  <string>34-SSC Buchhaltung</string>\n  <string>35-Bildung</st" +
+            "ring>\n  <string>36-KS Duisburg</string>\n  <string>37-Cargo NL Ffm</string>\n  <st" +
+            "ring>38-Netz Ffm</string>\n  <string>39-DB Cargo-Werke</string>\n  <string>40-ICE-" +
+            "BW München</string>\n  <string>41-R&amp;T Region</string>\n  <string>42-Gastronomi" +
+            "e (DBG)</string>\n  <string>43-DB Energie</string>\n  <string>44-DBS Süd</string>\n" +
+            "  <string>45-DB Regio Nord</string>\n  <string>46-DB Fernverkehr ICE</string>\n  <" +
+            "string>47-DB Service</string>\n  <string>48-DB Sicherheit</string>\n  <string>49-D" +
+            "B Stiftung</string>\n  <string>50-DB Vertrieb</string>\n  <string>51-DB Connect</s" +
+            "tring>\n  <string>52-DB Fahrzeuginstandhaltung</string>\n  <string>53-DB Regio Mit" +
+            "te</string>\n  <string>54-DB InfraGO AG (S&amp;S)</string>\n  <string>55-DB Regio " +
+            "NO</string>\n  <string>56-DB E&amp;C</string>\n  <string>57-DB Regio Bayern</strin" +
+            "g>\n  <string>58-DB Regio SO</string>\n  <string>59-DB Regio NRW</string>\n  <strin" +
+            "g>60-DB Fern TL</string>\n  <string>61-DB Cargo</string>\n  <string>90-DB Personal" +
+            "service</string>\n  <string>DB-Schulung</string>\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ASESClientList {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ASESClientList"]));
@@ -127,9 +126,9 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
-            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
-            "tring>Deutsch</string>\r\n  <string>English</string>\r\n</ArrayOfString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<ArrayOfString xmlns:xsd=\"http://www.w3.o" +
+            "rg/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n  <str" +
+            "ing>Deutsch</string>\n  <string>English</string>\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ASESLanguageList {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ASESLanguageList"]));
@@ -165,10 +164,10 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
-            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
-            "tring>Chrome</string>\r\n  <string>Edge</string>\r\n  <string>Firefox</string>\r\n</Ar" +
-            "rayOfString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<ArrayOfString xmlns:xsd=\"http://www.w3.o" +
+            "rg/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n  <str" +
+            "ing>Chrome</string>\n  <string>Edge</string>\n  <string>Firefox</string>\n</ArrayOf" +
+            "String>")]
         public global::System.Collections.Specialized.StringCollection WebDriverList {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["WebDriverList"]));
@@ -259,6 +258,18 @@ namespace EZAsesAutoType.Properties {
             }
             set {
                 this["ASESPunchDeviation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ASESUseSSO {
+            get {
+                return ((bool)(this["ASESUseSSO"]));
+            }
+            set {
+                this["ASESUseSSO"] = value;
             }
         }
     }

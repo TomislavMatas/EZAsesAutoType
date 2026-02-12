@@ -5,6 +5,8 @@
 // Project specific constants. 
 //
 // Revision History: 
+// 2026/02/12:TomislavMatas: v4.38.1450
+// * Add "CommandlineArg_UseSso".
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Add "Client_DbSystel" and "Client_DbCargo".
 // 2024/08/06:TomislavMatas: Version "1.127.1"
@@ -252,6 +254,11 @@ namespace EZAsesAutoType
         /// Do automated logout after time pair punches. 
         /// </summary>
         public const string CommandlineArg_DoLogout = "/dologout";
+
+        /// <summary>
+        /// Indicate that SSO (Single Sign On) should be used for login.
+        /// </summary>
+        public const string CommandlineArg_UseSso = "/sso";
 
         public const string Client_DbSystel ="06-DB-Systel";
         public const string Client_DbCargo = "24-Cargo Zentrale";

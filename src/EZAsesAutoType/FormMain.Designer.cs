@@ -72,6 +72,7 @@ namespace EZAsesAutoType
             textBox_Deviation = new TextBox();
             label_Deviation = new Label();
             label3 = new Label();
+            checkBox_Sso = new CheckBox();
             SuspendLayout();
             // 
             // btnRun
@@ -79,10 +80,10 @@ namespace EZAsesAutoType
             btnRun.BackColor = Color.Gray;
             btnRun.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRun.ForeColor = Color.White;
-            btnRun.Location = new Point(215, 183);
+            btnRun.Location = new Point(251, 188);
             btnRun.Margin = new Padding(1, 2, 1, 2);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(96, 32);
+            btnRun.Size = new Size(94, 39);
             btnRun.TabIndex = 30;
             btnRun.Text = "Run";
             btnRun.UseVisualStyleBackColor = false;
@@ -93,13 +94,13 @@ namespace EZAsesAutoType
             textBoxUrl.Location = new Point(74, 13);
             textBoxUrl.Margin = new Padding(1, 2, 1, 2);
             textBoxUrl.Name = "textBoxUrl";
-            textBoxUrl.Size = new Size(336, 23);
+            textBoxUrl.Size = new Size(335, 23);
             textBoxUrl.TabIndex = 40;
             textBoxUrl.Text = "https://ases.noncd.rz.db.de/SES/html?ClientNo=06";
             // 
             // textBoxUid
             // 
-            textBoxUid.Location = new Point(74, 42);
+            textBoxUid.Location = new Point(74, 46);
             textBoxUid.Margin = new Padding(1, 2, 1, 2);
             textBoxUid.Name = "textBoxUid";
             textBoxUid.Size = new Size(123, 23);
@@ -108,7 +109,7 @@ namespace EZAsesAutoType
             // 
             // textBoxPwd
             // 
-            textBoxPwd.Location = new Point(287, 42);
+            textBoxPwd.Location = new Point(287, 46);
             textBoxPwd.Margin = new Padding(1, 2, 1, 2);
             textBoxPwd.Name = "textBoxPwd";
             textBoxPwd.PasswordChar = '*';
@@ -119,7 +120,7 @@ namespace EZAsesAutoType
             // 
             // textBoxPunchInAM
             // 
-            textBoxPunchInAM.Location = new Point(287, 103);
+            textBoxPunchInAM.Location = new Point(287, 107);
             textBoxPunchInAM.Margin = new Padding(1, 2, 1, 2);
             textBoxPunchInAM.MaxLength = 5;
             textBoxPunchInAM.Name = "textBoxPunchInAM";
@@ -132,7 +133,7 @@ namespace EZAsesAutoType
             // 
             // textBoxPunchOutAM
             // 
-            textBoxPunchOutAM.Location = new Point(349, 103);
+            textBoxPunchOutAM.Location = new Point(349, 107);
             textBoxPunchOutAM.Margin = new Padding(1, 2, 1, 2);
             textBoxPunchOutAM.MaxLength = 5;
             textBoxPunchOutAM.Name = "textBoxPunchOutAM";
@@ -160,7 +161,7 @@ namespace EZAsesAutoType
             labelUid.AutoSize = true;
             labelUid.BackColor = Color.Transparent;
             labelUid.ForeColor = Color.White;
-            labelUid.Location = new Point(8, 46);
+            labelUid.Location = new Point(8, 50);
             labelUid.Margin = new Padding(1, 0, 1, 0);
             labelUid.Name = "labelUid";
             labelUid.Size = new Size(44, 15);
@@ -172,7 +173,7 @@ namespace EZAsesAutoType
             labelPwd.AutoSize = true;
             labelPwd.BackColor = Color.Transparent;
             labelPwd.ForeColor = Color.White;
-            labelPwd.Location = new Point(216, 46);
+            labelPwd.Location = new Point(216, 50);
             labelPwd.Margin = new Padding(1, 0, 1, 0);
             labelPwd.Name = "labelPwd";
             labelPwd.Size = new Size(60, 15);
@@ -184,7 +185,7 @@ namespace EZAsesAutoType
             labelPunchIn1.AutoSize = true;
             labelPunchIn1.BackColor = Color.Transparent;
             labelPunchIn1.ForeColor = Color.White;
-            labelPunchIn1.Location = new Point(215, 106);
+            labelPunchIn1.Location = new Point(215, 110);
             labelPunchIn1.Margin = new Padding(1, 0, 1, 0);
             labelPunchIn1.Name = "labelPunchIn1";
             labelPunchIn1.Size = new Size(61, 15);
@@ -196,7 +197,7 @@ namespace EZAsesAutoType
             comboBoxClientNo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxClientNo.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBoxClientNo.FormattingEnabled = true;
-            comboBoxClientNo.Location = new Point(74, 71);
+            comboBoxClientNo.Location = new Point(74, 75);
             comboBoxClientNo.Margin = new Padding(1, 2, 1, 2);
             comboBoxClientNo.Name = "comboBoxClientNo";
             comboBoxClientNo.Size = new Size(123, 23);
@@ -211,7 +212,7 @@ namespace EZAsesAutoType
             labelClientNo.AutoSize = true;
             labelClientNo.BackColor = Color.Transparent;
             labelClientNo.ForeColor = Color.White;
-            labelClientNo.Location = new Point(8, 75);
+            labelClientNo.Location = new Point(8, 79);
             labelClientNo.Margin = new Padding(1, 0, 1, 0);
             labelClientNo.Name = "labelClientNo";
             labelClientNo.Size = new Size(41, 15);
@@ -222,7 +223,7 @@ namespace EZAsesAutoType
             // 
             comboBoxWebDriver.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxWebDriver.FormattingEnabled = true;
-            comboBoxWebDriver.Location = new Point(74, 187);
+            comboBoxWebDriver.Location = new Point(74, 191);
             comboBoxWebDriver.Margin = new Padding(1, 2, 1, 2);
             comboBoxWebDriver.Name = "comboBoxWebDriver";
             comboBoxWebDriver.Size = new Size(123, 23);
@@ -235,7 +236,7 @@ namespace EZAsesAutoType
             labelWebDriverVersion.BackColor = Color.Transparent;
             labelWebDriverVersion.Font = new Font("Segoe UI", 9F);
             labelWebDriverVersion.ForeColor = Color.White;
-            labelWebDriverVersion.Location = new Point(73, 212);
+            labelWebDriverVersion.Location = new Point(73, 216);
             labelWebDriverVersion.Margin = new Padding(1, 0, 1, 0);
             labelWebDriverVersion.Name = "labelWebDriverVersion";
             labelWebDriverVersion.Size = new Size(115, 15);
@@ -246,7 +247,7 @@ namespace EZAsesAutoType
             // 
             comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxLanguage.FormattingEnabled = true;
-            comboBoxLanguage.Location = new Point(287, 71);
+            comboBoxLanguage.Location = new Point(287, 75);
             comboBoxLanguage.Margin = new Padding(3, 2, 3, 2);
             comboBoxLanguage.Name = "comboBoxLanguage";
             comboBoxLanguage.Size = new Size(123, 23);
@@ -257,7 +258,7 @@ namespace EZAsesAutoType
             labelLanguage.AutoSize = true;
             labelLanguage.BackColor = Color.Transparent;
             labelLanguage.ForeColor = Color.White;
-            labelLanguage.Location = new Point(216, 75);
+            labelLanguage.Location = new Point(216, 79);
             labelLanguage.Margin = new Padding(1, 0, 1, 0);
             labelLanguage.Name = "labelLanguage";
             labelLanguage.Size = new Size(62, 15);
@@ -275,10 +276,10 @@ namespace EZAsesAutoType
             btnCancel.Enabled = false;
             btnCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(316, 183);
+            btnCancel.Location = new Point(352, 188);
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(96, 32);
+            btnCancel.Size = new Size(94, 39);
             btnCancel.TabIndex = 35;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
@@ -287,7 +288,7 @@ namespace EZAsesAutoType
             // 
             // textBoxPunchInPM
             // 
-            textBoxPunchInPM.Location = new Point(287, 127);
+            textBoxPunchInPM.Location = new Point(287, 131);
             textBoxPunchInPM.Margin = new Padding(1, 2, 1, 2);
             textBoxPunchInPM.MaxLength = 21;
             textBoxPunchInPM.Name = "textBoxPunchInPM";
@@ -300,7 +301,7 @@ namespace EZAsesAutoType
             // 
             // textBoxPunchOutPM
             // 
-            textBoxPunchOutPM.Location = new Point(349, 127);
+            textBoxPunchOutPM.Location = new Point(349, 131);
             textBoxPunchOutPM.Margin = new Padding(1, 2, 1, 2);
             textBoxPunchOutPM.MaxLength = 22;
             textBoxPunchOutPM.Name = "textBoxPunchOutPM";
@@ -317,7 +318,7 @@ namespace EZAsesAutoType
             checkBox_DoLogin.BackColor = Color.Transparent;
             checkBox_DoLogin.FlatAppearance.BorderSize = 2;
             checkBox_DoLogin.ForeColor = Color.White;
-            checkBox_DoLogin.Location = new Point(74, 103);
+            checkBox_DoLogin.Location = new Point(74, 107);
             checkBox_DoLogin.MinimumSize = new Size(123, 23);
             checkBox_DoLogin.Name = "checkBox_DoLogin";
             checkBox_DoLogin.Size = new Size(123, 23);
@@ -331,7 +332,7 @@ namespace EZAsesAutoType
             checkBox_DoPunch.AutoSize = true;
             checkBox_DoPunch.BackColor = Color.Transparent;
             checkBox_DoPunch.ForeColor = Color.White;
-            checkBox_DoPunch.Location = new Point(74, 127);
+            checkBox_DoPunch.Location = new Point(74, 131);
             checkBox_DoPunch.MinimumSize = new Size(123, 23);
             checkBox_DoPunch.Name = "checkBox_DoPunch";
             checkBox_DoPunch.Size = new Size(123, 23);
@@ -345,7 +346,7 @@ namespace EZAsesAutoType
             labelPunchIn2.AutoSize = true;
             labelPunchIn2.BackColor = Color.Transparent;
             labelPunchIn2.ForeColor = Color.White;
-            labelPunchIn2.Location = new Point(215, 130);
+            labelPunchIn2.Location = new Point(215, 134);
             labelPunchIn2.Margin = new Padding(1, 0, 1, 0);
             labelPunchIn2.Name = "labelPunchIn2";
             labelPunchIn2.Size = new Size(61, 15);
@@ -357,7 +358,7 @@ namespace EZAsesAutoType
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
             label1.ForeColor = Color.White;
-            label1.Location = new Point(8, 190);
+            label1.Location = new Point(8, 194);
             label1.Margin = new Padding(1, 0, 1, 0);
             label1.Name = "label1";
             label1.Size = new Size(52, 15);
@@ -370,7 +371,7 @@ namespace EZAsesAutoType
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Segoe UI", 9F);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(8, 212);
+            label2.Location = new Point(8, 216);
             label2.Margin = new Padding(1, 0, 1, 0);
             label2.Name = "label2";
             label2.Size = new Size(41, 15);
@@ -382,7 +383,7 @@ namespace EZAsesAutoType
             checkBox_DoLogout.AutoSize = true;
             checkBox_DoLogout.BackColor = Color.Transparent;
             checkBox_DoLogout.ForeColor = Color.White;
-            checkBox_DoLogout.Location = new Point(74, 151);
+            checkBox_DoLogout.Location = new Point(74, 155);
             checkBox_DoLogout.MinimumSize = new Size(123, 23);
             checkBox_DoLogout.Name = "checkBox_DoLogout";
             checkBox_DoLogout.Size = new Size(123, 23);
@@ -393,7 +394,7 @@ namespace EZAsesAutoType
             // 
             // textBox_Deviation
             // 
-            textBox_Deviation.Location = new Point(287, 151);
+            textBox_Deviation.Location = new Point(287, 155);
             textBox_Deviation.Margin = new Padding(1, 2, 1, 2);
             textBox_Deviation.MaxLength = 2;
             textBox_Deviation.Name = "textBox_Deviation";
@@ -409,7 +410,7 @@ namespace EZAsesAutoType
             label_Deviation.AutoSize = true;
             label_Deviation.BackColor = Color.Transparent;
             label_Deviation.ForeColor = Color.White;
-            label_Deviation.Location = new Point(215, 154);
+            label_Deviation.Location = new Point(215, 158);
             label_Deviation.Margin = new Padding(1, 0, 1, 0);
             label_Deviation.Name = "label_Deviation";
             label_Deviation.Size = new Size(60, 15);
@@ -421,12 +422,27 @@ namespace EZAsesAutoType
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
             label3.ForeColor = Color.White;
-            label3.Location = new Point(349, 154);
+            label3.Location = new Point(349, 158);
             label3.Margin = new Padding(1, 0, 1, 0);
             label3.Name = "label3";
-            label3.Size = new Size(60, 15);
+            label3.Size = new Size(50, 15);
             label3.TabIndex = 100;
             label3.Text = "minutes";
+            // 
+            // checkBox_Sso
+            // 
+            checkBox_Sso.AutoSize = true;
+            checkBox_Sso.BackColor = Color.Transparent;
+            checkBox_Sso.FlatAppearance.BorderSize = 2;
+            checkBox_Sso.ForeColor = Color.White;
+            checkBox_Sso.Location = new Point(413, 13);
+            checkBox_Sso.MinimumSize = new Size(50, 23);
+            checkBox_Sso.Name = "checkBox_Sso";
+            checkBox_Sso.Size = new Size(50, 23);
+            checkBox_Sso.TabIndex = 41;
+            checkBox_Sso.Text = "SSO";
+            checkBox_Sso.UseVisualStyleBackColor = false;
+            checkBox_Sso.CheckedChanged += checkBox_Sso_CheckedChanged;
             // 
             // FormMain
             // 
@@ -436,7 +452,8 @@ namespace EZAsesAutoType
             BackgroundImage = Properties.Resources.atoss_504x306;
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnCancel;
-            ClientSize = new Size(424, 233);
+            ClientSize = new Size(467, 244);
+            Controls.Add(checkBox_Sso);
             Controls.Add(label3);
             Controls.Add(label_Deviation);
             Controls.Add(textBox_Deviation);
@@ -510,5 +527,6 @@ namespace EZAsesAutoType
         private TextBox textBox_Deviation;
         private Label label_Deviation;
         private Label label3;
+        private CheckBox checkBox_Sso;
     }
 }
