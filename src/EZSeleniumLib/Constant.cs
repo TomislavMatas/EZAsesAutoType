@@ -8,6 +8,9 @@
 // 2026/02/12:TomislavMatas: v4.38.1450:
 // * Use `chromedriver.exe` version "145.0.7632.45".
 // * Use `msedgedriver.exe` version "145.0.3800.53".
+// 2026/02/12:TomislavMatas: v4.38.1440:
+// * Use `chromedriver.exe` version "144.0.7559.133".
+// * Use `msedgedriver.exe` version "144.0.3719.115".
 // 2025/12/01:TomislavMatas: v4.38.143:
 // * Use `chromedriver.exe` version "143.0.7499.40".
 // * Use `msedgedriver.exe` version "143.0.3650.46".
@@ -85,7 +88,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverChromeVersion = "145.0.7632.45";
+        public const string WebDriverChromeVersion = "144.0.7559.133";
         
         #endregion
 
@@ -104,7 +107,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverEdgeVersion = "145.0.3800.53";
+        public const string WebDriverEdgeVersion = "144.0.3719.115";
 
         #endregion
 

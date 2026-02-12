@@ -3,7 +3,7 @@
 // File: "FormMain.cs"
 //
 // Revision History:
-// 2026/02/12:TomislavMatas: v4.38.1450
+// 2026/02/12:TomislavMatas: v4.38.1440
 // * Add control "checkBox_Sso".
 // 2024/08/05:TomislavMatas: Version "1.127.1"
 // * Add new control "checkBox_DoLogout".
