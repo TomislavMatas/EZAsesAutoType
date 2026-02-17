@@ -12,7 +12,9 @@
 // -->< https://stackoverflow.com/questions/49866334/c-sharp-selenium-expectedconditions-is-obsolete >
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
-// Revision History: 
+// Revision History:
+// 2025/08/08:TomislavMatas: Version "4.32.1"
+// * Add `DecorateArgument`.
 // 2024/07/05:TomislavMatas: Version "4.22.3"
 // * Add "ClearElementWithRetry" as wrapper for "IWebElement.Clear()".
 //   to mitigate "stale element reference" errors.
@@ -41,6 +43,8 @@ using System.Text.RegularExpressions;
 using log4net;
 
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace EZSeleniumLib
 {
@@ -200,7 +204,7 @@ namespace EZSeleniumLib
         /// </summary>
         protected string GetArgScriptPID()
         {
-            string argScriptPID = String.Format("{0}{1}{2}", GetArgPrefix(), Consts.ARG_SCRIPTPID, GetScriptPID());
+            string argScriptPID = DecorateArgument(String.Format("{0}{1}", Consts.ARG_SCRIPTPID, GetScriptPID()));
             return argScriptPID;
         }
 
@@ -213,6 +217,18 @@ namespace EZSeleniumLib
         /// Get the browser specific executable process name.
         /// </summary>
         protected abstract string GetProcessName();
+
+        /// <summary>
+        /// Decorate the argument with browser specific prefix. The prefix can 
+        /// be either "--", "-", "/" or "" depending on browser implementation. 
+        /// </summary>
+        /// <param name="argument"></param>
+        /// <returns></returns>
+        protected string DecorateArgument(string argument)
+        {
+            string prefix = this.GetArgPrefix();
+            return string.Format("{0}{1}", prefix, argument);
+        }
 
         #endregion
 
@@ -252,7 +268,7 @@ namespace EZSeleniumLib
                     foreach (ManagementObject commandLineObject in commandLineSearcher.Get())
                         commandLine += (String)commandLineObject["CommandLine"];
 
-                    string argPart = String.Format("{0}{1}", this.GetArgPrefix(), Consts.ARG_SCRIPTPID);
+                    string argPart = DecorateArgument(Consts.ARG_SCRIPTPID);
                     string regExp = String.Format("{0}(.+?) ", argPart);
                     String pidStr = (new Regex(regExp)).Match(commandLine).Groups[1].Value;
                     if (!pidStr.Equals(String.Empty) && Convert.ToInt32(pidStr).Equals(scriptPID))
@@ -644,7 +660,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
                 WebDriver? driver = this.GetDriver();
                 if (driver == null)
-                    throw new Exception(nameof(driver) + " is null");
+                    throw new ArgumentNullException(nameof(driver));
 
                 bool result = false;
                 int attempts = 0;
@@ -677,6 +693,48 @@ namespace EZSeleniumLib
                     }
                 }
                 return result;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Consts.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Wait for a specifc element to become visible.
+        /// Utilizes `SeleniumExtras.WaitHelpers.ExpectedConditions`
+        /// from NuGet package `DotNetSeleniumExtras.WaitHelpers`.
+        /// </summary>
+        /// <param name="by"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public bool WaitForElement(By by, int timeout)
+        {
+            try
+            {
+                LogTrace(Consts.LogStart);
+                WebDriver? driver = this.GetDriver();
+                if (driver == null)
+                    throw new ArgumentNullException(nameof(driver));
+
+                Log.Info(string.Format("Waiting {0} seconds for element `{1}` to become visible ...", timeout, by.Criteria));
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+
+                Func<IWebDriver, IWebElement> expectedCondition = ExpectedConditions.ElementIsVisible(by);
+                IWebElement element = wait.Until(expectedCondition);
+                Log.Info(string.Format("Waiting {0} seconds for element `{1}` to become visible OK", timeout, by.Criteria));
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                Log.Info(string.Format("Waiting {0} seconds for element `{1}` to become visible FAILED", timeout, by.Criteria));
+                return false;
             }
             catch (Exception ex)
             {

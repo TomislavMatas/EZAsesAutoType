@@ -206,6 +206,9 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
+                if(this.Driver == null)
+                    throw new ArgumentNullException(nameof(this.Driver));
+
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(element).Perform();
                 Thread.Sleep(this.GetDelay());
@@ -233,9 +236,13 @@ namespace EZSeleniumLib
             {
                 LogTrace(Consts.LogStart);
                 if(element==null)
-                    throw new ArgumentNullException(nameof(element)); 
+                    throw new ArgumentNullException(nameof(element));
 
                 object? result = this.ExecuteScript("arguments[0].scrollIntoView(true);", element);
+
+                if (this.Driver == null)
+                    throw new ArgumentNullException(nameof(this.Driver));
+
                 Actions actions = new Actions(Driver);
                 actions.MoveToElement(element).Perform();
                 Thread.Sleep(this.GetDelay());

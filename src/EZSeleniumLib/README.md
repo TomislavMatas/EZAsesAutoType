@@ -44,7 +44,18 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
-## 2025/08/07:TomislavMatas: v4.34.141
+## 2025/12/01:TomislavMatas: v4.38.143
+* Use `chromedriver.exe` version "143.0.7499.40".
+* Use `msedgedriver.exe` version "143.0.3650.46".
+* Use `Selenium.Support` version "4.38.0".
+* Use `Selenium.WebDriver` version "4.38.0".
+* Use `System.Management` version "10.0.0".
+
+## 2025/10/01:TomislavMatas: v4.34.143
+* Add `DotNetSeleniumExtras.WaitHelpers` version "3.11.0".
+* Implement browser specific startup argument `disable-build-check`.
+
+## 2025/10/01:TomislavMatas: v4.34.141
 * Update "chromedriver.exe" to version "141.0.7390.54".
 * Update "msedgedriver.exe" to version "141.0.3537.44".
 
@@ -63,13 +74,18 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 * Update "log4net" to version "3.1.0".
 * Update "System.Management" to version="9.0.5".
 
-## 2025/04/10:TomislavMatas: v4.31.1
-* Google finally decided to compile executable "chromedriver.exe"
-  with version info resource, so read version from executable.
+## 2025/08/08:TomislavMatas: v4.32.1
+* Use `log4net` version "3.1.0".
+* Add `DotNetSeleniumExtras.WaitHelpers` version "3.11.0".
+* Update "chromedriver.exe" to version "139.0.7258.66_x64".
+* Update "msedgedriver.exe" to version "139.0.3405.73_x64".
 
-## 2025/04/10:TomislavMatas: v4.31.0
-* Update "Selenium.Support" to version "4.31.0".
-* Update "Selenium.WebDriver" to version "4.31.0".
+## 2025/05/08:TomislavMatas: Version "4.32.0"
+* Update "Selenium.Support" to version "4.32.0".
+* Update "Selenium.WebDriver" to version="4.32.0".
+* Update "chromedriver.exe" to version "136.0.7103.92".
+* Update "msedgedriver.exe" to version "136.0.3240.50".
+* Update "geckodriver.exe"  to version "0.36.0".
 * Update "System.Management" to version "9.0.4".
 * Update "System.Text.Json" to version= 9.0.4".
 * Update "log4net" to version "3.0.4".

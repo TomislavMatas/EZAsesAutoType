@@ -12,6 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2025/08/08:TomislavMatas: Version "4.32.1"
+// * Implement usage of `DecorateArgument`.
+// * Add startup argument `disable-build-check`.
 // 2024/07/26:TomislavMatas: Version "4.22.4"
 // * Implement handling of browser specific "App.config"
 //   setting "EZSeleniumLib.Browser.AdditionalOptions.Firefox".
@@ -126,9 +129,9 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
- 
+
                 string initMode = this.BrowserOptions.InitMode;
-                if(String.IsNullOrEmpty(initMode))
+                if (String.IsNullOrEmpty(initMode))
                     throw new Exception("InitMode invalid");
 
                 if (Consts.INITMODE_SIMPLE.Equals(initMode, StringComparison.OrdinalIgnoreCase))
@@ -165,7 +168,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 FirefoxOptions? options = GetDriverOptions();
-                if (options==null)
+                if (options == null)
                     throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
                 this._driver = new FirefoxDriver(options);
@@ -294,13 +297,14 @@ namespace EZSeleniumLib
 
                 #region Startup Arguments
 
-                string argPfx = this.GetArgPrefix();
+                options.AddArgument(DecorateArgument("disable-build-check"));
+
 // #TODO:       if (DisableGPU)
-// #TODO:          options.AddArguments(String.Format("{0}disable-gpu", argPfx));
+// #TODO:          options.AddArguments(DecorateArgument("disable-gpu"));
 
                 bool preciseMemoryInfo = this.BrowserOptions.PreciseMemoryInfo;
                 if (preciseMemoryInfo)
-                    options.AddArgument(String.Format("{0}enable-precise-memory-info", argPfx));
+                    options.AddArgument(DecorateArgument("enable-precise-memory-info"));
 
                 int scriptPID = this.BrowserOptions.ScriptPID;
                 if (scriptPID > 0)
@@ -640,7 +644,11 @@ namespace EZSeleniumLib
                 if (keysToSend == null)
                     throw new ArgumentNullException(nameof(keysToSend));
 
-                Actions actions = new Actions(this.GetWebDriver());
+                IWebDriver? webDriver = this.GetWebDriver();
+                if (webDriver == null)
+                    throw new ArgumentNullException(nameof(webDriver));
+
+                Actions actions = new Actions(webDriver);
                 actions.SendKeys(element, keysToSend).Perform();
                 Thread.Sleep(this.GetDelay());
                 return true;
