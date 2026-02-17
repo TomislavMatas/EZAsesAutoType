@@ -2,6 +2,8 @@
 // File: "Worker.AppConfig.cs"
 //
 // Revision History: 
+// 2026/02/17:TomislavMatas: v4.40.1450
+// Add "GetSsoAccountXPath" and "GetSsoSubmitXPath".
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Add "GetDateGridCanvasLoadButtonPath".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
@@ -57,6 +59,16 @@ namespace EZAsesAutoType
         private string GetLoginPagePasswordXPath()
         {
             return this.WorkerConfig.GetAppConfig().GetLoginPagePasswordXPath();
+        }
+
+        private string GetSsoAccountXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetSsoAccountXPath();
+        }
+
+        private string GetSsoSubmitXPath()
+        {
+            return this.WorkerConfig.GetAppConfig().GetSsoSubmitXPath();
         }
 
         private string GetLoginPageClientXPath()

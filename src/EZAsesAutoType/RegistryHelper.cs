@@ -2,6 +2,8 @@
 // File: "AppHandler.cs"
 //
 // Revision History: 
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * Implement "ASESUseSso" and "ASESSsoAccount" ,
 // 2024/09/26:TomislavMatas: Version "1.129.0"
 // * Make sure that version independent values from registry
 //   supersede/override version dependent values from "App.config".
@@ -118,6 +120,7 @@ namespace EZAsesAutoType
                 userSettings.ASESLanguage       = this.GetValueString(key, nameof(userSettings.ASESLanguage),       userSettings.ASESLanguage       );
                 userSettings.WebDriver          = this.GetValueString(key, nameof(userSettings.WebDriver),          userSettings.WebDriver          );
                 userSettings.ASESPunchDeviation = this.GetValueInt(key,    nameof(userSettings.ASESPunchDeviation), userSettings.ASESPunchDeviation );
+                userSettings.ASESSsoAccount     = this.GetValueString(key, nameof(userSettings.ASESSsoAccount),     userSettings.ASESSsoAccount     );
                 LoadVersionIndependentUserSettingsTimePairs(key, userSettings);
                 LoadVersionIndependentUserSettingsBoolFlags(key, userSettings);
                 return true;
@@ -151,10 +154,8 @@ namespace EZAsesAutoType
             if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogout), userSettings.DoLogout.ToString()), out userSettings.DoLogout))
                 userSettings.DoLogout = true;
 
-            if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.UseSSO), userSettings.UseSSO.ToString()), out userSettings.UseSSO))
-                userSettings.UseSSO = true;
-
-
+            if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.ASESUseSso), userSettings.ASESUseSso.ToString()), out userSettings.ASESUseSso))
+                userSettings.ASESUseSso = true;
         }
 
         /// <summary>
@@ -247,6 +248,8 @@ namespace EZAsesAutoType
                 key.SetValue(nameof(userSettings.DoPunch), userSettings.DoPunch);
                 key.SetValue(nameof(userSettings.DoLogout), userSettings.DoLogout);
                 key.SetValue(nameof(userSettings.ASESPunchDeviation), userSettings.ASESPunchDeviation);
+                key.SetValue(nameof(userSettings.ASESUseSso), userSettings.ASESUseSso);
+                key.SetValue(nameof(userSettings.ASESSsoAccount), userSettings.ASESSsoAccount);
                 return true;
             }
             catch (Exception ex)

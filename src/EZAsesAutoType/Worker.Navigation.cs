@@ -1,7 +1,9 @@
 ﻿//
 // File: "Worker.Navigation.cs"
 //
-// Revision History: 
+// Revision History:
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * Implement SSO handling.
 // 2024/11/24:TomislavMatas: Version "1.131.2"
 // * Prevent browser teardown on exception.
 // 2024/11/22:TomislavMatas: Version "1.131.2"
@@ -733,11 +735,11 @@ namespace EZAsesAutoType
                 int maxRetriesForElementOperations = this.GetMaxRetriesForElementOperations();
                 string iFrameXPath = this.GetApplicationIFrameXPath();
                 bool doLogin = this.GetWorkerConfig().GetUserSettings().DoLogin;
-                bool useSso = this.GetWorkerConfig().GetUserSettings().UseSSO;
+                bool useSso = this.GetWorkerConfig().GetUserSettings().ASESUseSso;
                 if (!useSso)
                 {
                     if (!doLogin)
-                    {   // Login automation shall not be executed.
+                    {   // Login automation with username and password shall not be executed.
                         // Raise "CancelRequested" to quit automation,
                         // but leave browser up and running.
                         // See "finally" part of this method.
@@ -763,6 +765,21 @@ namespace EZAsesAutoType
 
                     if (this.CancelRequested())
                         throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                }
+                else
+                {
+                    if (!doLogin)
+                    {   // Login automation using SSO shall not be executed.
+                        // Raise "CancelRequested" to quit automation,
+                        // but leave browser up and running.
+                        // See "finally" part of this method.
+                        Global.SetCancelRequested(true);
+                        return true;
+                    }
+
+                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
 
                 }
 

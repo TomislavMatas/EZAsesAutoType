@@ -6,6 +6,13 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2026/02/17:TomislavMatas: v4.40.1450:
+* Use `chromedriver.exe` version "145.0.7632.76".
+* Use `msedgedriver.exe` version "145.0.3800.58".
+* Use `Selenium.Support` version "4.40.0".
+* Use `Selenium.WebDriver` version "4.40.0".
+* Add Single Sign On (SSO) support.
+
 ## 2026/02/12:TomislavMatas: v4.38.1450
 * Use `chromedriver.exe` version "145.0.7632.45".
 * Use `msedgedriver.exe` version "145.0.3800.53".

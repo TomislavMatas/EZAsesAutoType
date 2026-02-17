@@ -73,6 +73,8 @@ namespace EZAsesAutoType
             label_Deviation = new Label();
             label3 = new Label();
             checkBox_Sso = new CheckBox();
+            textBox_SsoAccount = new TextBox();
+            label_SsoAccount = new Label();
             SuspendLayout();
             // 
             // btnRun
@@ -161,7 +163,7 @@ namespace EZAsesAutoType
             labelUid.AutoSize = true;
             labelUid.BackColor = Color.Transparent;
             labelUid.ForeColor = Color.White;
-            labelUid.Location = new Point(8, 50);
+            labelUid.Location = new Point(8, 49);
             labelUid.Margin = new Padding(1, 0, 1, 0);
             labelUid.Name = "labelUid";
             labelUid.Size = new Size(44, 15);
@@ -444,6 +446,27 @@ namespace EZAsesAutoType
             checkBox_Sso.UseVisualStyleBackColor = false;
             checkBox_Sso.CheckedChanged += checkBox_Sso_CheckedChanged;
             // 
+            // textBox_SsoAccount
+            // 
+            textBox_SsoAccount.Location = new Point(74, 46);
+            textBox_SsoAccount.Margin = new Padding(1, 2, 1, 2);
+            textBox_SsoAccount.Name = "textBox_SsoAccount";
+            textBox_SsoAccount.Size = new Size(335, 23);
+            textBox_SsoAccount.TabIndex = 101;
+            textBox_SsoAccount.Text = "ChangeIt!";
+            // 
+            // label_SsoAccount
+            // 
+            label_SsoAccount.AutoSize = true;
+            label_SsoAccount.BackColor = Color.Transparent;
+            label_SsoAccount.ForeColor = Color.White;
+            label_SsoAccount.Location = new Point(10, 49);
+            label_SsoAccount.Margin = new Padding(1, 0, 1, 0);
+            label_SsoAccount.Name = "label_SsoAccount";
+            label_SsoAccount.Size = new Size(44, 15);
+            label_SsoAccount.TabIndex = 102;
+            label_SsoAccount.Text = "E-Mail:";
+            // 
             // FormMain
             // 
             AcceptButton = btnRun;
@@ -472,16 +495,18 @@ namespace EZAsesAutoType
             Controls.Add(comboBoxClientNo);
             Controls.Add(labelPunchIn1);
             Controls.Add(labelPwd);
-            Controls.Add(labelUid);
             Controls.Add(labelUrl);
             Controls.Add(textBoxPunchOutAM);
             Controls.Add(textBoxPunchInAM);
             Controls.Add(textBoxPwd);
-            Controls.Add(textBoxUid);
             Controls.Add(textBoxUrl);
             Controls.Add(btnRun);
             Controls.Add(btnCancel);
             Controls.Add(labelWebDriverVersion);
+            Controls.Add(label_SsoAccount);
+            Controls.Add(textBox_SsoAccount);
+            Controls.Add(labelUid);
+            Controls.Add(textBoxUid);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
@@ -528,5 +553,7 @@ namespace EZAsesAutoType
         private Label label_Deviation;
         private Label label3;
         private CheckBox checkBox_Sso;
+        private TextBox textBox_SsoAccount;
+        private Label label_SsoAccount;
     }
 }
