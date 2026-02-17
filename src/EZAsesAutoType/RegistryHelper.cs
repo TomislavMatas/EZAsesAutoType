@@ -4,6 +4,7 @@
 // Revision History: 
 // 2026/02/17:TomislavMatas: v4.40.1450
 // * Implement "ASESUseSso" and "ASESSsoAccount" ,
+// * Default "ASESUseSso" to "true" if not present in registry.
 // 2024/09/26:TomislavMatas: Version "1.129.0"
 // * Make sure that version independent values from registry
 //   supersede/override version dependent values from "App.config".
@@ -154,6 +155,7 @@ namespace EZAsesAutoType
             if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogout), userSettings.DoLogout.ToString()), out userSettings.DoLogout))
                 userSettings.DoLogout = true;
 
+            userSettings.ASESUseSso = true; // default value, if not present in registry
             if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.ASESUseSso), userSettings.ASESUseSso.ToString()), out userSettings.ASESUseSso))
                 userSettings.ASESUseSso = true;
         }

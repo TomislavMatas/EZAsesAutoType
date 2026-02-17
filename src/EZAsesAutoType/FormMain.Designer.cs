@@ -476,6 +476,7 @@ namespace EZAsesAutoType
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnCancel;
             ClientSize = new Size(467, 244);
+            Controls.Add(textBox_SsoAccount);
             Controls.Add(checkBox_Sso);
             Controls.Add(label3);
             Controls.Add(label_Deviation);
@@ -504,7 +505,6 @@ namespace EZAsesAutoType
             Controls.Add(btnCancel);
             Controls.Add(labelWebDriverVersion);
             Controls.Add(label_SsoAccount);
-            Controls.Add(textBox_SsoAccount);
             Controls.Add(labelUid);
             Controls.Add(textBoxUid);
             Icon = (Icon)resources.GetObject("$this.Icon");

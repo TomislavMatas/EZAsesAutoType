@@ -43,6 +43,7 @@ to automate the daily chore of utilizing the virtual punch card system
       * Use `Selenium.Support` version "4.40.0".
       * Use `Selenium.WebDriver` version "4.40.0".
       * Add Single Sign On (SSO) support.
+      * Default WebDriver is "Edge".
     </PackageReleaseNotes>
   </PropertyGroup>
 

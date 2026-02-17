@@ -12,6 +12,8 @@ Please refer to "EZSeleniumLib" project for details.
 * Use `Selenium.Support` version "4.40.0".
 * Use `Selenium.WebDriver` version "4.40.0".
 * Add Single Sign On (SSO) support.
+* Default WebDriver is "Edge".
+* Default To "Use SSO".
 
 ## 2026/02/12:TomislavMatas: v4.38.1450
 * Use `chromedriver.exe` version "145.0.7632.45".

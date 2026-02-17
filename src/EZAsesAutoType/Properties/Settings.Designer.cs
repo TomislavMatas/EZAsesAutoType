@@ -152,7 +152,7 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Chrome")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Edge")]
         public string WebDriver {
             get {
                 return ((string)(this["WebDriver"]));

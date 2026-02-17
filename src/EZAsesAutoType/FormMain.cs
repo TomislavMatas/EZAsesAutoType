@@ -220,6 +220,33 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool InitializeCheckBoxes(UserSettings userSettings)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                this.checkBox_DoLogin.Checked = userSettings.DoLogin;
+                this.checkBox_DoLogout.Checked = userSettings.DoLogout;
+                this.checkBox_DoPunch.Checked = userSettings.DoPunch;
+                this.checkBox_Sso.Checked = userSettings.ASESUseSso;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+
         private bool InitializeComboBox(ComboBox comboBox, StringCollection itemList, string defaultValue)
         {
             try
@@ -440,6 +467,9 @@ namespace EZAsesAutoType
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
 
+                if(!InitializeCheckBoxes(userSettings))
+                    throw new Exception(nameof(InitializeCheckBoxes) + Const.LogFail);
+
                 if (!InitializeComboBoxes(userSettings))
                     throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
 
@@ -494,7 +524,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = this.GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -533,7 +563,7 @@ namespace EZAsesAutoType
             return 0;
         }
 
-        private UserSettings? GetUserSettingsValuesFromControls()
+        private UserSettings? GetUserSettingValues()
         {
             try
             {
@@ -620,7 +650,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1052,7 +1082,7 @@ namespace EZAsesAutoType
             {
                 this.SaveUserSettings();
 
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = this.GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1706,7 +1736,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1733,7 +1763,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1759,7 +1789,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1785,7 +1815,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1808,7 +1838,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
