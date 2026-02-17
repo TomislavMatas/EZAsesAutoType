@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.38.143</Version>
-    <FileVersion>4.38.143</FileVersion>
-    <AssemblyVersion>4.38.143</AssemblyVersion>
+    <Version>4.38.1440</Version>
+    <FileVersion>4.38.1440</FileVersion>
+    <AssemblyVersion>4.38.1440</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -37,12 +37,10 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-      v4.38.143
-      * Use `chromedriver.exe` version "143.0.7499.40".
-      * Use `msedgedriver.exe` version "143.0.3650.46".
-      * Use `Selenium.Support` version "4.38.0".
-      * Use `Selenium.WebDriver` version "4.38.0".
-      * Use `EZSeleniumLib` version "4.38.143".
+      v4.38.1440
+      * Use `chromedriver.exe` version "144.0.7559.133".
+      * Use `msedgedriver.exe` version "144.0.3719.115".
+      * Add Single Sign On (SSO) support.
     </PackageReleaseNotes>
   </PropertyGroup>
 

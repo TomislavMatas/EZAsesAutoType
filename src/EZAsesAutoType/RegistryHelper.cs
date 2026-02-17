@@ -150,6 +150,11 @@ namespace EZAsesAutoType
 
             if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.DoLogout), userSettings.DoLogout.ToString()), out userSettings.DoLogout))
                 userSettings.DoLogout = true;
+
+            if (!bool.TryParse(this.GetValueString(key, nameof(userSettings.UseSSO), userSettings.UseSSO.ToString()), out userSettings.UseSSO))
+                userSettings.UseSSO = true;
+
+
         }
 
         /// <summary>

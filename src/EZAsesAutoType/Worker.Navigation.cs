@@ -202,9 +202,6 @@ namespace EZAsesAutoType
                     if (!browser.ClickElement(element))
                         throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
-                if (!WaitUntilMainPageHasLoaded(browser, timeoutInSeconds))
-                    throw new Exception(nameof(WaitUntilMainPageHasLoaded) + Const.LogFail);
-
                 return true;
             }
             catch (Exception ex)
@@ -732,38 +729,45 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                bool doLogin = this.GetWorkerConfig().GetUserSettings().DoLogin;
-                if (!doLogin)
-                {   // Login automation shall not be executed.
-                    // Raise "CancelRequested" to quit automation,
-                    // but leave browser up and running.
-                    // See "finally" part of this method.
-                    Global.SetCancelRequested(true);
-                    return true;
-                }
-
-                string iFrameXPath = this.GetApplicationIFrameXPath();
                 int timeoutFindElement = this.GetTimeoutFindElement();
                 int maxRetriesForElementOperations = this.GetMaxRetriesForElementOperations();
+                string iFrameXPath = this.GetApplicationIFrameXPath();
+                bool doLogin = this.GetWorkerConfig().GetUserSettings().DoLogin;
+                bool useSso = this.GetWorkerConfig().GetUserSettings().UseSSO;
+                if (!useSso)
+                {
+                    if (!doLogin)
+                    {   // Login automation shall not be executed.
+                        // Raise "CancelRequested" to quit automation,
+                        // but leave browser up and running.
+                        // See "finally" part of this method.
+                        Global.SetCancelRequested(true);
+                        return true;
+                    }
 
-                if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
+                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
 
-                if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
+                    if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
 
-                if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                Log.Info("Login" + Const.LogInProgress);
-                if (!this.ASESDoLogin(browser, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESDoLogin) + Const.LogFail);
+                    Log.Info("Login" + Const.LogInProgress);
+                    if (!this.ASESDoLogin(browser, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESDoLogin) + Const.LogFail);
 
-                if (this.CancelRequested())
-                    throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                }
+
+                if (!WaitUntilMainPageHasLoaded(browser, timeoutFindElement))
+                    throw new Exception(nameof(WaitUntilMainPageHasLoaded) + Const.LogFail);
 
                 Log.Info("Open time card" + Const.LogInProgress);
                 if (!this.ASESNavigateToTimeEntryCanvas(browser, timeoutFindElement))

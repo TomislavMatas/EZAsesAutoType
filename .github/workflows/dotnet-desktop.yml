@@ -68,7 +68,7 @@ jobs:
     runs-on: windows-latest  
                              
     env:
-      Solution_Name: "src/EZAsesAutoType-VS2022.sln"
+      Solution_Name: "src/EZAsesAutoType-VS2026.sln"
 #     Test_Project_Path: # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       Wap_Project_Directory: "src/EZAsesAutoTypeMSIX"
       Wap_Project_Path: "src/EZAsesAutoTypeMSIX/EZAsesAutoTypeMSIX.wapproj"
