@@ -6,6 +6,8 @@
 // updating the installed WebDriver binaries.
 //
 // Revision History: 
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * Make `GetWebDriverVersionString` bullet proof.
 // 2025/04/10:TomislavMatas: v4.31.1
 // * Google finally decided to compile executable "chromedriver.exe"
 //   with version info resource, so read version from executable.
@@ -105,10 +107,17 @@ namespace EZSeleniumLib
                     throw new ArgumentNullException(nameof(webDriver));
 
                 string webDriverExe;
+                string? webDriverVersionString = null;
                 if (Constant.WebDriverChrome.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
+                {
                     webDriverExe = Constant.WebDriverChromeExe;
+                    webDriverVersionString = Constant.WebDriverChromeVersion;
+                }
                 else if (Constant.WebDriverEdge.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
+                {
                     webDriverExe = Constant.WebDriverEdgeExe;
+                    webDriverVersionString = Constant.WebDriverEdgeVersion;
+                }
                 else if (Constant.WebDriverFirefox.Equals(webDriver, StringComparison.OrdinalIgnoreCase))
                     // For unknown reason, Mozilla decided not to add a version
                     // info ressource to Chrome WebDriver "geckodriver.exe". 
@@ -117,17 +126,26 @@ namespace EZSeleniumLib
                 else
                     throw new Exception(nameof(webDriver) + Consts.LogNotImpl);
 
-                string executingAssemblyPath = Consts.ExecutingAssemblyPath;
-                if (string.IsNullOrEmpty(executingAssemblyPath))
-                    throw new Exception(nameof(executingAssemblyPath) + Consts.LogIsNull);
+                try
+                {
+                    // this part is allowed to fail "silently", because if it fails,
+                    // the method will return the default version string from Constant class.
+                    string executingAssemblyPath = Consts.ExecutingAssemblyPath;
+                    if (string.IsNullOrEmpty(executingAssemblyPath))
+                        throw new Exception(nameof(executingAssemblyPath) + Consts.LogIsNull);
 
-                string webDriverFullPath = Path.Combine(executingAssemblyPath, webDriverExe);
-                if (string.IsNullOrEmpty(webDriverFullPath))
-                    throw new Exception(nameof(webDriverFullPath) + Consts.LogIsNull);
+                    string webDriverFullPath = Path.Combine(executingAssemblyPath, webDriverExe);
+                    if (string.IsNullOrEmpty(webDriverFullPath))
+                        throw new Exception(nameof(webDriverFullPath) + Consts.LogIsNull);
 
-                string? webDriverVersionString = GetVersionStringFromBinary(webDriverFullPath);
-                if (string.IsNullOrEmpty(webDriverVersionString))
-                    throw new Exception(nameof(webDriverVersionString) + Consts.LogIsNull);
+                    webDriverVersionString = GetVersionStringFromBinary(webDriverFullPath);
+                    if (string.IsNullOrEmpty(webDriverVersionString))
+                        throw new Exception(nameof(webDriverVersionString) + Consts.LogIsNull);
+                } 
+                catch (Exception silentException)
+                {
+                    Log.Debug(silentException);
+                }
 
                 return webDriverVersionString;
             }
