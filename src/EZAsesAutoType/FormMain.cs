@@ -3,6 +3,9 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * If any of the automation startup arguments has been provided, explicitly
+//   set "ASESUseSso" to perform Single Sign-On (SSO) by default.
 // 2026/02/12:TomislavMatas: v4.38.1440
 // * Add control "checkBox_Sso".
 // 2024/08/05:TomislavMatas: Version "1.127.1"
@@ -1186,40 +1189,43 @@ namespace EZAsesAutoType
                 bool doAutomationOnLoad = false;
                 if (this.IsArgDoLoginProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = false;
-                    this.UserSettings.DoLogout = false;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = false;
+                    userSettings.DoLogout = false;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgDoPunchProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = true;
-                    this.UserSettings.DoLogout = false;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = true;
+                    userSettings.DoLogout = false;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgDoLogoutProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = true;
-                    this.UserSettings.DoLogout = true;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = true;
+                    userSettings.DoLogout = true;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgRunProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = true;
-                    this.UserSettings.DoLogout = true;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = true;
+                    userSettings.DoLogout = true;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgSsoProvided())
                 {
-                    this.UserSettings.ASESUseSso = true;
-                    this.UserSettings.DoLogin = false;
+                    userSettings.ASESUseSso = true;
                     doAutomationOnLoad = true;
                 }
 
@@ -1230,6 +1236,8 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
 
                 this.ActiveControl = this.btnRun ;
+
+                SetUserSettings(userSettings);
 
                 if (doAutomationOnLoad)
                 {
