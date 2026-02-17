@@ -1097,11 +1097,16 @@ namespace EZAsesAutoType
 
                 Global.SetCancelRequested(false);
                 this.RenderControlsWorkerStatus(true);
+
+                bool alwaysOnTop = this.GetAlwaysOnTop();
+                if (!alwaysOnTop)
+                    this.WindowState = FormWindowState.Minimized;
+
                 this.backgroundWorker1.RunWorkerAsync(userSettings);
                 bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 while (backroundWorkerIsBusy)
                 {
-                    if (GetAlwaysOnTop())
+                    if (alwaysOnTop)
                         this.Activate();
 
                     Application.DoEvents();
@@ -1119,6 +1124,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.RenderControlsWorkerStatus(false);
+                this.WindowState = FormWindowState.Normal;
                 LogTrace(Const.LogDone);
             }
         }
