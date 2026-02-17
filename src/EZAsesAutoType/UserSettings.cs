@@ -5,8 +5,10 @@
 // Wrapper for "userSettings". 
 //
 // Revision History:
+// 2026/02/16:TomislavMatas: v4.40.1450
+// * Add UserSetting "ASESSsoAccount".
 // 2026/02/12:TomislavMatas: v4.38.1450
-// * Add UserSetting "UseSSO", tied to "checkBox_Sso".
+// * Add UserSetting "ASESUseSso", tied to "checkBox_Sso".
 // 2024/07/08:TomislavMatas: Version "1.126.4"
 // * Add UserSetting "DoLogout".
 // 2024/07/03:TomislavMatas: Version "1.126.2"
@@ -88,7 +90,13 @@ namespace EZAsesAutoType
         /// into the respective fields, or if it shall just wait 
         /// for the SSO to complete.
         /// </summary>
-        public bool UseSSO;
+        public bool ASESUseSso;
+        /// <summary>
+        /// Recently the company added automatically performed 
+        /// "Single Sign-On (SSO)" as soon as the respective 
+        /// base URL is accessed. This setting represents the 
+        /// account to be used when prompted for SSO account.
+        public string ASESSsoAccount;
         #endregion
 
         /// <summary>
@@ -113,7 +121,8 @@ namespace EZAsesAutoType
             this.DoPunch = true;
             this.DoLogout = true;
             this.ASESPunchDeviation = 60;
-            this.UseSSO = true;
+            this.ASESUseSso = true;
+            this.ASESSsoAccount = string.Empty;
         }
 
         /// <summary>
@@ -149,7 +158,8 @@ namespace EZAsesAutoType
                 this.DoPunch            = Properties.Settings.Default.ASESDoPunch;
                 this.DoLogout           = Properties.Settings.Default.ASESDoLogout;
                 this.ASESPunchDeviation = Properties.Settings.Default.ASESPunchDeviation;
-                this.UseSSO             = Properties.Settings.Default.ASESUseSSO;
+                this.ASESUseSso         = Properties.Settings.Default.ASESUseSso;
+                this.ASESSsoAccount     = Properties.Settings.Default.ASESSsoAccount;
                 return true;
             }
             catch (Exception ex)
@@ -188,7 +198,8 @@ namespace EZAsesAutoType
                 Properties.Settings.Default.ASESDoPunch        = this.DoPunch;
                 Properties.Settings.Default.ASESDoLogout       = this.DoLogout;
                 Properties.Settings.Default.ASESPunchDeviation = this.ASESPunchDeviation;
-                Properties.Settings.Default.ASESUseSSO         = this.UseSSO;
+                Properties.Settings.Default.ASESUseSso         = this.ASESUseSso;
+                Properties.Settings.Default.ASESSsoAccount     = this.ASESSsoAccount;
                 Properties.Settings.Default.Save();
                 return true;
             }

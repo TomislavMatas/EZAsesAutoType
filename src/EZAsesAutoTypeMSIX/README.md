@@ -33,6 +33,10 @@ with the same value for, e.G.:
 ```
 
 # Revision History
+## 2026/02/17:TomislavMatas: v4.40.1450
+* Use `Microsoft.Windows.SDK.BuildTools` version "10.0.26100.7705".
+* Use `System.Text.Json` version "10.0.3".
+
 ## 2024/11/24:TomislavMatas: Version "1.131.2"
 * First successful build with ".github/workflows/dotnet-desktop.yml".
 

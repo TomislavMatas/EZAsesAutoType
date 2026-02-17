@@ -4,9 +4,13 @@
 // Summary:
 // Project specific configuration settings. 
 //
-// Revision History: 
-/// 2024/11/22:TomislavMatas: Version "1.131.2"
-/// * Add new property "GetDateGridCanvasLoadButtonPath".
+// Revision History:
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * Add "ASES.Microsoft.SSO.Account.xPath" and
+//   "ASES.Microsoft.SSO.Submit.xPath" - may be required in the future.
+// * Add `TimeoutSso` to read value of "ASES.Timeout.SSO".
+// 2024/11/22:TomislavMatas: Version "1.131.2"
+// * Add new property "GetDateGridCanvasLoadButtonPath".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
 // * Add new property "DateGridCanvasSortingheaderXPath". 
 // 2024/07/02:TomislavMatas: Version "1.126.2"
@@ -116,6 +120,33 @@ namespace EZAsesAutoType
         {
             int prev = this.GetTimeoutFindElement();
             this.TimeoutFindElement = value;    
+            return prev;
+        }
+
+        private const string TimeoutSsoKeyName = "ASES.Timeout.SSO";
+        private const int TimeoutSsoDefault = 5;
+        private int m_TimeoutSso = -1;
+        private int TimeoutSso
+        {
+            get
+            {
+                if (m_TimeoutSso == -1)
+                    m_TimeoutSso = ConfigApi.GetAppSettingInt(TimeoutSsoKeyName, TimeoutSsoDefault);
+                return m_TimeoutSso;
+            }
+            set
+            {
+                m_TimeoutSso = value;
+            }
+        }
+        public int GetTimeoutSso()
+        {
+            return this.TimeoutSso;
+        }
+        public int SetTimeoutSso(int value)
+        {
+            int prev = this.GetTimeoutSso();
+            this.TimeoutSso = value;
             return prev;
         }
 
@@ -275,6 +306,60 @@ namespace EZAsesAutoType
         {
             string prev = this.GetLoginPagePasswordXPath();
             this.LoginPagePasswordXPath = value;
+            return prev;
+        }
+
+        private const string SsoAccountXPathKeyName = "ASES.Microsoft.SSO.Account.xPath";
+        private string? m_SsoAccountXPath = null;
+        private string SsoAccountXPath
+        {
+            get
+            {
+                if (m_SsoAccountXPath == null)
+                    m_SsoAccountXPath = ConfigApi.GetAppSettingString(SsoAccountXPathKeyName, string.Empty);
+                return m_SsoAccountXPath;
+            }
+            set
+            {
+                m_SsoAccountXPath = value;
+            }
+        }
+
+        public string GetSsoAccountXPath()
+        {
+            return this.SsoAccountXPath;
+        }
+        public string SetSsoAccountXPath(string value)
+        {
+            string prev = this.GetSsoAccountXPath();
+            this.SsoAccountXPath = value;
+            return prev;
+        }
+
+        private const string SsoSubmitXPathKeyName = "ASES.Microsoft.SSO.Submit.xPath";
+        private string? m_SsoSubmitXPath = null;
+        private string SsoSubmitXPath
+        {
+            get
+            {
+                if (m_SsoSubmitXPath == null)
+                    m_SsoSubmitXPath = ConfigApi.GetAppSettingString(SsoSubmitXPathKeyName, string.Empty);
+                return m_SsoSubmitXPath;
+            }
+            set
+            {
+                m_SsoSubmitXPath = value;
+            }
+        }
+
+        public string GetSsoSubmitXPath()
+        {
+            return this.SsoSubmitXPath;
+        }
+        public string SetSsoSubmitXPath(string value)
+        {
+            string prev = this.GetSsoSubmitXPath();
+            this.SsoSubmitXPath = value;
             return prev;
         }
 

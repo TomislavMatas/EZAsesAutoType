@@ -120,6 +120,43 @@ namespace EZAsesAutoType
 
         /// <summary>
         /// Use Browser-Interop Helper to find all the elements,
+        /// that shall be present on the app's SSO account page.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        private bool ASESSsoPageIsLoaded(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser);
+
+                StringCollection requiredElementsXPathCollection = [
+                  this.GetSsoAccountXPath()
+                , this.GetSsoSubmitXPath()
+                ];
+
+                foreach (string? requiredElementXPath in requiredElementsXPathCollection)
+                    if (requiredElementXPath != null)
+                        if (browser.FindElementByXpath(requiredElementXPath, timeoutInSeconds) == null)
+                            throw new Exception(String.Format("'{0}'{1}", requiredElementXPath, Const.LogNotFound));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to find all the elements,
         /// that shall be present on the app's main page.
         /// </summary>
         /// <param name="browser"></param>

@@ -152,7 +152,7 @@ namespace EZAsesAutoType.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Chrome")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Edge")]
         public string WebDriver {
             get {
                 return ((string)(this["WebDriver"]));
@@ -264,12 +264,24 @@ namespace EZAsesAutoType.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ASESUseSSO {
+        public bool ASESUseSso {
             get {
-                return ((bool)(this["ASESUseSSO"]));
+                return ((bool)(this["ASESUseSso"]));
             }
             set {
-                this["ASESUseSSO"] = value;
+                this["ASESUseSso"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ChangeIt!")]
+        public string ASESSsoAccount {
+            get {
+                return ((string)(this["ASESSsoAccount"]));
+            }
+            set {
+                this["ASESSsoAccount"] = value;
             }
         }
     }

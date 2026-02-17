@@ -1,7 +1,10 @@
 ﻿//
 // File: "Worker.Navigation.cs"
 //
-// Revision History: 
+// Revision History:
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * Implement "ASESDoSingleSignOn".
+// * Implement SSO handling.
 // 2024/11/24:TomislavMatas: Version "1.131.2"
 // * Prevent browser teardown on exception.
 // 2024/11/22:TomislavMatas: Version "1.131.2"
@@ -194,6 +197,105 @@ namespace EZAsesAutoType
                 }
 
                 xPath = this.GetLoginPageLoginButtonXPath();
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
+                if (browser.MoveToElement(element))
+                    if (!browser.ClickElement(element))
+                        throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Perform a "threaded" sleep, but keep the UI responsive 
+        /// by calling "Application.DoEvents()" in a loop.
+        /// </summary>
+        /// <param name="seconds"></param>
+        private void SleepThreaded(int seconds)
+        {
+            int threadedSleepCount = seconds * 10; // 10 iterations per second (100 ms sleep time)
+            int threadedSleepIndex = 0;
+            while (threadedSleepIndex < threadedSleepCount)
+            {
+                Application.DoEvents();
+                Thread.Sleep(100);
+                threadedSleepIndex++;
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to perform single sign on.
+        /// Note: For some reason, the SSO login page popup sometimes
+        /// appears, and sometimes, the SSO works implicitly and the
+        /// "main" page is loaded right away. Most likely, this depends 
+        /// on some kind of session timeout. This function uses a timed 
+        /// loop to verify which page has been loaded after invokation 
+        /// of the base url.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds">Provide a small amount of seconds that should be sufficient to determine, which page has been loaded</param>
+        /// <returns></returns>
+        private bool ASESDoSingleSignOn(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser, nameof(browser));
+
+                int secondsElapsed = 0;
+                while (secondsElapsed < timeoutInSeconds)
+                {
+                    try
+                    {
+                        Log.Info("Check main page");
+                        if (this.ASESMainPageIsLoaded(browser, 1))
+                            return true;
+
+                        Log.Info("Check SSO page");
+                        if (this.ASESSsoPageIsLoaded(browser, 1))
+                            break; 
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                    }
+
+                    Log.Info("Wait for SSO to complete");
+                    SleepThreaded(1);
+                    secondsElapsed++;
+                    if (secondsElapsed >= timeoutInSeconds)
+                        throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogTimeout);
+
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
+                }
+
+                Log.Info("Type SSO account value");
+                string xPath = this.GetSsoAccountXPath();
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
+                if (!browser.MoveToElement(element))
+                    throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
+                element.SendKeys(this.GetASESsoAccount());
+
+                Log.Info("Click submit button");
+                xPath = this.GetSsoSubmitXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
@@ -733,11 +835,11 @@ namespace EZAsesAutoType
                 int maxRetriesForElementOperations = this.GetMaxRetriesForElementOperations();
                 string iFrameXPath = this.GetApplicationIFrameXPath();
                 bool doLogin = this.GetWorkerConfig().GetUserSettings().DoLogin;
-                bool useSso = this.GetWorkerConfig().GetUserSettings().UseSSO;
+                bool useSso = this.GetWorkerConfig().GetUserSettings().ASESUseSso;
                 if (!useSso)
                 {
                     if (!doLogin)
-                    {   // Login automation shall not be executed.
+                    {   // Login automation with username and password shall not be executed.
                         // Raise "CancelRequested" to quit automation,
                         // but leave browser up and running.
                         // See "finally" part of this method.
@@ -764,6 +866,27 @@ namespace EZAsesAutoType
                     if (this.CancelRequested())
                         throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
+                }
+                else
+                {
+                    if (!doLogin)
+                    {   // Login automation using SSO shall not be executed.
+                        // Raise "CancelRequested" to quit automation,
+                        // but leave browser up and running.
+                        // See "finally" part of this method.
+                        Global.SetCancelRequested(true);
+                        return true;
+                    }
+
+                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
+
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
+
+                    int ssoTimeout = this.GetTimeoutSso(); 
+                    if(!ASESDoSingleSignOn(browser, ssoTimeout))
+                        throw new Exception(nameof(this.ASESDoSingleSignOn) + Const.LogFail);
                 }
 
                 if (!WaitUntilMainPageHasLoaded(browser, timeoutFindElement))
@@ -869,8 +992,9 @@ namespace EZAsesAutoType
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
-                if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
-                    throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
+                if(!useSso)
+                    if (!this.ASESLoginPageIsLoaded(browser, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESLoginPageIsLoaded) + Const.LogFail);
 
                 if (this.CancelRequested())
                     throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);

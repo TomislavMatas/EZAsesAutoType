@@ -3,6 +3,9 @@
 // File: "FormMain.cs"
 //
 // Revision History:
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * If any of the automation startup arguments has been provided, explicitly
+//   set "ASESUseSso" to perform Single Sign-On (SSO) by default.
 // 2026/02/12:TomislavMatas: v4.38.1440
 // * Add control "checkBox_Sso".
 // 2024/08/05:TomislavMatas: Version "1.127.1"
@@ -220,6 +223,33 @@ namespace EZAsesAutoType
             }
         }
 
+        private bool InitializeCheckBoxes(UserSettings userSettings)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                if (userSettings == null)
+                    throw new ArgumentNullException(nameof(userSettings));
+
+                this.checkBox_DoLogin.Checked = userSettings.DoLogin;
+                this.checkBox_DoLogout.Checked = userSettings.DoLogout;
+                this.checkBox_DoPunch.Checked = userSettings.DoPunch;
+                this.checkBox_Sso.Checked = userSettings.ASESUseSso;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+
         private bool InitializeComboBox(ComboBox comboBox, StringCollection itemList, string defaultValue)
         {
             try
@@ -416,6 +446,7 @@ namespace EZAsesAutoType
                 this.textBoxPunchInPM.Text = userSettings.ASESPunchInPM;
                 this.textBoxPunchOutPM.Text = userSettings.ASESPunchOutPM;
                 this.textBox_Deviation.Text = userSettings.ASESPunchDeviation.ToString();
+                this.textBox_SsoAccount.Text = userSettings.ASESSsoAccount;
 
                 return true;
             }
@@ -438,6 +469,9 @@ namespace EZAsesAutoType
                 this.SuspendLayout();
                 if (userSettings == null)
                     throw new ArgumentNullException(nameof(userSettings));
+
+                if(!InitializeCheckBoxes(userSettings))
+                    throw new Exception(nameof(InitializeCheckBoxes) + Const.LogFail);
 
                 if (!InitializeComboBoxes(userSettings))
                     throw new Exception(nameof(InitializeComboBoxes) + Const.LogFail);
@@ -493,7 +527,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = this.GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -532,7 +566,7 @@ namespace EZAsesAutoType
             return 0;
         }
 
-        private UserSettings? GetUserSettingsValuesFromControls()
+        private UserSettings? GetUserSettingValues()
         {
             try
             {
@@ -554,7 +588,8 @@ namespace EZAsesAutoType
                 userSettings.DoPunch = this.checkBox_DoPunch.Checked;
                 userSettings.DoLogout = this.checkBox_DoLogout.Checked;
                 userSettings.ASESPunchDeviation = toInt(this.textBox_Deviation.Text);
-                userSettings.UseSSO = this.checkBox_Sso.Checked;
+                userSettings.ASESUseSso = this.checkBox_Sso.Checked;
+                userSettings.ASESSsoAccount = this.textBox_SsoAccount.Text;
                 return userSettings;
             }
             catch (Exception ex)
@@ -618,7 +653,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -678,7 +713,7 @@ namespace EZAsesAutoType
                 this.checkBox_DoLogin.Checked = userSettings.DoLogin;
                 this.checkBox_DoPunch.Checked = userSettings.DoPunch;
                 this.checkBox_DoLogout.Checked = userSettings.DoLogout;
-                this.checkBox_Sso.Checked = userSettings.UseSSO;
+                this.checkBox_Sso.Checked = userSettings.ASESUseSso;
 
                 return true;
             }
@@ -814,35 +849,59 @@ namespace EZAsesAutoType
         private const int tabIndexLanguage = 80;
 
         /// <summary>
-        /// If "UseSSO" has been checked, disable all controlls,
+        /// If "ASESUseSso" has been checked, disable all controlls,
         /// which usually are required for legacy login.
         /// When uncheck, toggle them the opposite.
         /// </summary>
-        /// <param name="flag"></param>
+        /// <param name="ssoEnabled"></param>
         /// <returns></returns>
-        private bool RenderControlsUseSsoChanged(bool flag)
+        private bool RenderControlsUseSsoChanged(bool ssoEnabled)
         {
             try
             {
                 LogTrace(Const.LogStart);
                 this.SuspendLayout();
 
-                bool enabled = !flag;
-                this.textBoxUid.Enabled = enabled;
-                this.textBoxPwd.Enabled = enabled;
-                this.comboBoxClientNo.Enabled = enabled;
-                this.comboBoxLanguage.Enabled = enabled;
-                this.textBoxUid.TabIndex = enabled ? tabIndexUid : 0;
-                this.textBoxPwd.TabIndex = enabled ? tabIndexPwd : 0;
-                this.comboBoxClientNo.TabIndex = enabled ? tabIndexClient : 0;
-                this.comboBoxLanguage.TabIndex = enabled ? tabIndexLanguage : 0;
+                bool uidEnabled = !ssoEnabled;
+                bool uidReadOnly = ssoEnabled;
+                this.labelUid.Enabled = uidEnabled;
+                this.labelUid.Visible = uidEnabled;
+                this.textBoxUid.Enabled = uidEnabled;
+                this.textBoxUid.ReadOnly = uidReadOnly;
+                this.textBoxUid.Visible = uidEnabled;
+                this.textBoxUid.TabIndex = uidEnabled ? tabIndexUid : 0;
+                this.labelPwd.Enabled = uidEnabled;
+                this.labelPwd.Visible = uidEnabled;
+                this.textBoxPwd.Enabled = uidEnabled;
+                this.textBoxPwd.ReadOnly = uidReadOnly;
+                this.textBoxPwd.Visible = uidEnabled;
+                this.textBoxPwd.TabIndex = uidEnabled ? tabIndexPwd : 0;
 
-                bool readOnly = flag;
-                this.textBoxUid.ReadOnly = readOnly;
-                this.textBoxPwd.ReadOnly = readOnly;
+                this.labelClientNo.Enabled = uidEnabled;
+                this.labelClientNo.Visible = uidEnabled;
+                this.comboBoxClientNo.Enabled = uidEnabled;
+                this.comboBoxClientNo.Visible = uidEnabled;
+                this.comboBoxClientNo.TabIndex = uidEnabled ? tabIndexClient : 0;
+                this.labelLanguage.Enabled = uidEnabled;
+                this.labelLanguage.Visible = uidEnabled;
+                this.comboBoxLanguage.Enabled = uidEnabled;
+                this.comboBoxLanguage.Visible = uidEnabled;
+                this.comboBoxLanguage.TabIndex = uidEnabled ? tabIndexLanguage : 0;
 
-                this.ActiveControl = flag ? this.btnRun : this.textBoxUid;
+                this.label_SsoAccount.Enabled = ssoEnabled;
+                this.label_SsoAccount.Visible = ssoEnabled;
+                this.textBox_SsoAccount.Enabled = ssoEnabled;
+                this.textBox_SsoAccount.Visible = ssoEnabled;
+                this.textBox_SsoAccount.TabIndex = ssoEnabled ? tabIndexUid : 0;
 
+                this.ActiveControl = ssoEnabled ? this.textBox_SsoAccount : this.textBoxUid;
+
+                if(ssoEnabled)
+                {   // When "SSO" has been toggled from "false" to "true",
+                    // enable "DoLogin" by default, because that is a logical
+                    // consequence when using SSO
+                    this.checkBox_DoLogin.Checked = true;
+                }
                 return true;
             }
             catch (Exception ex)
@@ -887,7 +946,7 @@ namespace EZAsesAutoType
                 if (!RenderControlsDoPunchChanged(userSettings.DoPunch))
                     throw new Exception(nameof(RenderControlsDoPunchChanged) + Const.LogFail);
 
-                if (!RenderControlsUseSsoChanged(userSettings.UseSSO))
+                if (!RenderControlsUseSsoChanged(userSettings.ASESUseSso))
                     throw new Exception(nameof(RenderControlsUseSsoChanged) + Const.LogFail);
                 
                 return true;
@@ -925,8 +984,9 @@ namespace EZAsesAutoType
                     this.checkBox_DoLogin.Enabled = false;
                     this.checkBox_DoPunch.Enabled = false;
                     this.checkBox_DoLogout.Enabled = false;
-                    this.checkBox_Sso.Enabled = false;
                     this.textBox_Deviation.Enabled = false;
+                    this.checkBox_Sso.Enabled = false;
+                    this.textBox_SsoAccount.Enabled = false;
                     this.btnRun.Enabled = false;
                     this.btnRun.Visible = true;
                     this.btnCancel.Enabled = true;
@@ -947,8 +1007,9 @@ namespace EZAsesAutoType
                 this.checkBox_DoLogin.Enabled = true;
                 this.checkBox_DoPunch.Enabled = true;
                 this.checkBox_DoLogout.Enabled = true;
-                this.checkBox_Sso.Enabled = true;
                 this.textBox_Deviation.Enabled = true;
+                this.checkBox_Sso.Enabled = true;
+                this.textBox_SsoAccount.Enabled = true;
                 this.btnRun.Enabled = true;
                 this.btnRun.Visible = true;
                 this.btnCancel.Enabled = true;
@@ -1030,17 +1091,22 @@ namespace EZAsesAutoType
             {
                 this.SaveUserSettings();
 
-                UserSettings? userSettings = this.GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = this.GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
                 Global.SetCancelRequested(false);
                 this.RenderControlsWorkerStatus(true);
+
+                bool alwaysOnTop = this.GetAlwaysOnTop();
+                if (!alwaysOnTop)
+                    this.WindowState = FormWindowState.Minimized;
+
                 this.backgroundWorker1.RunWorkerAsync(userSettings);
                 bool backroundWorkerIsBusy = this.backgroundWorker1.IsBusy;
                 while (backroundWorkerIsBusy)
                 {
-                    if (GetAlwaysOnTop())
+                    if (alwaysOnTop)
                         this.Activate();
 
                     Application.DoEvents();
@@ -1058,6 +1124,7 @@ namespace EZAsesAutoType
             finally
             {
                 this.RenderControlsWorkerStatus(false);
+                this.WindowState = FormWindowState.Normal;
                 LogTrace(Const.LogDone);
             }
         }
@@ -1113,6 +1180,11 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
+
+                SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                                        ControlStyles.UserPaint |
+                                        ControlStyles.AllPaintingInWmPaint, true);
+
                 if (!LoadUserSettings())
                     throw new Exception(nameof(LoadUserSettings) + Const.LogFail);
 
@@ -1123,40 +1195,43 @@ namespace EZAsesAutoType
                 bool doAutomationOnLoad = false;
                 if (this.IsArgDoLoginProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = false;
-                    this.UserSettings.DoLogout = false;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = false;
+                    userSettings.DoLogout = false;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgDoPunchProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = true;
-                    this.UserSettings.DoLogout = false;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = true;
+                    userSettings.DoLogout = false;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgDoLogoutProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = true;
-                    this.UserSettings.DoLogout = true;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = true;
+                    userSettings.DoLogout = true;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgRunProvided())
                 {
-                    this.UserSettings.DoLogin = true;
-                    this.UserSettings.DoPunch = true;
-                    this.UserSettings.DoLogout = true;
+                    userSettings.ASESUseSso = true;
+                    userSettings.DoLogin = true;
+                    userSettings.DoPunch = true;
+                    userSettings.DoLogout = true;
                     doAutomationOnLoad = true;
                 }
 
                 if (this.IsArgSsoProvided())
                 {
-                    this.UserSettings.UseSSO = true;
-                    this.UserSettings.DoLogin = false;
+                    userSettings.ASESUseSso = true;
                     doAutomationOnLoad = true;
                 }
 
@@ -1167,6 +1242,8 @@ namespace EZAsesAutoType
                     throw new Exception(nameof(RenderControls) + Const.LogFail);
 
                 this.ActiveControl = this.btnRun ;
+
+                SetUserSettings(userSettings);
 
                 if (doAutomationOnLoad)
                 {
@@ -1679,7 +1756,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1706,7 +1783,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1732,7 +1809,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1758,7 +1835,7 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
@@ -1781,11 +1858,11 @@ namespace EZAsesAutoType
             try
             {
                 LogTrace(Const.LogStart);
-                UserSettings? userSettings = GetUserSettingsValuesFromControls();
+                UserSettings? userSettings = GetUserSettingValues();
                 if (userSettings == null)
                     throw new Exception(nameof(userSettings) + Const.LogIsNull);
 
-                if (!RenderControlsUseSsoChanged(userSettings.UseSSO))
+                if (!RenderControlsUseSsoChanged(userSettings.ASESUseSso))
                     throw new Exception(nameof(RenderControlsUseSsoChanged) + Const.LogFail);
 
             }

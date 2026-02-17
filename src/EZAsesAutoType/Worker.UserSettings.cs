@@ -1,7 +1,9 @@
 ﻿//
 // File: "Worker.UserSettings.cs"
 //
-// Revision History: 
+// Revision History:
+// 2026/02/17:TomislavMatas: v4.40.1450
+// * Implement user settings "ASESUseSso" and "ASESSsoAccount".
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Various code changes to meet code style conventions.
 // 2024/08/05:TomislavMatas: Version "1.127.1"
@@ -83,9 +85,14 @@ namespace EZAsesAutoType
             return this.WorkerConfig.GetUserSettings().ASESPunchDeviation;
         }
 
-        private bool GetASESuseSso()
+        private bool GetASESUseSso()
         {
-            return this.WorkerConfig.GetUserSettings().UseSSO;
+            return this.WorkerConfig.GetUserSettings().ASESUseSso;
+        }
+
+        private string GetASESsoAccount()
+        {
+            return this.WorkerConfig.GetUserSettings().ASESSsoAccount;
         }
 
         private List<TimePair> GetTimePairListDefault()
