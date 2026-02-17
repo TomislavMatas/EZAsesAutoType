@@ -7,7 +7,8 @@
 // Revision History:
 // 2026/02/17:TomislavMatas: v4.40.1450
 // * Add "ASES.Microsoft.SSO.Account.xPath" and
-//   "ASES.Microsoft.SSO.Submit.xPath" - may be required in the future
+//   "ASES.Microsoft.SSO.Submit.xPath" - may be required in the future.
+// * Add `TimeoutSso` to read value of "ASES.Timeout.SSO".
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Add new property "GetDateGridCanvasLoadButtonPath".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
@@ -119,6 +120,33 @@ namespace EZAsesAutoType
         {
             int prev = this.GetTimeoutFindElement();
             this.TimeoutFindElement = value;    
+            return prev;
+        }
+
+        private const string TimeoutSsoKeyName = "ASES.Timeout.SSO";
+        private const int TimeoutSsoDefault = 5;
+        private int m_TimeoutSso = -1;
+        private int TimeoutSso
+        {
+            get
+            {
+                if (m_TimeoutSso == -1)
+                    m_TimeoutSso = ConfigApi.GetAppSettingInt(TimeoutSsoKeyName, TimeoutSsoDefault);
+                return m_TimeoutSso;
+            }
+            set
+            {
+                m_TimeoutSso = value;
+            }
+        }
+        public int GetTimeoutSso()
+        {
+            return this.TimeoutSso;
+        }
+        public int SetTimeoutSso(int value)
+        {
+            int prev = this.GetTimeoutSso();
+            this.TimeoutSso = value;
             return prev;
         }
 

@@ -4,6 +4,7 @@
 // Revision History: 
 // 2026/02/17:TomislavMatas: v4.40.1450
 // Add "GetSsoAccountXPath" and "GetSsoSubmitXPath".
+// * Add `GetTimeoutSso` to read value of "ASES.Timeout.SSO".
 // 2024/11/22:TomislavMatas: Version "1.131.2"
 // * Add "GetDateGridCanvasLoadButtonPath".
 // 2024/08/07:TomislavMatas: Version "1.127.2"
@@ -29,6 +30,11 @@ namespace EZAsesAutoType
         private int GetTimeoutFindElement()
         {
             return this.WorkerConfig.GetAppConfig().GetTimeoutFindElement();
+        }
+
+        private int GetTimeoutSso()
+        {
+            return this.WorkerConfig.GetAppConfig().GetTimeoutSso();
         }
 
         private int GetMaxRetriesForElementOperations()
