@@ -3,6 +3,7 @@
 //
 // Revision History:
 // 2026/02/17:TomislavMatas: v4.40.1450
+// * Implement "ASESDoSingleSignOn".
 // * Implement SSO handling.
 // 2024/11/24:TomislavMatas: Version "1.131.2"
 // * Prevent browser teardown on exception.
@@ -196,6 +197,51 @@ namespace EZAsesAutoType
                 }
 
                 xPath = this.GetLoginPageLoginButtonXPath();
+                element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
+                if (browser.MoveToElement(element))
+                    if (!browser.ClickElement(element))
+                        throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            finally
+            {
+                LogTrace(Const.LogDone);
+            }
+        }
+
+        /// <summary>
+        /// Use Browser-Interop Helper to perform single sign on.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="timeoutInSeconds"></param>
+        /// <returns></returns>
+        private bool ASESDoSingleSignOn(BrowserBase browser, int timeoutInSeconds)
+        {
+            try
+            {
+                LogTrace(Const.LogStart);
+                ArgumentNullException.ThrowIfNull(browser, nameof(browser));
+
+                string xPath = this.GetSsoAccountXPath();
+                IWebElement? element = browser.FindElementByXpath(xPath, timeoutInSeconds);
+                if (element == null)
+                    throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
+
+                if (!browser.MoveToElement(element))
+                    throw new Exception(nameof(browser.MoveToElement) + Const.LogFail);
+
+                element.SendKeys(this.GetASESsoAccount());
+
+                xPath = this.GetSsoSubmitXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
                 if (element == null)
                     throw new Exception(string.Format("ElementNotFound, xPath='{0}'", xPath));
@@ -778,9 +824,18 @@ namespace EZAsesAutoType
                         return true;
                     }
 
-                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
-                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
-
+                    int ssoTimeout = 5; // useSso only a couple of seconds to wait for SSO popup.
+                    if (this.ASESSsoPageIsLoaded(browser, ssoTimeout))
+                    {   // If SSO shall be used, then after navigating to home page, SSO login page
+                        // should show up immediately without any user interaction in very short time.
+                        // if SSO has never been performed in current session.
+                        // if SSO login page is detected, then perform SSO login.
+                        if(ASESDoSingleSignOn(browser, ssoTimeout))
+                        {
+                            if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
+                                throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
+                        }
+                    }
                 }
 
                 if (!WaitUntilMainPageHasLoaded(browser, timeoutFindElement))

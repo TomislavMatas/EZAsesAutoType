@@ -893,6 +893,12 @@ namespace EZAsesAutoType
 
                 this.ActiveControl = ssoEnabled ? this.textBox_SsoAccount : this.textBoxUid;
 
+                if(ssoEnabled)
+                {   // When "SSO" has been toggled from "false" to "true",
+                    // enable "DoLogin" by default, because that is a logical
+                    // consequence when using SSO
+                    this.checkBox_DoLogin.Checked = true;
+                }
                 return true;
             }
             catch (Exception ex)
