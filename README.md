@@ -6,7 +6,7 @@ to automate the daily chore of utilizing the virtual punch card system
 # Overview
 Start the application and set the desired values in the main dialog:  
 
-![MainDialog](res/img/Screenshot-MainDialog-v1.131.0.png)
+![MainDialog](res/img/Screenshot-MainDialog-v4.40.1450.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
@@ -34,24 +34,24 @@ The application "EZAsesAutoType.exe" can be
 invoked with optional program startup arguments.
 Syntax: 
 ```CMD
-CMD> EZAsesAutoType[.exe] [/DoLogin] [/DoPunch] [/DoLogout] [/Run] [/Close]
+CMD> EZAsesAutoType[.exe] [/SSO] [/DoLogin] [/DoPunch] [/DoLogout] [/Run] [/Close]
 ```
 
-When invoked with argument "/DoLogin", processing will start immediatly
-using the settings from the last invokation. Processing commences until 
-the date grid has been displayed. Usefull option do review current data.
+When invoked with argument "/DoLogin", processing will start immediately
+using the settings from the last invocation. Processing commences until 
+the date grid has been displayed. Useful option to review current data.
 
 When argument "/DoLogin" and "/DoPunch" have been provided, processing 
-will start immediatly using all the settings from the last invokation.
+will start immediately using all the settings from the last invocation.
 Processing commences until the punch data has been typed and then stops. 
-Usefull option do review current data.
+Useful option do review current data.
 
 When argument "/DoLogin", "/DoPunch" and "/DoLogout" have been provided,
-processing will start immediatly using all the settings from the last invokation.
-Same as if "/Run" has been provided.
+processing will start immediately using all the settings from the last
+invocation. Same as if "/Run" has been provided.
 
-When invoked with argument "/Run", processing will start immediatly
-using all the settings from the last invokation. Same as if "/DoLogin",
+When invoked with argument "/Run", processing will start immediately
+using all the settings from the last invocation. Same as if "/DoLogin",
 "/DoPunch" and "/DoLogout" have been provided.
 
 Processing can still be stopped at any time by hitting the cancel button.
@@ -59,35 +59,35 @@ Once processing has finished, the main dialog will stay active for
 further user interaction.
 
 When invoked with "/DoPunch" or "/Run" and "/Close", processing 
-will also start immediatly. Once processing has finished, the app will close
-automatically except user has hitted the cancel button during processing.
+will also start immediately. Once processing has finished, the app will close
+automatically except user has hit the cancel button during processing.
 
 ## Time entry shortcuts
-* single dot (".") or "now" will evaluate to "now".
+* single dot ('.') or "now" will evaluate to "now".
   
 * "nine" will evaluate to 9am ("09:00").
   
 * "five" will evaluate to 5pm ("17:00").
   
 * Digits between "0" and "23" will evaluate to respective "hour", e.g.:   
-   "7" --> "07:00"   
-  "18" --> "18:00"     
+   "7" → "07:00"   
+  "18" → "18:00"     
 
 * digits between "24" and "59" will evaluate to respective "minute" 
   of current "hour". For example when entered at 9am:   
-  "30" --> "09:30"   
+  "30" → "09:30"   
 
 * Any entry consisting of three or four digits without the separator ":" 
   will be treated as a time entry in the form of "hhmm". For example:   
-   "700" --> "07:00"   
-  "1600" --> "16:00"   
+   "700" → "07:00"   
+  "1600" → "16:00"   
 
 All shortcut replacements are implemented within the 
 function "FormMain.EvalTimeByFragment()".
 
 ## Deviation
 If a value greater than 0 (zero) has been set, a random number up to 
-the specified deviation will be added or substracted to the 
+the specified deviation will be added or subtracted to the 
 punch in and punch out time. This makes the punch values vary on each processing. 
 This should result in a more organic look of the individual punches.
 
@@ -110,7 +110,7 @@ an unencrypted file within user's profile. The location will vary
 across release versions. It strongly recommended to not edit the
 user settings file manually.
 
-The version independent settings will be saved to the windows registry
+The version independent settings will be saved to the Windows registry
 under the CurrentUser hive also. 
 
 # Logging
