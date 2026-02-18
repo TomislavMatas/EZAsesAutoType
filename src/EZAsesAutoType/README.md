@@ -6,6 +6,9 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2026/02/18:TomislavMatas: v4.40.1451:
+* Fix Single Sign On (SSO) flow control.
+
 ## 2026/02/17:TomislavMatas: v4.40.1450:
 * Use `chromedriver.exe` version "145.0.7632.76".
 * Use `msedgedriver.exe` version "145.0.3800.58".
