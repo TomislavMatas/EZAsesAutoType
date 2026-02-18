@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History:
+// 2026/02/18:TomislavMatas: v4.40.1451
+// * Move invocation of `ASESSwitchToIFrame` to after `ASESDoSingleSignOn`.
 // 2026/02/17:TomislavMatas: v4.40.1450
 // * Implement "ASESDoSingleSignOn".
 // * Implement SSO handling.
@@ -878,15 +880,16 @@ namespace EZAsesAutoType
                         return true;
                     }
 
-                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
-                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
-
                     if (this.CancelRequested())
                         throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                     int ssoTimeout = this.GetTimeoutSso(); 
                     if(!ASESDoSingleSignOn(browser, ssoTimeout))
                         throw new Exception(nameof(this.ASESDoSingleSignOn) + Const.LogFail);
+
+                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
+                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
+
                 }
 
                 if (!WaitUntilMainPageHasLoaded(browser, timeoutFindElement))
