@@ -6,7 +6,10 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
-## 2026/02/18:TomislavMatas: v4.40.1451:
+## 2026/02/20:TomislavMatas: v4.40.1452
+* Fix Single Sign On (SSO) flow control.
+
+## 2026/02/18:TomislavMatas: v4.40.1451
 * Fix Single Sign On (SSO) flow control.
 
 ## 2026/02/17:TomislavMatas: v4.40.1450:

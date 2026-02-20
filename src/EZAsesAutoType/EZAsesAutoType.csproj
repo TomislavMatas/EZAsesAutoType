@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.40.1451</Version>
-    <FileVersion>4.40.1451</FileVersion>
-    <AssemblyVersion>4.40.1451</AssemblyVersion>
+    <Version>4.40.1452</Version>
+    <FileVersion>4.40.1452</FileVersion>
+    <AssemblyVersion>4.40.1452</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -37,7 +37,7 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-      v4.40.1451
+      v4.40.1452
       * Fix Single Sign On (SSO) flow control.
     </PackageReleaseNotes>
   </PropertyGroup>

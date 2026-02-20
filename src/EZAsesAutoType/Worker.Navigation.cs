@@ -2,6 +2,8 @@
 // File: "Worker.Navigation.cs"
 //
 // Revision History:
+// 2026/02/20:TomislavMatas: v4.40.1452
+// * Move invocation of `ASESSwitchToIFrame` into `ASESDoSingleSignOn`.
 // 2026/02/18:TomislavMatas: v4.40.1451
 // * Move invocation of `ASESSwitchToIFrame` to after `ASESDoSingleSignOn`.
 // 2026/02/17:TomislavMatas: v4.40.1450
@@ -237,19 +239,31 @@ namespace EZAsesAutoType
             }
         }
 
+
         /// <summary>
         /// Use Browser-Interop Helper to perform single sign on.
-        /// Note: For some reason, the SSO login page popup sometimes
-        /// appears, and sometimes, the SSO works implicitly and the
-        /// "main" page is loaded right away. Most likely, this depends 
-        /// on some kind of session timeout. This function uses a timed 
-        /// loop to verify which page has been loaded after invokation 
-        /// of the base url.
+        /// NOTES:
+        /// * For some reason, the SSO login page popup sometimes
+        ///   appears, and sometimes, the SSO works implicitly and the
+        ///   mai" page is loaded right away. Most likely, this depends 
+        ///   on some kind of session timeout and / or saved credentials 
+        /// * This function uses a timed loop to verify which page has been 
+        ///   loaded after invokation of the base url.
+        /// * Switching to the IFrame depends on initial state of
+        ///   the application: When SSO sign in page is loaded, then there 
+        ///   is no IFrame is  yet. If SSO redirection has been 
+        ///   automatically executed due to saved credentials, then
+        ///   it is required to to switch to the IFrame in order to determin
+        ///   if the main page has been loaded. Therefore, call "ASESSwitchToIFrame"
+        ///   in each loop iteration, but do not fail immediately when the switch 
+        ///   to IFrame failed, just log the execution and continue with the next 
+        ///   loop iteration.
         /// </summary>
         /// <param name="browser"></param>
+        /// <param name="iFrameXPath"></param>
         /// <param name="timeoutInSeconds">Provide a small amount of seconds that should be sufficient to determine, which page has been loaded</param>
         /// <returns></returns>
-        private bool ASESDoSingleSignOn(BrowserBase browser, int timeoutInSeconds)
+        private bool ASESDoSingleSignOn(BrowserBase browser, string iFrameXPath, int timeoutInSeconds)
         {
             try
             {
@@ -261,13 +275,14 @@ namespace EZAsesAutoType
                 {
                     try
                     {
-                        Log.Info("Check main page");
-                        if (this.ASESMainPageIsLoaded(browser, 1))
-                            return true;
-
                         Log.Info("Check SSO page");
                         if (this.ASESSsoPageIsLoaded(browser, 1))
-                            break; 
+                            break;
+
+                        Log.Info("Check main page");
+                        if (this.ASESSwitchToIFrame(browser, iFrameXPath, 1))
+                            if (this.ASESMainPageIsLoaded(browser, 1))
+                                return true;
                     }
                     catch (Exception ex)
                     {
@@ -884,12 +899,8 @@ namespace EZAsesAutoType
                         throw new Exception(nameof(DoDailyPunch) + Const.LogCanceled);
 
                     int ssoTimeout = this.GetTimeoutSso(); 
-                    if(!ASESDoSingleSignOn(browser, ssoTimeout))
+                    if(!ASESDoSingleSignOn(browser, iFrameXPath, ssoTimeout))
                         throw new Exception(nameof(this.ASESDoSingleSignOn) + Const.LogFail);
-
-                    if (!this.ASESSwitchToIFrame(browser, iFrameXPath, timeoutFindElement))
-                        throw new Exception(nameof(this.ASESSwitchToIFrame) + Const.LogFail);
-
                 }
 
                 if (!WaitUntilMainPageHasLoaded(browser, timeoutFindElement))

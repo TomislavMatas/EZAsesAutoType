@@ -6,7 +6,7 @@ to automate the daily chore of utilizing the virtual punch card system
 # Overview
 Start the application and set the desired values in the main dialog:  
 
-![MainDialog](res/img/Screenshot-MainDialog-v4.40.1450.png)
+![MainDialog](res/img/Screenshot-MainDialog-v4.40.1452.png)
 
 Hit the "Run" button and "EZ ASES AutoType" will do the 
 following for you completely automatically:
