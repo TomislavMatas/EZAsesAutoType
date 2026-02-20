@@ -5,6 +5,8 @@
 // Project specific configuration settings. 
 //
 // Revision History:
+// 2026/02/20:TomislavMatas: v4.40.1452
+// * Increase "ASES.Timeout.SSO" default value from 5 to 10 seconds.
 // 2026/02/17:TomislavMatas: v4.40.1450
 // * Add "ASES.Microsoft.SSO.Account.xPath" and
 //   "ASES.Microsoft.SSO.Submit.xPath" - may be required in the future.
@@ -124,7 +126,7 @@ namespace EZAsesAutoType
         }
 
         private const string TimeoutSsoKeyName = "ASES.Timeout.SSO";
-        private const int TimeoutSsoDefault = 5;
+        private const int TimeoutSsoDefault = 10;
         private int m_TimeoutSso = -1;
         private int TimeoutSso
         {
