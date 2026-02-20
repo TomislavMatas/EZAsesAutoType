@@ -3,6 +3,7 @@
 //
 // Revision History:
 // 2026/02/20:TomislavMatas: v4.40.1452
+// * Fix waiting for main page to appear in `ASESDoSingleSignOn`.
 // * Move invocation of `ASESSwitchToIFrame` into `ASESDoSingleSignOn`.
 // 2026/02/18:TomislavMatas: v4.40.1451
 // * Move invocation of `ASESSwitchToIFrame` to after `ASESDoSingleSignOn`.
@@ -279,10 +280,17 @@ namespace EZAsesAutoType
                         if (this.ASESSsoPageIsLoaded(browser, 1))
                             break;
 
+                        if (this.CancelRequested())
+                            throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
                         Log.Info("Check main page");
                         if (this.ASESSwitchToIFrame(browser, iFrameXPath, 1))
                             if (this.ASESMainPageIsLoaded(browser, 1))
                                 return true;
+
+                        if (this.CancelRequested())
+                            throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
                     }
                     catch (Exception ex)
                     {
@@ -311,6 +319,9 @@ namespace EZAsesAutoType
 
                 element.SendKeys(this.GetASESsoAccount());
 
+                if (this.CancelRequested())
+                    throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
                 Log.Info("Click submit button");
                 xPath = this.GetSsoSubmitXPath();
                 element = browser.FindElementByXpath(xPath, timeoutInSeconds);
@@ -321,7 +332,41 @@ namespace EZAsesAutoType
                     if (!browser.ClickElement(element))
                         throw new Exception(nameof(browser.ClickElement) + Const.LogFail);
 
-                return true;
+                if (this.CancelRequested())
+                    throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
+                // processing the singele sign on may take some time after clicking the submit button.
+                // wait in a loop to wait for the main page to be loaded.
+                secondsElapsed = 0;
+                while (secondsElapsed < timeoutInSeconds)
+                {
+                    try
+                    {
+                        Log.Info("Check main page");
+                        if (this.ASESSwitchToIFrame(browser, iFrameXPath, 1))
+                            if (this.ASESMainPageIsLoaded(browser, 1))
+                                return true;
+
+                        if (this.CancelRequested())
+                            throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                    }
+
+                    SleepThreaded(1);
+                    secondsElapsed++;
+                    if (secondsElapsed >= timeoutInSeconds)
+                        throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogTimeout);
+
+                    if (this.CancelRequested())
+                        throw new Exception(nameof(ASESDoSingleSignOn) + Const.LogCanceled);
+
+                }
+
+                return false;
             }
             catch (Exception ex)
             {
