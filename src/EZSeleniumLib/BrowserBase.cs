@@ -13,6 +13,9 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History:
+// 2026/02/27:TomislavMatas: v4.41.1453
+// * Add `CancellationToken` handling to be used with `service.StartAsync`
+//   in specific descendants and for future implementations.
 // 2025/08/08:TomislavMatas: Version "4.32.1"
 // * Add `DecorateArgument`.
 // 2024/07/05:TomislavMatas: Version "4.22.3"
@@ -228,6 +231,32 @@ namespace EZSeleniumLib
         {
             string prefix = this.GetArgPrefix();
             return string.Format("{0}{1}", prefix, argument);
+        }
+
+        CancellationToken? m_CancellationToken = null;
+        protected CancellationToken CancellationToken
+        {
+            get
+            {
+                if (m_CancellationToken == null)
+                    m_CancellationToken = new CancellationToken();
+
+                return (CancellationToken)m_CancellationToken;
+            }
+            set
+            {
+                m_CancellationToken = value;
+            }
+        }
+        public CancellationToken GetCancellationToken()
+        {
+            return this.CancellationToken;
+        }
+        public CancellationToken SetCancellationToken(CancellationToken cancellationToken)
+        {
+            CancellationToken prev = this.GetCancellationToken();
+            this.CancellationToken = cancellationToken;
+            return prev;
         }
 
         #endregion
