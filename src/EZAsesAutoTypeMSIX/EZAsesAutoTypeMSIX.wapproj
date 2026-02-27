@@ -53,10 +53,8 @@
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <EntryPointProjectUniqueName>..\EZAsesAutoType\EZAsesAutoType.csproj</EntryPointProjectUniqueName>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>3ECD39BB902BEC8DDC381DFD490935E3737CF805</PackageCertificateThumbprint>
+    <UpdateInterval>0</UpdateInterval>
+    <UpdateIntervalUnits>hours</UpdateIntervalUnits>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <AppxBundle>Always</AppxBundle>

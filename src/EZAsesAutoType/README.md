@@ -6,6 +6,13 @@ The required Selenium framework wrappers are provided by "EZSeleniumLib.dll".
 Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
+## 2026/02/27:TomislavMatas: v4.41.1453
+* Use `chromedriver.exe` version "145.0.7632.117".
+* Use `msedgedriver.exe` version "145.0.3800.82".
+* Use `Selenium.Support` version "4.41.0".
+* Use `Selenium.WebDriver` version "4.41.0".
+* Use `log4net` version "3.3.0".
+
 ## 2026/02/20:TomislavMatas: v4.40.1452
 * Fix waiting for main page in `ASESDoSingleSignOn`.
 * Fix Single Sign On (SSO) flow control.
