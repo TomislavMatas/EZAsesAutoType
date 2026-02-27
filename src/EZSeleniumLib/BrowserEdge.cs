@@ -12,6 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/02/27:TomislavMatas: v4.41.1453
+// * Use `service.StartAsync` instead of `service.Start`. `service.Start` is
+//   marked deprecated in SeleniumDriver v4.41.0 and will be removed in v4.43.0.
 // 2025/08/08:TomislavMatas: Version "4.32.1"
 // * Implement usage of `DecorateArgument`.
 // * Add startup argument `disable-build-check`.
@@ -155,9 +158,9 @@ namespace EZSeleniumLib
 
         /// <summary>
         /// Instantiate an instance of Edge WebDriver.
-        /// The instatiation method uses a minimalistic approach,
-        /// applying only thare bare defaults.
-        /// This mehtod will be called by "Initialize", 
+        /// The instantiation method uses a minimalistic approach,
+        /// applying only the bare defaults.
+        /// This method will be called by "Initialize",
         /// when "App.config" value for "EZSeleniumLib.Browser.InitMode" is set to "simple".
         /// </summary>
         /// <returns></returns>
@@ -187,9 +190,9 @@ namespace EZSeleniumLib
 
         /// <summary>
         /// Instantiate an instance of Edge WebDriver.
-        /// The instatiation method uses a more sophisticated approach,
+        /// The instantiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
-        /// This mehtod will be called by "Initialize", 
+        /// This method will be called by "Initialize",
         /// when "App.config" value for "EZSeleniumLib.Browser.InitMode" is set to "extended".
         /// </summary>
         /// <returns></returns>
@@ -202,27 +205,24 @@ namespace EZSeleniumLib
                 Log.Debug("EdgeDriverService init ...");
                 EdgeDriverService service = EdgeDriverService.CreateDefaultService();
 #if DEBUG
-				// Selenium v3
-				// service.UseVerboseLogging = true;
-				// service.UseSpecCompliantProtocol = true;
                 service.EnableVerboseLogging = true;
                 service.HideCommandPromptWindow = false;
                 service.SuppressInitialDiagnosticInformation = false;
+                service.LogPath = "EdgeDriverService.log";
 #else
-                // Selenium v3
-                // service.UseVerboseLogging = false;
-                // service.UseSpecCompliantProtocol = true;
+                service.EnableVerboseLogging = false;
                 service.HideCommandPromptWindow = true;
                 service.SuppressInitialDiagnosticInformation = true;
+                service.LogPath = null;
 #endif
                 Log.Debug("EdgeDriverService init OK");
-
                 EdgeOptions? options = this.GetDriverOptions();
                 if (options == null)
                     throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
                 Log.Debug("EdgeDriverService start ...");
-                service.Start();
+                CancellationToken cancellationToken = this.GetCancellationToken();
+                service.StartAsync(cancellationToken);
                 _service = service;
                 Log.Debug(String.Format("EdgeDriverService ServiceUrl: {0}", _service.ServiceUrl));
                 Log.Debug("EdgeDriverService start OK");
@@ -254,7 +254,6 @@ namespace EZSeleniumLib
                 EdgeOptions options = new EdgeOptions();
 
                 #region Basic Options
-
                 options.PageLoadStrategy = PageLoadStrategy.Normal;
                 options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
 #if DEBUG
@@ -264,7 +263,6 @@ namespace EZSeleniumLib
                 options.SetLoggingPreference(LogType.Profiler, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Server, LogLevel.Debug);
 #endif
-
                 #endregion
 
                 #region Startup Arguments
@@ -311,10 +309,6 @@ namespace EZSeleniumLib
                 #endregion
 
                 #region Capabilities
-
-                // Selenium v3
-                // options.AddAdditionalCapability("useAutomationExtension", false);
-                // Selenium v4
                 options.AddAdditionalEdgeOption("useAutomationExtension", false);
 
                 Dictionary<string, object> profilePreferenceDict = new Dictionary<string, object>();
@@ -402,7 +396,7 @@ namespace EZSeleniumLib
 
         //        /// <summary>
         //        /// #TODO: this does not work using even when using Selenium 4.x and latest Edge WebDriver : - (
-        //        /// anather approach modifying user prefs could be:
+        //        /// another approach modifying user prefs could be:
         //        /// a) https://stackoverflow.com/questions/60739613/change-default-download-location-on-edge-chromium
         //        /// b) using selenium to navigate to "edge://settings/system" and toggle the according switch
         //        /// </summary>
@@ -631,9 +625,9 @@ namespace EZSeleniumLib
 
                 // JavaScript "window.open()" opens a new TAB,
                 // but Selenium Driver does not transfer control
-                // to the newly opened TAB implizitly.
+                // to the newly opened TAB implicitly.
                 Log.Info("Open new TAB ...");
-                this.ExecuteScript("window.open()");
+                object? objOpenResult = this.ExecuteScript("window.open()");
 
                 // although the scipt should execute "synchronously",
                 // give browser some time to render the newly opened TAB.
@@ -653,7 +647,7 @@ namespace EZSeleniumLib
                     // It is still under Selenium Driver's control, as long
                     // as the driver.SwitchTo() command as not been issued.
                     Log.Info("Close old TAB ...");
-                    this.ExecuteScript("window.close()");
+                    object? objCloseResult = this.ExecuteScript("window.close()");
                     Thread.Sleep(this.GetDelay());
                 }
 

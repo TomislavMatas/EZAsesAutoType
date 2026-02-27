@@ -12,6 +12,9 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/02/27:TomislavMatas: v4.41.1453
+// * Use `service.StartAsync` instead of `service.Start`. `service.Start` is
+//   marked deprecated in SeleniumDriver v4.41.0 and will be removed in v4.43.0.
 // 2025/08/08:TomislavMatas: Version "4.32.1"
 // * Implement usage of `DecorateArgument`.
 // * Add startup argument `disable-build-check`.
@@ -138,7 +141,7 @@ namespace EZSeleniumLib
                     return this.InitializeSimple();
 
                 if (Consts.INITMODE_EXTENDED.Equals(initMode, StringComparison.OrdinalIgnoreCase))
-                    return InitializeExtended();
+                    return this.InitializeExtended();
 
                 throw new Exception("InitMode unsupported");
             }
@@ -155,9 +158,9 @@ namespace EZSeleniumLib
 
         /// <summary>
         /// Instantiate an instance of Firefox WebDriver.
-        /// The instatiation method uses a minimalistic approach,
+        /// The instantiation method uses a minimalistic approach,
         /// applying only the bare defaults.
-        /// This mehtod will be called by "Initialize", 
+        /// This method will be called by "Initialize",
         /// when "App.config" value for "EZSeleniumLib.Browser.InitMode" is set to "simple".
         /// </summary>
         /// <returns></returns>
@@ -167,9 +170,9 @@ namespace EZSeleniumLib
             {
                 LogTrace(Consts.LogStart);
 
-                FirefoxOptions? options = GetDriverOptions();
+                FirefoxOptions? options = this.GetDriverOptions();
                 if (options == null)
-                    throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
+                    throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
                 this._driver = new FirefoxDriver(options);
                 return true;
@@ -187,9 +190,9 @@ namespace EZSeleniumLib
 
         /// <summary>
         /// Instantiate an instance of Firefox WebDriver.
-        /// The instatiation method uses a more sophisticated approach,
+        /// The instantiation method uses a more sophisticated approach,
         /// allowing more detailed tweaking of individual properties.
-        /// This mehtod will be called by "Initialize", 
+        /// This method will be called by "Initialize",
         /// when "App.config" value for "EZSeleniumLib.Browser.InitMode" is set to "extended".
         /// </summary>
         /// <returns></returns>
@@ -224,13 +227,13 @@ namespace EZSeleniumLib
                 service.SuppressInitialDiagnosticInformation = true;
 #endif
                 Log.Debug("FirefoxDriverService init OK");
-
                 FirefoxOptions? options = GetDriverOptions();
                 if (options == null)
                     throw new Exception(nameof(GetDriverOptions) + Consts.LogFail);
 
                 Log.Debug("FirefoxDriverService start ...");
-                service.Start();
+                CancellationToken cancellationToken = this.GetCancellationToken();
+                service.StartAsync(cancellationToken);
                 _service = service;
                 Log.Debug(String.Format("FirefoxDriverService ServiceUrl: {0}", _service.ServiceUrl));
                 Log.Debug("FirefoxDriverService start OK");
@@ -268,11 +271,8 @@ namespace EZSeleniumLib
                 FirefoxOptions options = new FirefoxOptions();
 
                 #region Basic Options
-
                 options.PageLoadStrategy = PageLoadStrategy.Normal;
                 options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
-                // Selenium v3 next line disabled
-                // options.UseLegacyImplementation = false;
 #if DEBUG
                 options.SetLoggingPreference(LogType.Browser, LogLevel.Debug);
                 options.SetLoggingPreference(LogType.Client, LogLevel.Debug);
@@ -447,7 +447,7 @@ namespace EZSeleniumLib
             try
             {
                 if (_driver == null)
-                    throw new Exception("_driver is null");
+                    throw new Exception(nameof(_driver) + Consts.LogIsNull);
 
                 IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
                 return js.ExecuteScript(script, args);
@@ -475,7 +475,7 @@ namespace EZSeleniumLib
             {
                 object? obj = this.ExecuteScript("return window.performance.memory");
                 if (obj == null)
-                    throw new Exception("ExecuteScript failed");
+                    throw new Exception(nameof(obj) + Consts.LogIsNull);
 
                 MemoryInfo memoryInfo = new MemoryInfo(obj);
                 return memoryInfo;
@@ -577,9 +577,9 @@ namespace EZSeleniumLib
 
                 // JavaScript "window.open()" opens a new TAB,
                 // but Selenium Driver does not transfer control
-                // to the newly opened TAB implizitly.
+                // to the newly opened TAB implicitly.
                 Log.Info("Open new TAB ...");
-                this.ExecuteScript("window.open()");
+                object? objOpenResult = this.ExecuteScript("window.open()");
 
                 // although the scipt should execute "synchronously",
                 // give browser some time to render the newly opened TAB.
@@ -599,7 +599,7 @@ namespace EZSeleniumLib
                     // It is still under Selenium Driver's control, as long
                     // as the driver.SwitchTo() command as not been issued.
                     Log.Info("Close old TAB ...");
-                    this.ExecuteScript("window.close()");
+                    object? objCloseResult = this.ExecuteScript("window.close()");
                     Thread.Sleep(this.GetDelay());
                 }
 
@@ -625,7 +625,7 @@ namespace EZSeleniumLib
         /// Wrapper for element.SendKeys(keysToSend). 
         /// This Wrapper is required when using Firefox, because 
         /// element.SendKeys() will transfer only the first character text for 
-        /// unknown reason, wheras Edge and Chrome work well though.
+        /// unknown reason, whereas Edge and Chrome work well though.
         /// Google hits suggested to click the execute element.Click() 
         /// prior to element.SendKeys(), but that did NOT work. 
         /// using Actions.SendKeys(pttText, message).Perform() as by 
