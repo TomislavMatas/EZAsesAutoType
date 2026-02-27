@@ -55,6 +55,7 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>hours</UpdateIntervalUnits>
+    <PackageCertificateThumbprint>3ECD39BB902BEC8DDC381DFD490935E3737CF805</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <AppxBundle>Always</AppxBundle>
@@ -150,6 +151,7 @@
     <Content Include="Images\Wide310x150Logo.scale-150.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
     <Content Include="Images\Wide310x150Logo.scale-400.png" />
+    <None Include="MatasConsultingSelfSigned.pfx" />
     <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
