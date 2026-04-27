@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.41.1453</Version>
-    <FileVersion>4.41.1453</FileVersion>
-    <AssemblyVersion>4.41.1453</AssemblyVersion>
+    <Version>4.148.0</Version>
+    <FileVersion>4.148.0</FileVersion>
+    <AssemblyVersion>4.148.0</AssemblyVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Description>The Microsoft Windows Forms Application "EZAsesAutoType.exe" is supposed
@@ -37,12 +37,12 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-      v4.41.1453
-      * Use `chromedriver.exe` version "145.0.7632.117".
-      * Use `msedgedriver.exe` version "145.0.3800.82".
-      * Use `Selenium.Support` version "4.41.0".
-      * Use `Selenium.WebDriver` version "4.41.0".
-      * Use `log4net` version "3.3.0".
+      v4.148.0
+      * Use `chromedriver.exe` version "148.0.7778.56".
+      * Use `msedgedriver.exe` version "148.0.3967.20".
+      * Use `Selenium.Support` version "4.43.0".
+      * Use `Selenium.WebDriver` version "4.43.0".
+      * Use `log4net` version "3.3.1".
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -51,7 +51,7 @@ to automate the daily chore of utilizing the virtual punch card system
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.3.0" />
+    <PackageReference Include="log4net" Version="3.3.1" />
   </ItemGroup>
 
   <ItemGroup>

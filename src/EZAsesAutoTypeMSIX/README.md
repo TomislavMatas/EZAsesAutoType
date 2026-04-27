@@ -33,6 +33,11 @@ with the same value for, e.G.:
 ```
 
 # Revision History
+
+## 2026/04/27:TomislavMatas: v4.148.0
+* Use `Microsoft.Windows.SDK.BuildTools` version "10.0.28000.1721".
+* Use `System.Text.Json` version "10.0.7".
+
 ## 2026/02/17:TomislavMatas: v4.40.1450
 * Use `Microsoft.Windows.SDK.BuildTools` version "10.0.26100.7705".
 * Use `System.Text.Json` version "10.0.3".

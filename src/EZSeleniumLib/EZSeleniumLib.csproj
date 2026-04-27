@@ -15,32 +15,33 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.41.1453</Version>
-    <FileVersion>4.41.1453</FileVersion>
-    <AssemblyVersion>4.41.1453</AssemblyVersion>
-    <AssemblyInformationalVersion>4.41.1453</AssemblyInformationalVersion>
+    <Version>4.148.0</Version>
+    <FileVersion>4.148.0</FileVersion>
+    <AssemblyVersion>4.148.0</AssemblyVersion>
+    <AssemblyInformationalVersion>4.148.0</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
-      v4.41.1453
-      * Use `chromedriver.exe` version "145.0.7632.117".
-      * Use `msedgedriver.exe` version "145.0.3800.82".
-      * Use `Selenium.Support` version "4.41.0".
-      * Use `Selenium.WebDriver` version "4.41.0".
-      * Use `log4net` version "3.3.0".
+      v4.148.0
+      * Use `chromedriver.exe` version "148.0.7778.56".
+      * Use `msedgedriver.exe` version "148.0.3967.20".
+      * Use `Selenium.Support` version "4.43.0".
+      * Use `Selenium.WebDriver` version "4.43.0".
+      * Use `log4net` version "3.3.1".
+      * Use `System.Management` version "10.0.7".
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
-    <PackageReference Include="log4net" Version="3.3.0" />
-    <PackageReference Include="Selenium.Support" Version="4.41.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.41.0" />
+    <PackageReference Include="log4net" Version="3.3.1" />
+    <PackageReference Include="Selenium.Support" Version="4.43.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.43.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
-    <PackageReference Include="System.Management" Version="10.0.3" />
+    <PackageReference Include="System.Management" Version="10.0.7" />
   </ItemGroup>
 
   <ItemGroup>
