@@ -15,19 +15,19 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.148.1</Version>
-    <FileVersion>4.148.1</FileVersion>
-    <AssemblyVersion>4.148.1</AssemblyVersion>
-    <AssemblyInformationalVersion>4.148.1</AssemblyInformationalVersion>
+    <Version>4.148.0</Version>
+    <FileVersion>4.148.0</FileVersion>
+    <AssemblyVersion>4.148.0</AssemblyVersion>
+    <AssemblyInformationalVersion>4.148.0</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
-      v4.148.1
-      * Use `chromedriver.exe` version "148.0.7778.56".
+      v4.148.0
       * Use `msedgedriver.exe` version "148.0.3967.20".
+      * Use `chromedriver.exe` version "148.0.7778.56".
     </PackageReleaseNotes>
   </PropertyGroup>
 

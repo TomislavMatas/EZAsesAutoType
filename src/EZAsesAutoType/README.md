@@ -7,9 +7,9 @@ Please refer to "EZSeleniumLib" project for details.
 
 # Revision History
 
-## 2026/04/27:TomislavMatas: v4.148.1
-* Use `chromedriver.exe` version "148.0.7778.56".
+## 2026/04/28:TomislavMatas: v4.148.0
 * Use `msedgedriver.exe` version "148.0.3967.20".
+* Use `chromedriver.exe` version "148.0.7778.56".
 
 ## 2026/04/27:TomislavMatas: v4.147.0
 * Use `chromedriver.exe` version "147.0.7727.117".
