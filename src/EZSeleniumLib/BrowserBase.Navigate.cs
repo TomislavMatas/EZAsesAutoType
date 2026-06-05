@@ -69,8 +69,8 @@ namespace EZSeleniumLib
             {
                 LogTrace(Consts.LogStart);
 
-                if (String.IsNullOrEmpty(url))
-                    throw new ArgumentNullException("url");
+                if (string.IsNullOrEmpty(url))
+                    throw new ArgumentNullException(nameof(url));
 
                 if (!IsValidURI(url))
                     throw new ArgumentException("url is not a valid URI");
