@@ -49,6 +49,8 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 * Use `msedgedriver.exe` version "149.0.4022.52".
 * Use `chromedriver.exe` version "149.0.7827.53".
 * Use `geckodriver.exe` version "0.37.0".
+* Use `Selenium.Support` version "4.43.0".
+* Use `Selenium.WebDriver` version "4.43.0".
 * Remove package reference `DotNetSeleniumExtras.WaitHelpers`.
 
 ## 2026/04/28:TomislavMatas: v4.148.0
