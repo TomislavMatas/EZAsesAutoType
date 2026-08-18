@@ -55,7 +55,7 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>hours</UpdateIntervalUnits>
-    <PackageCertificateThumbprint>3ECD39BB902BEC8DDC381DFD490935E3737CF805</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>315AAB411FDB33F00346050382185E0D688FB277</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <AppxBundle>Always</AppxBundle>
