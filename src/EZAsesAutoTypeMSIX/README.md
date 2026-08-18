@@ -36,6 +36,9 @@ with the same value for, e.G.:
 ## 2026/08/18:TomislavMatas: v4.151.0
 * Updated "MatasConsultingSelfSigned.pfx" can be used for automated builds
   until 2027/06/05.
+* Edit "EZAsesAutoTypeMSIX.wapproj": Add ProjectReference 
+  "..\EZSeleniumLib\EZSeleniumLib.csproj", because in "*.wapproj" projects, 
+  all references must be added explicitly, even the transitive references.
 
 ## 2026/04/27:TomislavMatas: v4.147.0
 * Use `Microsoft.Windows.SDK.BuildTools` version "10.0.28000.1721".
