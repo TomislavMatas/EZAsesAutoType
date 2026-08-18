@@ -50,12 +50,15 @@
     <NoWarn>$(NoWarn);NU1702</NoWarn>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <EntryPointProjectUniqueName>..\EZAsesAutoType\EZAsesAutoType.csproj</EntryPointProjectUniqueName>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>hours</UpdateIntervalUnits>
-    <PackageCertificateThumbprint>3ECD39BB902BEC8DDC381DFD490935E3737CF805</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>315AAB411FDB33F00346050382185E0D688FB277</PackageCertificateThumbprint>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <GenerateTestArtifacts>False</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <AppxBundle>Always</AppxBundle>
@@ -156,10 +159,11 @@
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1839" PrivateAssets="all" />
-    <PackageReference Include="System.Text.Json" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2526" PrivateAssets="all" />
+    <PackageReference Include="System.Text.Json" Version="10.0.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EZAsesAutoType\EZAsesAutoType.csproj" />
+    <ProjectReference Include="..\EZSeleniumLib\EZSeleniumLib.csproj" />
   </ItemGroup>
 </Project>

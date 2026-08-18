@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_61B8C5B7C9F1429BB24168BA57C49174"
+        "MsmKey" = "8:_73304BD938A44DA791D967940BAB88C6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,7 +39,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:bin\\Debug\\EZAsesAutoType-debug.msi"
+        "OutputFilename" = "8:bin\\Debug\\EZAsesAutoType-Setup-Debug.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -71,7 +71,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:bin\\Release\\EZAsesAutoType-setup.msi"
+        "OutputFilename" = "8:bin\\Release\\EZAsesAutoType-Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -224,15 +224,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EZ ASES AutoType"
-        "ProductCode" = "8:{E197703C-783A-41F7-9E1E-7394C749F98D}"
-        "PackageCode" = "8:{5A7B37B7-E801-481F-B7B8-6AA5C23E350E}"
+        "ProductCode" = "8:{9021EEE8-AD5C-481C-8846-6AAA95D09AEE}"
+        "PackageCode" = "8:{252BDD0E-25C7-46B6-A84A-D0C920A9491A}"
         "UpgradeCode" = "8:{8A6849D5-37DA-4A40-A26E-88046820FAA1}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:4.149.0"
+        "ProductVersion" = "8:4.151.0"
         "Manufacturer" = "8:matas consulting"
         "ARPHELPTELEPHONE" = "8:+49 151 50989124"
         "ARPHELPLINK" = "8:http://consulting.matas.de"
@@ -345,7 +345,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_49FF254A5B404EBBA3459996A73337F2"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_28D2C6455FA24C7BA543A79BF931CD78"
             {
             "Name" = "8:EZ ASES AutoType"
             "Arguments" = "8:"
@@ -353,7 +353,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_61B8C5B7C9F1429BB24168BA57C49174"
+            "Target" = "8:_73304BD938A44DA791D967940BAB88C6"
             "Folder" = "8:_7F544D843E7D43AD90DF5A3AE0A54139"
             "WorkingFolder" = "8:_1104C379D14F46E8977131739157E861"
             "Icon" = "8:_50068045F57848C69B79060B6279E07C"
@@ -768,7 +768,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_61B8C5B7C9F1429BB24168BA57C49174"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_73304BD938A44DA791D967940BAB88C6"
             {
             "SourcePath" = "8:..\\EZAsesAutoType\\obj\\Release\\net8.0-windows10.0.26100.0\\apphost.exe"
             "TargetName" = "8:"
@@ -788,7 +788,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{555FB130-6454-4EB6-A0A2-14386A5FABD8}"
             "ShowKeyOutput" = "11:TRUE"

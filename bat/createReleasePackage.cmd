@@ -16,7 +16,7 @@
 
 @echo off
 setlocal
-set "VersionLabelDefault=4.149.0"
+set "VersionLabelDefault=4.151.0"
   
 :: cast batch file input arguments to variables with meaningfull name.
 set "VersionLabel=%1"
