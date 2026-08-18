@@ -1,0 +1,42 @@
+This Privacy Policy describes our policies on the collection
+and use of your information when you use the app.
+
+* Personal information
+
+Data persisted to the file system is limited to the configuration settings.
+The configuration settings include the app's specific settings. Users shall
+be aware, that any entered credentials may be stored unencrypted as plain text
+along with other settings in the user profile.
+
+* Third parties
+
+The app is not using any third party services. All data is stored locally
+within user's profile or user's roaming app data storage. It will never
+be sent to neither the app developer nor any third party. Of course, the
+purpose of this app is to automate a web frontend that requires textual
+data entry. The user should be aware of the security implications of any
+data transmitted over the network.
+Thus, it's strongly advised to utilize this app from secure networks using
+appropriate configured firewall and VPN software. When used in public
+internet network, any transmitted data can potentially be read and modified
+by means of "man in the middle attacks", even when using secure protocols
+such as https.
+
+* Technical information
+
+The app uses the Selenium Framework to automate data entry within
+a specific web frontend by emulating mouse movements and keyboard
+entry simulations. To do so, the app requires network access to
+log in to the configured http URL.
+
+* Statistical information
+
+Since the app is listed online at the Microsoft Store, a small set of
+non-identifiable information can be sent to Microsoft for statistical
+information about app usage, device type and capabilities.
+
+* Contact information
+- ... report any violations
+- ... get more information about this Privacy Policy
+- ... provide feedback, suggestions, comments about our Privacy Policy
+please do not hesitate to contact us at ->< mailto:consulting@matas.de >.
