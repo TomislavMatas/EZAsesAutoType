@@ -53,6 +53,10 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 * Use `Selenium.WebDriver` version "4.47.0".
 * Use `log4net` version "3.3.2".
 * Use `System.Management` version "10.0.11".
+* Edit ->< [BrowserEdge.cs](BrowserEdge.cs) >:
+  Add `disable-features` with comprehensive Edge mini menu/context
+  menu flags and user profile preferences to suppress Edge's floating
+  context menu during automation.
 
 ## 2026/06/05:TomislavMatas: v4.149.0
 * Use `msedgedriver.exe` version "149.0.4022.52".

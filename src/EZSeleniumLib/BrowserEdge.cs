@@ -12,6 +12,10 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/08/18:TomislavMatas: [v4.151.0]
+// * Add `disable-features` with comprehensive Edge mini menu/context
+//   menu flags and user profile preferences to suppress Edge's floating
+//   context menu during automation.
 // 2026/06/05:TomislavMatas: [v4.149.0]
 // * Use `IWebDriver` instead of `WebDriver` in consistent manner.
 // 2026/02/27:TomislavMatas: v4.41.1453
@@ -273,6 +277,7 @@ namespace EZSeleniumLib
                 argumentList.Add(DecorateArgument("disable-build-check"));
                 argumentList.Add(DecorateArgument("disable-infobars"));
                 argumentList.Add(DecorateArgument("disable-automation"));
+                argumentList.Add(DecorateArgument("disable-features=msEdgeEnhancedMiniMenu,msEdgeMiniMenu,msEdgeMiniMenuV2,msWebOOUI,msPdfOOUI,msEdgeEnableNurturingFramework,msEdgeQuickSearchShowMiniMenu,msSmartActionsV2"));
 
                 bool disableGPU = this.BrowserOptions.DisableGPU;
                 if (disableGPU)
@@ -323,6 +328,11 @@ namespace EZSeleniumLib
                 // Values for "notifications": 0 - Default, 1 - Allow, 2 - Block
                 int notifications = notificationsEnabled ? 1 : 2;
                 profilePreferenceDict.Add("profile.default_content_setting_values.notifications", notifications);
+
+                // Disable Edge mini context menu / smart actions on text selection and focus change
+                profilePreferenceDict.Add("edge_quick_search.show_mini_menu", false);
+                profilePreferenceDict.Add("autofill.profile_enabled", false);
+                profilePreferenceDict.Add("edge_smart_actions.enabled", false);
 
                 #region Selenium v3 
                 // Dictionary<string, object> optionDict = new Dictionary<string, object>();
