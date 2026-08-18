@@ -45,6 +45,15 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
 
 # Revision History
 
+## 2026/08/18:TomislavMatas: v4.151.0
+* Use `chromedriver.exe` version "151.0.7922.138".
+* Use `msedgedriver.exe` version "151.0.4129.86".
+* Use `geckodriver.exe` version "0.37.1".
+* Use `Selenium.Support` version "4.47.0".
+* Use `Selenium.WebDriver` version "4.47.0".
+* Use `log4net` version "3.3.2".
+* Use `System.Management` version "10.0.11".
+
 ## 2026/06/05:TomislavMatas: v4.149.0
 * Use `msedgedriver.exe` version "149.0.4022.52".
 * Use `chromedriver.exe` version "149.0.7827.53".
