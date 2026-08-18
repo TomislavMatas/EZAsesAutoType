@@ -12,6 +12,8 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/06/05:TomislavMatas: [v4.149.0]
+// * Use `IWebDriver` instead of `WebDriver` in consistent manner.
 // 2026/02/27:TomislavMatas: v4.41.1453
 // * Use `service.StartAsync` instead of `service.Start`. `service.Start` is
 //   marked deprecated in SeleniumDriver v4.41.0 and will be removed in v4.43.0.
@@ -70,7 +72,7 @@ namespace EZSeleniumLib
         #region private memberz
 
         private FirefoxDriver? _driver = null;
-        protected override WebDriver? GetDriver()
+        protected override IWebDriver? GetDriver()
         {
             if (_driver == null)
                 return null;

@@ -13,6 +13,9 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History:
+// 2026/06/05:TomislavMatas: [v4.149.0]
+// * Replace usage of outdated `SeleniumExtras.WaitHelpers.ExpectedConditions`
+//   with native `wait.Until` through lambda.
 // 2026/02/27:TomislavMatas: v4.41.1453
 // * Add `CancellationToken` handling to be used with `service.StartAsync`
 //   in specific descendants and for future implementations.
@@ -47,7 +50,6 @@ using log4net;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 
 namespace EZSeleniumLib
 {
@@ -76,8 +78,8 @@ namespace EZSeleniumLib
 
         #region protected memberz
 
-        private WebDriver? m_Driver = null;
-        protected WebDriver? Driver
+        private IWebDriver? m_Driver = null;
+        protected IWebDriver? Driver
         {
             get
             {
@@ -91,7 +93,7 @@ namespace EZSeleniumLib
                 m_Driver = value;
             }
         }
-        protected abstract WebDriver? GetDriver();
+        protected abstract IWebDriver? GetDriver();
 
         /// <summary>
         /// Return reference on current instance of IWebDriver.
@@ -567,7 +569,7 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
-                WebDriver? driver = this.GetDriver();
+                IWebDriver? driver = this.GetDriver();
                 if (driver == null)
                     throw new Exception(nameof(driver)+"is null");
 
@@ -627,7 +629,7 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
-                WebDriver? driver = this.GetDriver();
+                IWebDriver? driver = this.GetDriver();
                 if (driver == null)
                     throw new Exception(nameof(driver)+" is null");
 
@@ -687,7 +689,7 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
-                WebDriver? driver = this.GetDriver();
+                IWebDriver? driver = this.GetDriver();
                 if (driver == null)
                     throw new ArgumentNullException(nameof(driver));
 
@@ -736,8 +738,6 @@ namespace EZSeleniumLib
 
         /// <summary>
         /// Wait for a specifc element to become visible.
-        /// Utilizes `SeleniumExtras.WaitHelpers.ExpectedConditions`
-        /// from NuGet package `DotNetSeleniumExtras.WaitHelpers`.
         /// </summary>
         /// <param name="by"></param>
         /// <param name="timeout"></param>
@@ -748,15 +748,21 @@ namespace EZSeleniumLib
             try
             {
                 LogTrace(Consts.LogStart);
-                WebDriver? driver = this.GetDriver();
+                IWebDriver? driver = this.GetDriver();
                 if (driver == null)
                     throw new ArgumentNullException(nameof(driver));
 
                 Log.Info(string.Format("Waiting {0} seconds for element `{1}` to become visible ...", timeout, by.Criteria));
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
 
-                Func<IWebDriver, IWebElement> expectedCondition = ExpectedConditions.ElementIsVisible(by);
-                IWebElement element = wait.Until(expectedCondition);
+// 2026/06/05:TomislavMatas: [v4.149.0] next 2 lines disabled: do not use `SeleniumExtras.WaitHelpers.ExpectedConditions` anymore.
+//              Func<IWebDriver, IWebElement> expectedCondition = ExpectedConditions.ElementIsVisible(by);
+//              IWebElement element = wait.Until(expectedCondition);
+// 2026/06/05:TomislavMatas: [v4.149.0] next 4 lines added: Use native `wait.Until` through lambda.
+                IWebElement element = wait.Until(d => {
+                    var el = d.FindElement(by);
+                    return el.Displayed ? el : null;
+                });
                 Log.Info(string.Format("Waiting {0} seconds for element `{1}` to become visible OK", timeout, by.Criteria));
                 return true;
             }
