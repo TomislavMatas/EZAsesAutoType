@@ -12,6 +12,16 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/08/17:TomislavMatas: v4.451.0
+// * Starting with geckodriver [v0.37.1], browser UI testing for Firefox now
+//   requires the geckodriver "--allow-system-access" command-line argument.
+//   Setting the Firefox "--remote-allow-system-access" command-line argument
+//   via `moz:firefoxOptions` is no longer supported, see:
+//   ->< https://github.com/mozilla/geckodriver/releases >
+// * Set property `FirefoxDriverService.AllowSystemAccess = true`, to mimic the
+//   geckodriver "--allow-system-access" command-line argument.
+//   The property `FirefoxDriverService.AllowSystemAccess is available
+//   since `Selenium.WebDriver` version "4.47.0".
 // 2026/06/05:TomislavMatas: [v4.149.0]
 // * Use `IWebDriver` instead of `WebDriver` in consistent manner.
 // 2026/02/27:TomislavMatas: v4.41.1453
@@ -228,6 +238,7 @@ namespace EZSeleniumLib
                 service.HideCommandPromptWindow = true;
                 service.SuppressInitialDiagnosticInformation = true;
 #endif
+                service.AllowSystemAccess = true;
                 Log.Debug("FirefoxDriverService init OK");
                 FirefoxOptions? options = GetDriverOptions();
                 if (options == null)
