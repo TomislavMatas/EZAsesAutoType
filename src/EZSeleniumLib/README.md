@@ -44,6 +44,13 @@ Assuming that the auto update feature of Microsoft Edge Browser has been disable
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
 # Revision History
+## 2026/08/17:TomislavMatas: v4.152.0
+* Use `chromedriver.exe` version "152.0.7977.42".
+* Use `msedgedriver.exe` version "152.0.4191.19".
+* Edit ->< [BrowserEdge.cs](BrowserEdge.cs) >:
+  Add `disable-features` with comprehensive Edge mini menu/context
+  menu flags and user profile preferences to suppress Edge's floating
+  context menu during automation.
 
 ## 2026/08/18:TomislavMatas: v4.151.0
 * Use `chromedriver.exe` version "151.0.7922.138".
@@ -57,6 +64,11 @@ a specific Microsoft Edge Driver Version could be used "for ever", at least in t
   Add `disable-features` with comprehensive Edge mini menu/context
   menu flags and user profile preferences to suppress Edge's floating
   context menu during automation.
+
+## 2026/07/17:TomislavMatas: v4.150.0
+* Use `chromedriver.exe` version "150.0.7871.129".
+* Use `msedgedriver.exe` version "150.0.4078.65".
+* Use `geckodriver.exe`  version "0.37.0".
 
 ## 2026/06/05:TomislavMatas: v4.149.0
 * Use `msedgedriver.exe` version "149.0.4022.52".

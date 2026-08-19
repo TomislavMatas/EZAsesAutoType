@@ -15,26 +15,19 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.151.0</Version>
-    <FileVersion>4.151.0</FileVersion>
-    <AssemblyVersion>4.151.0</AssemblyVersion>
-    <AssemblyInformationalVersion>4.151.0</AssemblyInformationalVersion>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Version>4.152.0</Version>
+    <FileVersion>4.152.0</FileVersion>
+    <AssemblyVersion>4.152.0</AssemblyVersion>
+    <AssemblyInformationalVersion>4.152.0</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
-v4.151.0
-* Use `chromedriver.exe` version "151.0.7922.138".
-* Use `msedgedriver.exe` version "151.0.4129.86".
-* Use `geckodriver.exe` version "0.37.1".
-* Use `Selenium.Support` version "4.47.0".
-* Use `Selenium.WebDriver` version "4.47.0".
-* Use `log4net` version "3.3.2".
-* Use `System.Management` version "10.0.11".
+        v4.152.0 (2026/08/17):
+        * Use `chromedriver.exe` version "152.0.7977.42".
+        * Use `msedgedriver.exe` version "152.0.4191.19".
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -42,7 +35,6 @@ v4.151.0
     <PackageReference Include="log4net" Version="3.3.2" />
     <PackageReference Include="Selenium.Support" Version="4.47.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.47.0" />
-    <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="4.1.0" />
     <PackageReference Include="System.Management" Version="10.0.11" />
   </ItemGroup>
 

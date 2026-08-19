@@ -12,7 +12,7 @@
 // See "README.md" for details.
 //
 // Revision History:
-// 2026/08/18:TomislavMatas: [v4.151.0]
+// 2026/08/19:TomislavMatas: [v4.152.0]
 // * Add `disable-features` with comprehensive Edge mini menu/context
 //   menu flags and user profile preferences to suppress Edge's floating
 //   context menu during automation.
