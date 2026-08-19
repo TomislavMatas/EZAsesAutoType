@@ -29,7 +29,7 @@ git clone --mirror "%BFG_GIT%" "%BFG_MIR%"
 pushd "%BFG_MIR%"
 @if errorlevel 1 @pause
 
-java -jar "%~dp0bfg-1.14.0.jar" --delete-files EZAsesAutoType-{portable,setup}*.{zip,msi} "%BFG_MIR%"
+java -jar "%~dp0bfg-1.14.0.jar" --delete-files EZAsesAutoType-{Portable,Setup}*.{zip,msi} "%BFG_MIR%"
 @if errorlevel 1 @pause
 
 git reflog expire --expire=now --all 

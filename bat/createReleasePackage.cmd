@@ -32,7 +32,7 @@ if "%VersionLabel%" == "" (
 set "PROJECT_ROOT=%~dp0.."
 set "SIGNAGE_BAT=%PROJECT_ROOT%\bat\signReleaseBinaries.cmd"
 set "PORTABLE_BIN_PATH=%PROJECT_ROOT%\src\EZAsesAutoType\bin\Release\net8.0-windows10.0.26100.0"
-set "SETUP_MSI_BIN_FILE=%PROJECT_ROOT%\src\EZAsesAutoTypeSetup\bin\Release\EZAsesAutoType-setup.msi"
+set "SETUP_MSI_BIN_FILE=%PROJECT_ROOT%\src\EZAsesAutoTypeSetup\bin\Release\EZAsesAutoType-Setup.msi"
 set "BIN_RELEASE_PATH=%PROJECT_ROOT%\bin\release"
 
 if not exist "%SIGNAGE_BAT%" (
@@ -63,7 +63,7 @@ if not exist "%BIN_RELEASE_PATH%" (
 :: -- The portable package is basically a zip file containing the build output.
 :: -- Create the zip file in a dedicated release directory.
 echo create portable package zip file ...
-set "ZIP_FILE=%BIN_RELEASE_PATH%\EZAsesAutoType-portable-%VersionLabel%.zip"
+set "ZIP_FILE=%BIN_RELEASE_PATH%\EZAsesAutoType-Portable-%VersionLabel%.zip"
 set "ZIP_CMD=powershell.exe -command"
 set "ZIP_ARG=Compress-Archive -CompressionLevel Optimal "
 set "ZIP_ARG=%ZIP_ARG% -DestinationPath \"%ZIP_FILE%\" "
@@ -82,7 +82,7 @@ set "ZIP_ARG=%ZIP_ARG% -Force "
 :: -- _without_ any version label in it's file name.
 :: -- Place a copy _with_ version label into dedicated release directory.
 echo create setup msi file ...
-set "MSI_FILE=%BIN_RELEASE_PATH%\EZAsesAutoType-setup-%VersionLabel%.msi"
+set "MSI_FILE=%BIN_RELEASE_PATH%\EZAsesAutoType-Setup-%VersionLabel%.msi"
 @echo on
 copy "%SETUP_MSI_BIN_FILE%" "%MSI_FILE%"
 @if ERRORLEVEL 1 @(
