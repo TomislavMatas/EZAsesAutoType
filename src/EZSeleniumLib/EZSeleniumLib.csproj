@@ -25,16 +25,19 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
-        v4.152.0 (2026/08/17):
-        * Use `chromedriver.exe` version "152.0.7977.42".
-        * Use `msedgedriver.exe` version "152.0.4191.19".
+v4.152.0 (2026/08/31):
+* Use `chromedriver.exe` version "152.0.7977.64".
+* Use `msedgedriver.exe` version "152.0.4191.53".
+* Use `Selenium.Support` version "4.48.0".
+* Use `Selenium.WebDriver` version "4.48.0".
+* Use `log4net` version "3.4.0".
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.3.2" />
-    <PackageReference Include="Selenium.Support" Version="4.47.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.47.0" />
+    <PackageReference Include="log4net" Version="3.4.0" />
+    <PackageReference Include="Selenium.Support" Version="4.48.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.48.0" />
     <PackageReference Include="System.Management" Version="10.0.11" />
   </ItemGroup>
 
