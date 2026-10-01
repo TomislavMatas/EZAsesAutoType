@@ -12,6 +12,10 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/10/01:TomislavMatas: [v4.152.1]
+// * When creating browser instance, pass the bundled driver directory explicitly
+//   to prevent the Selenium Manager from attempting an online driver download,
+//   which can fail on proxy/firewall restricted clients.
 // 2026/06/05:TomislavMatas: [v4.149.0]
 // * Use `IWebDriver` instead of `WebDriver` in consistent manner.
 // 2026/02/27:TomislavMatas: v4.41.1453
@@ -175,7 +179,12 @@ namespace EZSeleniumLib
                 if (options == null)
                     throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
-                this._driver = new ChromeDriver(options);
+                // Pass the bundled driver directory explicitly to prevent
+                // Selenium Manager from attempting an online driver download,
+                // which fails on proxy/firewall restricted clients.
+                ChromeDriverService service = ChromeDriverService.CreateDefaultService(GetDriverDirectory());
+                this._service = service;
+                this._driver = new ChromeDriver(service, options);
                 return true;
             }
             catch (Exception ex)
@@ -204,7 +213,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 Log.Debug("ChromeDriverService init ...");
-                ChromeDriverService service = ChromeDriverService.CreateDefaultService();
+                ChromeDriverService service = ChromeDriverService.CreateDefaultService(GetDriverDirectory());
 #if DEBUG
                 service.EnableVerboseLogging = true;
                 service.HideCommandPromptWindow = false;

@@ -12,6 +12,10 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/10/01:TomislavMatas: [v4.152.1]
+// * When creating browser instance, pass the bundled driver directory explicitly
+//   to prevent the Selenium Manager from attempting an online driver download,
+//   which can fail on proxy/firewall restricted clients.
 // 2026/08/19:TomislavMatas: [v4.152.0]
 // * Add `disable-features` with comprehensive Edge mini menu/context
 //   menu flags and user profile preferences to suppress Edge's floating
@@ -180,7 +184,12 @@ namespace EZSeleniumLib
                 if (options == null)
                     throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
-                this._driver = new EdgeDriver(options);
+                // Pass the bundled driver directory explicitly to prevent
+                // Selenium Manager from attempting an online driver download,
+                // which fails on proxy/firewall restricted clients.
+                EdgeDriverService service = EdgeDriverService.CreateDefaultService(GetDriverDirectory());
+                this._service = service;
+                this._driver = new EdgeDriver(service, options);
                 return true;
             }
             catch (Exception ex)
@@ -209,7 +218,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 Log.Debug("EdgeDriverService init ...");
-                EdgeDriverService service = EdgeDriverService.CreateDefaultService();
+                EdgeDriverService service = EdgeDriverService.CreateDefaultService(GetDriverDirectory());
 #if DEBUG
                 service.EnableVerboseLogging = true;
                 service.HideCommandPromptWindow = false;

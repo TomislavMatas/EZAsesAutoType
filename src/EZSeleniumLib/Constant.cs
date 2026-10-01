@@ -5,6 +5,9 @@
 // Constants with "public" relevance.
 //
 // Revision History:
+// 2026/10/01:TomislavMatas: v4.152.1
+// * Use `chromedriver.exe` version "152.0.7977.82".
+// * Use `msedgedriver.exe` version "152.0.4191.100".
 // 2026/08/31:TomislavMatas: v4.152.0
 // * Use `chromedriver.exe` version "152.0.7977.64".
 // * Use `msedgedriver.exe` version "152.0.4191.53".
@@ -114,7 +117,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverChromeVersion = "152.0.7977.64";
+        public const string WebDriverChromeVersion = "152.0.7977.82";
         
         #endregion
 
@@ -133,7 +136,7 @@ namespace EZSeleniumLib
         /// <summary>
         /// WebDriver executable version used during build.
         /// </summary>
-        public const string WebDriverEdgeVersion = "152.0.4191.53";
+        public const string WebDriverEdgeVersion = "152.0.4191.100";
 
         #endregion
 

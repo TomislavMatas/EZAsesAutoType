@@ -33,6 +33,10 @@ with the same value for, e.G.:
 ```
 
 # Revision History
+
+## 2026/10/01:TomislavMatas: v4.151.0
+* Use `System.Text.Json` version "10.0.12".
+
 ## 2026/08/18:TomislavMatas: v4.151.0
 * Updated "MatasConsultingSelfSigned.pfx" can be used for automated builds
   until 2027/06/05.

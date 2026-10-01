@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.152.0</Version>
-    <FileVersion>4.152.0</FileVersion>
-    <AssemblyVersion>4.152.0</AssemblyVersion>
+    <Version>4.152.1</Version>
+    <FileVersion>4.152.1</FileVersion>
+    <AssemblyVersion>4.152.1</AssemblyVersion>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <Authors>Tomislav Matas</Authors>
@@ -39,12 +39,16 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-v4.152.0 (2026/08/31):
-* Use `chromedriver.exe` version "152.0.7977.64".
-* Use `msedgedriver.exe` version "152.0.4191.53".
-* Use `Selenium.Support` version "4.48.0".
-* Use `Selenium.WebDriver` version "4.48.0".
-* Use `log4net` version "3.4.0".
+v4.152.1 (2026/10/01):
+* Use `chromedriver.exe` version "152.0.7977.82".
+* Use `msedgedriver.exe` version "152.0.4191.100".
+* Use `Selenium.Support` version "4.50.0".
+* Use `Selenium.WebDriver` version "4.50.0".
+* Use `log4net` version "3.5.0".
+* Use `System.Management` "10.0.12".
+* When creating browser instance, pass the bundled driver directory explicitly
+  to prevent the Selenium Manager from attempting an online driver download,
+  which can fail on proxy/firewall restricted clients.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -53,7 +57,7 @@ v4.152.0 (2026/08/31):
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.4.0" />
+    <PackageReference Include="log4net" Version="3.5.0" />
   </ItemGroup>
 
   <ItemGroup>

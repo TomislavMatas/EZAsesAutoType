@@ -13,6 +13,10 @@
 // There for, the fork "DotNetSeleniumExtras.WaitHelpers" has been added to this project using NuGet.
 //
 // Revision History:
+// 2026/10/01:TomislavMatas: [v4.152.1]
+// * When creating browser instance, pass the bundled driver directory explicitly
+//   to prevent the Selenium Manager from attempting an online driver download,
+//   which can fail on proxy/firewall restricted clients.
 // 2026/06/05:TomislavMatas: [v4.149.0]
 // * Replace usage of outdated `SeleniumExtras.WaitHelpers.ExpectedConditions`
 //   with native `wait.Until` through lambda.
@@ -120,6 +124,22 @@ namespace EZSeleniumLib
             }
         }
         protected abstract DriverService? GetService();
+
+        /// <summary>
+        /// Return the directory that contains the bundled WebDriver
+        /// executables (chromedriver.exe, msedgedriver.exe, geckodriver.exe).
+        /// The build copies these binaries next to the application assemblies
+        /// (see "*.csproj" -> "CopyToOutputDirectory"). Passing this directory
+        /// explicitly to "*DriverService.CreateDefaultService(...)" prevents
+        /// Selenium Manager from being invoked and attempting an online driver
+        /// download, which fails on proxy/firewall restricted clients
+        /// (e.g. "selenium-manager.exe" exit code 65).
+        /// </summary>
+        /// <returns>Absolute path to the directory of the executing assembly.</returns>
+        protected static string GetDriverDirectory()
+        {
+            return AppContext.BaseDirectory;
+        }
 
         /// <summary>
         /// Singleton helper variable.

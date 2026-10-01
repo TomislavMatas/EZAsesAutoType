@@ -12,6 +12,10 @@
 // See "README.md" for details.
 //
 // Revision History:
+// 2026/10/01:TomislavMatas: [v4.152.1]
+// * When creating browser instance, pass the bundled driver directory explicitly
+//   to prevent the Selenium Manager from attempting an online driver download,
+//   which can fail on proxy/firewall restricted clients.
 // 2026/08/17:TomislavMatas: v4.451.0
 // * Starting with geckodriver [v0.37.1], browser UI testing for Firefox now
 //   requires the geckodriver "--allow-system-access" command-line argument.
@@ -186,7 +190,12 @@ namespace EZSeleniumLib
                 if (options == null)
                     throw new Exception(nameof(this.GetDriverOptions) + Consts.LogFail);
 
-                this._driver = new FirefoxDriver(options);
+                // Pass the bundled driver directory explicitly to prevent
+                // Selenium Manager from attempting an online driver download,
+                // which fails on proxy/firewall restricted clients.
+                FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(GetDriverDirectory());
+                this._service = service;
+                this._driver = new FirefoxDriver(service, options);
                 return true;
             }
             catch (Exception ex)
@@ -215,7 +224,7 @@ namespace EZSeleniumLib
                 LogTrace(Consts.LogStart);
 
                 Log.Debug("FirefoxDriverService init ...");
-                FirefoxDriverService service = FirefoxDriverService.CreateDefaultService();
+                FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(GetDriverDirectory());
 #if DEBUG
                 //service.EnableVerboseLogging = true;
                 //service.LogPath = "FirefoxDriverService.log";
