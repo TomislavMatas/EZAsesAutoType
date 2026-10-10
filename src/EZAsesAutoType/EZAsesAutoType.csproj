@@ -20,9 +20,9 @@
     <!-- package props -->
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>EZ ASES AutoType</Title>
-    <Version>4.152.1</Version>
-    <FileVersion>4.152.1</FileVersion>
-    <AssemblyVersion>4.152.1</AssemblyVersion>
+    <Version>4.155.0.0</Version>
+    <FileVersion>4.155.0.0</FileVersion>
+    <AssemblyVersion>4.155.0.0</AssemblyVersion>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <Authors>Tomislav Matas</Authors>
@@ -39,16 +39,12 @@ to automate the daily chore of utilizing the virtual punch card system
     <ApplicationIcon>Resources\EZAsesAutoType.ico</ApplicationIcon>
     <Product>EZ ASES AutoType</Product>
     <PackageReleaseNotes>
-v4.152.1 (2026/10/01):
-* Use `chromedriver.exe` version "152.0.7977.82".
-* Use `msedgedriver.exe` version "152.0.4191.100".
-* Use `Selenium.Support` version "4.50.0".
-* Use `Selenium.WebDriver` version "4.50.0".
-* Use `log4net` version "3.5.0".
-* Use `System.Management` "10.0.12".
-* When creating browser instance, pass the bundled driver directory explicitly
-  to prevent the Selenium Manager from attempting an online driver download,
-  which can fail on proxy/firewall restricted clients.
+      v4.155.0.0 (2026/10/10):
+      * Use `EZSeleniumLib` version "4.155.0.0".
+      * Use `chromedriver.exe` version "155.0.8059.39".
+      * Use `msedgedriver.exe` version "155.0.4283.45".
+      * Use `Selenium.Support` version "4.51.0".
+      * Use `Selenium.WebDriver` version "4.51.0".
     </PackageReleaseNotes>
   </PropertyGroup>
 
