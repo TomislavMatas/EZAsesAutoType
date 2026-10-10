@@ -43,7 +43,149 @@ there is only a small risk by sticking with older Microsoft Edge Browser version
 Assuming that the auto update feature of Microsoft Edge Browser has been disabled,
 a specific Microsoft Edge Driver Version could be used "for ever", at least in theory.
 
+## Selenium Manager Offline Driver Resolution
+
+### Summary
+
+On some business clients the application failed to start the browser
+with the following error, while the same build worked on other clients:
+
+```
+Manager process exited abnormally with 65 code:
+...\runtimes\win\native\selenium-manager.exe --browser "MicrosoftEdge"
+--language-binding csharp --output mixed
+--- Standard Output ---
+{
+  "driver_path": "",
+  "browser_path": "",
+  "error": "error sending request for url
+   (https://msedgedriver.microsoft.com/LATEST_RELEASE_152_WINDOWS)"
+}
+--- End Standard Output ---
+   at OpenQA.Selenium.Manager.SeleniumManager. ...
+```
+
+This document describes the root cause and the implemented fix.
+
+### Root Cause
+
+Selenium.WebDriver 4.x ships a helper named `selenium-manager.exe`.
+When the driver service is created without an explicit driver path,
+Selenium invokes this helper to auto-resolve the driver. The helper
+detects the installed browser version and then downloads the matching
+driver binary from an online source, for Edge this is
+`https://msedgedriver.microsoft.com`.
+
+Exit code 65 means Selenium Manager could not resolve a driver. The
+embedded standard output shows the real reason: the HTTPS request to
+`msedgedriver.microsoft.com` failed.
+
+Why it happened on some clients but not others:
+
+* Corporate proxy or firewall blocks `msedgedriver.microsoft.com`.
+* No direct internet access without proxy configuration.
+* TLS inspection breaks the request.
+* Offline or air-gapped machines.
+
+Clients with open internet access worked; locked-down clients did not.
+
+The project already ships the matching driver binaries next to the
+application assemblies. The build copies `msedgedriver.exe`,
+`chromedriver.exe` and `geckodriver.exe` to the output directory via
+`CopyToOutputDirectory` in `EZSeleniumLib.csproj`. However, the code
+created the driver service without pointing at that directory, so
+Selenium Manager was invoked anyway and tried to go online.
+
+### Solution
+
+Pass the directory that contains the bundled driver binaries explicitly
+to `*DriverService.CreateDefaultService(...)`. When Selenium is given a
+valid driver path, it uses that driver and does not invoke Selenium
+Manager, so no online request is made. This makes browser startup fully
+offline-capable on restricted clients.
+
+#### Changes
+
+`BrowserBase.cs`
+
+Added a shared helper that returns the directory of the executing
+assembly, which is where the build copies the driver binaries:
+
+```csharp
+protected static string GetDriverDirectory()
+{
+    return AppContext.BaseDirectory;
+}
+```
+
+`BrowserEdge.cs`, `BrowserChrome.cs`, `BrowserFirefox.cs`
+
+Both initialization modes now create the driver service with the
+bundled driver directory.
+
+Extended mode (example for Edge):
+
+```csharp
+EdgeDriverService service =
+    EdgeDriverService.CreateDefaultService(GetDriverDirectory());
+```
+
+Simple mode now also builds a service with the explicit directory,
+stores it, and passes it to the driver constructor (example for Edge):
+
+```csharp
+EdgeDriverService service =
+    EdgeDriverService.CreateDefaultService(GetDriverDirectory());
+this._service = service;
+this._driver = new EdgeDriver(service, options);
+```
+
+The same pattern is applied to Chrome and Firefox using their
+respective service and driver types.
+
+### Verification
+
+The library was rebuilt in Release configuration:
+
+```
+dotnet build EZSeleniumLib.csproj --configuration Release
+```
+
+Result: 0 warnings, 0 errors. `EZSeleniumLib.dll` was produced.
+
+### Operational Notes
+
+* The shipped `msedgedriver.exe` version must match the installed Edge
+  major version on the client. The repository currently pins the driver
+  version documented in `README.md`. If a client runs a different Edge
+  major version, the driver rejects the session even though it is found
+  locally.
+* The startup argument `disable-build-check` relaxes the exact build
+  check within the same major version, but it does not bridge different
+  major versions.
+* This fix addresses driver resolution only. The browser itself must be
+  installed on the client as before.
+
 # Revision History
+
+## 2026/10/01:TomislavMatas: v4.152.1
+* Use `chromedriver.exe` version "152.0.7977.82".
+* Use `msedgedriver.exe` version "152.0.4191.100".
+* Use `Selenium.Support` version "4.50.0".
+* Use `Selenium.WebDriver` version "4.50.0".
+* Use `log4net` version "3.5.0".
+* Use `System.Management` "10.0.12".
+* When creating browser instance, pass the bundled driver directory explicitly
+  to prevent the Selenium Manager from attempting an online driver download,
+  which can fail on proxy/firewall restricted clients.
+
+## 2026/08/31:TomislavMatas: v4.152.0
+* Use `chromedriver.exe` version "152.0.7977.64".
+* Use `msedgedriver.exe` version "152.0.4191.53".
+* Use `Selenium.Support` version "4.48.0".
+* Use `Selenium.WebDriver` version "4.48.0".
+* Use `log4net` version "3.4.0".
+
 ## 2026/08/17:TomislavMatas: v4.152.0
 * Use `chromedriver.exe` version "152.0.7977.42".
 * Use `msedgedriver.exe` version "152.0.4191.19".

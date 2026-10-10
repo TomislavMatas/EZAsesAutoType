@@ -15,27 +15,34 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyName>EZSeleniumLib</AssemblyName>
     <RootNamespace>EZSeleniumLib</RootNamespace>
-    <Version>4.152.0</Version>
-    <FileVersion>4.152.0</FileVersion>
-    <AssemblyVersion>4.152.0</AssemblyVersion>
-    <AssemblyInformationalVersion>4.152.0</AssemblyInformationalVersion>
+    <Version>4.152.1</Version>
+    <FileVersion>4.152.1</FileVersion>
+    <AssemblyVersion>4.152.1</AssemblyVersion>
+    <AssemblyInformationalVersion>4.152.1</AssemblyInformationalVersion>
     <Authors>Tomislav Matas</Authors>
     <Company>matas consulting</Company>
     <Copyright>(c) 2021 matas consulting</Copyright>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReleaseNotes>
-        v4.152.0 (2026/08/17):
-        * Use `chromedriver.exe` version "152.0.7977.42".
-        * Use `msedgedriver.exe` version "152.0.4191.19".
+v4.152.1 (2026/10/01):
+* Use `chromedriver.exe` version "152.0.7977.82".
+* Use `msedgedriver.exe` version "152.0.4191.100".
+* Use `Selenium.Support` version "4.50.0".
+* Use `Selenium.WebDriver` version "4.50.0".
+* Use `log4net` version "3.5.0".
+* Use `System.Management` "10.0.12".
+* When creating browser instance, pass the bundled driver directory explicitly
+  to prevent the Selenium Manager from attempting an online driver download,
+  which can fail on proxy/firewall restricted clients.
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="3.3.2" />
-    <PackageReference Include="Selenium.Support" Version="4.47.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.47.0" />
-    <PackageReference Include="System.Management" Version="10.0.11" />
+    <PackageReference Include="log4net" Version="3.5.0" />
+    <PackageReference Include="Selenium.Support" Version="4.50.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.50.0" />
+    <PackageReference Include="System.Management" Version="10.0.12" />
   </ItemGroup>
 
   <ItemGroup>
